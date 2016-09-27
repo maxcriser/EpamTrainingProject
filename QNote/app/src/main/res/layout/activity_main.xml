@@ -60,4 +60,31 @@
         android:layout_below="@+id/editText2"
         android:layout_alignRight="@+id/editText2"
         android:layout_alignEnd="@+id/editText2" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Second Switch"
+        android:id="@+id/Check"
+        android:layout_below="@+id/status"
+        android:layout_alignRight="@+id/status"
+        android:layout_alignEnd="@+id/status" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Third Switch"
+        android:id="@+id/switch1"
+        android:layout_above="@+id/start"
+        android:layout_alignRight="@+id/status"
+        android:layout_alignEnd="@+id/status" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Box"
+        android:id="@+id/checkBox"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp" />
 </RelativeLayout>
