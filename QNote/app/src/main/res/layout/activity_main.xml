@@ -16,9 +16,13 @@
         android:id="@+id/title"
         android:textStyle="bold"
         android:textSize="@dimen/notification_large_icon_width"
-        android:layout_above="@+id/editText"
+        style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+        android:allowUndo="false"
+        android:layout_alignWithParentIfMissing="false"
+        android:background="#a3a3a3"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp" />
+        android:autoText="false" />
 
     <EditText
         android:layout_width="wrap_content"
