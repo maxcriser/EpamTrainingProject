@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="QNote v1.0"
+        android:text="QNote v0.0"
         android:id="@+id/title"
         android:textStyle="bold"
         android:textSize="@dimen/notification_large_icon_width"
