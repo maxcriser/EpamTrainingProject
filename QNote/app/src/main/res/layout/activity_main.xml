@@ -9,23 +9,46 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.maxcriser.qnote.MainActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="QNote v0.0"
+        android:id="@+id/title"
+        android:textStyle="bold"
+        android:textSize="@dimen/notification_large_icon_width"
+        style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+        android:allowUndo="false"
+        android:layout_alignWithParentIfMissing="false"
+        android:background="#a3a3a3"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:autoText="false" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editText2"
+        android:layout_below="@+id/editText"
+        android:layout_alignLeft="@+id/editText"
+        android:layout_alignStart="@+id/editText" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="START"
         android:id="@+id/start"
-        android:layout_below="@+id/title"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="52dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="QNote v2.0"
-        android:id="@+id/title"
-        android:textStyle="bold"
-        android:textSize="@dimen/notification_large_icon_width"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="160dp" />
+        android:layout_marginBottom="42dp" />
 </RelativeLayout>
