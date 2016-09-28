@@ -1,18 +1,18 @@
 # EpamTraining
 
-Publish our app to market -> 4pda,Xpda
-GOOGLE.COM/design
-HOTKEYS
-PixelBook read
-Activity
-File->Import Sample
-Job Scheduler
-ApiDemos (how to create app)
-Афукация (афуцированный код)
-*.jar
-*.aar
-mipmaps
-Extentions
+0. Publish our app to market -> 4pda,Xpda
+1. GOOGLE.COM/design
+2. HOTKEYS Android Studio
+3. PixelBook read
+4. Activity
+5. File->Import Sample
+6. Job Scheduler
+7. ApiDemos (how to create app)
+8. Афукация (афуцированный код)
+9. *.jar
+10. *.aar
+11. mipmaps
+12. Extentions
 
 ####Q: - How to name branches?
 
