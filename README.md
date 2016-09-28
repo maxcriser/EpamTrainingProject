@@ -1,6 +1,7 @@
-# EpamTrainingProject
+# EpamTraining
 
-GOOGLE.COM/design \n
+Publish our app to market -> 4pda,Xpda
+GOOGLE.COM/design
 HOTKEYS
 PixelBook read
 Activity
