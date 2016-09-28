@@ -1,6 +1,6 @@
 # EpamTrainingProject
 
-GOOGLE.COM/design
+GOOGLE.COM/design \n
 HOTKEYS
 PixelBook read
 Activity
