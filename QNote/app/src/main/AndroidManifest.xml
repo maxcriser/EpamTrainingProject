@@ -9,7 +9,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-            <intent-filter>
+            // android:configChanges=""> launchMode windowsMode theme  taskAffinity proccess screenOrientation
+            <intent-filter> // intent - намерение что-то делать (что будет запущено)
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
