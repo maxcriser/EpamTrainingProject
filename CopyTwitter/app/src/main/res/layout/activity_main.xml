@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.maxcriser.copytwitter.MainActivity">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:background="@drawable/top_earth" />
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="-35dp"
+                    android:background="@drawable/profile_photo" />
+
+                <ImageButton
+                    android:layout_width="95dp"
+                    android:layout_height="95dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="-92dp"
+                    android:background="@drawable/rounded"
+                    android:onClick="ShowHighPhoto" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="-50dp"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/btn_follow"
+                        android:layout_width="100dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="-95dp"
+                        android:background="@drawable/follow"
+                        android:onClick="Follow" />
+
+                    <ImageButton
+                        android:id="@+id/btn_notifications"
+                        android:layout_width="45dp"
+                        android:layout_height="35dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/notifications" />
+
+                    <ImageButton
+                        android:id="@+id/btn_added"
+                        android:layout_width="45dp"
+                        android:layout_height="35dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/added"
+                        android:onClick="UnFollowing" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/profile_name"
+                        android:textColor="#FF000000"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginTop="11dp"
+                        android:background="@drawable/ic_profile_verified" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/about"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="7dp"
+                    android:text="@string/site"
+                    android:textColor="@android:color/holo_blue_dark"
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:orientation="horizontal"
+                    android:textSize="15sp">
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="@drawable/ic_room_24dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/gps"
+                        android:textColor="@android:color/holo_blue_dark" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/count_following"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/name_following" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="35dp"
+                        android:text="@string/count_followers"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/name_followers" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="7dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#dbdbdb" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/btn_tweets"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:background="#FFFFFFFF"
+                        android:onClick="TweetsClicked"
+                        android:text="@string/tweets"
+                        android:textColor="#1ba4f4" />
+
+                    <Button
+                        android:id="@+id/btn_media"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:background="#FFFFFFFF"
+                        android:onClick="MediaClicked"
+                        android:text="@string/media"
+                        android:textColor="#8899a1" />
+
+                    <Button
+                        android:id="@+id/btn_likes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:background="#FFFFFFFF"
+                        android:onClick="LikesClicked"
+                        android:text="@string/likes"
+                        android:textColor="#8899a1" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@android:color/white">
+
+                    <TextView
+                        android:id="@+id/line_tweets"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:background="#1aa1f2" />
+
+                    <TextView
+                        android:id="@+id/line_media"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:background="#FFFFFFFF" />
+
+                    <TextView
+                        android:id="@+id/line_likes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:background="#FFFFFFFF" />
+                </LinearLayout>
+
+                <include layout="@layout/tweets" />
+
+            </LinearLayout>
+
+            <include layout="@layout/toolbar" />
+
+        </FrameLayout>
+    </ScrollView>
+
+    <ImageButton
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="bottom|right"
+        android:background="?attr/selectableItemBackground"
+        android:onClick="NewTweetPress"
+        android:src="@drawable/new_tweet" />
+
+</merge>
+

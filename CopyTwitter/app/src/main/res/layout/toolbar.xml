@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackground"
+            android:onClick="BackPress"
+            android:src="@drawable/ic_arrow_back_24dp" />
+
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="end"
+            android:layout_marginRight="48dp"
+            android:background="?attr/selectableItemBackground"
+            android:onClick="SearchPress"
+            android:src="@drawable/ic_action_name" />
+
+        <ImageButton
+            android:id="@+id/btn_three_dots"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="right"
+            android:background="?attr/selectableItemBackground"
+            android:onClick="SettingsPress"
+            android:src="@drawable/ic_keyboard_control" />
+    </FrameLayout>
+
+
+</merge>

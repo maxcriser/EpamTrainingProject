@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFFFF">
+
+            <Button
+                android:id="@+id/btn_tweets"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:background="#FFFFFFFF"
+                android:onClick="TweetsClicked"
+                android:text="TWEETS"
+                android:textColor="#1ba4f4" />
+
+            <Button
+                android:id="@+id/btn_media"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:background="#FFFFFFFF"
+                android:onClick="MediaClicked"
+                android:text="MEDIA"
+                android:textColor="#8899a1" />
+
+            <Button
+                android:id="@+id/btn_likes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:background="#FFFFFFFF"
+                android:onClick="LikesClicked"
+                android:text="LIKES"
+                android:textColor="#8899a1" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@android:color/white">
+
+            <TextView
+                android:id="@+id/line_tweets"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:background="#1aa1f2" />
+
+            <TextView
+                android:id="@+id/line_media"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:background="#FFFFFFFF" />
+
+            <TextView
+                android:id="@+id/line_likes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:background="#FFFFFFFF" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</merge>

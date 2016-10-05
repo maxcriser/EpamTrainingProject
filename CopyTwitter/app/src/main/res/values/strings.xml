@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">CopyTwitter</string>
+    <string name="text_second_page">SECOND PAGE!!!</string>
+    <string name="profile_name"><b>Scott Kelly</b></string>
+    <string name="site">scottkelly.com</string>
+    <string name="about">\@StationCDRKelly</string>
+    <string name="gps">Houston, TX</string>
+    <string name="count_following">152</string>
+    <string name="name_following">FOLLOWING</string>
+    <string name="count_followers">1.9M</string>
+    <string name="name_followers"> FOLLOWERS</string>
+    <string name="count_time">1h</string>
+    <string name="text_new">Enfoyed talking at #Dreamforce in #SanFran today with @ShuttleCDRKelly! #Salesforce #DF16</string>
+    <string name="nine_hours">9h</string>
+    <string name="twenty_two_hours">22h</string>
+    <string name="text_third_tweet">This was my view last October during my #YearInSpace. Like being on Earth but miss the view.</string>
+    <string name="text_second_tweet">Ready for #Mars? Recently talked w @CNN correspondent about our #JourneyToMars bit.ly/2dupRQN</string>
+    <string name="media">MEDIA</string>
+    <string name="tweets">TWEETS</string>
+    <string name="likes">LIKES</string>
+</resources>
