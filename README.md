@@ -1,5 +1,7 @@
 # EpamTraining
 
+
+1. Hig hProfile Photo
 2. HOTKEYS Android Studio
 3. Основные компонетнты андроид
 4. Жизненный цикл activity
