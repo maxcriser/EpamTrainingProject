@@ -1,21 +1,33 @@
 package com.maxcriser.hw_activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 
 public class ZeroActivity extends AppCompatActivity {
 
-    static boolean flag = true;
-    Intent intent;
+    public static final String KEY_SETTINGS = "Registration";
+    public static boolean FLAG_REG;
+
+    SharedPreferences cacheReg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (flag) {
+
+        cacheReg = getSharedPreferences(KEY_SETTINGS, MODE_PRIVATE);
+        FLAG_REG = cacheReg.getBoolean(KEY_SETTINGS, false);
+
+        Intent intent;
+
+        if (FLAG_REG) {
+            intent = new Intent(this, MainActivity.class);
+        } else {
             intent = new Intent(this, FirstActivity.class);
-            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
         }
+
+        startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
     }
 }
