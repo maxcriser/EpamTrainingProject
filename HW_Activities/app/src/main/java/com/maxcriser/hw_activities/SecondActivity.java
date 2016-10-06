@@ -6,16 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 
-public class FourthPage extends AppCompatActivity {
+public class SecondActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fourth);
+        setContentView(R.layout.activity_second);
     }
 
     public void NextPress(View view) {
-        Intent intent = new Intent(this, FifthPage.class);
+        Intent intent = new Intent(this, ThirdActivity.class);
         startActivity(intent);
     }
 }

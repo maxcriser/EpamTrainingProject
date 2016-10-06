@@ -20,13 +20,13 @@
             />
 
         <Button
-            android:onClick="NextPress"
+            android:onClick="ExitPress"
             android:layout_margin="20dp"
             android:layout_gravity="bottom"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btn_next"
+            android:text="@string/btn_exit"
             />
 
 

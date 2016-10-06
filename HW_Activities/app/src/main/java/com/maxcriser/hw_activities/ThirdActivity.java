@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 
-public class ThirdPage extends AppCompatActivity {
+public class ThirdActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,7 +15,7 @@ public class ThirdPage extends AppCompatActivity {
     }
 
     public void NextPress(View view) {
-        Intent intent = new Intent(this, FourthPage.class);
+        Intent intent = new Intent(this, FourthActivity.class);
         startActivity(intent);
     }
 }

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 
-public class ZeroPage extends AppCompatActivity {
+public class ZeroActivity extends AppCompatActivity {
 
     static boolean flag = true;
     Intent intent;
@@ -14,13 +14,8 @@ public class ZeroPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (flag) {
-            intent = new Intent(this, FirstPage.class);
-
-        }
-        else
-        {
-            intent = new Intent(this, FirstPage.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+            intent = new Intent(this, FirstActivity.class);
+            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
         }
     }
 }
