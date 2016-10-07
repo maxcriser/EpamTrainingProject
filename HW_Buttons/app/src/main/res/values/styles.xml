@@ -6,6 +6,22 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="icButtonStyle">@style/GreenButton</item>
+    </style>
+
+    <style name="RedButton" parent="AppTheme">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:background">@android:color/holo_red_dark</item>
+    </style>
+
+    <style name="RedButton.TextColor" parent="RedButton">
+        <item name="android:textColor">@android:color/holo_blue_dark</item>
+    </style>
+
+    <style name="GreenButton" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:background">@android:color/holo_green_light</item>
+        <item name="android:textAppearance">@style/RedButton</item>
     </style>
 
 </resources>
