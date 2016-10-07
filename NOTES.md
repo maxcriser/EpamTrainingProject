@@ -35,6 +35,7 @@ ctr=shift+/
 ###Material Google      - https://material.google.com/
 ###Android Monitor Overview - https://developer.android.com/studio/profile/android-monitor.html?utm_source=android-studio
 ###Google design            - https://design.google.com/
+###Draw9Patch               - https://romannurik.github.io/AndroidAssetStudio/nine-patches.html
 
 
 ##QNotes
