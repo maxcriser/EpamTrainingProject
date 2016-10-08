@@ -14,7 +14,7 @@ public class FirstActivity extends AppCompatActivity {
         setContentView(R.layout.activity_first);
     }
 
-    public void NextPress(View view) {
+    public void nextPress(View view) {
         Intent intent = new Intent(this, SecondActivity.class);
         startActivity(intent);
     }
