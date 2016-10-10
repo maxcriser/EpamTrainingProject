@@ -11,7 +11,7 @@ public class ZeroActivity extends AppCompatActivity {
     public static final String KEY_SETTINGS = "Registration";
     public static boolean FLAG_REG;
 
-    SharedPreferences cacheReg;
+    public static SharedPreferences cacheReg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

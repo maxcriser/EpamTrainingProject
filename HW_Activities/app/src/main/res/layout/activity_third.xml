@@ -20,7 +20,7 @@
         />
 
     <Button
-        android:onClick="NextPress"
+        android:onClick="nextPress"
         android:layout_margin="20dp"
         android:layout_gravity="bottom"
         android:layout_marginTop="10dp"

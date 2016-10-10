@@ -14,7 +14,7 @@ public class ThirdActivity extends AppCompatActivity {
         setContentView(R.layout.activity_third);
     }
 
-    public void NextPress(View view) {
+    public void nextPress(View view) {
         Intent intent = new Intent(this, FourthActivity.class);
         startActivity(intent);
     }
