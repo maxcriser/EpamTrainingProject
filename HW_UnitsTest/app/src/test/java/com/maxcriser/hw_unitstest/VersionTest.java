@@ -16,13 +16,14 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class)
+@Config(constants = BuildConfig.class, sdk = 21)
 public class VersionTest {
 
-    private AndroidVersion mAndroidVersion;
+    private Version mAndroidVersion;
     private MainActivity mMainActivity;
 
     @BeforeClass
@@ -41,6 +42,8 @@ public class VersionTest {
 
         mMainActivity = Robolectric.setupActivity(MainActivity.class);
         mAndroidVersion = Mockito.spy(new Version());
+
+        mMainActivity.initVersion(mAndroidVersion);
 
         System.out.println("Before");
     }
@@ -77,5 +80,12 @@ public class VersionTest {
 
         mMainActivity.setVisibility();
         assertEquals(View.INVISIBLE, mMainActivity.buttonUpdate.getVisibility());
+    }
+
+    @Test
+    public void testTextView() throws Exception {
+        assertNotNull(mMainActivity);
+
+        assertEquals(mMainActivity.title.getText().toString(), "ANDROID VERSION");
     }
 }

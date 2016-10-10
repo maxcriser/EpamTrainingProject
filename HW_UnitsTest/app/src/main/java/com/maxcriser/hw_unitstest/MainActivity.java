@@ -7,8 +7,9 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    Version setVersion;
+    private Version setVersion;
     TextView nameVersion;
+    TextView title;
     android.widget.Button buttonUpdate;
 
     @Override
@@ -18,12 +19,17 @@ public class MainActivity extends AppCompatActivity {
 
         setVersion = new Version();
 
+        title = (TextView) findViewById(R.id.title);
         nameVersion = (TextView) findViewById(R.id.version);
         buttonUpdate = (android.widget.Button) findViewById(R.id.update);
 
         nameVersion.setText(setVersion.versionAndroid());
 
         setVisibility();
+    }
+
+    public void initVersion(Version v) {
+        setVersion = v;
     }
 
     public void setVisibility() {
