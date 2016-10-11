@@ -6,102 +6,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/choice_country"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:layout_marginTop="50dp"
-            android:gravity="center"
-            android:text="@string/text_choice_country"
-            android:textSize="@dimen/sp_34" />
-
-        <include layout="@layout/fragment_line_one_dp" />
-
-        <FrameLayout style="@style/frameLanguageButton">
-            <!--android:background="@color/bluelight_500"-->
-
-            <ImageView
-                style="@style/icFlags"
-                android:src="@drawable/us_flag" />
-
-            <TextView
-                style="@style/textFlags"
-                android:text="@string/united_states" />
-
-            <ImageView
-                style="@style/doneFlags"
-                android:visibility="gone" />
-
-        </FrameLayout>
-
-        <include layout="@layout/fragment_line_one_dp" />
-
-        <FrameLayout style="@style/frameLanguageButton">
-            <!--android:background="@color/bluelight_500"-->
-
-            <TextView
-                style="@style/textFlags"
-                android:text="@string/united_kingdom" />
-
-            <ImageView
-                style="@style/icFlags"
-                android:src="@drawable/uk_flag" />
-
-            <ImageView
-                style="@style/doneFlags"
-                android:visibility="gone" />
-
-        </FrameLayout>
-
-        <include layout="@layout/fragment_line_one_dp" />
-
-        <FrameLayout style="@style/frameLanguageButton">
-            <!--android:background="@color/bluelight_500"-->
-
-            <TextView
-                style="@style/textFlags"
-                android:text="@string/russian" />
-
-            <ImageView
-                style="@style/icFlags"
-                android:src="@drawable/ru_flag" />
-
-            <ImageView
-                style="@style/doneFlags"
-                android:visibility="gone" />
-        </FrameLayout>
-
-        <include layout="@layout/fragment_line_one_dp" />
-
-        <FrameLayout style="@style/frameLanguageButton">
-            <!--android:background="@color/bluelight_500"-->
-            <!--android:clickable="true"-->
-            <!--android:onClick="ukraineClick"-->
-
-            <TextView
-                style="@style/textFlags"
-                android:text="@string/ukraine" />
-
-            <ImageView
-                style="@style/icFlags"
-                android:src="@drawable/ua_flag" />
-
-            <ImageView
-                style="@style/doneFlags"
-                android:visibility="gone" />
-        </FrameLayout>
-
-        <include layout="@layout/fragment_line_one_dp" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:orientation="vertical">
 
@@ -113,20 +17,115 @@
             android:layout_gravity="bottom">
 
             <ImageButton
-                android:onClick="onClick"
                 style="@style/buttonPrevNext"
                 android:layout_gravity="center|right"
+                android:onClick="onClick"
                 android:paddingLeft="24dp"
                 android:src="@drawable/ic_navigate_next_black_24dp" />
 
+            <ImageView
+                android:id="@+id/number_of_pages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_hdr_strong_black_24dp"/>
+
             <ImageButton
-                android:onClick="backOnClick"
                 style="@style/buttonPrevNext"
                 android:layout_gravity="center|left"
+                android:onClick="backOnClick"
                 android:paddingRight="24dp"
                 android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
 
         </FrameLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/choice_country"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="56dp"
+            android:gravity="center"
+            android:text="@string/text_choice_country"
+            android:textAllCaps="true"
+            android:textColor="@color/bluelight_500"
+            android:textSize="24sp" />
+
+        <include layout="@layout/fragment_line_one_dp" />
+
+        <FrameLayout style="@style/frameLanguageButton"
+            android:id="@+id/us"
+            android:onClick="usClicked">
+            <!--android:background="@color/bluelight_500"-->
+
+            <ImageView
+                style="@style/icFlags"
+                android:src="@drawable/us_flag" />
+
+            <TextView
+                android:id="@+id/text_us"
+                style="@style/textFlags"
+                android:text="@string/united_states" />
+
+            <ImageView
+                style="@style/doneFlags"
+                android:visibility="visible" />
+
+        </FrameLayout>
+
+        <include layout="@layout/fragment_line_one_dp" />
+
+        <FrameLayout style="@style/frameLanguageButton"
+            android:id="@+id/ru"
+            android:onClick="ruClicked">
+            <!--android:background="@color/bluelight_500"-->
+
+            <TextView
+                android:id="@+id/text_ru"
+                style="@style/textFlags"
+                android:text="@string/russian" />
+
+            <ImageView
+                style="@style/icFlags"
+                android:src="@drawable/ru_flag" />
+
+            <ImageView
+                style="@style/doneFlags"
+                android:visibility="visible" />
+        </FrameLayout>
+
+        <include layout="@layout/fragment_line_one_dp" />
+
+        <FrameLayout style="@style/frameLanguageButton"
+            android:id="@+id/ua"
+            android:onClick="uaClicked">
+            <!--android:background="@color/bluelight_500"-->
+            <!--android:clickable="true"-->
+            <!--android:onClick="ukraineClick"-->
+
+            <TextView
+                android:id="@+id/text_ua"
+                style="@style/textFlags"
+                android:text="@string/ukraine" />
+
+            <ImageView
+                style="@style/icFlags"
+                android:src="@drawable/ua_flag" />
+
+            <ImageView
+                style="@style/doneFlags"
+                android:visibility="visible" />
+        </FrameLayout>
+
+        <include layout="@layout/fragment_line_one_dp" />
+
 
     </LinearLayout>
 

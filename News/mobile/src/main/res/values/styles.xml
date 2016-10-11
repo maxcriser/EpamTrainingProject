@@ -5,6 +5,7 @@
         <item name="colorPrimaryDark">@color/black</item>
         <item name="android:navigationBarColor">@color/gray_2</item>
         <item name="android:windowBackground">@color/gray_3</item>
+        <item name="icButtonStyle">@style/Base.Widget.AppCompat.Button</item>
     </style>
 
     <style name="SelectableItemBackground">
@@ -35,6 +36,16 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:src">@drawable/ic_done_black_24dp</item>
+    </style>
+
+    <style name="BlueTextButton" parent="AppTheme">
+        <item name="android:textSize">@dimen/sp_20</item>
+        <item name="android:textColor">@color/bluelight_500</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:layout_marginLeft">80dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/dp_touch</item>
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="frameLanguageButton">

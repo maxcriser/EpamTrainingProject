@@ -6,5 +6,5 @@
     <dimen name="dp_action">56dp</dimen>
     <dimen name="dp_touch_80">80dp</dimen>
     <dimen name="sp_34">34sp</dimen>
-    <dimen name="sp_20">20sp</dimen>
+    <dimen name="sp_20">16sp</dimen>
 </resources>
