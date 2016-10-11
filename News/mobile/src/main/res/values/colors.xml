@@ -1,6 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="black">#151518</color>
+
+    <color name="gray_2">#212121</color>
+
+    <color name="blue">#22a7f0</color>
+
+    <color name="gray_1">#535357</color>
+
+    <color name="gray_light">#606064</color>
+
+    <color name="gray_3">#1e1e23</color>
+
     <color name="colorPrimary">#3F51B5</color>
+
     <color name="colorPrimaryDark">#303F9F</color>
+
     <color name="colorAccent">#FF4081</color>
+
+    <color name="bluelight_50">#abf7f9</color>
+
+    <color name="bluelight_100">#64f0f3</color>
+
+    <color name="bluelight_200">#30ebef</color>
+
+    <color name="bluelight_300">#0fc4c8</color>
+
+    <color name="bluelight_400">#0da8ab</color>
+
+    <color name="bluelight_500">#0b8c8f</color>
+
+    <color name="bluelight_600">#097073</color>
+
+    <color name="bluelight_700">#075456</color>
+
+    <color name="bluelight_800">#04393a</color>
+
+    <color name="bluelight_900">#021d1d</color>
+
+    <color name="bluelight_A100">#abf7f9</color>
+
+    <color name="bluelight_A200">#64f0f3</color>
+
+    <color name="bluelight_A400">#0da8ab</color>
+
+    <color name="bluelight_A700">#075456</color>
+
+    <color name="bluefog_50">#f8fcfc</color>
+
+    <color name="bluefog_100">#c1e6e4</color>
+
+    <color name="bluefog_200">#99d6d2</color>
+
+    <color name="bluefog_300">#66c2bc</color>
+
+    <color name="bluefog_400">#50b9b2</color>
+
+    <color name="bluefog_500">#43a8a1</color>
+
+    <color name="bluefog_600">#3a928c</color>
+
+    <color name="bluefog_700">#327c77</color>
+
+    <color name="bluefog_800">#296662</color>
+
+    <color name="bluefog_900">#20504d</color>
+
+    <color name="bluefog_A100">#f8fcfc</color>
+
+    <color name="bluefog_A200">#c1e6e4</color>
+
+    <color name="bluefog_A400">#50b9b2</color>
+
+    <color name="bluefog_A700">#327c77</color>
 </resources>
