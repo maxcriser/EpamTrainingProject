@@ -1,15 +1,17 @@
 package com.maxcriser.news;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class LanguagesActivity extends AppCompatActivity {
 
+    public static final String BLUE_SELECT = "#0b8c8f";
+    public static final String GRAY_3 = "#1e1e23";
     static boolean pressUA = false;
     static boolean pressRU = false;
     static boolean pressUS = false;
@@ -46,11 +48,11 @@ public class LanguagesActivity extends AppCompatActivity {
 
     public void choice(View country, boolean flag, TextView text) {
         if (flag) {
-            country.setBackgroundResource(R.color.bluefog_500);
-            text.setTextColor(getResources().getColor(R.color.gray_3));
+            country.setBackgroundColor(Color.parseColor(BLUE_SELECT));
+            text.setTextColor(Color.parseColor(GRAY_3));
         } else {
             country.setBackground(null);
-            text.setTextColor(getResources().getColor(R.color.bluelight_500));
+            text.setTextColor(Color.parseColor(BLUE_SELECT));
         }
     }
 

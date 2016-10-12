@@ -1,8 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#81D4FA">
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical">
+
+        <include layout="@layout/fragment_line_one_dp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_action"
+            android:layout_gravity="bottom">
+
+            <ImageButton
+                style="@style/buttonPrevNext"
+                android:layout_gravity="center|right"
+                android:onClick="onClick"
+                android:paddingLeft="24dp"
+                android:src="@drawable/ic_navigate_next_black_24dp" />
+
+            <ImageView
+                android:id="@+id/number_of_pages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_hdr_strong_black_24dp"/>
+
+            <ImageButton
+                style="@style/buttonPrevNext"
+                android:layout_gravity="center|left"
+                android:onClick="backOnClick"
+                android:paddingRight="24dp"
+                android:src="@drawable/ic_keyboard_arrow_left_black_24dp" />
+
+        </FrameLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,27 +47,32 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/choice_country"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="56dp"
             android:gravity="center"
-            android:text="Choose resources:"
-            android:textSize="34sp" />
+            android:text="@string/choose_resources"
+            android:textAllCaps="true"
+            android:textColor="@color/bluelight_500"
+            android:textSize="24sp" />
 
-        <FrameLayout style="@style/chooseFrameLanguageButton">
+        <include layout="@layout/fragment_line_one_dp" />
+
+        <FrameLayout style="@style/frameLanguageButton"
+            android:id="@+id/us"
+            android:onClick="usClicked">
+            <!--android:background="@color/bluelight_500"-->
 
             <ImageView
-                android:id="@+id/imageView2"
                 style="@style/icFlags"
                 android:src="@drawable/us_flag" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/text_us"
                 style="@style/textFlags"
-                android:text="site"
-                android:textSize="20sp" />
+                android:text="habrahabr" />
 
             <ImageView
                 style="@style/doneFlags"
@@ -38,30 +80,17 @@
 
         </FrameLayout>
 
-        <FrameLayout style="@style/chooseFrameLanguageButton">
+        <include layout="@layout/fragment_line_one_dp" />
+
+        <FrameLayout style="@style/frameLanguageButton"
+            android:id="@+id/ru"
+            android:onClick="ruClicked">
+            <!--android:background="@color/bluelight_500"-->
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/text_ru"
                 style="@style/textFlags"
-                android:text="site2" />
-
-            <ImageView
-                android:id="@+id/imageView3"
-                style="@style/icFlags"
-                android:src="@drawable/uk_flag" />
-
-            <ImageView
-                style="@style/doneFlags"
-                android:visibility="visible" />
-
-        </FrameLayout>
-
-        <FrameLayout style="@style/frameLanguageButton">
-
-            <TextView
-                style="@style/textFlags"
-                android:gravity="center"
-                android:text="site3" />
+                android:text="tut.by" />
 
             <ImageView
                 style="@style/icFlags"
@@ -69,50 +98,36 @@
 
             <ImageView
                 style="@style/doneFlags"
-                android:visibility="gone" />
+                android:visibility="visible" />
         </FrameLayout>
 
-        <FrameLayout style="@style/frameLanguageButton">
+        <include layout="@layout/fragment_line_one_dp" />
 
-            <TextView
-                style="@style/textFlags"
-                android:gravity="center"
-                android:text="site4" />
-
-            <ImageView
-                style="@style/icFlags"
-                android:src="@drawable/ua_flag" />
+        <FrameLayout style="@style/frameLanguageButton"
+            android:id="@+id/ua"
+            android:onClick="uaClicked">
+            <!--android:background="@color/bluelight_500"-->
+            <!--android:clickable="true"-->
+            <!--android:onClick="ukraineClick"-->
 
             <ImageView
                 style="@style/doneFlags"
-                android:visibility="gone" />
+                android:visibility="visible" />
+
+            <ImageView
+                style="@style/icFlags"
+                android:src="@drawable/ua_flag"
+                android:id="@+id/imageView2" />
+
+            <TextView
+                android:id="@+id/text_ua"
+                style="@style/textFlags"
+                android:text="news.com" />
         </FrameLayout>
+
+        <include layout="@layout/fragment_line_one_dp" />
 
 
     </LinearLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_action"
-        android:layout_gravity="bottom"
-        android:background="#B3E5FC">
-
-        <Button
-            style="@style/buttonPrevNext"
-            android:layout_gravity="center|right"
-            android:background="?attr/selectableItemBackground"
-            android:onClick="doneClick"
-            android:src="@drawable/ic_arrow_forward_black_24dp"
-            android:text="done"
-            android:textAllCaps="true"
-            android:textSize="16sp" />
-
-        <ImageButton
-            style="@style/buttonPrevNext"
-            android:layout_gravity="center|left"
-            android:onClick="backOnClick"
-            android:paddingRight="16dp"
-            android:src="@drawable/ic_arrow_back_black_24dp" />
-    </FrameLayout>
 
 </FrameLayout>
