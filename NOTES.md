@@ -2,6 +2,7 @@
 
 Stats => https://deniotokiari.github.io/training-epam-2016/
 
+1. continuous integration
 1. Cursorloader
 1. ~~Http protocol basics~~
 1. Java collections (List+Map+Set) + SparseArrays
