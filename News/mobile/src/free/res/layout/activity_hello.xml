@@ -3,6 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include layout="@layout/fragment_advrt"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="@dimen/icon_dp_hello"
@@ -17,7 +23,7 @@
         android:layout_gravity="bottom"
         android:layout_marginBottom="90dp"
         android:gravity="center"
-        android:text="FREE NEWS"
+        android:text="@string/text_title_hello"
         android:textColor="@color/gray_light"
         android:textSize="30dp" />
 
@@ -53,5 +59,7 @@
         </FrameLayout>
 
     </LinearLayout>
+
+    </FrameLayout>
 
 </FrameLayout>
