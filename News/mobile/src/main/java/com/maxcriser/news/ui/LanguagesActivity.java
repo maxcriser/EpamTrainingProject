@@ -1,4 +1,4 @@
-package com.maxcriser.news;
+package com.maxcriser.news.ui;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import com.maxcriser.news.R;
 
 public class LanguagesActivity extends AppCompatActivity {
 
