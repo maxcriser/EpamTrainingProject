@@ -12,12 +12,16 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
+    flavorDimensions "version"
+
     productFlavors {
         free {
+            dimension "version"
             applicationId "news.free"
             versionName "1.0"
         }
         pro {
+            dimension "version"
             applicationId "news.pro"
             versionName "1.0-pro"
         }
