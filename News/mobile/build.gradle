@@ -11,6 +11,18 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    productFlavors {
+        free {
+            applicationId "news.free"
+            versionName "1.0"
+        }
+        pro {
+            applicationId "news.pro"
+            versionName "1.0-pro"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
