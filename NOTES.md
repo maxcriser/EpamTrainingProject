@@ -2,6 +2,8 @@
 
 Stats => https://deniotokiari.github.io/training-epam-2016/
 
+1. SOLID + OOP
+1. Singleton, Fabric, Builder, Observer, Adapter, [ViewHolder, ContextBuilder], State, Strategy
 1. continuous integration
 1. Cursorloader
 1. ~~Http protocol basics~~
