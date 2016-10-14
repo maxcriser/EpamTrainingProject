@@ -1,9 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+
+    def titleVersionPro = '"Q-NEWS PRO"'
+    def titleVersionFree = '"Q-NEWS"'
+
     compileSdkVersion 24
     buildToolsVersion "24.0.3"
     defaultConfig {
+
         applicationId "com.maxcriser.news"
         minSdkVersion 16
         targetSdkVersion 24
@@ -16,24 +21,47 @@ android {
 
     productFlavors {
         free {
+
             dimension "version"
-            applicationId "news.free"
+            applicationId "qnews"
             versionName "1.0"
+
+            buildConfigField "String", "APP_TITLE_VERSION", titleVersionFree
         }
         pro {
+
             dimension "version"
-            applicationId "news.pro"
+            applicationId "qnewsPRO"
             versionName "1.0-pro"
+
+            buildConfigField "String", "APP_TITLE_VERSION", titleVersionPro
         }
     }
 
     buildTypes {
-        release {
+
+        debug {
             minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
+
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def sep = "_"
+            def appName = variant.getApplicationId()
+            def flavor = variant.getFlavorName()
+            def build = variant.getBuildType().getName()
+            def apkName = appName + sep + build + sep + flavor + sep + versionName + ".apk"
+            output.outputFile = new File(output.outputFile.parent, apkName)
+        }
+    }
 }
 
 dependencies {
