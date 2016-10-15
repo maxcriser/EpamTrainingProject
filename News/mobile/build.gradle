@@ -23,7 +23,7 @@ android {
         free {
 
             dimension "version"
-            applicationId "qnews"
+            applicationId "qnewsFREE"
             versionName "1.0"
 
             buildConfigField "String", "APP_TITLE_VERSION", titleVersionFree
