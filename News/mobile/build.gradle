@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 
 android {
 
-    def nameFree = '"qnews"'
-    def namePro = '"qnewsPRO"'
+    def titleVersionPro = '"Q-NEWS PRO"'
+    def titleVersionFree = '"Q-NEWS FREE"'
 
     compileSdkVersion 24
     buildToolsVersion "24.0.3"
@@ -23,18 +23,18 @@ android {
         free {
 
             dimension "version"
-            applicationId "news.free"
+            applicationId "qnews"
             versionName "1.0"
 
-            buildConfigField "String", "APP_NAME", nameFree
+            buildConfigField "String", "APP_TITLE_VERSION", titleVersionFree
         }
         pro {
 
             dimension "version"
-            applicationId "news.pro"
+            applicationId "qnewsPRO"
             versionName "1.0-pro"
 
-            buildConfigField "String", "APP_NAME", namePro
+            buildConfigField "String", "APP_TITLE_VERSION", titleVersionPro
         }
     }
 
