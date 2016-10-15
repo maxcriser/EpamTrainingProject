@@ -6,11 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.maxcriser.news.R;
-import com.maxcriser.news.ui.version.TitleVersionActivity;
+import com.maxcriser.news.ui.version.TitleVersion;
+import com.maxcriser.news.view.RobotoThinTextView;
 
 public class HelloActivity extends AppCompatActivity {
 
-    com.maxcriser.news.view.RobotoThinTextView title;
+    RobotoThinTextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +19,7 @@ public class HelloActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hello);
 
         title = (com.maxcriser.news.view.RobotoThinTextView) findViewById(R.id.title_news);
-        title.setText(TitleVersionActivity.setTitle());
+        title.setText(TitleVersion.setTitle());
     }
 
     public void onClick(View view) {
