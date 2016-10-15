@@ -52,21 +52,16 @@ android {
     }
     sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
 
-
-    //test 2
-//    applicationVariants.all { variant ->
-//        variant.outputs.each { output ->
-//            def name = BuildConfig.APP_NAME
-//            def flavor = BuildConfig.FLAVOR
-//            def version = BuildConfig.VERSION_NAME
-
-//            def newName = name + "_" + flavor + "_" + "_" + version + ".apk"
-
-//            def newName = "qnews_test_1.1.1.1.1.apk"
-
-//            output.outputFile = new File(output.outputFile.parent, newName)
-//        }
-//    }
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def file = output.outputFile
+            def fileName = getParent().getName()
+            def flavor = variant.getFlavorName()
+            def build = variant.getBuildType().getName()
+            fileName = fileName + "_" + build + "_" + flavor + "_" + versionName + ".apk"
+            output.outputFile = new File(file.parent, fileName)
+        }
+    }
 }
 
 dependencies {
