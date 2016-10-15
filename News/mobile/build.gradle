@@ -52,6 +52,8 @@ android {
     }
     sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
 
+
+    //test
 //    applicationVariants.all { variant ->
 //        variant.outputs.each { output ->
 //            def name = BuildConfig.APP_NAME
