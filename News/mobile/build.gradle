@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 
 android {
 
-    def nameFree = '"qnews"'
-    def namePro = '"qnewsPRO"'
+    def titleVersionPro = '"Q-NEWS PRO"'
+    def titleVersionFree = '"Q-NEWS FREE"'
 
     compileSdkVersion 24
     buildToolsVersion "24.0.3"
@@ -23,18 +23,18 @@ android {
         free {
 
             dimension "version"
-            applicationId "news.free"
+            applicationId "qnews"
             versionName "1.0"
 
-            buildConfigField "String", "APP_NAME", nameFree
+            buildConfigField "String", "APP_TITLE_VERSION", titleVersionFree
         }
         pro {
 
             dimension "version"
-            applicationId "news.pro"
+            applicationId "qnewsPRO"
             versionName "1.0-pro"
 
-            buildConfigField "String", "APP_NAME", namePro
+            buildConfigField "String", "APP_TITLE_VERSION", titleVersionPro
         }
     }
 
@@ -52,19 +52,16 @@ android {
     }
     sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
 
-//    applicationVariants.all { variant ->
-//        variant.outputs.each { output ->
-//            def name = BuildConfig.APP_NAME
-//            def flavor = BuildConfig.FLAVOR
-//            def version = BuildConfig.VERSION_NAME
-
-//            def newName = name + "_" + flavor + "_" + "_" + version + ".apk"
-
-//            def newName = "qnews_test_1.1.1.1.1.apk"
-
-//            output.outputFile = new File(output.outputFile.parent, newName)
-//        }
-//    }
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def file = output.outputFile
+            def fileName = getParent().getName()
+            def flavor = variant.getFlavorName()
+            def build = variant.getBuildType().getName()
+            fileName = fileName + "_" + build + "_" + flavor + "_" + versionName + ".apk"
+            output.outputFile = new File(file.parent, fileName)
+        }
+    }
 }
 
 dependencies {
