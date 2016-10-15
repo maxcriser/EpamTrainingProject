@@ -3,11 +3,7 @@ apply plugin: 'com.android.application'
 android {
 
     def titleVersionPro = '"Q-NEWS PRO"'
-<<<<<<< HEAD
     def titleVersionFree = '"Q-NEWS FREE"'
-=======
-    def titleVersionFree = '"Q-NEWS"'
->>>>>>> 2b3ac92f42d22cd7729934aa2e4d88d79cf86e1b
 
     compileSdkVersion 24
     buildToolsVersion "24.0.3"
@@ -58,21 +54,12 @@ android {
 
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
-<<<<<<< HEAD
             def file = output.outputFile
             def fileName = getParent().getName()
             def flavor = variant.getFlavorName()
             def build = variant.getBuildType().getName()
             fileName = fileName + "_" + build + "_" + flavor + "_" + versionName + ".apk"
             output.outputFile = new File(file.parent, fileName)
-=======
-            def sep = "_"
-            def appName = variant.getApplicationId()
-            def flavor = variant.getFlavorName()
-            def build = variant.getBuildType().getName()
-            def apkName = appName + sep + build + sep + flavor + sep + versionName + ".apk"
-            output.outputFile = new File(output.outputFile.parent, apkName)
->>>>>>> 2b3ac92f42d22cd7729934aa2e4d88d79cf86e1b
         }
     }
 }
