@@ -1,11 +1,20 @@
 #NOTES
 
-1. Shadow to btn/view/layout
+Stats => https://deniotokiari.github.io/training-epam-2016/
+
+1. SOLID + OOP
+1. Singleton, Fabric, Builder, Observer, Adapter, [ViewHolder, ContextBuilder], State, Strategy
+1. continuous integration
+1. Cursorloader
+1. ~~Http protocol basics~~
+1. Java collections (List+Map+Set) + SparseArrays
+1. Create AppEngine module
+1. ~~Shadow to btn/view/layout~~
 1. Hig hProfile Photo
-2. HOTKEYS Android Studio
+2. ~~HOTKEYS Android Studio~~
 3. Основные компонетнты андроид
 4. ~~Жизненный цикл activity~~
-5. buld in gitignore
+5. ~~buld in gitignore~~
 6. анонимные классы (опасность)
 4. spannable
 5. Intent
@@ -14,7 +23,7 @@
 1. фнкциональное програмирование
 3. ~~PixelBook~~
 4. ~~Activity~~
-5. **Import Sample**
+5. ##**Import Sample**
 6. ~~Job Scheduler~~
 9. ~~*.jar~~
 10. ~~*.aar~~
