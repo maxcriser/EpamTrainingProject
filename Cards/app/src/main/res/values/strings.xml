@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Cards</string>
+    <string-array name="cat_names">
+        <item>Protected</item>
+        <item>Open</item>
+    </string-array>
+</resources>
