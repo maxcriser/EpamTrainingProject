@@ -6,7 +6,7 @@ public class TypesCardsReader {
 
     private String[] types;
 
-    private TypesCardsReader() {
+    TypesCardsReader() {
 
     }
 

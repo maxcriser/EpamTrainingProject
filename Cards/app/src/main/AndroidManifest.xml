@@ -16,6 +16,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.MainActivity" />
+
+        <activity android:name=".ui.cards.BankCardsActivity" />
+        <activity android:name=".ui.cards.DiscountCardsActivity" />
+        <activity android:name=".ui.cards.TicketsActivity" />
+        <activity android:name=".ui.PinProtectedActivity"
+            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>

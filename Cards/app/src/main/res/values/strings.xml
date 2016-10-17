@@ -1,7 +1,15 @@
 <resources>
     <string name="app_name">Cards</string>
-    <string-array name="cat_names">
+    <string-array name="type_of_bank_cards">
         <item>Protected</item>
         <item>Open</item>
+    </string-array>
+
+    <string-array name="drawer_bar">
+        <item>Profile</item>
+        <item>Theme</item>
+        <item>Settings</item>
+        <item>About</item>
+        <item>Exit</item>
     </string-array>
 </resources>

@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.TypesCardsReader;
@@ -17,6 +17,8 @@ import com.maxcriser.cards.ui.cards.TicketsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    private String[] mDrawer;
+    private ListView mDrawerListView;
     ListView typesCards;
     String[] types;
 
@@ -34,22 +36,33 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, types);
 
         typesCards.setAdapter(adapter);
+        typesCards.setOnItemClickListener(new OnItemClickListener());
 
-        typesCards.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View itemClicked, int position,
-                                    long id) {
-                TextView textView = (TextView) itemClicked;
-                String strText = textView.getText().toString();
+        mDrawer = getResources().getStringArray(R.array.drawer_bar);
+        mDrawerListView = (ListView) findViewById(R.id.left_drawer);
 
-                if (strText.equalsIgnoreCase(types[0])) {
-                    startActivity(new Intent(MainActivity.this, BankCardsActivity.class));
-                } else if (strText.equalsIgnoreCase(types[1])) {
-                    startActivity(new Intent(MainActivity.this, DiscountCardsActivity.class));
-                } else {
-                    startActivity(new Intent(MainActivity.this, TicketsActivity.class));
-                }
+        mDrawerListView.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawer));
+        mDrawerListView.setOnItemClickListener(new DrawerItemClickListener());
+    }
+
+    private class OnItemClickListener implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            if (position == 0) {
+                startActivity(new Intent(MainActivity.this, BankCardsActivity.class));
+            } else if (position == 1) {
+                startActivity(new Intent(MainActivity.this, DiscountCardsActivity.class));
+            } else {
+                startActivity(new Intent(MainActivity.this, TicketsActivity.class));
             }
-        });
+        }
+    }
+
+    private class DrawerItemClickListener implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Toast.makeText(getApplicationContext(),
+                    "Выбран пункт " + position, Toast.LENGTH_SHORT).show();
+        }
     }
 }
