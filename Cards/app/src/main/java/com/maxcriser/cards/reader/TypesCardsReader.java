@@ -1,4 +1,4 @@
-package com.maxcriser.cards;
+package com.maxcriser.cards.reader;
 
 public class TypesCardsReader {
 

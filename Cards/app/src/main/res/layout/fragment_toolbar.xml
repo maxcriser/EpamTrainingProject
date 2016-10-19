@@ -8,6 +8,7 @@
         android:background="@color/bluelight_500">
 
         <ImageButton
+            android:onClick="onMenuClicked"
             android:background="?attr/selectableItemBackground"
             android:layout_width="@dimen/height_toolbar"
             android:layout_height="@dimen/height_toolbar"

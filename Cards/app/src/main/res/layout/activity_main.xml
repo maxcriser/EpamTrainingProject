@@ -24,6 +24,6 @@
         </LinearLayout>
     </FrameLayout>
 
-    <include layout="@layout/fragment_drawer"/>
+    <include layout="@layout/fragment_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

@@ -10,7 +10,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.TypesCardsReader;
+import com.maxcriser.cards.reader.TypesCardsReader;
 import com.maxcriser.cards.ui.cards.BankCardsActivity;
 import com.maxcriser.cards.ui.cards.DiscountCardsActivity;
 import com.maxcriser.cards.ui.cards.TicketsActivity;
@@ -43,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawerListView.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawer));
         mDrawerListView.setOnItemClickListener(new DrawerItemClickListener());
+    }
+
+    public void onMenuClicked(View view) {
+        // open drawer
     }
 
     private class OnItemClickListener implements AdapterView.OnItemClickListener {

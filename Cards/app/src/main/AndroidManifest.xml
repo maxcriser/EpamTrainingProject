@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.maxcriser.cards">
 
+    <uses-permission
+        android:name="android.permission.USE_FINGERPRINT" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,6 +23,7 @@
         <activity android:name=".ui.cards.BankCardsActivity" />
         <activity android:name=".ui.cards.DiscountCardsActivity" />
         <activity android:name=".ui.cards.TicketsActivity" />
+        <activity android:name=".ui.cards.ProtectedBankCards" />
         <activity android:name=".ui.PinProtectedActivity"
             android:windowSoftInputMode="stateHidden"/>
     </application>

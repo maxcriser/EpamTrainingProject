@@ -1,128 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="380dp"
+        android:layout_gravity="bottom"
+        android:background="@color/gray_3"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_margin="2dp"
-            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center">
 
-            <ImageButton
-                android:onClick=""
+            <Button
                 android:id="@+id/button_one"
-                android:layout_margin="8dp"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:background="@drawable/ic_radio_button_unchecked_black_24dp"/>
+                android:layout_margin="12dp"
+                android:background="@drawable/ic_radio_button_unchecked_black_24dp"
+                android:onClick="oneInput"
+                android:text="1"
+                android:textSize="32sp" />
 
-            <ImageButton
+            <Button
                 android:id="@+id/button_two"
-                android:layout_margin="8dp"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:background="@drawable/ic_radio_button_unchecked_black_24dp" />
+                android:layout_margin="12dp"
+                android:background="@drawable/ic_radio_button_unchecked_black_24dp"
+                android:onClick="twoInput"
+                android:text="2"
+                android:textSize="32sp" />
 
-            <ImageButton
+            <Button
                 android:id="@+id/button_three"
-                android:layout_margin="8dp"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:background="@drawable/ic_radio_button_unchecked_black_24dp"/>
+                android:layout_margin="12dp"
+                android:background="@drawable/ic_radio_button_unchecked_black_24dp"
+                android:onClick="threeInput"
+                android:text="3"
+                android:textSize="32sp" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_margin="2dp"
-            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:gravity="center">
 
-            <ImageButton
+            <Button
                 android:id="@+id/button_four"
-                android:layout_margin="8dp"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:background="@drawable/ic_radio_button_unchecked_black_24dp" />
+                android:layout_margin="12dp"
+                android:background="@drawable/ic_radio_button_unchecked_black_24dp"
+                android:onClick="fourInput"
+                android:text="4"
+                android:textSize="32sp" />
 
-            <ImageButton
+            <Button
                 android:id="@+id/button_five"
-                android:layout_margin="8dp"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:background="@drawable/ic_radio_button_unchecked_black_24dp"/>
-
-            <ImageButton
-                android:layout_margin="8dp"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
+                android:layout_margin="12dp"
                 android:background="@drawable/ic_radio_button_unchecked_black_24dp"
-                android:id="@+id/button_six" />
+                android:onClick="fiveInput"
+                android:text="5"
+                android:textSize="32sp" />
+
+            <Button
+                android:id="@+id/button_six"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_margin="12dp"
+                android:background="@drawable/ic_radio_button_unchecked_black_24dp"
+                android:onClick="sixInput"
+                android:text="6"
+                android:textSize="32sp" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:gravity="center">
 
-            <ImageButton
+            <Button
                 android:id="@+id/button_seven"
-                android:layout_margin="8dp"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:background="@drawable/ic_radio_button_unchecked_black_24dp"/>
-
-            <ImageButton
-                android:layout_margin="8dp"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
+                android:layout_margin="12dp"
                 android:background="@drawable/ic_radio_button_unchecked_black_24dp"
-                android:id="@+id/button_eight" />
+                android:onClick="sevenInput"
+                android:text="7"
+                android:textSize="32sp" />
 
-            <ImageButton
-                android:layout_margin="8dp"
+            <Button
+                android:id="@+id/button_eight"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
+                android:layout_margin="12dp"
                 android:background="@drawable/ic_radio_button_unchecked_black_24dp"
-                android:id="@+id/button_nine" />
+                android:onClick="eightInput"
+                android:text="8"
+                android:textSize="32sp" />
+
+            <Button
+                android:id="@+id/button_nine"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_margin="12dp"
+                android:background="@drawable/ic_radio_button_unchecked_black_24dp"
+                android:onClick="nineInput"
+                android:text="9"
+                android:textSize="32sp" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_margin="8dp"
-            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center">
 
             <ImageView
-                android:layout_margin="8dp"
                 android:layout_width="56dp"
-                android:layout_height="56dp"/>
+                android:layout_height="56dp"
+                android:layout_marginRight="12dp" />
 
-            <ImageButton
+            <Button
                 android:id="@+id/button_zero"
-                android:layout_margin="8dp"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:background="@drawable/ic_radio_button_unchecked_black_24dp"/>
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/ic_radio_button_unchecked_black_24dp"
+                android:onClick="zeroInput"
+                android:text="0"
+                android:textSize="32sp" />
 
-            <ImageButton
-                android:layout_margin="8dp"
+            <ImageView
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:background="@drawable/ic_keyboard_return_black_24dp"
-                android:id="@+id/button_ok" />
+                android:layout_marginLeft="12dp" />
 
         </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:textColor="@color/bluelight_500"
+                android:layout_marginLeft="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/gray_3"
+                android:onClick="onCancelClicked"
+                android:text="Cancel"
+                android:textAllCaps="true"
+                android:textSize="24sp" />
+
+            <Button
+                android:textColor="@color/bluelight_500"
+                android:layout_marginRight="16dp"
+                android:layout_gravity="right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/gray_3"
+                android:onClick="onCancelClicked"
+                android:text="Delete"
+                android:textAllCaps="true"
+                android:textSize="24sp" />
+
+        </FrameLayout>
 
     </LinearLayout>
 
-
-</merge>
+</FrameLayout>

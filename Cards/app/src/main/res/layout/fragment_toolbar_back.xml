@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_toolbar"
+        android:background="@color/bluelight_500">
+
+        <ImageButton
+            android:onClick="onBackClicked"
+            android:background="?attr/selectableItemBackground"
+            android:layout_width="@dimen/height_toolbar"
+            android:layout_height="@dimen/height_toolbar"
+            android:src="@drawable/ic_arrow_back_black_24dp" />
+
+        <com.maxcriser.cards.view.RobotoRegularTextView
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/margin_left_title_toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/height_toolbar"
+            android:text="@string/app_name"
+            android:textSize="18sp"
+            android:id="@+id/title_toolbar" />
+
+    </FrameLayout>
+
+</merge>

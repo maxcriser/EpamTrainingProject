@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.maxcriser.fingerprintproject.MainActivity">
+
+    <Button
+        android:onClick="onNextClicked"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="56dp"
+        android:background="#ff00"
+        android:text="TEST FINGERPRINT"/>
+</merge>

@@ -39,4 +39,8 @@ public class BankCardsActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void onBackClicked(View view) {
+        super.onBackPressed();
+    }
 }
