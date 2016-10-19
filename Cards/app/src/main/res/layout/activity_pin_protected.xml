@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enter Passcode"
+            android:textSize="36dp"
+            android:gravity="center"
+            android:layout_margin="30dp"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_margin="8dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/ic_radio_button_unchecked_black_24dp"
+                    android:id="@+id/crlcOne" />
+
+                <ImageView
+                    android:id="@+id/crlcTwo"
+                    android:layout_margin="8dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/ic_radio_button_unchecked_black_24dp"/>
+
+                <ImageView
+                    android:id="@+id/crlcThree"
+                    android:layout_margin="8dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/ic_radio_button_unchecked_black_24dp"/>
+
+                <ImageView
+                    android:id="@+id/crlcFour"
+                    android:layout_margin="8dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/ic_radio_button_unchecked_black_24dp"/>
+
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+
+        <include layout="@layout/fragment_keyboard_pin"/>
+
+    </FrameLayout>
+
+</merge>

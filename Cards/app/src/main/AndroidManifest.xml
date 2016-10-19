@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.maxcriser.cards">
+
+    <uses-permission
+        android:name="android.permission.USE_FINGERPRINT" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".ui.LaunchScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.MainActivity" />
+
+        <activity android:name=".ui.cards.BankCardsActivity" />
+        <activity android:name=".ui.cards.DiscountCardsActivity" />
+        <activity android:name=".ui.cards.TicketsActivity" />
+        <activity android:name=".ui.cards.ProtectedBankCards" />
+        <activity android:name=".ui.PinProtectedActivity"
+            android:windowSoftInputMode="stateHidden"/>
+    </application>
+
+</manifest>
