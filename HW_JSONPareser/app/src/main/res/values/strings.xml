@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">HW_JSONPareser</string>
+    <string name="json_parser">JSON Parser:</string>
+    <string name="gson_parser">GSON Parser:</string>
+    <string name="parse">PARSE</string>
+    <string name="setfields">SetFields</string>
+</resources>
