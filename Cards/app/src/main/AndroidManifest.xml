@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.maxcriser.cards">
+          package="com.maxcriser.cards">
 
-    <uses-permission
-        android:name="android.permission.USE_FINGERPRINT" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
+
+    <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
 
     <application
         android:allowBackup="true"
@@ -13,18 +18,19 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.LaunchScreenActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.MainActivity"/>
 
-        <activity android:name=".ui.cards.BankCardsActivity" />
-        <activity android:name=".ui.cards.DiscountCardsActivity" />
-        <activity android:name=".ui.cards.TicketsActivity" />
-        <activity android:name=".ui.cards.ProtectedBankCards" />
-        <activity android:name=".ui.PinProtectedActivity"
+        <activity android:name=".ui.cards.BankCardsActivity"/>
+        <activity android:name=".ui.cards.DiscountCardsActivity"/>
+        <activity android:name=".ui.cards.TicketsActivity"/>
+        <activity android:name=".ui.cards.ProtectedBankCards"/>
+        <activity
+            android:name=".ui.PinProtectedActivity"
             android:windowSoftInputMode="stateHidden"/>
     </application>
 

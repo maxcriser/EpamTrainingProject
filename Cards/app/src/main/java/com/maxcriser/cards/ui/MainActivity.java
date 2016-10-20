@@ -29,18 +29,16 @@ public class MainActivity extends AppCompatActivity {
 
         final TypesCardsReader tcReader = TypesCardsReader.getInstance();
         tcReader.setTypes();
+
         types = tcReader.getTypes();
 
         typesCards = (ListView) findViewById(R.id.types_of_cards);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, types);
-
-        typesCards.setAdapter(adapter);
+        typesCards.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, types));
         typesCards.setOnItemClickListener(new OnItemClickListener());
 
         mDrawer = getResources().getStringArray(R.array.drawer_bar);
-        mDrawerListView = (ListView) findViewById(R.id.left_drawer);
 
+        mDrawerListView = (ListView) findViewById(R.id.list_drawer);
         mDrawerListView.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawer));
         mDrawerListView.setOnItemClickListener(new DrawerItemClickListener());
     }

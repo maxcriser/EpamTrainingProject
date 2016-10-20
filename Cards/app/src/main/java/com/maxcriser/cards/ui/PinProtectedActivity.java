@@ -11,16 +11,13 @@ import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.handler.FingerprintHandler;
-import com.maxcriser.cards.reader.CorrectPassword;
+import com.maxcriser.cards.reader.PasswordReader;
 import com.maxcriser.cards.ui.cards.ProtectedBankCards;
 
 import java.io.IOException;
@@ -40,46 +37,59 @@ import javax.crypto.SecretKey;
 
 public class PinProtectedActivity extends AppCompatActivity {
 
+    public static final String BUTTON_ZERO = "0";
+    public static final String BUTTON_ONE = "1";
+    public static final String BUTTON_TWO = "2";
+    public static final String BUTTON_THREE = "3";
+    public static final String BUTTON_FOUR = "4";
+    public static final String BUTTON_FIVE = "5";
+    public static final String BUTTON_SIX = "6";
+    public static final String BUTTON_SEVEN = "7";
+    public static final String BUTTON_EIGHT = "8";
+    public static final String BUTTON_NINE = "9";
+
     ImageView firstCircle;
     ImageView secondCircle;
     ImageView thirdCircle;
     ImageView fourthCircle;
 
-    CorrectPassword check;
-    public static EditText editTextPin;
+    String builderPassword;
 
-    private static final String KEY_NAME = "example_key";
+    Integer circleCounter;
 
-    private FingerprintManager fingerprintManager;
-    private KeyguardManager keyguardManager;
-    private KeyStore keyStore;
-    private KeyGenerator keyGenerator;
-    private Cipher cipher;
-    private FingerprintManager.CryptoObject cryptoObject;
+    PasswordReader check;
+
+    private static final String FINGER_KEY = "finger_key";
+
+    private FingerprintManager mFingerprintManager;
+    private KeyguardManager mKeyguardManager;
+    private KeyStore mKeyStore;
+    private KeyGenerator mKeyGenerator;
+    private Cipher mCipher;
+    private FingerprintManager.CryptoObject mCryptoObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin_protected);
 
-        check = CorrectPassword.getInstance();
+        circleCounter = 1;
+        builderPassword = "";
+
+        check = PasswordReader.getInstance();
         check.setPassword();
 
-        firstCircle = (ImageView)findViewById(R.id.crlcOne);
-        secondCircle = (ImageView)findViewById(R.id.crlcTwo);
-        thirdCircle = (ImageView)findViewById(R.id.crlcThree);
-        fourthCircle = (ImageView)findViewById(R.id.crlcFour);
+        firstCircle = (ImageView) findViewById(R.id.crlcOne);
+        secondCircle = (ImageView) findViewById(R.id.crlcTwo);
+        thirdCircle = (ImageView) findViewById(R.id.crlcThree);
+        fourthCircle = (ImageView) findViewById(R.id.crlcFour);
 
-        //editTextPin = (EditText) findViewById(R.id.editText_pin);
-        //editTextPin.setTextIsSelectable(true);
-        //editTextPin.addTextChangedListener(new onPasswordInputListener());
-
-        keyguardManager =
+        mKeyguardManager =
                 (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
-        fingerprintManager =
+        mFingerprintManager =
                 (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
 
-        if (!keyguardManager.isKeyguardSecure()) {
+        if (!mKeyguardManager.isKeyguardSecure()) {
 
             Toast.makeText(this,
                     "Lock screen security not enabled in Settings",
@@ -93,11 +103,10 @@ public class PinProtectedActivity extends AppCompatActivity {
             Toast.makeText(this,
                     "Fingerprint authentication permission not enabled",
                     Toast.LENGTH_SHORT).show();
-
             return;
         }
 
-        if (!fingerprintManager.hasEnrolledFingerprints()) {
+        if (!mFingerprintManager.hasEnrolledFingerprints()) {
             Toast.makeText(this,
                     "Register at least one fingerprint in Settings",
                     Toast.LENGTH_SHORT).show();
@@ -107,26 +116,26 @@ public class PinProtectedActivity extends AppCompatActivity {
         generateKey();
 
         if (cipherInit()) {
-            cryptoObject =
-                    new FingerprintManager.CryptoObject(cipher);
+            mCryptoObject =
+                    new FingerprintManager.CryptoObject(mCipher);
         }
 
         if (cipherInit()) {
-            cryptoObject = new FingerprintManager.CryptoObject(cipher);
+            mCryptoObject = new FingerprintManager.CryptoObject(mCipher);
             FingerprintHandler helper = new FingerprintHandler(this);
-            helper.startAuth(fingerprintManager, cryptoObject);
+            helper.startAuth(mFingerprintManager, mCryptoObject);
         }
     }
 
     protected void generateKey() {
         try {
-            keyStore = KeyStore.getInstance("AndroidKeyStore");
+            mKeyStore = KeyStore.getInstance("AndroidKeyStore");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         try {
-            keyGenerator = KeyGenerator.getInstance(
+            mKeyGenerator = KeyGenerator.getInstance(
                     KeyProperties.KEY_ALGORITHM_AES,
                     "AndroidKeyStore");
         } catch (NoSuchAlgorithmException |
@@ -136,9 +145,9 @@ public class PinProtectedActivity extends AppCompatActivity {
         }
 
         try {
-            keyStore.load(null);
-            keyGenerator.init(new
-                    KeyGenParameterSpec.Builder(KEY_NAME,
+            mKeyStore.load(null);
+            mKeyGenerator.init(new
+                    KeyGenParameterSpec.Builder(FINGER_KEY,
                     KeyProperties.PURPOSE_ENCRYPT |
                             KeyProperties.PURPOSE_DECRYPT)
                     .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
@@ -146,7 +155,7 @@ public class PinProtectedActivity extends AppCompatActivity {
                     .setEncryptionPaddings(
                             KeyProperties.ENCRYPTION_PADDING_PKCS7)
                     .build());
-            keyGenerator.generateKey();
+            mKeyGenerator.generateKey();
         } catch (NoSuchAlgorithmException |
                 InvalidAlgorithmParameterException
                 | CertificateException | IOException e) {
@@ -156,7 +165,7 @@ public class PinProtectedActivity extends AppCompatActivity {
 
     public boolean cipherInit() {
         try {
-            cipher = Cipher.getInstance(
+            mCipher = Cipher.getInstance(
                     KeyProperties.KEY_ALGORITHM_AES + "/"
                             + KeyProperties.BLOCK_MODE_CBC + "/"
                             + KeyProperties.ENCRYPTION_PADDING_PKCS7);
@@ -166,10 +175,10 @@ public class PinProtectedActivity extends AppCompatActivity {
         }
 
         try {
-            keyStore.load(null);
-            SecretKey key = (SecretKey) keyStore.getKey(KEY_NAME,
+            mKeyStore.load(null);
+            SecretKey key = (SecretKey) mKeyStore.getKey(FINGER_KEY,
                     null);
-            cipher.init(Cipher.ENCRYPT_MODE, key);
+            mCipher.init(Cipher.ENCRYPT_MODE, key);
             return true;
         } catch (KeyPermanentlyInvalidatedException e) {
             return false;
@@ -184,79 +193,96 @@ public class PinProtectedActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
+    public void setBackgroundCircle(ImageView v) {
+        v.setBackgroundResource(R.drawable.ic_lens_black_24dp);
+    }
+
     public void inputPassword(String number) {
-      //  editTextPin.setText(editTextPin.getText() + number);
+
+        builderPassword += number;
+
+        Toast.makeText(this, builderPassword, Toast.LENGTH_SHORT).show();
+
+        if (circleCounter.equals(1)) {
+            setBackgroundCircle(firstCircle);
+        } else if (circleCounter.equals(2)) {
+            setBackgroundCircle(secondCircle);
+        } else if (circleCounter.equals(3)) {
+            setBackgroundCircle(thirdCircle);
+        } else {
+            setBackgroundCircle(fourthCircle);
+        }
+        circleCounter++;
+
+        if (circleCounter == 5) {
+            if (builderPassword.equals(check.getPassword())) {
+                start();
+            } else {
+                //TODO animation and vibration
+                onDeleteClicked(null);
+            }
+        }
     }
 
     public void zeroInput(View view) {
-        inputPassword("0");
+        inputPassword(BUTTON_ZERO);
     }
 
     public void oneInput(View view) {
-        inputPassword("1");
+        inputPassword(BUTTON_ONE);
     }
 
     public void twoInput(View view) {
-        inputPassword("2");
+        inputPassword(BUTTON_TWO);
     }
 
     public void threeInput(View view) {
-        inputPassword("3");
+        inputPassword(BUTTON_THREE);
     }
 
     public void fourInput(View view) {
-        inputPassword("4");
+        inputPassword(BUTTON_FOUR);
     }
 
     public void fiveInput(View view) {
-        inputPassword("5");
+        inputPassword(BUTTON_FIVE);
     }
 
     public void sixInput(View view) {
-        inputPassword("6");
+        inputPassword(BUTTON_SIX);
     }
 
     public void sevenInput(View view) {
-        inputPassword("7");
+        inputPassword(BUTTON_SEVEN);
     }
 
     public void eightInput(View view) {
-        inputPassword("8");
+        inputPassword(BUTTON_EIGHT);
     }
 
     public void nineInput(View view) {
-        inputPassword("9");
+        inputPassword(BUTTON_NINE);
+    }
+
+    public void setBackgroundCircles(boolean flag, ImageView... args) {
+        for (ImageView v : args) {
+            if (flag) {
+                v.setBackgroundResource(R.drawable.ic_lens_black_24dp);
+            } else {
+                v.setBackgroundResource(R.drawable.ic_radio_button_unchecked_black_24dp);
+            }
+        }
     }
 
     public void onDeleteClicked(View view) {
-//        if (editTextPin.getText().length() != 0) {
-//            // delete circles
-//            editTextPin.setText("");
-//        }
-    }
-
-    private class onPasswordInputListener implements TextWatcher {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-//            if (editTextPin.length() == 4) {
-//                if (check.getPassword())
-//                    accessPassword();
-//                else {
-//                    editTextPin.setText("");
-//                }
-//            }
+        if (circleCounter != 1) {
+            builderPassword = "";
+            circleCounter = 1;
+            setBackgroundCircles(false, firstCircle, secondCircle, thirdCircle, fourthCircle);
         }
     }
 
-    public void accessPassword(){
+    public void start() {
         startActivity(new Intent(PinProtectedActivity.this, ProtectedBankCards.class));
     }
 }
