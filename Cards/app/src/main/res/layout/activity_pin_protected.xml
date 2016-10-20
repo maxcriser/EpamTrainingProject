@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"        >
+        android:orientation="vertical">
 
-        <TextView
+        <com.maxcriser.cards.view.RobotoThinTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enter Passcode"
-            android:textSize="36dp"
+            android:layout_margin="30dp"
             android:gravity="center"
-            android:layout_margin="30dp"/>
+            android:text="Enter Passcode"
+            android:textColor="@color/bluelight_500"
+            android:textSize="24dp"/>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -25,31 +27,31 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:layout_margin="8dp"
+                    android:id="@+id/crlcOne"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:background="@drawable/ic_radio_button_unchecked_black_24dp"
-                    android:id="@+id/crlcOne" />
+                    android:layout_margin="8dp"
+                    android:background="@drawable/ic_radio_button_unchecked_black_24dp"/>
 
                 <ImageView
                     android:id="@+id/crlcTwo"
-                    android:layout_margin="8dp"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
+                    android:layout_margin="8dp"
                     android:background="@drawable/ic_radio_button_unchecked_black_24dp"/>
 
                 <ImageView
                     android:id="@+id/crlcThree"
-                    android:layout_margin="8dp"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
+                    android:layout_margin="8dp"
                     android:background="@drawable/ic_radio_button_unchecked_black_24dp"/>
 
                 <ImageView
                     android:id="@+id/crlcFour"
-                    android:layout_margin="8dp"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
+                    android:layout_margin="8dp"
                     android:background="@drawable/ic_radio_button_unchecked_black_24dp"/>
 
             </LinearLayout>

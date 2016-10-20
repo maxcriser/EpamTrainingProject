@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff">
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="#ffffff">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,30 +21,30 @@
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_margin="12dp"
-                android:background="@drawable/ic_radio_button_unchecked_black_24dp"
+                android:background="@color/gray_3"
                 android:onClick="oneInput"
                 android:text="1"
-                android:textSize="32sp" />
+                android:textSize="32sp"/>
 
             <Button
                 android:id="@+id/button_two"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_margin="12dp"
-                android:background="@drawable/ic_radio_button_unchecked_black_24dp"
+                android:background="@color/gray_3"
                 android:onClick="twoInput"
                 android:text="2"
-                android:textSize="32sp" />
+                android:textSize="32sp"/>
 
             <Button
                 android:id="@+id/button_three"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_margin="12dp"
-                android:background="@drawable/ic_radio_button_unchecked_black_24dp"
+                android:background="@color/gray_3"
                 android:onClick="threeInput"
                 android:text="3"
-                android:textSize="32sp" />
+                android:textSize="32sp"/>
 
         </LinearLayout>
 
@@ -59,30 +59,30 @@
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_margin="12dp"
-                android:background="@drawable/ic_radio_button_unchecked_black_24dp"
+                android:background="@color/gray_3"
                 android:onClick="fourInput"
                 android:text="4"
-                android:textSize="32sp" />
+                android:textSize="32sp"/>
 
             <Button
                 android:id="@+id/button_five"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_margin="12dp"
-                android:background="@drawable/ic_radio_button_unchecked_black_24dp"
+                android:background="@color/gray_3"
                 android:onClick="fiveInput"
                 android:text="5"
-                android:textSize="32sp" />
+                android:textSize="32sp"/>
 
             <Button
                 android:id="@+id/button_six"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_margin="12dp"
-                android:background="@drawable/ic_radio_button_unchecked_black_24dp"
+                android:background="@color/gray_3"
                 android:onClick="sixInput"
                 android:text="6"
-                android:textSize="32sp" />
+                android:textSize="32sp"/>
 
         </LinearLayout>
 
@@ -97,30 +97,30 @@
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_margin="12dp"
-                android:background="@drawable/ic_radio_button_unchecked_black_24dp"
+                android:background="@color/gray_3"
                 android:onClick="sevenInput"
                 android:text="7"
-                android:textSize="32sp" />
+                android:textSize="32sp"/>
 
             <Button
                 android:id="@+id/button_eight"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_margin="12dp"
-                android:background="@drawable/ic_radio_button_unchecked_black_24dp"
+                android:background="@color/gray_3"
                 android:onClick="eightInput"
                 android:text="8"
-                android:textSize="32sp" />
+                android:textSize="32sp"/>
 
             <Button
                 android:id="@+id/button_nine"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_margin="12dp"
-                android:background="@drawable/ic_radio_button_unchecked_black_24dp"
+                android:background="@color/gray_3"
                 android:onClick="nineInput"
                 android:text="9"
-                android:textSize="32sp" />
+                android:textSize="32sp"/>
 
         </LinearLayout>
 
@@ -133,7 +133,7 @@
             <ImageView
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:layout_marginRight="12dp" />
+                android:layout_marginRight="12dp"/>
 
             <Button
                 android:id="@+id/button_zero"
@@ -141,15 +141,15 @@
                 android:layout_height="56dp"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
-                android:background="@drawable/ic_radio_button_unchecked_black_24dp"
+                android:background="@color/gray_3"
                 android:onClick="zeroInput"
                 android:text="0"
-                android:textSize="32sp" />
+                android:textSize="32sp"/>
 
             <ImageView
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:layout_marginLeft="12dp" />
+                android:layout_marginLeft="12dp"/>
 
         </LinearLayout>
 
@@ -157,28 +157,31 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button
-                android:textColor="@color/bluelight_500"
-                android:layout_marginLeft="16dp"
+            <com.maxcriser.cards.view.RobotoThinTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="left|bottom"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
                 android:background="@color/gray_3"
                 android:onClick="onCancelClicked"
                 android:text="Cancel"
                 android:textAllCaps="true"
-                android:textSize="24sp" />
-
-            <Button
                 android:textColor="@color/bluelight_500"
-                android:layout_marginRight="16dp"
-                android:layout_gravity="right"
+                android:textSize="24sp"/>
+
+            <com.maxcriser.cards.view.RobotoThinTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:layout_marginBottom="16dp"
+                android:layout_marginRight="16dp"
                 android:background="@color/gray_3"
-                android:onClick="onCancelClicked"
+                android:onClick="onDeleteClicked"
                 android:text="Delete"
                 android:textAllCaps="true"
-                android:textSize="24sp" />
+                android:textColor="@color/bluelight_500"
+                android:textSize="24sp"/>
 
         </FrameLayout>
 

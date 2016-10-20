@@ -2,15 +2,11 @@ package com.maxcriser.cards.handler;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.CancellationSignal;
 import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
-
-import com.maxcriser.cards.ui.PinProtectedActivity;
-import com.maxcriser.cards.ui.cards.ProtectedBankCards;
 
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
 
@@ -39,7 +35,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
                                       CharSequence errString) {
         Toast.makeText(appContext,
                 "Authentication error\n" + errString,
-                Toast.LENGTH_LONG).show();
+                Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -47,24 +43,22 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
                                      CharSequence helpString) {
         Toast.makeText(appContext,
                 "Authentication help\n" + helpString,
-                Toast.LENGTH_LONG).show();
+                Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onAuthenticationFailed() {
-        // add vibration and error reaction
         Toast.makeText(appContext,
                 "Authentication failed.",
-                Toast.LENGTH_LONG).show();
+                Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onAuthenticationSucceeded(
             FingerprintManager.AuthenticationResult result) {
-        // add vibration and succeeded reaction
-        // startActivity
+
         Toast.makeText(appContext,
                 "Authentication succeeded.",
-                Toast.LENGTH_LONG).show();
+                Toast.LENGTH_SHORT).show();
     }
 }

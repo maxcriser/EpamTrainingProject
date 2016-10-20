@@ -22,25 +22,26 @@ public class BankCardsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bank_cards);
 
         typesBankCards = getResources().getStringArray(R.array.type_of_bank_cards);
+
         tcBank = (ListView) findViewById(R.id.types_bank_cards);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, typesBankCards);
-
-        tcBank.setAdapter(adapter);
-
-        tcBank.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
-                if (position == 0) {
-                    startActivity(new Intent(BankCardsActivity.this, PinProtectedActivity.class));
-                } else {
-                    // start open
-                }
-            }
-        });
+        tcBank.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, typesBankCards));
+        tcBank.setOnItemClickListener(new onBankCardsTypeListener());
     }
 
     public void onBackClicked(View view) {
         super.onBackPressed();
+    }
+
+    private class onBankCardsTypeListener implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            if (position == 0) {
+                startActivity(new Intent(BankCardsActivity.this,
+                        PinProtectedActivity.class).
+                        addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
+            } else {
+                // start open bank cards
+            }
+        }
     }
 }

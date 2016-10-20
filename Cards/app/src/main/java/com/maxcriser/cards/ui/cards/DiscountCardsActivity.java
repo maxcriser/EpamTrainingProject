@@ -8,6 +8,7 @@ import com.maxcriser.cards.R;
 
 public class DiscountCardsActivity extends AppCompatActivity {
 
+    //TODO if this page is empty - fragment_empty_page.xml visibility VISIBLE
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
