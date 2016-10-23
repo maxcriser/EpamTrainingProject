@@ -17,8 +17,6 @@ import com.maxcriser.cards.ui.cards.TicketsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String[] mDrawer;
-    private ListView mDrawerListView;
     ListView typesCards;
     String[] types;
 
@@ -36,11 +34,11 @@ public class MainActivity extends AppCompatActivity {
         typesCards.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, types));
         typesCards.setOnItemClickListener(new OnItemClickListener());
 
-        mDrawer = getResources().getStringArray(R.array.drawer_bar);
+        String[] drawer = getResources().getStringArray(R.array.drawer_bar);
 
-        mDrawerListView = (ListView) findViewById(R.id.list_drawer);
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawer));
-        mDrawerListView.setOnItemClickListener(new DrawerItemClickListener());
+        ListView drawerListView = (ListView) findViewById(R.id.list_drawer);
+        drawerListView.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, drawer));
+        drawerListView.setOnItemClickListener(new DrawerItemClickListener());
     }
 
     public void onMenuClicked(View view) {
@@ -59,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 
     private class DrawerItemClickListener implements AdapterView.OnItemClickListener {
         @Override

@@ -1,10 +1,12 @@
 package com.maxcriser.cards.ui;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.KeyguardManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
@@ -84,49 +86,54 @@ public class PinProtectedActivity extends AppCompatActivity {
         thirdCircle = (ImageView) findViewById(R.id.crlcThree);
         fourthCircle = (ImageView) findViewById(R.id.crlcFour);
 
-        mKeyguardManager =
-                (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
-        mFingerprintManager =
-                (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
 
-        if (!mKeyguardManager.isKeyguardSecure()) {
+        if (Build.VERSION.SDK_INT >= 23 && Build.FINGERPRINT != null) {
 
-            Toast.makeText(this,
-                    "Lock screen security not enabled in Settings",
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
+            mKeyguardManager =
+                    (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+            mFingerprintManager =
+                    (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
 
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.USE_FINGERPRINT) !=
-                PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this,
-                    "Fingerprint authentication permission not enabled",
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
+            if (!mKeyguardManager.isKeyguardSecure()) {
 
-        if (!mFingerprintManager.hasEnrolledFingerprints()) {
-            Toast.makeText(this,
-                    "Register at least one fingerprint in Settings",
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
+                Toast.makeText(this,
+                        "Lock screen security not enabled in Settings",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-        generateKey();
+            if (ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.USE_FINGERPRINT) !=
+                    PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this,
+                        "Fingerprint authentication permission not enabled",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-        if (cipherInit()) {
-            mCryptoObject =
-                    new FingerprintManager.CryptoObject(mCipher);
-        }
+            if (!mFingerprintManager.hasEnrolledFingerprints()) {
+                Toast.makeText(this,
+                        "Register at least one fingerprint in Settings",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-        if (cipherInit()) {
-            mCryptoObject = new FingerprintManager.CryptoObject(mCipher);
-            FingerprintHandler helper = new FingerprintHandler(this);
-            helper.startAuth(mFingerprintManager, mCryptoObject);
+            generateKey();
+
+            if (cipherInit()) {
+                mCryptoObject =
+                        new FingerprintManager.CryptoObject(mCipher);
+            }
+
+            if (cipherInit()) {
+                mCryptoObject = new FingerprintManager.CryptoObject(mCipher);
+                FingerprintHandler helper = new FingerprintHandler(this);
+                helper.startAuth(mFingerprintManager, mCryptoObject);
+            }
         }
     }
 
+    @TargetApi(23)
     protected void generateKey() {
         try {
             mKeyStore = KeyStore.getInstance("AndroidKeyStore");
@@ -163,6 +170,7 @@ public class PinProtectedActivity extends AppCompatActivity {
         }
     }
 
+    @TargetApi(23)
     public boolean cipherInit() {
         try {
             mCipher = Cipher.getInstance(
