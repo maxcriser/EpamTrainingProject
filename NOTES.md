@@ -2,6 +2,8 @@
 
 Stats => https://deniotokiari.github.io/training-epam-2016/
 
+1. aw space
+2. #99000000
 1. Adapter (ListView)
 1. Bind
 1. Inflater
