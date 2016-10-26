@@ -16,6 +16,7 @@
             <include layout="@layout/fragment_toolbar_back"/>
 
             <Button
+                android:layout_marginBottom="16dp"
                 android:background="@color/blue"
                 android:textColor="@android:color/white"
                 android:id="@+id/new_discount_card"
@@ -34,7 +35,6 @@
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
                 android:paddingBottom="16dp"
-                android:paddingTop="16dp"
                 android:scrollbars="vertical"/>
 
         </LinearLayout>

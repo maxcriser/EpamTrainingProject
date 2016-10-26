@@ -37,6 +37,34 @@ public class TypesCardsReader {
         discountCards.add("ВЕСТА");
         discountCards.add("СОЛНЕЧНЫЙ вкусный сыр");
         discountCards.add("ALMI");
+        discountCards.add("ALMI");
+        discountCards.add("EUROOPT");
+        discountCards.add("RODNUI KUY");
+        discountCards.add("BELMARKET");
+        discountCards.add("DOBRONOM");
+        discountCards.add("GIPPO");
+        discountCards.add("5 KOPEEK");
+        discountCards.add("WOOL MARK");
+        discountCards.add("STARBUCKS");
+        discountCards.add("ВИОР");
+        discountCards.add("ВИШНЕВЕЦ");
+        discountCards.add("ВЕСТА");
+        discountCards.add("СОЛНЕЧНЫЙ вкусный сыр");
+        discountCards.add("ALMI");
+        discountCards.add("ALMI");
+        discountCards.add("EUROOPT");
+        discountCards.add("RODNUI KUY");
+        discountCards.add("BELMARKET");
+        discountCards.add("DOBRONOM");
+        discountCards.add("GIPPO");
+        discountCards.add("5 KOPEEK");
+        discountCards.add("WOOL MARK");
+        discountCards.add("STARBUCKS");
+        discountCards.add("ВИОР");
+        discountCards.add("ВИШНЕВЕЦ");
+        discountCards.add("ВЕСТА");
+        discountCards.add("СОЛНЕЧНЫЙ вкусный сыр");
+        discountCards.add("ALMI");
     }
 
 

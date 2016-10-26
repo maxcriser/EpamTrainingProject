@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         typesCards = (RecyclerView) findViewById(R.id.types_cards_recycler_view);
 
-        RecyclerAdapterTypes adapter = new RecyclerAdapterTypes(this, types);
+        RecyclerAdapterTypes adapter = new RecyclerAdapterTypes(this, types, R.layout.item_list);
         typesCards.setAdapter(adapter);
         typesCards.setHasFixedSize(true);
         typesCards.setLayoutManager(new LinearLayoutManager(this));

@@ -5,6 +5,9 @@
     <string name="text_empty_page">you have not cards</string>
     <string name="text_big_add_new_card">add new card</string>
     <string name="title_of_cards">title</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="place_a_barcode_on_camera_to_scan_it">Place a barcode on camera to scan it</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>

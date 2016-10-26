@@ -1,11 +1,9 @@
 package com.maxcriser.cards.barcode;
 
-import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -30,7 +28,7 @@ public class BarcodeScanner extends AppCompatActivity {
     private Button mOk;
     private TextView mSolution;
     private FrameLayout mFrameSolution;
-    private FrameLayout mBottomText;
+    private TextView mBottomText;
 
     private Camera mCamera;
     private CameraPreview mPreview;
@@ -50,7 +48,7 @@ public class BarcodeScanner extends AppCompatActivity {
         mCancel = (Button) findViewById(R.id.button_cancel);
         mSolution = (TextView) findViewById(R.id.solution_of_scan);
         mFrameSolution = (FrameLayout) findViewById(R.id.frame_solution_of_scan);
-        mBottomText = (FrameLayout) findViewById(R.id.bottom_text_barcode_scan);
+        mBottomText = (TextView) findViewById(R.id.bottom_text_barcode_scan);
 
         initControls();
     }

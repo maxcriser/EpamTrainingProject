@@ -6,26 +6,25 @@
               android:orientation="vertical">
 
     <FrameLayout
+        android:visibility="gone"
         android:id="@+id/cameraPreview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:layout_height="match_parent"/>
 
     <FrameLayout
-        android:visibility="gone"
         android:id="@+id/frame_solution_of_scan"
         android:background="@color/gray_shadow"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <com.maxcriser.cards.view.RobotoThinTextView
             android:id="@+id/solution_of_scan"
             android:gravity="center"
             android:textColor="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="40dp"
-            android:text="900190019001"/>
+            android:textSize="34sp"
+            android:text=""/>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -35,7 +34,7 @@
 
             <Button
                 android:id="@+id/button_cancel"
-                android:text="Cancel"
+                android:text="@string/cancel"
                 android:textColor="@android:color/white"
                 android:background="?attr/selectableItemBackground"
                 android:layout_weight="1"
@@ -44,7 +43,7 @@
 
             <Button
                 android:id="@+id/button_ok"
-                android:text="OK"
+                android:text="@string/ok"
                 android:textColor="@android:color/white"
                 android:background="?attr/selectableItemBackground"
                 android:layout_weight="1"
@@ -60,7 +59,7 @@
         android:gravity="center"
         android:textAllCaps="true"
         android:textColor="@android:color/white"
-        android:text="Place a barcode on camera to scan it"
+        android:text="@string/place_a_barcode_on_camera_to_scan_it"
         android:layout_gravity="bottom"
         android:background="@color/gray_shadow"
         android:layout_width="match_parent"

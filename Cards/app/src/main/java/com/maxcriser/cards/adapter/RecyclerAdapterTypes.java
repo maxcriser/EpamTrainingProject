@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.maxcriser.cards.R;
 import com.maxcriser.cards.holder.RecyclerViewHolderTypes;
 
 import java.util.List;
@@ -18,9 +17,11 @@ public class RecyclerAdapterTypes extends RecyclerView.Adapter<RecyclerViewHolde
     private List<String> mItems;
     private Context mContext;
     private LayoutInflater mInflater;
+    private Object mView;
 
-    public RecyclerAdapterTypes(Context context, List<String> pItems) {
+    public RecyclerAdapterTypes(Context context, List<String> pItems, Object pObject) {
 
+        mView = pObject;
         mItems = pItems;
         this.mContext = context;
         mInflater = LayoutInflater.from(context);
@@ -28,7 +29,7 @@ public class RecyclerAdapterTypes extends RecyclerView.Adapter<RecyclerViewHolde
 
     @Override
     public RecyclerViewHolderTypes onCreateViewHolder(ViewGroup parent, int viewType) {
-        View myView = mInflater.inflate(R.layout.item_list, parent, false);
+        View myView = mInflater.inflate((Integer) mView, parent, false);
 
         RecyclerViewHolderTypes viewHolder = new RecyclerViewHolderTypes(myView);
         return viewHolder;

@@ -31,7 +31,8 @@ public class DiscountCardsActivity extends AppCompatActivity {
         newDiscountCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), BarcodeScanner.class);
+                Intent intent = new Intent(v.getContext(), BarcodeScanner.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }
         });
@@ -43,7 +44,7 @@ public class DiscountCardsActivity extends AppCompatActivity {
 
         discountCards = (RecyclerView) findViewById(R.id.discount_cards_recycler_view);
 
-        RecyclerAdapterTypes adapter = new RecyclerAdapterTypes(this, myDiscountCards);
+        RecyclerAdapterTypes adapter = new RecyclerAdapterTypes(this, myDiscountCards, R.layout.discount_item);
         discountCards.setAdapter(adapter);
         discountCards.setHasFixedSize(true);
         discountCards.setLayoutManager(new LinearLayoutManager(this));

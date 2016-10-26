@@ -39,10 +39,10 @@ public class TicketsActivity extends AppCompatActivity {
 
         final List<String> myTickets = tcReader.getTickets();
 
-        if(myTickets.isEmpty()) {
+        if (myTickets.isEmpty()) {
             tickets.setVisibility(GONE);
         } else {
-            RecyclerAdapterTypes adapter = new RecyclerAdapterTypes(this, myTickets);
+            RecyclerAdapterTypes adapter = new RecyclerAdapterTypes(this, myTickets, R.layout.item_list);
             tickets.setAdapter(adapter);
             tickets.setHasFixedSize(true);
             tickets.setLayoutManager(new LinearLayoutManager(this));

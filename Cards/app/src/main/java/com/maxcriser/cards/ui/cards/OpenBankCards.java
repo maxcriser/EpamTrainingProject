@@ -35,7 +35,7 @@ public class OpenBankCards extends AppCompatActivity {
         if (myOpenBankCards.isEmpty()) {
             openBankCards.setVisibility(GONE);
         } else {
-            RecyclerAdapterTypes adapter = new RecyclerAdapterTypes(this, myOpenBankCards);
+            RecyclerAdapterTypes adapter = new RecyclerAdapterTypes(this, myOpenBankCards, R.layout.item_list);
             openBankCards.setAdapter(adapter);
             openBankCards.setHasFixedSize(true);
             openBankCards.setLayoutManager(new LinearLayoutManager(this));
