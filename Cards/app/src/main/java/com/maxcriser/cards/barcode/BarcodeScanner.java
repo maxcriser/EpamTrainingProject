@@ -9,7 +9,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.maxcriser.cards.R;
 
@@ -19,7 +22,15 @@ import net.sourceforge.zbar.ImageScanner;
 import net.sourceforge.zbar.Symbol;
 import net.sourceforge.zbar.SymbolSet;
 
+import static android.view.View.GONE;
+
 public class BarcodeScanner extends AppCompatActivity {
+
+    private Button mCancel;
+    private Button mOk;
+    private TextView mSolution;
+    private FrameLayout mFrameSolution;
+    private FrameLayout mBottomText;
 
     private Camera mCamera;
     private CameraPreview mPreview;
@@ -34,6 +45,12 @@ public class BarcodeScanner extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.barcode_scanner);
+
+        mOk = (Button) findViewById(R.id.button_ok);
+        mCancel = (Button) findViewById(R.id.button_cancel);
+        mSolution = (TextView) findViewById(R.id.solution_of_scan);
+        mFrameSolution = (FrameLayout) findViewById(R.id.frame_solution_of_scan);
+        mBottomText = (FrameLayout) findViewById(R.id.bottom_text_barcode_scan);
 
         initControls();
     }
@@ -131,26 +148,35 @@ public class BarcodeScanner extends AppCompatActivity {
 
     private void showAlertDialog(String message) {
 
-        new AlertDialog.Builder(this)
-                .setTitle(getResources().getString(R.string.app_name))
-                .setCancelable(false)
-                .setMessage(message)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
+        mBottomText.setVisibility(GONE);
+        mFrameSolution.setVisibility(View.VISIBLE);
+        mSolution.setText(message);
 
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (barcodeScanned) {
-                            barcodeScanned = false;
-                            mCamera.setPreviewCallback(previewCb);
-                            mCamera.startPreview();
-                            previewing = true;
-                            mCamera.autoFocus(autoFocusCB);
-                        }
-                    }
-                })
-                .show();
+        mCancel.setOnClickListener(new onCancelClickListener());
+
+        mOk.setOnClickListener(new onOkClickListener());
+    }
+
+    private class onCancelClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            if (barcodeScanned) {
+                mBottomText.setVisibility(View.VISIBLE);
+                mFrameSolution.setVisibility(View.GONE);
+
+                barcodeScanned = false;
+                mCamera.setPreviewCallback(previewCb);
+                mCamera.startPreview();
+                previewing = true;
+                mCamera.autoFocus(autoFocusCB);
+            }
+        }
+    }
+
+    private class onOkClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            // give message to other activity or somewhere else
+        }
     }
 }
