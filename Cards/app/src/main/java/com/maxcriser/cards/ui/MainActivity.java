@@ -3,6 +3,8 @@ package com.maxcriser.cards.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -10,15 +12,18 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.maxcriser.cards.R;
+import com.maxcriser.cards.adapter.RecyclerAdapterTypes;
+import com.maxcriser.cards.handler.RecyclerItemClickListener;
 import com.maxcriser.cards.reader.TypesCardsReader;
 import com.maxcriser.cards.ui.cards.BankCardsActivity;
 import com.maxcriser.cards.ui.cards.DiscountCardsActivity;
 import com.maxcriser.cards.ui.cards.TicketsActivity;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
-    ListView typesCards;
-    String[] types;
+    RecyclerView typesCards;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +31,34 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final TypesCardsReader tcReader = TypesCardsReader.getInstance();
-        tcReader.setTypes();
+        tcReader.setTypesCards();
 
-        types = tcReader.getTypes();
+        final List<String> types = tcReader.getTypesCards();
 
-        typesCards = (ListView) findViewById(R.id.types_of_cards);
-        typesCards.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, types));
-        typesCards.setOnItemClickListener(new OnItemClickListener());
+        typesCards = (RecyclerView) findViewById(R.id.types_cards_recycler_view);
+
+        RecyclerAdapterTypes adapter = new RecyclerAdapterTypes(this, types);
+        typesCards.setAdapter(adapter);
+        typesCards.setHasFixedSize(true);
+        typesCards.setLayoutManager(new LinearLayoutManager(this));
+        typesCards.addOnItemTouchListener(new RecyclerItemClickListener(this, typesCards, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                if (position == 0) {
+                    startActivity(new Intent(MainActivity.this, BankCardsActivity.class));
+                } else if (position == 1) {
+                    startActivity(new Intent(MainActivity.this, DiscountCardsActivity.class));
+                } else if (position == 2) {
+                    startActivity(new Intent(MainActivity.this, TicketsActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(), "Error: Directory does not exist", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+            }
+        }));
 
         String[] drawer = getResources().getStringArray(R.array.drawer_bar);
 
@@ -44,20 +70,6 @@ public class MainActivity extends AppCompatActivity {
     public void onMenuClicked(View view) {
         // open drawer
     }
-
-    private class OnItemClickListener implements AdapterView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if (position == 0) {
-                startActivity(new Intent(MainActivity.this, BankCardsActivity.class));
-            } else if (position == 1) {
-                startActivity(new Intent(MainActivity.this, DiscountCardsActivity.class));
-            } else {
-                startActivity(new Intent(MainActivity.this, TicketsActivity.class));
-            }
-        }
-    }
-
 
     private class DrawerItemClickListener implements AdapterView.OnItemClickListener {
         @Override

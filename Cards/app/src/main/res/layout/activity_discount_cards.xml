@@ -15,7 +15,27 @@
 
             <include layout="@layout/fragment_toolbar_back"/>
 
-            <include layout="@layout/fragment_empty_page"/>
+            <Button
+                android:background="@color/blue"
+                android:textColor="@android:color/white"
+                android:id="@+id/new_discount_card"
+                android:layout_marginLeft="48dp"
+                android:layout_marginRight="48dp"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:text="+ NEW DISCOUNT CARD"
+                android:textSize="14sp"/>
+
+            <android.support.v7.widget.RecyclerView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/discount_cards_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp"
+                android:scrollbars="vertical"/>
 
         </LinearLayout>
 

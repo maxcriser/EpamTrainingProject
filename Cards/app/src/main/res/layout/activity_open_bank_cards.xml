@@ -4,7 +4,6 @@
                                         android:layout_height="match_parent">
 
     <FrameLayout
-        android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -15,28 +14,15 @@
 
             <include layout="@layout/fragment_toolbar_back"/>
 
-            <Button
-                android:background="@color/blue"
-                android:textColor="@android:color/white"
-                android:id="@+id/new_ticket"
-                android:layout_marginLeft="48dp"
-                android:layout_marginRight="48dp"
-                android:layout_marginTop="16dp"
-                android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:text="+ NEW TICKET"
-                android:textSize="14sp"/>
-
             <android.support.v7.widget.RecyclerView
                 xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/tickets_recycler_view"
+                android:id="@+id/open_bank_cards_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
                 android:paddingBottom="16dp"
                 android:paddingTop="16dp"
                 android:scrollbars="vertical"/>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -60,7 +46,6 @@
                     android:textSize="24sp"/>
 
             </LinearLayout>
-
 
         </LinearLayout>
 

@@ -61,7 +61,4 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
                 "Authentication succeeded.",
                 Toast.LENGTH_LONG).show();
     }
-
-
-
 }

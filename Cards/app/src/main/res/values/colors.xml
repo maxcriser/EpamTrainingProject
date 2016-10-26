@@ -4,5 +4,6 @@
     <color name="gray_3">#1e1e23</color>
     <color name="bluelight_500">#0b8c8f</color>
     <color name="blue">#22a7f0</color>
+    <color name="gray_shadow">#99000000</color>
 
 </resources>

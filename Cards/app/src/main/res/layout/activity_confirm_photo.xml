@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+    <FrameLayout
+        android:background="@drawable/drawer_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_margin="16dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="220dp"
+            android:background="@drawable/card"/>
+
+        <ImageView
+            android:id="@+id/cancel_photo"
+            android:layout_marginLeft="48dp"
+            android:src="@drawable/cancel_photo_24dp"
+            android:layout_gravity="bottom|left"
+            android:layout_width="48dp"
+            android:layout_height="48dp"/>
+
+        <ImageView
+            android:id="@+id/confirm_photo"
+            android:layout_marginRight="48dp"
+            android:src="@drawable/confirm_photo_24dp"
+            android:layout_gravity="right|bottom"
+            android:layout_width="48dp"
+            android:layout_height="48dp"/>
+    </FrameLayout>
+
+</merge>

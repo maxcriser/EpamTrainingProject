@@ -61,14 +61,14 @@ public class PinProtectedActivity extends AppCompatActivity {
 
     PasswordReader check;
 
-    private static final String FINGER_KEY = "finger_key";
+    private static final String KEY_NAME = "finger_key";
 
-    private FingerprintManager mFingerprintManager;
-    private KeyguardManager mKeyguardManager;
-    private KeyStore mKeyStore;
-    private KeyGenerator mKeyGenerator;
-    private Cipher mCipher;
-    private FingerprintManager.CryptoObject mCryptoObject;
+    private FingerprintManager fingerprintManager;
+    private KeyguardManager keyguardManager;
+    private KeyStore keyStore;
+    private KeyGenerator keyGenerator;
+    private Cipher cipher;
+    private FingerprintManager.CryptoObject cryptoObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,20 +86,23 @@ public class PinProtectedActivity extends AppCompatActivity {
         thirdCircle = (ImageView) findViewById(R.id.crlcThree);
         fourthCircle = (ImageView) findViewById(R.id.crlcFour);
 
-
         if (Build.VERSION.SDK_INT >= 23 && Build.FINGERPRINT != null) {
 
-            mKeyguardManager =
+            keyguardManager =
                     (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
-            mFingerprintManager =
+            fingerprintManager =
                     (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
 
-            if (!mKeyguardManager.isKeyguardSecure()) {
+            if (!keyguardManager.isKeyguardSecure()) {
 
                 Toast.makeText(this,
                         "Lock screen security not enabled in Settings",
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_LONG).show();
                 return;
+            } else {
+                Toast.makeText(this,
+                        "ENABLED",
+                        Toast.LENGTH_LONG).show();
             }
 
             if (ActivityCompat.checkSelfPermission(this,
@@ -107,28 +110,39 @@ public class PinProtectedActivity extends AppCompatActivity {
                     PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this,
                         "Fingerprint authentication permission not enabled",
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_LONG).show();
+
                 return;
+            } else {
+                Toast.makeText(this,
+                        "PERMISSION ENABLED",
+                        Toast.LENGTH_LONG).show();
             }
 
-            if (!mFingerprintManager.hasEnrolledFingerprints()) {
+            if (!fingerprintManager.hasEnrolledFingerprints()) {
+
+                // This happens when no fingerprints are registered.
                 Toast.makeText(this,
                         "Register at least one fingerprint in Settings",
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_LONG).show();
                 return;
+            } else {
+                Toast.makeText(this,
+                        "FINGERPRINT ONE",
+                        Toast.LENGTH_LONG).show();
             }
 
             generateKey();
 
             if (cipherInit()) {
-                mCryptoObject =
-                        new FingerprintManager.CryptoObject(mCipher);
+                cryptoObject =
+                        new FingerprintManager.CryptoObject(cipher);
             }
 
             if (cipherInit()) {
-                mCryptoObject = new FingerprintManager.CryptoObject(mCipher);
+                cryptoObject = new FingerprintManager.CryptoObject(cipher);
                 FingerprintHandler helper = new FingerprintHandler(this);
-                helper.startAuth(mFingerprintManager, mCryptoObject);
+                helper.startAuth(fingerprintManager, cryptoObject);
             }
         }
     }
@@ -136,13 +150,13 @@ public class PinProtectedActivity extends AppCompatActivity {
     @TargetApi(23)
     protected void generateKey() {
         try {
-            mKeyStore = KeyStore.getInstance("AndroidKeyStore");
+            keyStore = KeyStore.getInstance("AndroidKeyStore");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         try {
-            mKeyGenerator = KeyGenerator.getInstance(
+            keyGenerator = KeyGenerator.getInstance(
                     KeyProperties.KEY_ALGORITHM_AES,
                     "AndroidKeyStore");
         } catch (NoSuchAlgorithmException |
@@ -152,9 +166,9 @@ public class PinProtectedActivity extends AppCompatActivity {
         }
 
         try {
-            mKeyStore.load(null);
-            mKeyGenerator.init(new
-                    KeyGenParameterSpec.Builder(FINGER_KEY,
+            keyStore.load(null);
+            keyGenerator.init(new
+                    KeyGenParameterSpec.Builder(KEY_NAME,
                     KeyProperties.PURPOSE_ENCRYPT |
                             KeyProperties.PURPOSE_DECRYPT)
                     .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
@@ -162,7 +176,7 @@ public class PinProtectedActivity extends AppCompatActivity {
                     .setEncryptionPaddings(
                             KeyProperties.ENCRYPTION_PADDING_PKCS7)
                     .build());
-            mKeyGenerator.generateKey();
+            keyGenerator.generateKey();
         } catch (NoSuchAlgorithmException |
                 InvalidAlgorithmParameterException
                 | CertificateException | IOException e) {
@@ -173,7 +187,7 @@ public class PinProtectedActivity extends AppCompatActivity {
     @TargetApi(23)
     public boolean cipherInit() {
         try {
-            mCipher = Cipher.getInstance(
+            cipher = Cipher.getInstance(
                     KeyProperties.KEY_ALGORITHM_AES + "/"
                             + KeyProperties.BLOCK_MODE_CBC + "/"
                             + KeyProperties.ENCRYPTION_PADDING_PKCS7);
@@ -183,10 +197,10 @@ public class PinProtectedActivity extends AppCompatActivity {
         }
 
         try {
-            mKeyStore.load(null);
-            SecretKey key = (SecretKey) mKeyStore.getKey(FINGER_KEY,
+            keyStore.load(null);
+            SecretKey key = (SecretKey) keyStore.getKey(KEY_NAME,
                     null);
-            mCipher.init(Cipher.ENCRYPT_MODE, key);
+            cipher.init(Cipher.ENCRYPT_MODE, key);
             return true;
         } catch (KeyPermanentlyInvalidatedException e) {
             return false;
