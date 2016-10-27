@@ -29,6 +29,7 @@
         <activity android:name=".ui.cards.OpenBankCards"/>
         <activity android:name=".ui.cards.ProtectedBankCards"/>
         <activity android:name=".barcode.BarcodeScanner"/>
+        <activity android:name=".ui.create.Discount"/>
         <activity android:name=".ui.TakePhotoActivity"/>
         <activity
             android:name=".ui.PinProtectedActivity"

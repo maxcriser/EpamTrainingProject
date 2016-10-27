@@ -1,31 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<merge
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
-    <Button
-        android:id="@+id/btnStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onclick"
-        android:text="@string/start">
-    </Button>
-    <Button
-        android:id="@+id/buttonGet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/get"
-        android:onClick="onclick">
-    </Button>
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </ProgressBar>
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="">
-    </TextView>
-</LinearLayout>
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onclick"
+            android:text="@string/start">
+        </Button>
+
+        <Button
+            android:id="@+id/btnGet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onGetClick"
+            android:text="@string/get_2">
+        </Button>
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onCancelClick"
+            android:text="@string/cancel">
+        </Button>
+
+        <Button
+            android:id="@+id/btnSatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onStatusClick"
+            android:text="@string/status">
+        </Button>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </ProgressBar>
+
+        <TextView
+            android:layout_margin="16dp"
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@android:color/holo_purple"/>
+
+    </LinearLayout>
+</merge>

@@ -1,7 +1,9 @@
 package com.maxcriser.cards.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +42,11 @@ public class RecyclerAdapterTypes extends RecyclerView.Adapter<RecyclerViewHolde
 
 //        holder.mIcon.setImageBitmap(...);
 
+        try {
+            holder.mLinearCard.setBackgroundColor(Color.parseColor(mItems.get(position)));
+        } catch (Exception e){
+            Log.d("Log:", e.toString());
+        }
         holder.mTitle.setText(mItems.get(position));
         holder.mTitle.setTag(holder);
     }

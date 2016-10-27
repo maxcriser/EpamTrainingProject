@@ -18,7 +18,7 @@
             <Button
                 android:layout_marginBottom="16dp"
                 android:background="@color/blue"
-                android:textColor="@android:color/white"
+                android:textColor="@color/white"
                 android:id="@+id/new_discount_card"
                 android:layout_marginLeft="48dp"
                 android:layout_marginRight="48dp"

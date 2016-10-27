@@ -3,4 +3,7 @@
     <string name="app_name">AsyncTaskResult</string>
     <string name="start">Start</string>
     <string name="get">Result</string>
+    <string name="get_2">GET</string>
+    <string name="cancel">Cancel</string>
+    <string name="status">Status</string>
 </resources>
