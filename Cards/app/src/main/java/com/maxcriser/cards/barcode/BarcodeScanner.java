@@ -1,18 +1,20 @@
 package com.maxcriser.cards.barcode;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.maxcriser.cards.R;
+import com.maxcriser.cards.ui.create.Discount;
 
 import net.sourceforge.zbar.Config;
 import net.sourceforge.zbar.Image;
@@ -39,9 +41,17 @@ public class BarcodeScanner extends AppCompatActivity {
     private boolean barcodeScanned = false;
     private boolean previewing = true;
 
+    public static final String TAG_BARCODE = "barcode";
+    private String scanResult;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        WindowManager.LayoutParams attrs = getWindow().getAttributes();
+        attrs.flags = WindowManager.LayoutParams.FLAG_FULLSCREEN;
+        getWindow().setAttributes(attrs);
+
         setContentView(R.layout.barcode_scanner);
 
         mOk = (Button) findViewById(R.id.button_ok);
@@ -122,15 +132,9 @@ public class BarcodeScanner extends AppCompatActivity {
 
                 SymbolSet syms = scanner.getResults();
                 for (Symbol sym : syms) {
-
-                    Log.i("<<<<<<Asset Code>>>>> ",
-                            "<<<<Bar Code>>> " + sym.getData());
-                    String scanResult = sym.getData().trim();
-
+                    scanResult = sym.getData().trim();
                     showAlertDialog(scanResult);
-
                     barcodeScanned = true;
-
                     break;
                 }
             }
@@ -174,7 +178,10 @@ public class BarcodeScanner extends AppCompatActivity {
     private class onOkClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            // give message to other activity or somewhere else
+            releaseCamera();
+            Intent intent = new Intent(BarcodeScanner.this, Discount.class);
+            intent.putExtra(TAG_BARCODE, scanResult);
+            startActivity(intent);
         }
     }
 }

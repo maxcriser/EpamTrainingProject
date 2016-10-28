@@ -9,6 +9,7 @@
     <string name="ok">OK</string>
     <string name="place_a_barcode_on_camera_to_scan_it">Place a barcode on camera to scan it</string>
     <string name="sim_barcode">|||||||</string>
+    <string name="name">Name:</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>

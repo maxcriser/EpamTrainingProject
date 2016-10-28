@@ -1,18 +1,19 @@
 package com.maxcriser.cards.ui.create;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.adapter.RecyclerAdapterTypes;
+import com.maxcriser.cards.barcode.BarcodeScanner;
 import com.maxcriser.cards.barcode.EAN13CodeBuilder;
 import com.maxcriser.cards.reader.PreviewColorReader;
 import com.maxcriser.cards.view.EANP72TextView;
-import android.widget.Button;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class Discount extends AppCompatActivity {
     EAN13CodeBuilder mEAN13CodeBuilder;
     EANP72TextView mEANP72TextView;
     RecyclerView colorCards;
-    String mBarcode = "90014582910436014";
+    String mBarcode;
 
     Button createCard; // database
     String title; // database
@@ -33,6 +34,9 @@ public class Discount extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_discount);
+
+        Intent barcodeIntent = getIntent();
+        mBarcode = barcodeIntent.getStringExtra(BarcodeScanner.TAG_BARCODE);
 
         mEAN13CodeBuilder = new EAN13CodeBuilder(mBarcode);
         generateBarcode = mEAN13CodeBuilder.getCode();
@@ -62,5 +66,9 @@ public class Discount extends AppCompatActivity {
         colorCards.setAdapter(adapter);
         colorCards.setHasFixedSize(true);
         colorCards.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+    }
+
+    public void onBackClicked(View view) {
+        super.onBackPressed();
     }
 }

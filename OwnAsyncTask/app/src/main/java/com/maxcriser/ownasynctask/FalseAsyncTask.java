@@ -20,15 +20,35 @@ public class FalseAsyncTask {
 
     public<Params, Progress, Result> void execute(
             final Task<Params, Progress, Result> task,
-            Params param,
-            OnResultCallback<Result, Progress> onResultCallback){
+            final Params param,
+            final OnResultCallback<Result, Progress> onResultCallback){
 
         mExecutorService.execute(new Runnable() {
             android.os.Handler mHandler = new android.os.Handler();
             @Override
             public void run() {
 
-
+                try {
+                    final Result result = task.doInBackground(param, new ProgressCallback<Progress>() {
+                        @Override
+                        public void onProgressChanged(final Progress pProgress) {
+                                 mHandler.post(new Runnable() {
+                                     @Override
+                                     public void run() {
+                                         onResultCallback.onProgressChanged(pProgress);
+                                     }
+                                 });
+                        }
+                    });
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            onResultCallback.onSuccess(result);
+                        }
+                    });
+                } catch (Exception pE) {
+                    onResultCallback.onError(pE);
+                }
             }
         });
     }

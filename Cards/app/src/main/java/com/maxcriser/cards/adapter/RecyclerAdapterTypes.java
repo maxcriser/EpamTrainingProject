@@ -17,15 +17,12 @@ public class RecyclerAdapterTypes extends RecyclerView.Adapter<RecyclerViewHolde
 
 
     private List<String> mItems;
-    private Context mContext;
     private LayoutInflater mInflater;
     private Object mView;
 
     public RecyclerAdapterTypes(Context context, List<String> pItems, Object pObject) {
-
         mView = pObject;
         mItems = pItems;
-        this.mContext = context;
         mInflater = LayoutInflater.from(context);
     }
 
