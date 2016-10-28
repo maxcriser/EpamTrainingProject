@@ -20,7 +20,24 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FalseAsyncTask falseAsyncTask = new FalseAsyncTask();
+        falseAsyncTask.execute(new WorkerOperation(), "krakazabrik", new OnResultCallback<WorkerOperation.Result, Integer>() {
+            @Override
+            public void onSuccess(WorkerOperation.Result pResult) {
+                Toast.makeText(MainActivity.this, "SUCCESS " + pResult.toString(), Toast.LENGTH_LONG).show();
+            }
 
+            @Override
+            public void onError(Exception pE) {
+                Toast.makeText(MainActivity.this, "ERROR " + pE.toString(), Toast.LENGTH_LONG).show();
 
+            }
+
+            @Override
+            public void onProgressChanged(Integer pInteger) {
+                Toast.makeText(MainActivity.this, "PROGRESS " + pInteger.toString(), Toast.LENGTH_LONG).show();
+
+            }
+        });
     }
 }

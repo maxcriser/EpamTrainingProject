@@ -1,4 +1,4 @@
-package com.maxcriser.cards.adapter;
+package com.maxcriser.cards.ui;
 
 import android.content.Context;
 import android.graphics.Color;

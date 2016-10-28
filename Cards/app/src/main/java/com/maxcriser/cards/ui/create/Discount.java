@@ -2,33 +2,39 @@ package com.maxcriser.cards.ui.create;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.adapter.RecyclerAdapterTypes;
 import com.maxcriser.cards.barcode.BarcodeScanner;
 import com.maxcriser.cards.barcode.EAN13CodeBuilder;
 import com.maxcriser.cards.reader.PreviewColorReader;
-import com.maxcriser.cards.ui.cards.DiscountCardsActivity;
+import com.maxcriser.cards.ui.ViewPagerPreviewCard;
 import com.maxcriser.cards.view.EANP72TextView;
 
 import java.util.List;
 
 public class Discount extends AppCompatActivity {
 
+    static int PAGE_COUNT;
+    ViewPager pager;
+    PagerAdapter pagerAdapter;
+
     EAN13CodeBuilder mEAN13CodeBuilder;
     EANP72TextView mEANP72TextView;
-    RecyclerView colorCards;
     String mBarcode;
 
     Button createCard; // database
     String title; // database
     String generateBarcode; // database
     String myColor;
+    public static List<String> previewColors;
     // Color mColor - putExtra
 
     @Override
@@ -54,19 +60,35 @@ public class Discount extends AppCompatActivity {
 
         mEANP72TextView = (EANP72TextView) findViewById(R.id.generate_barcode);
         mEANP72TextView.setText(generateBarcode);
-        //getExtra.... mBarcode
 
         final PreviewColorReader tcReader = PreviewColorReader.getInstance();
         tcReader.setPreviewColors();
 
-        final List<String> previewColors = tcReader.getPreviewColors();
+        previewColors = tcReader.getPreviewColors();
+        myColor = previewColors.get(0);
+        PAGE_COUNT = previewColors.size();
 
-        colorCards = (RecyclerView) findViewById(R.id.preview_discount_cards);
+        pager = (ViewPager) findViewById(R.id.pager);
+        pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
+        pager.setAdapter(pagerAdapter);
+        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
-        RecyclerAdapterTypes adapter = new RecyclerAdapterTypes(this, previewColors, R.layout.discount_item);
-        colorCards.setAdapter(adapter);
-        colorCards.setHasFixedSize(true);
-        colorCards.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+            @Override
+            public void onPageSelected(int position) {
+                myColor = previewColors.get(position);
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset,
+                                       int positionOffsetPixels) {
+            }
+
+            @Override
+
+            public void onPageScrollStateChanged(int state) {
+            }
+
+        });
     }
 
     public void onBackClicked(View view) {
@@ -76,5 +98,22 @@ public class Discount extends AppCompatActivity {
     public void onCreateCardClicked(View view) {
         //TODO write to database
         super.onBackPressed();
+    }
+
+    private class MyFragmentPagerAdapter extends FragmentPagerAdapter {
+        public MyFragmentPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return ViewPagerPreviewCard.newInstance(position);
+        }
+
+        @Override
+
+        public int getCount() {
+            return PAGE_COUNT;
+        }
     }
 }

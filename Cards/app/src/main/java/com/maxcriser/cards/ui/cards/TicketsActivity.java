@@ -9,7 +9,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.adapter.RecyclerAdapterTypes;
+import com.maxcriser.cards.ui.RecyclerAdapterTypes;
 import com.maxcriser.cards.reader.TypesCardsReader;
 import com.maxcriser.cards.ui.TakePhotoActivity;
 

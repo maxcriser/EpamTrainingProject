@@ -11,7 +11,7 @@ public class FalseAsyncTask {
     ExecutorService mExecutorService;
 
     public FalseAsyncTask(){
-        Executors.newFixedThreadPool(COUNT_CORES);
+        this.mExecutorService = Executors.newFixedThreadPool(COUNT_CORES);
     }
 
     public FalseAsyncTask(final ExecutorService mExecutorService){

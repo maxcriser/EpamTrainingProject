@@ -12,7 +12,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.adapter.RecyclerAdapterTypes;
 import com.maxcriser.cards.handler.RecyclerItemClickListener;
 import com.maxcriser.cards.reader.TypesCardsReader;
 import com.maxcriser.cards.ui.cards.BankCardsActivity;

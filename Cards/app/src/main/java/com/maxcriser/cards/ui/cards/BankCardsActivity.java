@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.adapter.RecyclerAdapterTypes;
+import com.maxcriser.cards.ui.RecyclerAdapterTypes;
 import com.maxcriser.cards.handler.RecyclerItemClickListener;
 import com.maxcriser.cards.reader.TypesCardsReader;
 import com.maxcriser.cards.ui.PinProtectedActivity;
