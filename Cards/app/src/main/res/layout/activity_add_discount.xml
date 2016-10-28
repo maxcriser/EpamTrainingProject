@@ -85,12 +85,13 @@
                         android:layout_marginTop="16dp"/>
 
                     <com.maxcriser.cards.view.RobotoThinTextView
+                        android:onClick="onCreateCardClicked"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_gravity="bottom|center"
                         android:background="@color/bluelight_500"
                         android:gravity="center"
-                        android:text="create card"
+                        android:text="@string/create_card"
                         android:textAllCaps="true"
                         android:textSize="18sp"/>
 

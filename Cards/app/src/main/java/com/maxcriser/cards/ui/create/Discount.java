@@ -13,6 +13,7 @@ import com.maxcriser.cards.adapter.RecyclerAdapterTypes;
 import com.maxcriser.cards.barcode.BarcodeScanner;
 import com.maxcriser.cards.barcode.EAN13CodeBuilder;
 import com.maxcriser.cards.reader.PreviewColorReader;
+import com.maxcriser.cards.ui.cards.DiscountCardsActivity;
 import com.maxcriser.cards.view.EANP72TextView;
 
 import java.util.List;
@@ -69,6 +70,11 @@ public class Discount extends AppCompatActivity {
     }
 
     public void onBackClicked(View view) {
+        super.onBackPressed();
+    }
+
+    public void onCreateCardClicked(View view) {
+        //TODO write to database
         super.onBackPressed();
     }
 }
