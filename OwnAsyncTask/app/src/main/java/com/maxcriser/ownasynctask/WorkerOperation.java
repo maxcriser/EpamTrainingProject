@@ -15,7 +15,6 @@ public class WorkerOperation implements Task<String, Integer, WorkerOperation.Re
                 throw  new Exception(e);
             }
             Log.d("TAG", pS + i);
-            pIntegerProgressCallback.onProgressChanged(i);
         }
 
         Result result = new Result();

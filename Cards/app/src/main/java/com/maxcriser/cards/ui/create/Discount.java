@@ -1,6 +1,8 @@
 package com.maxcriser.cards.ui.create;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,19 +10,26 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.Toast;
 
 import com.maxcriser.cards.R;
+import com.maxcriser.cards.async.BarcodeConverter;
+import com.maxcriser.cards.async.FalseAsyncTask;
+import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.barcode.BarcodeScanner;
 import com.maxcriser.cards.barcode.EAN13CodeBuilder;
-import com.maxcriser.cards.reader.PreviewColorReader;
+import com.maxcriser.cards.reader.PreviewColor.PreviewColorReader;
 import com.maxcriser.cards.ui.ViewPagerPreviewCard;
 import com.maxcriser.cards.view.EANP72TextView;
 
 import java.util.List;
 
 public class Discount extends AppCompatActivity {
+
+    ContentValues cv;
+    SQLiteDatabase db;
 
     static int PAGE_COUNT;
     ViewPager pager;
@@ -30,7 +39,6 @@ public class Discount extends AppCompatActivity {
     EANP72TextView mEANP72TextView;
     String mBarcode;
 
-    Button createCard; // database
     String title; // database
     String generateBarcode; // database
     String myColor;
@@ -44,23 +52,23 @@ public class Discount extends AppCompatActivity {
 
         Intent barcodeIntent = getIntent();
         mBarcode = barcodeIntent.getStringExtra(BarcodeScanner.TAG_BARCODE);
-
-        mEAN13CodeBuilder = new EAN13CodeBuilder(mBarcode);
-        generateBarcode = mEAN13CodeBuilder.getCode();
-
-
-//        createCard = (Button)findViewById(R.id.new_discount_card);
-//        createCard.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                TODO write to database
-//            }
-//        });
-
         mEANP72TextView = (EANP72TextView) findViewById(R.id.generate_barcode);
-        mEANP72TextView.setText(generateBarcode);
 
+        FalseAsyncTask barcodeGenerator = new FalseAsyncTask();
+        barcodeGenerator.execute(new BarcodeConverter(), mBarcode, new OnResultCallback<String, String>() {
+            @Override
+            public void onSuccess(String pS) {
+                mEANP72TextView.setText(pS);
+            }
+
+            @Override
+            public void onError(Exception pE) {
+            }
+
+            @Override
+            public void onProgressChanged(String pS) {
+            }
+        });
         final PreviewColorReader tcReader = PreviewColorReader.getInstance();
         tcReader.setPreviewColors();
 
@@ -84,11 +92,16 @@ public class Discount extends AppCompatActivity {
             }
 
             @Override
-
             public void onPageScrollStateChanged(int state) {
             }
 
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        mDBHelper.close();
     }
 
     public void onBackClicked(View view) {
@@ -96,8 +109,7 @@ public class Discount extends AppCompatActivity {
     }
 
     public void onCreateCardClicked(View view) {
-        //TODO write to database
-        super.onBackPressed();
+//                TODO write to database
     }
 
     private class MyFragmentPagerAdapter extends FragmentPagerAdapter {

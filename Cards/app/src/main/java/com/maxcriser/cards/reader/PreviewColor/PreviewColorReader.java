@@ -1,16 +1,16 @@
-package com.maxcriser.cards.reader;
+package com.maxcriser.cards.reader.PreviewColor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PreviewColorReader {
 
+
     private static PreviewColorReader sPreviewColorReader;
 
     private List<String> previewColors;
 
     PreviewColorReader() {
-
     }
 
     public void setPreviewColors() {

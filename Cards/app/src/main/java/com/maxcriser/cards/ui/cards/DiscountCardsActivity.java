@@ -13,7 +13,6 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.barcode.BarcodeScanner;
 import com.maxcriser.cards.ui.RecyclerAdapterTypes;
 import com.maxcriser.cards.reader.TypesCardsReader;
-import com.maxcriser.cards.ui.create.Discount;
 
 import java.util.List;
 
