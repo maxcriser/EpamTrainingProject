@@ -70,9 +70,9 @@ public class TypesCardsReader {
 
     public void setTickets() {
         tickets = new ArrayList<>();
-//        tickets.add("Ticket to HOME");
-//        tickets.add("ticket to ITALY");
-//        tickets.add("Ticket to ASS");
+        tickets.add("Ticket to HOME");
+        tickets.add("ticket to ITALY");
+        tickets.add("Ticket to ASS");
     }
 
     public void setTypesCards() {
