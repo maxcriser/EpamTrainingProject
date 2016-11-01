@@ -2,12 +2,14 @@ package com.maxcriser.cards.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,6 +25,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView typesCards;
+    LinearLayout lv;
+    DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +65,17 @@ public class MainActivity extends AppCompatActivity {
 
         String[] drawer = getResources().getStringArray(R.array.drawer_bar);
 
+
+        lv = (LinearLayout) findViewById(R.id.left_drawer);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         ListView drawerListView = (ListView) findViewById(R.id.list_drawer);
         drawerListView.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, drawer));
         drawerListView.setOnItemClickListener(new DrawerItemClickListener());
     }
 
     public void onMenuClicked(View view) {
-        // open drawer
+        drawerLayout.openDrawer(lv);
     }
 
     private class DrawerItemClickListener implements AdapterView.OnItemClickListener {
