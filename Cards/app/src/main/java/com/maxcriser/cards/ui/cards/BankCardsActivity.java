@@ -9,10 +9,12 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.maxcriser.cards.R;
+import com.maxcriser.cards.constant.StaticPageNames;
 import com.maxcriser.cards.ui.RecyclerAdapterTypes;
 import com.maxcriser.cards.handler.RecyclerItemClickListener;
 import com.maxcriser.cards.reader.TypesCardsReader;
 import com.maxcriser.cards.ui.PinProtectedActivity;
+import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
 
 import java.util.List;
 
@@ -24,6 +26,9 @@ public class BankCardsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_cards);
+
+        RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
+        title.setText(StaticPageNames.BANK_TITLE);
 
         final TypesCardsReader tcReader = TypesCardsReader.getInstance();
         tcReader.setTypesBankCards();

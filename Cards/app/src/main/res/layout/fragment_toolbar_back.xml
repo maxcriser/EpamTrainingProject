@@ -14,7 +14,7 @@
             android:layout_height="@dimen/height_toolbar"
             android:src="@drawable/ic_arrow_back_black_24dp" />
 
-        <com.maxcriser.cards.view.RobotoRegularTextView
+        <com.maxcriser.cards.view.TextViews.RobotoRegularTextView
             android:textAllCaps="true"
             android:gravity="center"
             android:layout_marginLeft="@dimen/margin_left_title_toolbar"

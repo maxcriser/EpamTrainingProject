@@ -9,9 +9,11 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 import com.maxcriser.cards.R;
+import com.maxcriser.cards.constant.StaticPageNames;
 import com.maxcriser.cards.ui.RecyclerAdapterTypes;
 import com.maxcriser.cards.reader.TypesCardsReader;
 import com.maxcriser.cards.ui.TakePhotoActivity;
+import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
 
 import java.util.List;
 
@@ -28,6 +30,9 @@ public class TicketsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tickets);
+
+        RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
+        title.setText(StaticPageNames.TICKETS_TITLE);
 
         buttonNewTicket = findViewById(R.id.new_ticket);
         buttonNewTicket.setOnClickListener(new onButtonNewTickedClickListener());

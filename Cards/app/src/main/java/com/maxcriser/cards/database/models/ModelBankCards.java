@@ -26,5 +26,5 @@ public final class ModelBankCards {
     public static final String BANK_PING = "pin";
 
     @dbString
-    public static final String BANK_NFC = "barcode";
+    public static final String BANK_NFC = "nfc";
 }

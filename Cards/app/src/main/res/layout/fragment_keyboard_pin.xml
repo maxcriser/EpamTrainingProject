@@ -155,7 +155,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.maxcriser.cards.view.RobotoThinTextView
+            <com.maxcriser.cards.view.TextViews.RobotoThinTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|bottom"
@@ -168,7 +168,7 @@
                 android:textColor="@color/bluelight_500"
                 android:textSize="24sp"/>
 
-            <com.maxcriser.cards.view.RobotoThinTextView
+            <com.maxcriser.cards.view.TextViews.RobotoThinTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|bottom"

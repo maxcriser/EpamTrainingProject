@@ -15,7 +15,7 @@
             android:onClick="onMenuClicked"
             android:src="@drawable/ic_menu_black_24dp"/>
 
-        <com.maxcriser.cards.view.RobotoRegularTextView
+        <com.maxcriser.cards.view.TextViews.RobotoRegularTextView
             android:id="@+id/title_toolbar"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/height_toolbar"

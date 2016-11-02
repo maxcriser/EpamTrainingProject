@@ -30,7 +30,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/types_cards_icon" />
 
-            <com.maxcriser.cards.view.RobotoThinTextView
+            <com.maxcriser.cards.view.TextViews.RobotoThinTextView
                 android:textStyle="bold"
                 android:textAllCaps="true"
                 android:gravity="center|left"

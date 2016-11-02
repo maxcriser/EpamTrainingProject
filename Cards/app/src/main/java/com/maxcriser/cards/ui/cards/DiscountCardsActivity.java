@@ -11,8 +11,12 @@ import android.widget.Button;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.barcode.BarcodeScanner;
+import com.maxcriser.cards.constant.StaticPageNames;
+import com.maxcriser.cards.handler.RecyclerItemClickListener;
 import com.maxcriser.cards.ui.RecyclerAdapterTypes;
 import com.maxcriser.cards.reader.TypesCardsReader;
+import com.maxcriser.cards.ui.show.ShowDiscountCard;
+import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
 
 import java.util.List;
 
@@ -26,6 +30,9 @@ public class DiscountCardsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discount_cards);
+
+        RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
+        title.setText(StaticPageNames.DISCOUNT_TITLE);
 
         newDiscountCard = (Button) findViewById(R.id.new_discount_card);
         newDiscountCard.setOnClickListener(new View.OnClickListener() {
@@ -44,7 +51,7 @@ public class DiscountCardsActivity extends AppCompatActivity {
 
         discountCards = (RecyclerView) findViewById(R.id.discount_cards_recycler_view);
 
-        RecyclerAdapterTypes adapter = new RecyclerAdapterTypes(this, myDiscountCards,R.layout.discount_item);
+        RecyclerAdapterTypes adapter = new RecyclerAdapterTypes(this, myDiscountCards, R.layout.discount_item);
 
         discountCards.setAdapter(adapter);
         discountCards.setHasFixedSize(true);
@@ -68,6 +75,18 @@ public class DiscountCardsActivity extends AppCompatActivity {
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(discountCards);
+
+        discountCards.addOnItemTouchListener(new RecyclerItemClickListener(this, discountCards, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                startActivity(new Intent(DiscountCardsActivity.this, ShowDiscountCard.class));
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        }));
     }
 
     public void onBackClicked(View view) {

@@ -1,4 +1,4 @@
-package com.maxcriser.cards.view;
+package com.maxcriser.cards.view.EditTextViews;
 
 import android.content.Context;
 import android.graphics.Typeface;

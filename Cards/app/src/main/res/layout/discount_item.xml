@@ -30,7 +30,7 @@
                 android:layout_height="40dp"
                 android:background="@color/gray_shadow"/>
 
-            <com.maxcriser.cards.view.RobotoThinTextView
+            <com.maxcriser.cards.view.TextViews.RobotoThinTextView
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"

@@ -12,17 +12,19 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.async.BarcodeConverter;
 import com.maxcriser.cards.async.FalseAsyncTask;
 import com.maxcriser.cards.async.OnResultCallback;
+import com.maxcriser.cards.async.task.BarcodeConverter;
+import com.maxcriser.cards.barcode.BarcodeBuilder;
 import com.maxcriser.cards.barcode.BarcodeScanner;
-import com.maxcriser.cards.barcode.EAN13CodeBuilder;
+import com.maxcriser.cards.constant.StaticPageNames;
+import com.maxcriser.cards.database.custom.ListColors;
 import com.maxcriser.cards.reader.PreviewColor.PreviewColorReader;
 import com.maxcriser.cards.ui.ViewPagerPreviewCard;
-import com.maxcriser.cards.view.EANP72TextView;
+import com.maxcriser.cards.view.TextViews.EANP72TextView;
+import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
 
 import java.util.List;
 
@@ -35,20 +37,25 @@ public class Discount extends AppCompatActivity {
     ViewPager pager;
     PagerAdapter pagerAdapter;
 
-    EAN13CodeBuilder mEAN13CodeBuilder;
+    BarcodeBuilder mBarcodeBuilder;
     EANP72TextView mEANP72TextView;
     String mBarcode;
 
+    ListColors listColors;
+    String myColorName;
+    String myColorCode;
     String title; // database
     String generateBarcode; // database
-    String myColor;
-    public static List<String> previewColors;
+    public static List<ListColors> previewColors;
     // Color mColor - putExtra
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_discount);
+
+        RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
+        title.setText(StaticPageNames.NEW_DISCOUNT_TITLE);
 
         Intent barcodeIntent = getIntent();
         mBarcode = barcodeIntent.getStringExtra(BarcodeScanner.TAG_BARCODE);
@@ -71,9 +78,13 @@ public class Discount extends AppCompatActivity {
         });
         final PreviewColorReader tcReader = PreviewColorReader.getInstance();
         tcReader.setPreviewColors();
-
         previewColors = tcReader.getPreviewColors();
-        myColor = previewColors.get(0);
+
+        listColors = previewColors.get(0);
+        myColorName = listColors.getNameColor();
+        myColorCode = listColors.getCodeColor();
+        Log.d("TAG", myColorName + " " + myColorCode);
+
         PAGE_COUNT = previewColors.size();
 
         pager = (ViewPager) findViewById(R.id.pager);
@@ -83,7 +94,11 @@ public class Discount extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                myColor = previewColors.get(position);
+                listColors = previewColors.get(position);
+                myColorName = listColors.getNameColor();
+                myColorCode = listColors.getCodeColor();
+                Log.d("TAG", myColorName + " " + myColorCode);
+
             }
 
             @Override
@@ -101,7 +116,6 @@ public class Discount extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        mDBHelper.close();
     }
 
     public void onBackClicked(View view) {
@@ -109,7 +123,6 @@ public class Discount extends AppCompatActivity {
     }
 
     public void onCreateCardClicked(View view) {
-//                TODO write to database
     }
 
     private class MyFragmentPagerAdapter extends FragmentPagerAdapter {

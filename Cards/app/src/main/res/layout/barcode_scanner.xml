@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.maxcriser.cards.view.RobotoThinTextView
+        <com.maxcriser.cards.view.TextViews.RobotoThinTextView
             android:id="@+id/solution_of_scan"
             android:gravity="center"
             android:textColor="@color/white"
@@ -54,7 +54,7 @@
 
     </FrameLayout>
 
-    <com.maxcriser.cards.view.RobotoThinTextView
+    <com.maxcriser.cards.view.TextViews.RobotoThinTextView
         android:id="@+id/bottom_text_barcode_scan"
         android:gravity="center"
         android:textAllCaps="true"

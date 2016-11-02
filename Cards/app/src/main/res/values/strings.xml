@@ -8,7 +8,7 @@
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
     <string name="place_a_barcode_on_camera_to_scan_it">Place a barcode on camera to scan it</string>
-    <string name="sim_barcode">|||||||</string>
+    <string name="sim_barcode">1234567891011</string>
     <string name="name">Name:</string>
     <string name="create_card">create card</string>
 

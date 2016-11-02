@@ -10,34 +10,30 @@
 package com.maxcriser.cards.barcode;
 
 
-public class EAN13CodeBuilder {
+public class BarcodeBuilder {
     private String codeStringValue;
     private String generatedCode;
 
-    public EAN13CodeBuilder(String codeString) {
+    public BarcodeBuilder(String codeString) {
         codeStringValue = codeString;
         parse();
     }
 
     public String getCode() {
         return generatedCode;
-
     }
-
-    //////////////////////////////////////////////////////////
 
     private String getFullCode() {
 
-        int chetVal = 0, nechetVal = 0;
+        int even = 0, odd = 0;
         String codeToParse = codeStringValue;
 
         for (int index = 0; index < 6; index++) {
-            chetVal += Integer.valueOf(codeToParse.substring(index * 2 + 1, index * 2 + 2)).intValue();
-            nechetVal += Integer.valueOf(codeToParse.substring(index * 2, index * 2 + 1)).intValue();
+            even += Integer.valueOf(codeToParse.substring(index * 2 + 1, index * 2 + 2));
+            odd += Integer.valueOf(codeToParse.substring(index * 2, index * 2 + 1));
         }
-
-        chetVal *= 3;
-        int controlNumber = 10 - (chetVal + nechetVal) % 10;
+        even *= 3;
+        int controlNumber = 10 - (even + odd) % 10;
         if (controlNumber == 10) controlNumber = 0;
 
         codeToParse += String.valueOf(controlNumber);
@@ -48,30 +44,28 @@ public class EAN13CodeBuilder {
 
     private String DigitToUpperCase(String digit) {
         String letters = "ABCDEFGHIJ";
-        int position = Integer.valueOf(digit).intValue();
+        int position = Integer.valueOf(digit);
 
-        String retVal = letters.substring(position, position + 1);
+        String solutionValue = letters.substring(position, position + 1);
 
-        return retVal;
+        return solutionValue;
 
     }
 
     private String DigitToLowerCase(String digit) {
         String letters = "abcdefghij";
-        int position = Integer.valueOf(digit).intValue();
+        int position = Integer.valueOf(digit);
 
-        String retVal = letters.substring(position, position + 1);
+        String solutionValue = letters.substring(position, position + 1);
 
-        return retVal;
+        return solutionValue;
 
     }
 
     private String createEAN13Code(String rawCode) {
         int firstFlag = Integer.valueOf(
-
                 rawCode.substring(0, 1)
-
-        ).intValue();
+        );
 
         String leftString = rawCode.substring(1, 7);
         String rightString = rawCode.substring(7);
@@ -83,7 +77,6 @@ public class EAN13CodeBuilder {
             rightCode += DigitToLowerCase(rightString.substring(i, i + 1));
         }
 
-
         if (firstFlag == 0) {
             leftCode = "#!" + leftString.substring(0, 1)
                     + leftString.substring(1, 2)
@@ -93,7 +86,6 @@ public class EAN13CodeBuilder {
                     + leftString.substring(5);
         }
         if (firstFlag == 1) {
-            ///System.out.println("leftString: "+leftString);
             leftCode = "$!" + leftString.substring(0, 1)
                     + leftString.substring(1, 2)
                     + DigitToUpperCase(leftString.substring(2, 3))
@@ -167,18 +159,13 @@ public class EAN13CodeBuilder {
         }
 
 
-        String retVal = leftCode + "-" + rightCode + "!";
+        String solutionValue = leftCode + "-" + rightCode + "!";
 
-        return retVal;
+        return solutionValue;
     }
 
     private void parse() {
         String fullString = getFullCode();
-        System.out.println("Full code: " + fullString);
-
         generatedCode = createEAN13Code(fullString);
-
-        System.out.println("Generated code: " + generatedCode);
-
     }
 }

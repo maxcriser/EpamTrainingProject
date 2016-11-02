@@ -14,7 +14,10 @@ public final class ModelTickets {
     public static final String TICKETS_TITLE = "title";
 
     @dbString
-    public static final String TICKETS_NFC = "nfc";
+    public static final String TICKETS_PHOTO_FIRST = "firstPhoto";
+
+    @dbString
+    public static final String TICKETS_PHOTO_SECOND = "secondPhoto";
 
     @dbString
     public static final String TICKETS_BACKGROUND_COLOR = "backgroundColor";

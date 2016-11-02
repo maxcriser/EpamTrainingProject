@@ -4,6 +4,9 @@
 
 
     <uses-permission android:name="android.permission.CAMERA"/>
+
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
@@ -14,26 +17,60 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.LaunchScreenActivity">
+
+        <activity android:name=".ui.LaunchScreenActivity"
+                  android:configChanges="orientation"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MainActivity"/>
+
+        <activity android:name=".ui.MainActivity"
+                  android:configChanges="orientation"
+                  android:screenOrientation="portrait"/>
 
         <activity android:name=".ui.cards.BankCardsActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".ui.cards.DiscountCardsActivity"/>
-        <activity android:name=".ui.cards.TicketsActivity"/>
-        <activity android:name=".ui.cards.OpenBankCards"/>
-        <activity android:name=".ui.cards.ProtectedBankCards"/>
-        <activity android:name=".barcode.BarcodeScanner"/>
-        <activity android:name=".ui.create.Discount"/>
-        <activity android:name=".ui.TakePhotoActivity"/>
+                  android:configChanges="orientation"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.cards.DiscountCardsActivity"
+                  android:configChanges="orientation"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.cards.TicketsActivity"
+                  android:configChanges="orientation"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.cards.OpenBankCards"
+                  android:configChanges="orientation"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.cards.ProtectedBankCards"
+                  android:configChanges="orientation"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.show.ShowDiscountCard"
+                  android:configChanges="orientation"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".barcode.BarcodeScanner"
+                  android:configChanges="orientation"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.create.Discount"
+                  android:configChanges="orientation"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.TakePhotoActivity"
+                  android:configChanges="orientation"
+                  android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.PinProtectedActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
     </application>
 

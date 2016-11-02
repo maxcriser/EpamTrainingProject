@@ -2,6 +2,7 @@
 <resources>
     <color name="gray_3">#262626</color>
     <color name="bluelight_500">#0b8c8f</color>
+    <color name="bluelight_600">#097173</color>
     <color name="blue">#22a7f0</color>
     <color name="gray_shadow">#99000000</color>
     <color name="gray_light">#FFAFAFAF</color>

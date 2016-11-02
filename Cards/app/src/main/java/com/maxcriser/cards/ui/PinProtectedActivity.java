@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.maxcriser.cards.R;
+import com.maxcriser.cards.constant.PinKeyboard;
 import com.maxcriser.cards.handler.FingerprintHandler;
 import com.maxcriser.cards.reader.PasswordReader;
 import com.maxcriser.cards.ui.cards.ProtectedBankCards;
@@ -37,18 +38,9 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
-public class PinProtectedActivity extends AppCompatActivity {
+import static com.maxcriser.cards.constant.PinKeyboard.BUTTON_ZERO;
 
-    public static final String BUTTON_ZERO = "0";
-    public static final String BUTTON_ONE = "1";
-    public static final String BUTTON_TWO = "2";
-    public static final String BUTTON_THREE = "3";
-    public static final String BUTTON_FOUR = "4";
-    public static final String BUTTON_FIVE = "5";
-    public static final String BUTTON_SIX = "6";
-    public static final String BUTTON_SEVEN = "7";
-    public static final String BUTTON_EIGHT = "8";
-    public static final String BUTTON_NINE = "9";
+public class PinProtectedActivity extends AppCompatActivity {
 
     ImageView firstCircle;
     ImageView secondCircle;
@@ -75,6 +67,8 @@ public class PinProtectedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin_protected);
 
+        Toast.makeText(this, "first", Toast.LENGTH_LONG).show();
+
         circleCounter = 1;
         builderPassword = "";
 
@@ -94,7 +88,6 @@ public class PinProtectedActivity extends AppCompatActivity {
                     (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
 
             if (!keyguardManager.isKeyguardSecure()) {
-
                 Toast.makeText(this,
                         "Lock screen security not enabled in Settings",
                         Toast.LENGTH_LONG).show();
@@ -247,43 +240,43 @@ public class PinProtectedActivity extends AppCompatActivity {
     }
 
     public void zeroInput(View view) {
-        inputPassword(BUTTON_ZERO);
+        inputPassword(PinKeyboard.BUTTON_ZERO);
     }
 
     public void oneInput(View view) {
-        inputPassword(BUTTON_ONE);
+        inputPassword(PinKeyboard.BUTTON_ONE);
     }
 
     public void twoInput(View view) {
-        inputPassword(BUTTON_TWO);
+        inputPassword(PinKeyboard.BUTTON_TWO);
     }
 
     public void threeInput(View view) {
-        inputPassword(BUTTON_THREE);
+        inputPassword(PinKeyboard.BUTTON_THREE);
     }
 
     public void fourInput(View view) {
-        inputPassword(BUTTON_FOUR);
+        inputPassword(PinKeyboard.BUTTON_FOUR);
     }
 
     public void fiveInput(View view) {
-        inputPassword(BUTTON_FIVE);
+        inputPassword(PinKeyboard.BUTTON_FIVE);
     }
 
     public void sixInput(View view) {
-        inputPassword(BUTTON_SIX);
+        inputPassword(PinKeyboard.BUTTON_SIX);
     }
 
     public void sevenInput(View view) {
-        inputPassword(BUTTON_SEVEN);
+        inputPassword(PinKeyboard.BUTTON_SEVEN);
     }
 
     public void eightInput(View view) {
-        inputPassword(BUTTON_EIGHT);
+        inputPassword(PinKeyboard.BUTTON_EIGHT);
     }
 
     public void nineInput(View view) {
-        inputPassword(BUTTON_NINE);
+        inputPassword(PinKeyboard.BUTTON_NINE);
     }
 
     public void setBackgroundCircles(boolean flag, ImageView... args) {
