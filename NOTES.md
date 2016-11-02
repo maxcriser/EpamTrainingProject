@@ -2,15 +2,18 @@
 
 Stats => https://deniotokiari.github.io/training-epam-2016/
 
+1. 
+1. Content provider
+1. Create abstract
 1. cursorloader
-1. handler, holder
-1. aw space
+1. ~~handler, holder~~
+1. ~~aw space~~
 2. #99000000
-1. Adapter (ListView)
+1. ~~Adapter (ListView)~~
 1. Bind
 1. Inflater
 6. анонимные классы (опасность)
-4. spannable
+4. ~~spannable~~
 1. Create AppEngine module
 1. REST
 1. continuous integration
