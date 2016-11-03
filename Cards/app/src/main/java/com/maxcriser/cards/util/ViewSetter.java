@@ -32,8 +32,8 @@ public final class ViewSetter extends View implements View.OnTouchListener {
         super(context);
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        maskColor = Color.argb(200, 100, 100, 100);
-        frameColor = Color.LTGRAY;
+        maskColor = Color.CYAN;
+        frameColor = Color.BLACK;
         cornerColor = Color.WHITE;
         WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = manager.getDefaultDisplay();

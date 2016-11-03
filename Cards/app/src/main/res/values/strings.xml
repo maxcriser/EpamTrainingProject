@@ -11,6 +11,8 @@
     <string name="sim_barcode">1234567891011</string>
     <string name="name">Name:</string>
     <string name="create_card">create card</string>
+    <string name="delete">Delete</string>
+    <string name="enter_pin">Enter Passcode</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>

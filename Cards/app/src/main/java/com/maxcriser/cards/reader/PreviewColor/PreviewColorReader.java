@@ -1,13 +1,13 @@
 package com.maxcriser.cards.reader.PreviewColor;
 
-import com.maxcriser.cards.database.custom.ListColors;
+import com.maxcriser.cards.database.custom.ListTableItems;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PreviewColorReader {
 
-    private List<ListColors> previewColors;
+    private List<ListTableItems> previewColors;
 
     private static PreviewColorReader sPreviewColorReader;
 
@@ -19,13 +19,26 @@ public class PreviewColorReader {
 
     public void setPreviewColors() {
 
-        previewColors.add(new ListColors("name1", "#0b8c8f"));
+        ListTableItems listTableItems = new ListTableItems();
+        listTableItems.setNameColorTable("name1");
+        listTableItems.setCodeColorTable("#0b8c8f");
 
-        previewColors.add(new ListColors("name2", "#E91E63"));
+        ListTableItems listTableItems2 = new ListTableItems();
+        listTableItems2.setNameColorTable("name2");
+        listTableItems2.setCodeColorTable("#E91E63");
 
-        previewColors.add(new ListColors("name3", "#F44336"));
+        ListTableItems listTableItems3 = new ListTableItems();
+        listTableItems3.setNameColorTable("name3");
+        listTableItems3.setCodeColorTable("#F44336");
 
-        previewColors.add(new ListColors("name4", "#E91E63"));
+        ListTableItems listTableItems4 = new ListTableItems();
+        listTableItems4.setNameColorTable("name4");
+        listTableItems4.setCodeColorTable("E91E63");
+
+        previewColors.add(listTableItems);
+        previewColors.add(listTableItems2);
+        previewColors.add(listTableItems3);
+        previewColors.add(listTableItems4);
 
 //        previewColors.add("#0b8c8f");
 //        previewColors.add("#E91E63");
@@ -50,7 +63,7 @@ public class PreviewColorReader {
 //        previewColors.add("#607D8B");
     }
 
-    public List<ListColors> getPreviewColors() {
+    public List<ListTableItems> getPreviewColors() {
         return previewColors;
     }
 

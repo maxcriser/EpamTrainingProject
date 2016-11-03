@@ -13,7 +13,7 @@ public class ListTableItems {
     String nfcTable;
     String barcodeTable;
 
-    ListTableItems(){
+    public ListTableItems(){
 
     }
 

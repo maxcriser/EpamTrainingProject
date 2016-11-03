@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.database.custom.ListColors;
+import com.maxcriser.cards.database.custom.ListTableItems;
 import com.maxcriser.cards.ui.create.Discount;
 import com.maxcriser.cards.view.TextViews.RobotoThinTextView;
 
@@ -41,9 +41,9 @@ public class ViewPagerPreviewCard extends Fragment {
         RobotoThinTextView tvPage = (RobotoThinTextView) view.findViewById(R.id.title_main_cards);
         FrameLayout mLinearCard = (FrameLayout) view.findViewById(R.id.linear_card);
 
-        ListColors color = Discount.previewColors.get(pageNumber);
-        mLinearCard.setBackgroundColor(Color.parseColor(color.getCodeColor()));
-        tvPage.setText(color.getNameColor());
+        ListTableItems color = Discount.previewColors.get(pageNumber);
+        mLinearCard.setBackgroundColor(Color.parseColor(color.getCodeColorTable()));
+        tvPage.setText(color.getNameColorTable());
 
         return view;
     }

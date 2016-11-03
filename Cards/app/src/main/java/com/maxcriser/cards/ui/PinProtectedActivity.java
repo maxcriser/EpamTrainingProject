@@ -38,8 +38,6 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
-import static com.maxcriser.cards.constant.PinKeyboard.BUTTON_ZERO;
-
 public class PinProtectedActivity extends AppCompatActivity {
 
     ImageView firstCircle;

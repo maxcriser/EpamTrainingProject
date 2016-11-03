@@ -20,7 +20,7 @@ import com.maxcriser.cards.async.task.BarcodeConverter;
 import com.maxcriser.cards.barcode.BarcodeBuilder;
 import com.maxcriser.cards.barcode.BarcodeScanner;
 import com.maxcriser.cards.constant.StaticPageNames;
-import com.maxcriser.cards.database.custom.ListColors;
+import com.maxcriser.cards.database.custom.ListTableItems;
 import com.maxcriser.cards.reader.PreviewColor.PreviewColorReader;
 import com.maxcriser.cards.ui.ViewPagerPreviewCard;
 import com.maxcriser.cards.view.TextViews.EANP72TextView;
@@ -41,12 +41,12 @@ public class Discount extends AppCompatActivity {
     EANP72TextView mEANP72TextView;
     String mBarcode;
 
-    ListColors listColors;
+    ListTableItems listColors;
     String myColorName;
     String myColorCode;
     String title; // database
     String generateBarcode; // database
-    public static List<ListColors> previewColors;
+    public static List<ListTableItems> previewColors;
     // Color mColor - putExtra
 
     @Override
@@ -81,8 +81,8 @@ public class Discount extends AppCompatActivity {
         previewColors = tcReader.getPreviewColors();
 
         listColors = previewColors.get(0);
-        myColorName = listColors.getNameColor();
-        myColorCode = listColors.getCodeColor();
+        myColorName = listColors.getNameColorTable();
+        myColorCode = listColors.getCodeColorTable();
         Log.d("TAG", myColorName + " " + myColorCode);
 
         PAGE_COUNT = previewColors.size();
@@ -95,8 +95,8 @@ public class Discount extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 listColors = previewColors.get(position);
-                myColorName = listColors.getNameColor();
-                myColorCode = listColors.getCodeColor();
+                myColorName = listColors.getNameColorTable();
+                myColorCode = listColors.getCodeColorTable();
                 Log.d("TAG", myColorName + " " + myColorCode);
 
             }
