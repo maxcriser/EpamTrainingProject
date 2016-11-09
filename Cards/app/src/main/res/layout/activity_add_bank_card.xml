@@ -43,7 +43,7 @@
                         <com.maxcriser.cards.view.EditTextViews.RobotoThinEditText
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
-                            android:hint="Enter name of the bank..."
+                            android:hint="@string/enter_name_of_card"
                             android:inputType="text"
                             android:maxLines="1"
                             android:paddingLeft="16dp"
@@ -57,21 +57,12 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:background="@color/white"
-                        android:gravity="center"
-                        android:padding="16dp"
-                        android:textColor="@color/black">
+                        android:background="@color/white">
 
-                        <com.maxcriser.cards.view.TextViews.EANP72TextView
-                            android:id="@+id/generate_barcode"
+                        <android.support.v4.view.ViewPager
+                            android:id="@+id/type_card"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textSize="120sp"
-                            android:textColor="@color/black"
-                            android:text="thecriser"/>
+                            android:layout_height="56dp"/>
 
                     </FrameLayout>
 
@@ -81,7 +72,7 @@
                         android:background="@color/bluelight_500"
                         android:gravity="center"
                         android:paddingLeft="16dp"
-                        android:text="card color"
+                        android:text="@string/card_color"
                         android:textAllCaps="true"
                         android:textSize="18sp"/>
 
@@ -96,5 +87,6 @@
         </ScrollView>
 
     </LinearLayout>
+
 
 </merge>

@@ -8,17 +8,17 @@ public class TypesCardsReader {
     private static TypesCardsReader sTypesCardsReader;
 
     private List<String> typesCards;
-    private List<String> typesBankCards;
     private List<String> tickets;
     private List<String> discountCards;
-    private List<String> openBankCards;
+    private List<String> bankCards;
+    private List<String> nfcCards;
 
-    public void setOpenBankCards() {
-        openBankCards = new ArrayList<>();
-        openBankCards.add("Belinvestbank");
-        openBankCards.add("Priorbank");
-        openBankCards.add("Belarusbank");
-        openBankCards.add("Bank of America");
+    public void setBankCards() {
+        bankCards = new ArrayList<>();
+        bankCards.add("Belinvestbank");
+        bankCards.add("Priorbank");
+        bankCards.add("Belarusbank");
+        bankCards.add("Bank of America");
     }
 
     public void setDiscountCards() {
@@ -80,12 +80,13 @@ public class TypesCardsReader {
         typesCards.add("Bank cards");
         typesCards.add("Discount cards");
         typesCards.add("Tickets");
+        typesCards.add("NFC cards");
     }
 
-    public void setTypesBankCards() {
-        typesBankCards = new ArrayList<>();
-        typesBankCards.add("Protected");
-        typesBankCards.add("Open");
+    public void setNfcCards() {
+        nfcCards = new ArrayList<>();
+        nfcCards.add("NFC 1");
+        nfcCards.add("NFC 2");
     }
 
     TypesCardsReader() {
@@ -107,15 +108,15 @@ public class TypesCardsReader {
         return typesCards;
     }
 
-    public List<String> getTypesBankCards() {
-        return typesBankCards;
-    }
-
     public List<String> getDiscountCards() {
         return discountCards;
     }
 
-    public List<String> getOpenBankCards() {
-        return openBankCards;
+    public List<String> getBankCards() {
+        return bankCards;
+    }
+
+    public List<String> getNfcCards() {
+        return nfcCards;
     }
 }

@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.StaticPageNames;
-import com.maxcriser.cards.ui.RecyclerAdapterTypes;
+import com.maxcriser.cards.ui.adapter.ItemsRecyclerAdapter;
 import com.maxcriser.cards.reader.TypesCardsReader;
 import com.maxcriser.cards.ui.TakePhotoActivity;
 import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
@@ -34,9 +34,6 @@ public class TicketsActivity extends AppCompatActivity {
         RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
         title.setText(StaticPageNames.TICKETS_TITLE);
 
-        buttonNewTicket = findViewById(R.id.new_ticket);
-        buttonNewTicket.setOnClickListener(new onButtonNewTickedClickListener());
-
         final TypesCardsReader tcReader = TypesCardsReader.getInstance();
         tcReader.setTickets();
 
@@ -47,7 +44,7 @@ public class TicketsActivity extends AppCompatActivity {
         if (myTickets.isEmpty()) {
             tickets.setVisibility(GONE);
         } else {
-            RecyclerAdapterTypes adapter = new RecyclerAdapterTypes(this, myTickets, R.layout.item_list);
+            ItemsRecyclerAdapter adapter = new ItemsRecyclerAdapter(this, myTickets, R.layout.item_list);
             tickets.setAdapter(adapter);
             tickets.setHasFixedSize(true);
             tickets.setLayoutManager(new LinearLayoutManager(this));
@@ -75,10 +72,7 @@ public class TicketsActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    private class onButtonNewTickedClickListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            startActivity(new Intent(TicketsActivity.this, TakePhotoActivity.class));
-        }
+    public void onAddNewClicked(View view) {
+        startActivity(new Intent(TicketsActivity.this, TakePhotoActivity.class));
     }
 }

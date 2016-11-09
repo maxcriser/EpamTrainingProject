@@ -1,8 +1,5 @@
 package com.maxcriser.cards.ui.create;
 
-import android.content.ContentValues;
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,70 +11,75 @@ import android.util.Log;
 import android.view.View;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.async.FalseAsyncTask;
-import com.maxcriser.cards.async.OnResultCallback;
-import com.maxcriser.cards.async.task.BarcodeConverter;
-import com.maxcriser.cards.barcode.BarcodeBuilder;
-import com.maxcriser.cards.barcode.BarcodeScanner;
 import com.maxcriser.cards.constant.StaticPageNames;
 import com.maxcriser.cards.database.custom.ListTableItems;
 import com.maxcriser.cards.reader.PreviewReader;
 import com.maxcriser.cards.ui.pager.ViewPagerPreviewCard;
-import com.maxcriser.cards.view.TextViews.EANP72TextView;
+import com.maxcriser.cards.ui.pager.ViewPagerPreviewType;
 import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
 
 import java.util.List;
 
-public class Discount extends AppCompatActivity {
-
-    ContentValues cv;
-    SQLiteDatabase db;
+public class Bank extends AppCompatActivity {
 
     static int PAGE_COUNT;
+    static int PAGE_COUNT_TEMPLATE;
     static final int pagerMargin = 16;
-    ViewPager pager;
-    PagerAdapter pagerAdapter;
-
-    BarcodeBuilder mBarcodeBuilder;
-    EANP72TextView mEANP72TextView;
-    String mBarcode;
+    ViewPager pagerTypes;
+    ViewPager pagerTemplate;
+    PagerAdapter pagerAdapterTypes;
+    PagerAdapter pagerAdapterTemplate;
 
     ListTableItems listColors;
     String myColorName;
     String myColorCode;
-    String title; // database
-    String generateBarcode; // database
+    String myTypeCard;
     public static List<ListTableItems> previewColors;
+    public static List<String> previewTypes;
     // Color mColor - putExtra
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_discount);
+        setContentView(R.layout.activity_add_bank_card);
 
         RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
-        title.setText(StaticPageNames.NEW_DISCOUNT_TITLE);
+        title.setText(StaticPageNames.NEW_BANK_TITLE);
 
-        Intent barcodeIntent = getIntent();
-        mBarcode = barcodeIntent.getStringExtra(BarcodeScanner.TAG_BARCODE);
-        mEANP72TextView = (EANP72TextView) findViewById(R.id.generate_barcode);
-
-        FalseAsyncTask barcodeGenerator = new FalseAsyncTask();
-        barcodeGenerator.execute(new BarcodeConverter(), mBarcode, new OnResultCallback<String, String>() {
-            @Override
-            public void onSuccess(String pS) {
-                mEANP72TextView.setText(pS);
-            }
-
-            @Override
-            public void onError(Exception pE) {
-            }
-
-            @Override
-            public void onProgressChanged(String pS) {
-            }
-        });
         final PreviewReader tcReader = PreviewReader.getInstance();
+        tcReader.setTypeCard();
+        previewTypes = tcReader.getTypeCard();
+
+        myTypeCard = previewTypes.get(0);
+        Log.d("TAG", myTypeCard);
+
+        PAGE_COUNT = previewTypes.size();
+
+        pagerTypes = (ViewPager) findViewById(R.id.type_card);
+//        pagerTypes.setPageMargin(pagerMargin);
+        pagerAdapterTypes = new MyFragmentPagerAdapterTypes(getSupportFragmentManager());
+        pagerTypes.setAdapter(pagerAdapterTypes);
+        pagerTypes.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                myTypeCard = previewTypes.get(position);
+                Log.d("TAG", myTypeCard);
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset,
+                                       int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+
+        });
+
+        // VIEWPAGER template start)
+
         tcReader.setPreviewColors();
         previewColors = tcReader.getPreviewColors();
 
@@ -86,13 +88,13 @@ public class Discount extends AppCompatActivity {
         myColorCode = listColors.getCodeColorTable();
         Log.d("TAG", myColorName + " " + myColorCode);
 
-        PAGE_COUNT = previewColors.size();
+        PAGE_COUNT_TEMPLATE = previewColors.size();
 
-        pager = (ViewPager) findViewById(R.id.pager);
-        pager.setPageMargin(pagerMargin);
-        pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
-        pager.setAdapter(pagerAdapter);
-        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        pagerTemplate = (ViewPager) findViewById(R.id.pager);
+        pagerTemplate.setPageMargin(pagerMargin);
+        pagerAdapterTemplate = new MyFragmentPagerAdapterTemplate(getSupportFragmentManager());
+        pagerTemplate.setAdapter(pagerAdapterTemplate);
+        pagerTemplate.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
             public void onPageSelected(int position) {
@@ -113,7 +115,7 @@ public class Discount extends AppCompatActivity {
             }
 
         });
-    }
+        }
 
     @Override
     protected void onDestroy() {
@@ -127,14 +129,31 @@ public class Discount extends AppCompatActivity {
     public void onCreateCardClicked(View view) {
     }
 
-    private class MyFragmentPagerAdapter extends FragmentPagerAdapter {
-        public MyFragmentPagerAdapter(FragmentManager fm) {
+    private class MyFragmentPagerAdapterTemplate extends FragmentPagerAdapter {
+        public MyFragmentPagerAdapterTemplate(FragmentManager fm) {
             super(fm);
         }
 
         @Override
         public Fragment getItem(int position) {
             return ViewPagerPreviewCard.newInstance(position);
+        }
+
+        @Override
+
+        public int getCount() {
+            return PAGE_COUNT_TEMPLATE;
+        }
+    }
+
+    private class MyFragmentPagerAdapterTypes extends FragmentPagerAdapter {
+        public MyFragmentPagerAdapterTypes(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return ViewPagerPreviewType.newInstance(position);
         }
 
         @Override

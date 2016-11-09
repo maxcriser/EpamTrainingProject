@@ -1,4 +1,4 @@
-package com.maxcriser.cards.ui;
+package com.maxcriser.cards.ui.pager;
 
 import android.graphics.Color;
 import android.os.Bundle;

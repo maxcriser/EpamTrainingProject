@@ -16,8 +16,9 @@ import android.widget.Toast;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.handler.RecyclerItemClickListener;
 import com.maxcriser.cards.reader.TypesCardsReader;
-import com.maxcriser.cards.ui.cards.BankCardsActivity;
+import com.maxcriser.cards.ui.adapter.ItemsRecyclerAdapter;
 import com.maxcriser.cards.ui.cards.DiscountCardsActivity;
+import com.maxcriser.cards.ui.cards.NFCCardsActivity;
 import com.maxcriser.cards.ui.cards.TicketsActivity;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         typesCards = (RecyclerView) findViewById(R.id.types_cards_recycler_view);
 
-        RecyclerAdapterTypes adapter = new RecyclerAdapterTypes(this, types, R.layout.item_list);
+        ItemsRecyclerAdapter adapter = new ItemsRecyclerAdapter(this, types, R.layout.item_list);
         typesCards.setAdapter(adapter);
         typesCards.setHasFixedSize(true);
         typesCards.setLayoutManager(new LinearLayoutManager(this));
@@ -48,13 +49,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, int position) {
                 if (position == 0) {
-                    startActivity(new Intent(MainActivity.this, BankCardsActivity.class));
+//                    TODO putExtra x.class to start after access auth
+//                    Intent intent = new Intent(MainActivity.this, LockerActivity.class);
+//                    intent.putExtra("ActivityToStart", BankCardsActivity.class);
+//                    startActivity(intent);
+                    startActivity(new Intent(MainActivity.this, LockerActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
                 } else if (position == 1) {
                     startActivity(new Intent(MainActivity.this, DiscountCardsActivity.class));
                 } else if (position == 2) {
                     startActivity(new Intent(MainActivity.this, TicketsActivity.class));
+                } else if (position == 3){
+                    startActivity(new Intent(MainActivity.this, NFCCardsActivity.class));
                 } else {
                     Toast.makeText(getApplicationContext(), "Error: Directory does not exist", Toast.LENGTH_LONG).show();
+
                 }
             }
 

@@ -1,4 +1,4 @@
-package com.maxcriser.cards.ui;
+package com.maxcriser.cards.ui.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -13,14 +13,14 @@ import com.maxcriser.cards.holder.RecyclerViewHolderTypes;
 import java.util.List;
 
 
-public class RecyclerAdapterTypes extends RecyclerView.Adapter<RecyclerViewHolderTypes> {
+public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolderTypes> {
 
 
     private List<String> mItems;
     private LayoutInflater mInflater;
     private Object mView;
 
-    public RecyclerAdapterTypes(Context context, List<String> pItems, Object pObject) {
+    public ItemsRecyclerAdapter(Context context, List<String> pItems, Object pObject) {
         mView = pObject;
         mItems = pItems;
         mInflater = LayoutInflater.from(context);

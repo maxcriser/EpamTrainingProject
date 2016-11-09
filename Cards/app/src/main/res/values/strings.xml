@@ -13,6 +13,9 @@
     <string name="create_card">create card</string>
     <string name="delete">Delete</string>
     <string name="enter_pin">Enter Passcode</string>
+    <string name="add_a_new">add a new</string>
+    <string name="card_color">card color</string>
+    <string name="enter_name_of_card">Enter name of card...</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>

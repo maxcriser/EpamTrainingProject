@@ -1,22 +1,39 @@
-package com.maxcriser.cards.reader.PreviewColor;
+package com.maxcriser.cards.reader;
 
 import com.maxcriser.cards.database.custom.ListTableItems;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PreviewColorReader {
+import static com.maxcriser.cards.constant.BankCardTypes.AMEX;
+import static com.maxcriser.cards.constant.BankCardTypes.DINERS_CLUB;
+import static com.maxcriser.cards.constant.BankCardTypes.JCB;
+import static com.maxcriser.cards.constant.BankCardTypes.MAESTRO;
+import static com.maxcriser.cards.constant.BankCardTypes.MASTERCARD;
+import static com.maxcriser.cards.constant.BankCardTypes.VISA;
+import static com.maxcriser.cards.constant.BankCardTypes.WESTERN_UNION;
+
+public class PreviewReader {
 
     private List<ListTableItems> previewColors;
+    private List<String> typeCard;
 
-    private static PreviewColorReader sPreviewColorReader;
+    private static PreviewReader sPreviewReader;
 
-    PreviewColorReader() {
+    PreviewReader() {
         previewColors = new ArrayList<>();
     }
 
-
-
+    public void setTypeCard() {
+        typeCard = new ArrayList<>();
+        typeCard.add(VISA);
+        typeCard.add(MASTERCARD);
+        typeCard.add(AMEX);
+        typeCard.add(MAESTRO);
+        typeCard.add(WESTERN_UNION);
+        typeCard.add(JCB);
+        typeCard.add(DINERS_CLUB);
+    }
     public void setPreviewColors() {
 
         ListTableItems listTableItems = new ListTableItems();
@@ -33,7 +50,7 @@ public class PreviewColorReader {
 
         ListTableItems listTableItems4 = new ListTableItems();
         listTableItems4.setNameColorTable("name4");
-        listTableItems4.setCodeColorTable("E91E63");
+        listTableItems4.setCodeColorTable("#99000000");
 
         previewColors.add(listTableItems);
         previewColors.add(listTableItems2);
@@ -67,11 +84,15 @@ public class PreviewColorReader {
         return previewColors;
     }
 
-    public static PreviewColorReader getInstance() {
-        if (sPreviewColorReader == null) {
-            sPreviewColorReader = new PreviewColorReader();
+    public List<String> getTypeCard() {
+        return typeCard;
+    }
+
+    public static PreviewReader getInstance() {
+        if (sPreviewReader == null) {
+            sPreviewReader = new PreviewReader();
         }
-        return sPreviewColorReader;
+        return sPreviewReader;
     }
 
 }

@@ -10,11 +10,14 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
+import com.maxcriser.cards.ui.LockerActivity;
+
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
 
     private CancellationSignal cancellationSignal;
     private Context appContext;
+    LockerActivity mLockerActivity = new LockerActivity();
 
     public FingerprintHandler(Context context) {
         appContext = context;
@@ -51,17 +54,12 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     @Override
     public void onAuthenticationFailed() {
-        Toast.makeText(appContext,
-                "Authentication failed.",
-                Toast.LENGTH_LONG).show();
+        mLockerActivity.error(250);
     }
 
     @Override
     public void onAuthenticationSucceeded(
-            FingerprintManager.AuthenticationResult result) {
-
-        Toast.makeText(appContext,
-                "Authentication succeeded.",
-                Toast.LENGTH_LONG).show();
+        FingerprintManager.AuthenticationResult result) {
+        mLockerActivity.start();
     }
 }

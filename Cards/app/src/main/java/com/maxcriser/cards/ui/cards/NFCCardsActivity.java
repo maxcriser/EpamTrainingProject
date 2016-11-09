@@ -1,6 +1,5 @@
 package com.maxcriser.cards.ui.cards;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,34 +12,33 @@ import com.maxcriser.cards.constant.StaticPageNames;
 import com.maxcriser.cards.handler.RecyclerItemClickListener;
 import com.maxcriser.cards.reader.TypesCardsReader;
 import com.maxcriser.cards.ui.adapter.ItemsRecyclerAdapter;
-import com.maxcriser.cards.ui.create.Bank;
 import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
 
 import java.util.List;
 
-public class BankCardsActivity extends AppCompatActivity {
+public class NFCCardsActivity extends AppCompatActivity {
 
-    RecyclerView viewBankCards;
+    RecyclerView viewNFCItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bank_cards);
+        setContentView(R.layout.activity_nfc_cards);
 
         RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
-        title.setText(StaticPageNames.NEW_BANK_TITLE);
+        title.setText(StaticPageNames.NFC_TITLE);
 
         final TypesCardsReader tcReader = TypesCardsReader.getInstance();
-        tcReader.setBankCards();
+        tcReader.setNfcCards();
 
-        final List<String> myBankCards = tcReader.getBankCards();
+        final List<String> myNFCItems = tcReader.getNfcCards();
 
-        viewBankCards = (RecyclerView) findViewById(R.id.types_bank_cards_recycler_view);
+        viewNFCItems = (RecyclerView) findViewById(R.id.nfc_items_recycler_view);
 
-        ItemsRecyclerAdapter adapter = new ItemsRecyclerAdapter(this, myBankCards, R.layout.item_list);
-        viewBankCards.setAdapter(adapter);
-        viewBankCards.setHasFixedSize(true);
-        viewBankCards.setLayoutManager(new LinearLayoutManager(this));
+        ItemsRecyclerAdapter adapter = new ItemsRecyclerAdapter(this, myNFCItems, R.layout.item_list);
+        viewNFCItems.setAdapter(adapter);
+        viewNFCItems.setHasFixedSize(true);
+        viewNFCItems.setLayoutManager(new LinearLayoutManager(this));
 
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -52,16 +50,16 @@ public class BankCardsActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                myBankCards.remove(viewHolder.getAdapterPosition());
-                viewBankCards.getAdapter().notifyItemRemoved(viewHolder.getAdapterPosition());
+                myNFCItems.remove(viewHolder.getAdapterPosition());
+                viewNFCItems.getAdapter().notifyItemRemoved(viewHolder.getAdapterPosition());
                 //TODO remove to database myTickets (viewHolder.getAdapterPosition)
             }
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(viewBankCards);
+        itemTouchHelper.attachToRecyclerView(viewNFCItems);
 
-        viewBankCards.addOnItemTouchListener(new RecyclerItemClickListener(this, viewBankCards, new RecyclerItemClickListener.OnItemClickListener() {
+        viewNFCItems.addOnItemTouchListener(new RecyclerItemClickListener(this, viewNFCItems, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
 //                TODO GO TO my card
@@ -77,12 +75,5 @@ public class BankCardsActivity extends AppCompatActivity {
 
     public void onBackClicked(View view) {
         super.onBackPressed();
-    }
-
-    public void onAddNewClicked(View view) {
-        // TODO start camera
-        startActivity(new Intent(BankCardsActivity.this, Bank.class));
-//        Intent intent = new Intent(BankCardsActivity.this, Bank.class);
-//        startActivity(intent);
     }
 }

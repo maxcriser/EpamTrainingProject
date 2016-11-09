@@ -18,7 +18,6 @@ public class PasswordReader {
     }
 
     public void setPassword() {
-        //some method of read password
         mPassword = "1234";
     }
 

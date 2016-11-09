@@ -3,11 +3,13 @@ package com.maxcriser.cards.ui;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.KeyguardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
@@ -21,7 +23,7 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.PinKeyboard;
 import com.maxcriser.cards.handler.FingerprintHandler;
 import com.maxcriser.cards.reader.PasswordReader;
-import com.maxcriser.cards.ui.cards.ProtectedBankCards;
+import com.maxcriser.cards.ui.cards.BankCardsActivity;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
@@ -38,12 +40,15 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
-public class PinProtectedActivity extends AppCompatActivity {
+public class LockerActivity extends AppCompatActivity {
 
     ImageView firstCircle;
     ImageView secondCircle;
     ImageView thirdCircle;
     ImageView fourthCircle;
+    Vibrator mVibrator;
+
+    Intent intent;
 
     String builderPassword;
 
@@ -64,8 +69,8 @@ public class PinProtectedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin_protected);
-
-        Toast.makeText(this, "first", Toast.LENGTH_LONG).show();
+        mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        intent = getIntent();
 
         circleCounter = 1;
         builderPassword = "";
@@ -231,8 +236,8 @@ public class PinProtectedActivity extends AppCompatActivity {
             if (builderPassword.equals(check.getPassword())) {
                 start();
             } else {
-                //TODO animation and vibration
-                onDeleteClicked(null);
+                //TODO animation
+                error(250);
             }
         }
     }
@@ -295,7 +300,13 @@ public class PinProtectedActivity extends AppCompatActivity {
         }
     }
 
+    public void error(int time){
+        mVibrator.vibrate(time);
+        onDeleteClicked(null);
+    }
+
     public void start() {
-        startActivity(new Intent(PinProtectedActivity.this, ProtectedBankCards.class));
+        //TODO getExtra from activity to start after access
+        startActivity(new Intent(LockerActivity.this, BankCardsActivity.class));
     }
 }
