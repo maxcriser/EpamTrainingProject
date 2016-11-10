@@ -7,8 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
 import com.maxcriser.cards.R;
+import com.maxcriser.cards.database.custom.ListTableItems;
+import com.maxcriser.cards.reader.PreviewReader;
+
+import java.util.List;
 
 public class LaunchScreenActivity extends AppCompatActivity {
+
+    public static List<ListTableItems> previewColors;
+    public static List<String> previewTypes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +24,12 @@ public class LaunchScreenActivity extends AppCompatActivity {
         WindowManager.LayoutParams attrs = getWindow().getAttributes();
         attrs.flags = WindowManager.LayoutParams.FLAG_FULLSCREEN;
         getWindow().setAttributes(attrs);
+
+        final PreviewReader tcReader = PreviewReader.getInstance();
+        tcReader.setPreviewColors();
+        previewColors = tcReader.getPreviewColors();
+        tcReader.setTypeCard();
+        previewTypes = tcReader.getTypeCard();
 
         setContentView(R.layout.activity_launch_screen);
 

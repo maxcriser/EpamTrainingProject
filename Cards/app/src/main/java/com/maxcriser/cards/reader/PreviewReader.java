@@ -34,50 +34,36 @@ public class PreviewReader {
         typeCard.add(JCB);
         typeCard.add(DINERS_CLUB);
     }
-    public void setPreviewColors() {
 
+    public void addPreviewColors(String name, String color){
         ListTableItems listTableItems = new ListTableItems();
-        listTableItems.setNameColorTable("name1");
-        listTableItems.setCodeColorTable("#0b8c8f");
-
-        ListTableItems listTableItems2 = new ListTableItems();
-        listTableItems2.setNameColorTable("name2");
-        listTableItems2.setCodeColorTable("#E91E63");
-
-        ListTableItems listTableItems3 = new ListTableItems();
-        listTableItems3.setNameColorTable("name3");
-        listTableItems3.setCodeColorTable("#F44336");
-
-        ListTableItems listTableItems4 = new ListTableItems();
-        listTableItems4.setNameColorTable("name4");
-        listTableItems4.setCodeColorTable("#99000000");
+        listTableItems.setNameColorTable(name);
+        listTableItems.setCodeColorTable(color);
 
         previewColors.add(listTableItems);
-        previewColors.add(listTableItems2);
-        previewColors.add(listTableItems3);
-        previewColors.add(listTableItems4);
+    }
 
-//        previewColors.add("#0b8c8f");
-//        previewColors.add("#E91E63");
-//        previewColors.add("#F44336");
-//        previewColors.add("#E91E63");
-//        previewColors.add("#9C27B0");
-//        previewColors.add("#673AB7");
-//        previewColors.add("#3F51B5");
-//        previewColors.add("#2196F3");
-//        previewColors.add("#03A9F4");
-//        previewColors.add("#00BCD4");
-//        previewColors.add("#00BCD4");
-//        previewColors.add("#4CAF50");
-//        previewColors.add("#8BC34A");
-//        previewColors.add("#CDDC39");
-//        previewColors.add("#FFEB3B");
-//        previewColors.add("#FFC107");
-//        previewColors.add("#FF9800");
-//        previewColors.add("#FF5722");
-//        previewColors.add("#795548");
-//        previewColors.add("#9E9E9E");
-//        previewColors.add("#607D8B");
+    public void setPreviewColors() {
+
+        addPreviewColors("standard", "#0b8c8f");
+        addPreviewColors("red", "#F44336");
+        addPreviewColors("pink", "#E91E63");
+        addPreviewColors("purple", "#9C27B0");
+        addPreviewColors("deep purple", "#673AB7");
+        addPreviewColors("indigo", "#3F51B5");
+        addPreviewColors("blue", "#2196F3");
+        addPreviewColors("light blue", "#03A9F4");
+        addPreviewColors("cyan", "#00BCD4");
+        addPreviewColors("teal", "#009688");
+        addPreviewColors("green", "#4CAF50");
+        addPreviewColors("light green", "#8BC34A");
+        addPreviewColors("lime", "#CDDC39");
+        addPreviewColors("amber", "#FFC107");
+        addPreviewColors("orange", "#FF9800");
+        addPreviewColors("deep orange", "#FF5722");
+        addPreviewColors("brown", "#795548");
+        addPreviewColors("grey", "#9E9E9E");
+        addPreviewColors("blue grey", "#607D8B");
     }
 
     public List<ListTableItems> getPreviewColors() {

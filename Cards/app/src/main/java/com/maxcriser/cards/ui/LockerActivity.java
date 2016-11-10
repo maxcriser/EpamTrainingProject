@@ -95,10 +95,6 @@ public class LockerActivity extends AppCompatActivity {
                         "Lock screen security not enabled in Settings",
                         Toast.LENGTH_LONG).show();
                 return;
-            } else {
-                Toast.makeText(this,
-                        "ENABLED",
-                        Toast.LENGTH_LONG).show();
             }
 
             if (ActivityCompat.checkSelfPermission(this,
@@ -109,10 +105,6 @@ public class LockerActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
 
                 return;
-            } else {
-                Toast.makeText(this,
-                        "PERMISSION ENABLED",
-                        Toast.LENGTH_LONG).show();
             }
 
             if (!fingerprintManager.hasEnrolledFingerprints()) {
@@ -122,10 +114,6 @@ public class LockerActivity extends AppCompatActivity {
                         "Register at least one fingerprint in Settings",
                         Toast.LENGTH_LONG).show();
                 return;
-            } else {
-                Toast.makeText(this,
-                        "FINGERPRINT ONE",
-                        Toast.LENGTH_LONG).show();
             }
 
             generateKey();
@@ -218,8 +206,6 @@ public class LockerActivity extends AppCompatActivity {
     public void inputPassword(String number) {
 
         builderPassword += number;
-
-        Toast.makeText(this, builderPassword, Toast.LENGTH_SHORT).show();
 
         if (circleCounter.equals(1)) {
             setBackgroundCircle(firstCircle);

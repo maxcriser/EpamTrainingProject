@@ -17,6 +17,7 @@ import static com.maxcriser.cards.constant.BankCardTypes.MAESTRO;
 import static com.maxcriser.cards.constant.BankCardTypes.MASTERCARD;
 import static com.maxcriser.cards.constant.BankCardTypes.VISA;
 import static com.maxcriser.cards.constant.BankCardTypes.WESTERN_UNION;
+import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
 
 public class ViewPagerPreviewType extends Fragment{
 
@@ -44,7 +45,7 @@ public class ViewPagerPreviewType extends Fragment{
         View view = inflater.inflate(R.layout.preview_type_item, null);
 // pageNumberType
         ImageView tvPage = (ImageView) view.findViewById(R.id.icon_type_card);
-        String type = Bank.previewTypes.get(pageNumberType);
+        String type = previewTypes.get(pageNumberType);
         if (type.equals(VISA)) {
             tvPage.setImageResource(R.drawable.type_visa);
         } else if (type.equals(MASTERCARD)) {

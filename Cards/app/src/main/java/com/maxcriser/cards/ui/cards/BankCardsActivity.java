@@ -37,7 +37,7 @@ public class BankCardsActivity extends AppCompatActivity {
 
         viewBankCards = (RecyclerView) findViewById(R.id.types_bank_cards_recycler_view);
 
-        ItemsRecyclerAdapter adapter = new ItemsRecyclerAdapter(this, myBankCards, R.layout.item_list);
+        ItemsRecyclerAdapter adapter = new ItemsRecyclerAdapter(this, myBankCards, R.layout.item_list_bank);
         viewBankCards.setAdapter(adapter);
         viewBankCards.setHasFixedSize(true);
         viewBankCards.setLayoutManager(new LinearLayoutManager(this));

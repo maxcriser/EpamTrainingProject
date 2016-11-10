@@ -21,12 +21,13 @@ import com.maxcriser.cards.barcode.BarcodeBuilder;
 import com.maxcriser.cards.barcode.BarcodeScanner;
 import com.maxcriser.cards.constant.StaticPageNames;
 import com.maxcriser.cards.database.custom.ListTableItems;
-import com.maxcriser.cards.reader.PreviewReader;
+import com.maxcriser.cards.ui.adapter.MyFragmentPagerAdapterTemplate;
 import com.maxcriser.cards.ui.pager.ViewPagerPreviewCard;
 import com.maxcriser.cards.view.TextViews.EANP72TextView;
 import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
 
-import java.util.List;
+import static com.maxcriser.cards.constant.ViewPagerTemplate.ID_DISCOUNT_ITEM;
+import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
 public class Discount extends AppCompatActivity {
 
@@ -47,7 +48,6 @@ public class Discount extends AppCompatActivity {
     String myColorCode;
     String title; // database
     String generateBarcode; // database
-    public static List<ListTableItems> previewColors;
     // Color mColor - putExtra
 
     @Override
@@ -77,9 +77,6 @@ public class Discount extends AppCompatActivity {
             public void onProgressChanged(String pS) {
             }
         });
-        final PreviewReader tcReader = PreviewReader.getInstance();
-        tcReader.setPreviewColors();
-        previewColors = tcReader.getPreviewColors();
 
         listColors = previewColors.get(0);
         myColorName = listColors.getNameColorTable();
@@ -90,7 +87,10 @@ public class Discount extends AppCompatActivity {
 
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setPageMargin(pagerMargin);
-        pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
+        pagerAdapter = new MyFragmentPagerAdapterTemplate(getSupportFragmentManager(),
+                ID_DISCOUNT_ITEM,
+                PAGE_COUNT);
+
         pager.setAdapter(pagerAdapter);
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -126,22 +126,4 @@ public class Discount extends AppCompatActivity {
 
     public void onCreateCardClicked(View view) {
     }
-
-    private class MyFragmentPagerAdapter extends FragmentPagerAdapter {
-        public MyFragmentPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return ViewPagerPreviewCard.newInstance(position);
-        }
-
-        @Override
-
-        public int getCount() {
-            return PAGE_COUNT;
-        }
-    }
-
 }

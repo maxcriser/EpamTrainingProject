@@ -1,9 +1,6 @@
 package com.maxcriser.cards.ui.create;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -13,12 +10,13 @@ import android.view.View;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.StaticPageNames;
 import com.maxcriser.cards.database.custom.ListTableItems;
-import com.maxcriser.cards.reader.PreviewReader;
-import com.maxcriser.cards.ui.pager.ViewPagerPreviewCard;
-import com.maxcriser.cards.ui.pager.ViewPagerPreviewType;
+import com.maxcriser.cards.ui.adapter.MyFragmentPagerAdapterTemplate;
 import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
 
-import java.util.List;
+import static com.maxcriser.cards.constant.ViewPagerTemplate.ID_BANK_CARD_ITEM;
+import static com.maxcriser.cards.constant.ViewPagerTemplate.ID_TYPE_BANK_CARD_ITEM;
+import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
+import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
 
 public class Bank extends AppCompatActivity {
 
@@ -34,8 +32,6 @@ public class Bank extends AppCompatActivity {
     String myColorName;
     String myColorCode;
     String myTypeCard;
-    public static List<ListTableItems> previewColors;
-    public static List<String> previewTypes;
     // Color mColor - putExtra
 
     @Override
@@ -46,10 +42,6 @@ public class Bank extends AppCompatActivity {
         RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
         title.setText(StaticPageNames.NEW_BANK_TITLE);
 
-        final PreviewReader tcReader = PreviewReader.getInstance();
-        tcReader.setTypeCard();
-        previewTypes = tcReader.getTypeCard();
-
         myTypeCard = previewTypes.get(0);
         Log.d("TAG", myTypeCard);
 
@@ -57,7 +49,10 @@ public class Bank extends AppCompatActivity {
 
         pagerTypes = (ViewPager) findViewById(R.id.type_card);
 //        pagerTypes.setPageMargin(pagerMargin);
-        pagerAdapterTypes = new MyFragmentPagerAdapterTypes(getSupportFragmentManager());
+        pagerAdapterTypes = new MyFragmentPagerAdapterTemplate(getSupportFragmentManager(),
+                ID_TYPE_BANK_CARD_ITEM,
+                PAGE_COUNT);
+
         pagerTypes.setAdapter(pagerAdapterTypes);
         pagerTypes.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -80,9 +75,6 @@ public class Bank extends AppCompatActivity {
 
         // VIEWPAGER template start)
 
-        tcReader.setPreviewColors();
-        previewColors = tcReader.getPreviewColors();
-
         listColors = previewColors.get(0);
         myColorName = listColors.getNameColorTable();
         myColorCode = listColors.getCodeColorTable();
@@ -92,7 +84,10 @@ public class Bank extends AppCompatActivity {
 
         pagerTemplate = (ViewPager) findViewById(R.id.pager);
         pagerTemplate.setPageMargin(pagerMargin);
-        pagerAdapterTemplate = new MyFragmentPagerAdapterTemplate(getSupportFragmentManager());
+        pagerAdapterTemplate = new MyFragmentPagerAdapterTemplate(getSupportFragmentManager(),
+                ID_BANK_CARD_ITEM,
+                PAGE_COUNT_TEMPLATE);
+
         pagerTemplate.setAdapter(pagerAdapterTemplate);
         pagerTemplate.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -102,7 +97,6 @@ public class Bank extends AppCompatActivity {
                 myColorName = listColors.getNameColorTable();
                 myColorCode = listColors.getCodeColorTable();
                 Log.d("TAG", myColorName + " " + myColorCode);
-
             }
 
             @Override
@@ -115,7 +109,7 @@ public class Bank extends AppCompatActivity {
             }
 
         });
-        }
+    }
 
     @Override
     protected void onDestroy() {
@@ -127,40 +121,6 @@ public class Bank extends AppCompatActivity {
     }
 
     public void onCreateCardClicked(View view) {
-    }
-
-    private class MyFragmentPagerAdapterTemplate extends FragmentPagerAdapter {
-        public MyFragmentPagerAdapterTemplate(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return ViewPagerPreviewCard.newInstance(position);
-        }
-
-        @Override
-
-        public int getCount() {
-            return PAGE_COUNT_TEMPLATE;
-        }
-    }
-
-    private class MyFragmentPagerAdapterTypes extends FragmentPagerAdapter {
-        public MyFragmentPagerAdapterTypes(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return ViewPagerPreviewType.newInstance(position);
-        }
-
-        @Override
-
-        public int getCount() {
-            return PAGE_COUNT;
-        }
     }
 
 }

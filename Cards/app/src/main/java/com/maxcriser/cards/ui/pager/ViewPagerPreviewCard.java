@@ -10,19 +10,23 @@ import android.widget.FrameLayout;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.database.custom.ListTableItems;
-import com.maxcriser.cards.ui.create.Discount;
 import com.maxcriser.cards.view.TextViews.RobotoThinTextView;
+
+import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
 public class ViewPagerPreviewCard extends Fragment {
 
-    static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
+    public static Object previewView;
 
-    int pageNumber;
+    static final String ARGUMENT_PAGE_NUMBER_DISCOUNT = "arg_page_number";
 
-    public static ViewPagerPreviewCard newInstance(int page) {
+    int pageNumberDiscount;
+
+    public static ViewPagerPreviewCard newInstance(int pageDiscount, Object pView) {
+        previewView = pView;
         ViewPagerPreviewCard viewPagerPreviewCard = new ViewPagerPreviewCard();
         Bundle arguments = new Bundle();
-        arguments.putInt(ARGUMENT_PAGE_NUMBER, page);
+        arguments.putInt(ARGUMENT_PAGE_NUMBER_DISCOUNT, pageDiscount);
         viewPagerPreviewCard.setArguments(arguments);
         return viewPagerPreviewCard;
     }
@@ -30,18 +34,18 @@ public class ViewPagerPreviewCard extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pageNumber = getArguments().getInt(ARGUMENT_PAGE_NUMBER);
+        pageNumberDiscount = getArguments().getInt(ARGUMENT_PAGE_NUMBER_DISCOUNT);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.discount_item, null);
+        View view = inflater.inflate((Integer) previewView, null);
 
         RobotoThinTextView tvPage = (RobotoThinTextView) view.findViewById(R.id.title_main_cards);
         FrameLayout mLinearCard = (FrameLayout) view.findViewById(R.id.linear_card);
 
-        ListTableItems color = Discount.previewColors.get(pageNumber);
+        ListTableItems color = previewColors.get(pageNumberDiscount);
         mLinearCard.setBackgroundColor(Color.parseColor(color.getCodeColorTable()));
         tvPage.setText(color.getNameColorTable());
 
