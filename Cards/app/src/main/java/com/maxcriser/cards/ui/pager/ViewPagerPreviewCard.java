@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.database.custom.ListTableItems;
@@ -17,6 +18,8 @@ import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 public class ViewPagerPreviewCard extends Fragment {
 
     public static Object previewView;
+
+    public static Object icon = R.drawable.type_visa;
 
     static final String ARGUMENT_PAGE_NUMBER_DISCOUNT = "arg_page_number";
 
@@ -35,6 +38,7 @@ public class ViewPagerPreviewCard extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pageNumberDiscount = getArguments().getInt(ARGUMENT_PAGE_NUMBER_DISCOUNT);
+//        icon = R.drawable.type_visa;
     }
 
     @Override
@@ -44,6 +48,12 @@ public class ViewPagerPreviewCard extends Fragment {
 
         RobotoThinTextView tvPage = (RobotoThinTextView) view.findViewById(R.id.title_main_cards);
         FrameLayout mLinearCard = (FrameLayout) view.findViewById(R.id.linear_card);
+        ImageView imageView = (ImageView) view.findViewById(R.id.icon_bank_cards);
+        try {
+            imageView.setImageResource((Integer) icon);
+        }catch(Exception e) {
+
+        }
 
         ListTableItems color = previewColors.get(pageNumberDiscount);
         mLinearCard.setBackgroundColor(Color.parseColor(color.getCodeColorTable()));

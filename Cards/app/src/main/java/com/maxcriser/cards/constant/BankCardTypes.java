@@ -9,5 +9,6 @@ public class BankCardTypes {
     public static final String WESTERN_UNION = "western_union";
     public static final String JCB = "jcb";
     public static final String DINERS_CLUB = "diners_club";
+    public static final String BELCARD = "belcard";
 
 }

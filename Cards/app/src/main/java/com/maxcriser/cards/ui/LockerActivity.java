@@ -9,6 +9,8 @@ import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Vibrator;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
@@ -42,6 +44,8 @@ import javax.crypto.SecretKey;
 
 public class LockerActivity extends AppCompatActivity {
 
+    Handler mHandler;
+
     ImageView firstCircle;
     ImageView secondCircle;
     ImageView thirdCircle;
@@ -51,8 +55,6 @@ public class LockerActivity extends AppCompatActivity {
     Intent intent;
 
     String builderPassword;
-
-    Integer circleCounter;
 
     PasswordReader check;
 
@@ -65,6 +67,14 @@ public class LockerActivity extends AppCompatActivity {
     private Cipher cipher;
     private FingerprintManager.CryptoObject cryptoObject;
 
+    Handler.Callback hc = new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            error(250);
+            return false;
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +82,8 @@ public class LockerActivity extends AppCompatActivity {
         mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         intent = getIntent();
 
-        circleCounter = 1;
+        mHandler = new Handler(hc);
+
         builderPassword = "";
 
         check = PasswordReader.getInstance();
@@ -83,50 +94,54 @@ public class LockerActivity extends AppCompatActivity {
         thirdCircle = (ImageView) findViewById(R.id.crlcThree);
         fourthCircle = (ImageView) findViewById(R.id.crlcFour);
 
-        if (Build.VERSION.SDK_INT >= 23 && Build.FINGERPRINT != null) {
+//        TODO FIX BUG At least finger
+        if (Build.VERSION.SDK_INT >= 23) {
 
             keyguardManager =
                     (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
             fingerprintManager =
                     (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
 
-            if (!keyguardManager.isKeyguardSecure()) {
-                Toast.makeText(this,
-                        "Lock screen security not enabled in Settings",
-                        Toast.LENGTH_LONG).show();
-                return;
-            }
+            if (fingerprintManager.isHardwareDetected() && fingerprintManager.hasEnrolledFingerprints()) {
 
-            if (ActivityCompat.checkSelfPermission(this,
-                    Manifest.permission.USE_FINGERPRINT) !=
-                    PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this,
-                        "Fingerprint authentication permission not enabled",
-                        Toast.LENGTH_LONG).show();
+                if (!keyguardManager.isKeyguardSecure()) {
+                    Toast.makeText(this,
+                            "Lock screen security not enabled in Settings",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
 
-                return;
-            }
+                if (ActivityCompat.checkSelfPermission(this,
+                        Manifest.permission.USE_FINGERPRINT) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this,
+                            "Fingerprint authentication permission not enabled",
+                            Toast.LENGTH_LONG).show();
 
-            if (!fingerprintManager.hasEnrolledFingerprints()) {
+                    return;
+                }
 
-                // This happens when no fingerprints are registered.
-                Toast.makeText(this,
-                        "Register at least one fingerprint in Settings",
-                        Toast.LENGTH_LONG).show();
-                return;
-            }
+                if (!fingerprintManager.hasEnrolledFingerprints()) {
 
-            generateKey();
+                    // This happens when no fingerprints are registered.
+                    Toast.makeText(this,
+                            "Register at least one fingerprint in Settings",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
 
-            if (cipherInit()) {
-                cryptoObject =
-                        new FingerprintManager.CryptoObject(cipher);
-            }
+                generateKey();
 
-            if (cipherInit()) {
-                cryptoObject = new FingerprintManager.CryptoObject(cipher);
-                FingerprintHandler helper = new FingerprintHandler(this);
-                helper.startAuth(fingerprintManager, cryptoObject);
+                if (cipherInit()) {
+                    cryptoObject =
+                            new FingerprintManager.CryptoObject(cipher);
+                }
+
+                if (cipherInit()) {
+                    cryptoObject = new FingerprintManager.CryptoObject(cipher);
+                    FingerprintHandler helper = new FingerprintHandler(this);
+                    helper.startAuth(fingerprintManager, cryptoObject);
+                }
             }
         }
     }
@@ -207,23 +222,24 @@ public class LockerActivity extends AppCompatActivity {
 
         builderPassword += number;
 
-        if (circleCounter.equals(1)) {
-            setBackgroundCircle(firstCircle);
-        } else if (circleCounter.equals(2)) {
-            setBackgroundCircle(secondCircle);
-        } else if (circleCounter.equals(3)) {
-            setBackgroundCircle(thirdCircle);
-        } else {
-            setBackgroundCircle(fourthCircle);
-        }
-        circleCounter++;
+        // TODO length
+        Integer length = builderPassword.length();
 
-        if (circleCounter == 5) {
+        if (length == 1) {
+            setBackgroundCircle(firstCircle);
+        } else if (length == 2) {
+            setBackgroundCircle(secondCircle);
+        } else if (length == 3) {
+            setBackgroundCircle(thirdCircle);
+        } else if (length == 4) {
+            setBackgroundCircle(fourthCircle);
             if (builderPassword.equals(check.getPassword())) {
                 start();
             } else {
                 //TODO animation
-                error(250);
+                mVibrator.vibrate(200);
+                setBackgroundCircles(false, firstCircle, secondCircle, thirdCircle, fourthCircle);
+                mHandler.sendEmptyMessageDelayed(1, 350);
             }
         }
     }
@@ -270,8 +286,8 @@ public class LockerActivity extends AppCompatActivity {
 
     public void setBackgroundCircles(boolean flag, ImageView... args) {
         for (ImageView v : args) {
-            if (flag) {
-                v.setBackgroundResource(R.drawable.ic_lens_black_24dp);
+            if (!flag) {
+                v.setBackgroundResource(R.drawable.ic_lens_red_24dp);
             } else {
                 v.setBackgroundResource(R.drawable.ic_radio_button_unchecked_black_24dp);
             }
@@ -279,15 +295,13 @@ public class LockerActivity extends AppCompatActivity {
     }
 
     public void onDeleteClicked(View view) {
-        if (circleCounter != 1) {
+        if (builderPassword.length() != 0) {
             builderPassword = "";
-            circleCounter = 1;
-            setBackgroundCircles(false, firstCircle, secondCircle, thirdCircle, fourthCircle);
+            setBackgroundCircles(true, firstCircle, secondCircle, thirdCircle, fourthCircle);
         }
     }
 
-    public void error(int time){
-        mVibrator.vibrate(time);
+    public void error(int time) {
         onDeleteClicked(null);
     }
 

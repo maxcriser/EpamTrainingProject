@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.maxcriser.cards.constant.BankCardTypes.AMEX;
+import static com.maxcriser.cards.constant.BankCardTypes.BELCARD;
 import static com.maxcriser.cards.constant.BankCardTypes.DINERS_CLUB;
 import static com.maxcriser.cards.constant.BankCardTypes.JCB;
 import static com.maxcriser.cards.constant.BankCardTypes.MAESTRO;
@@ -33,6 +34,7 @@ public class PreviewReader {
         typeCard.add(WESTERN_UNION);
         typeCard.add(JCB);
         typeCard.add(DINERS_CLUB);
+        typeCard.add(BELCARD);
     }
 
     public void addPreviewColors(String name, String color){

@@ -11,6 +11,7 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.ui.create.Bank;
 
 import static com.maxcriser.cards.constant.BankCardTypes.AMEX;
+import static com.maxcriser.cards.constant.BankCardTypes.BELCARD;
 import static com.maxcriser.cards.constant.BankCardTypes.DINERS_CLUB;
 import static com.maxcriser.cards.constant.BankCardTypes.JCB;
 import static com.maxcriser.cards.constant.BankCardTypes.MAESTRO;
@@ -60,6 +61,8 @@ public class ViewPagerPreviewType extends Fragment{
             tvPage.setImageResource(R.drawable.type_jcb);
         } else if (type.equals(DINERS_CLUB)) {
             tvPage.setImageResource(R.drawable.type_diners_club);
+        } else if(type.equals(BELCARD)){
+            tvPage.setImageResource(R.drawable.type_belcard);
         }
         return view;
     }

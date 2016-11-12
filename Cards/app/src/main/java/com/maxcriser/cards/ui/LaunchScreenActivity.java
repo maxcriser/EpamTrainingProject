@@ -1,5 +1,6 @@
 package com.maxcriser.cards.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,6 +9,7 @@ import android.view.WindowManager;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.database.custom.ListTableItems;
+import com.maxcriser.cards.holder.ContextHolder;
 import com.maxcriser.cards.reader.PreviewReader;
 
 import java.util.List;
@@ -20,6 +22,8 @@ public class LaunchScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ContextHolder.getInstance().setContext(getApplicationContext());
 
         WindowManager.LayoutParams attrs = getWindow().getAttributes();
         attrs.flags = WindowManager.LayoutParams.FLAG_FULLSCREEN;

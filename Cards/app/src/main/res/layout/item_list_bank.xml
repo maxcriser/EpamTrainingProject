@@ -25,7 +25,7 @@
             <ImageView
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/icon_main_cards"
+                android:id="@+id/icon_bank_cards"
                 android:layout_width="80dp"
                 android:layout_height="50dp"
                 android:layout_margin="16dp"

@@ -2,7 +2,7 @@
     <string name="app_name">Cards</string>
 
     <string name="action_settings">Settings</string>
-    <string name="text_empty_page">you have not cards</string>
+    <string name="text_empty_page">This page is empty</string>
     <string name="text_big_add_new_card">add new card</string>
     <string name="title_of_cards">name</string>
     <string name="cancel">Cancel</string>
@@ -16,6 +16,7 @@
     <string name="add_a_new">add a new</string>
     <string name="card_color">card color</string>
     <string name="enter_name_of_card">Enter name of card...</string>
+    <string name="enter_name_of_the_card">Enter name of the card...</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>

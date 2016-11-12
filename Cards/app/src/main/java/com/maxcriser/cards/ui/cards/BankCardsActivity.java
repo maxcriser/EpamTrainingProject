@@ -28,7 +28,7 @@ public class BankCardsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bank_cards);
 
         RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
-        title.setText(StaticPageNames.NEW_BANK_TITLE);
+        title.setText(StaticPageNames.BANK_TITLE);
 
         final TypesCardsReader tcReader = TypesCardsReader.getInstance();
         tcReader.setBankCards();

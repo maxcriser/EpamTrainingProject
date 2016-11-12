@@ -34,7 +34,6 @@ public class TypesCardsReader {
         discountCards.add("STARBUCKS");
         discountCards.add("ВИОР");
         discountCards.add("ВИШНЕВЕЦ");
-        discountCards.add("ВЕСТА");
         discountCards.add("СОЛНЕЧНЫЙ вкусный сыр");
         discountCards.add("ALMI");
         discountCards.add("ALMI");
@@ -77,10 +76,10 @@ public class TypesCardsReader {
 
     public void setTypesCards() {
         typesCards = new ArrayList<>();
-        typesCards.add("Bank cards");
+        typesCards.add("Credit cards");
         typesCards.add("Discount cards");
         typesCards.add("Tickets");
-        typesCards.add("NFC cards");
+        typesCards.add("NFC items");
     }
 
     public void setNfcCards() {

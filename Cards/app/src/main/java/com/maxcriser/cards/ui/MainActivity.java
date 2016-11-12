@@ -1,11 +1,14 @@
 package com.maxcriser.cards.ui;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,6 +17,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.maxcriser.cards.R;
+import com.maxcriser.cards.async.OnResultCallback;
+import com.maxcriser.cards.database.DatabaseHelper;
+import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.handler.RecyclerItemClickListener;
 import com.maxcriser.cards.reader.TypesCardsReader;
 import com.maxcriser.cards.ui.adapter.ItemsRecyclerAdapter;
@@ -33,6 +39,37 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        db.delete(ModelDiscountCards.class, null, ModelDiscountCards.DISCOUNT_ID + " = ?", String.valueOf(3));
+
+        /*db.query(new OnResultCallback<Cursor, Void>() {
+            @Override
+            public void onSuccess(Cursor pCursor) {
+                if(pCursor.moveToFirst()) {
+                    do {
+                        Integer s = pCursor.getColumnIndex(ModelDiscountCards.DISCOUNT_ID);
+                        Log.d("ID", pCursor.getInt(s) + "");
+                        Log.d("TITLE", pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.DISCOUNT_TITLE)));
+                    }while(pCursor.moveToNext());
+                }
+            }
+
+            @Override
+            public void onError(Exception pE) {
+
+            }
+
+            @Override
+            public void onProgressChanged(Void pVoid) {
+
+            }
+        }, "*", ModelDiscountCards.class, "");
+        */
+
+//    }, "*", ModelDiscountCards.class, "WHERE " + ModelDiscountCards.DISCOUNT_ID + " = ?" , String.valueOf(3));
+//     if nothing "", "" in latest
+//    }, "*", ModelDiscountCards.class, ModelDiscountCards.DISCOUNT_ID + " = ?", String.valueOf(100));
+//        ModelDiscountCards.DISCOUNT_ID+","+,
 
         final TypesCardsReader tcReader = TypesCardsReader.getInstance();
         tcReader.setTypesCards();
