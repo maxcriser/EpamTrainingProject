@@ -54,7 +54,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     @Override
     public void onAuthenticationFailed() {
-        mLockerActivity.error(250);
+        mLockerActivity.error();
     }
 
     @Override

@@ -51,7 +51,7 @@
                 android:layout_margin="8dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:src="@drawable/nfc_icon"
+                android:src="@drawable/icon_nfc"
                 android:layout_width="36dp"
                 android:layout_height="36dp"/>
         </LinearLayout>

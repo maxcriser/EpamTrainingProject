@@ -15,6 +15,7 @@ import java.util.List;
 
 public class BankRecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolderTypes> {
 
+    public static final String BANK_RECYCLER_ADAPTER = "BankRecyclerAdapter";
     private List<String> mItems;
     private LayoutInflater mInflater;
     private Object mView;
@@ -38,7 +39,7 @@ public class BankRecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder
         try {
             holder.mLinearCard.setBackgroundColor(Color.parseColor(mItems.get(position)));
         } catch (Exception e){
-            Log.d("Log:", e.toString());
+            Log.d(BANK_RECYCLER_ADAPTER, e.toString());
         }
         holder.mTitle.setText(mItems.get(position));
         holder.mTitle.setTag(holder);

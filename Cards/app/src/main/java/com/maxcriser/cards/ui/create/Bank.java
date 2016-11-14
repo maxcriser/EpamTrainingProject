@@ -29,6 +29,7 @@ import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
 
 public class Bank extends AppCompatActivity {
 
+    public static final String BANK = "Bank";
     int currentPositionColors;
     static int PAGE_COUNT;
     static int PAGE_COUNT_TEMPLATE;
@@ -59,7 +60,7 @@ public class Bank extends AppCompatActivity {
         listColors = previewColors.get(0);
         myColorName = listColors.getNameColorCards();
         myColorCode = listColors.getCodeColorCards();
-        Log.d("TAG", myColorName + " " + myColorCode);
+        Log.d(BANK, myColorName + " " + myColorCode);
 
         PAGE_COUNT_TEMPLATE = previewColors.size();
 
@@ -76,7 +77,7 @@ public class Bank extends AppCompatActivity {
                 listColors = previewColors.get(position);
                 myColorName = listColors.getNameColorCards();
                 myColorCode = listColors.getCodeColorCards();
-                Log.d("TAG", myColorName + " " + myColorCode);
+                Log.d(BANK, myColorName + " " + myColorCode);
                 currentPositionColors = position;
             }
 
@@ -93,7 +94,7 @@ public class Bank extends AppCompatActivity {
 
 //        Preview Colors
         myTypeCard = previewTypes.get(0);
-        Log.d("TAG", myTypeCard);
+        Log.d(BANK, myTypeCard);
 
         PAGE_COUNT = previewTypes.size();
 
@@ -108,7 +109,7 @@ public class Bank extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 myTypeCard = previewTypes.get(position);
-                Log.d("TAG", myTypeCard);
+                Log.d(BANK, myTypeCard);
                 if (myTypeCard.equals(VISA)) {
                     ViewPagerPreviewCard.icon = R.drawable.type_visa;
                 } else if (myTypeCard.equals(MAESTRO)) {

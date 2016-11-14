@@ -27,6 +27,7 @@ import java.util.Locale;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    public static final String DATABASE_HELPER = "DatabaseHelper";
     private static DatabaseHelper mHelper;
     private static final String mDatabaseName = "database.cards.theCriser";
     private static final String SQL_TABLE_CREATE_TEMPLATE = "CREATE TABLE IF NOT EXISTS %s (%s);";
@@ -106,7 +107,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(final SQLiteDatabase pDatabase) {
         for (final Class<?> clazz : ModelList.MODELS) {
             final String sql = getTableCreateQuery(clazz);
-            Log.d("MYTAG", "onCreate db: " + sql + " class: " + clazz);
+            Log.d(DATABASE_HELPER, "onCreate db: " + sql + " class: " + clazz);
             if (sql != null) {
                 pDatabase.execSQL(sql);
             }

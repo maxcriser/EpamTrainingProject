@@ -18,6 +18,7 @@ import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
 public class ViewPagerPreviewCard extends Fragment {
 
+    public static final String EXCEPTION_VP = "ExceptionVP";
     public static Object previewView;
 
     public static Object icon = R.drawable.type_visa;
@@ -53,7 +54,7 @@ public class ViewPagerPreviewCard extends Fragment {
         try {
             imageView.setImageResource((Integer) icon);
         } catch (Exception e) {
-            Log.d("ExceptionViewPager", e.toString());
+            Log.d(EXCEPTION_VP, e.toString());
         }
 
         ColorCardsSG color = previewColors.get(pageNumberDiscount);

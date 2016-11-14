@@ -1,16 +1,21 @@
 package com.maxcriser.cards.ui.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.maxcriser.cards.R;
 import com.maxcriser.cards.holder.RecyclerViewHolderTypes;
 
 import java.util.List;
+
+import static com.maxcriser.cards.constant.StaticPageNames.BANK_TITLE;
+import static com.maxcriser.cards.constant.StaticPageNames.DISCOUNT_TITLE;
+import static com.maxcriser.cards.constant.StaticPageNames.NFC_TITLE;
+import static com.maxcriser.cards.constant.StaticPageNames.TICKETS_TITLE;
 
 
 public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolderTypes> {
@@ -35,15 +40,21 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolde
     @Override
     public void onBindViewHolder(RecyclerViewHolderTypes holder, int position) {
 
-//        holder.mIcon.setImageBitmap(...);
-
-        try {
-            holder.mLinearCard.setBackgroundColor(Color.parseColor(mItems.get(position)));
-        } catch (Exception e) {
-            Log.d("Log:", e.toString());
-        }
         holder.mTitle.setText(mItems.get(position));
         holder.mTitle.setTag(holder);
+
+        String title = holder.mTitle.getText().toString();
+
+        if (title.equals(NFC_TITLE)) {
+            holder.mIcon.setImageResource(R.drawable.icon_nfc);
+        } else if (title.equals(BANK_TITLE)) {
+            holder.mIcon.setImageResource(R.drawable.icon_bank_cards);
+        } else if (title.equals(DISCOUNT_TITLE)) {
+            holder.mIcon.setImageResource(R.drawable.icon_discount_cards);
+        } else if (title.equals(TICKETS_TITLE)) {
+            holder.mIcon.setImageResource(R.drawable.icon_tickets);
+        }
+
     }
 
     @Override

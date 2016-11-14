@@ -28,6 +28,7 @@ import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
 public class Discount extends AppCompatActivity {
 
+    public static final String DISCOUNT = "Discount";
     ContentValues cvNewDiscount;
     DatabaseHelper db;
 
@@ -82,7 +83,7 @@ public class Discount extends AppCompatActivity {
         listColors = previewColors.get(0);
         myColorName = listColors.getNameColorCards();
         myColorCode = listColors.getCodeColorCards();
-        Log.d("TAG", myColorName + " " + myColorCode);
+        Log.d(DISCOUNT, myColorName + " " + myColorCode);
 
         PAGE_COUNT = previewColors.size();
 
@@ -100,7 +101,7 @@ public class Discount extends AppCompatActivity {
                 listColors = previewColors.get(position);
                 myColorName = listColors.getNameColorCards();
                 myColorCode = listColors.getCodeColorCards();
-                Log.d("TAG", myColorName + " " + myColorCode);
+                Log.d(DISCOUNT, myColorName + " " + myColorCode);
 
             }
 
@@ -137,7 +138,7 @@ public class Discount extends AppCompatActivity {
             db.insert(ModelDiscountCards.class, cvNewDiscount, new OnResultCallback<Long, Void>() {
                 @Override
                 public void onSuccess(Long pLong) {
-                    Log.d("MyID", pLong.toString());
+                    Log.d(DISCOUNT + " ID", pLong.toString());
                 }
 
                 @Override
