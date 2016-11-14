@@ -2,7 +2,6 @@ package com.maxcriser.cards.ui;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(MainActivity.this, DiscountCardsActivity.class));
                 } else if (position == 2) {
                     startActivity(new Intent(MainActivity.this, TicketsActivity.class));
-                } else if (position == 3){
+                } else if (position == 3) {
                     startActivity(new Intent(MainActivity.this, NFCCardsActivity.class));
                 } else {
                     Toast.makeText(getApplicationContext(), "Error: Directory does not exist", Toast.LENGTH_LONG).show();

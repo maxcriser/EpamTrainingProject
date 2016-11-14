@@ -4,10 +4,11 @@
        android:layout_height="match_parent">
 
     <include layout="@layout/fragment_toolbar_back"/>
+    <include layout="@layout/floating_menu_show"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <include layout="@layout/fragment_toolbar_back"/>
@@ -27,11 +28,43 @@
                     android:layout_margin="8dp"
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <FrameLayout
+                        android:id="@+id/linear_frame_title_discount"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/bluelight_500"
-                        android:orientation="horizontal">
+                        android:background="@color/bluelight_500">
+
+                        <LinearLayout
+                            android:visibility="gone"
+                            android:id="@+id/linear_edit_frame_title_discount"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/bluelight_500"
+                            android:orientation="horizontal">
+
+                            <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="48dp"
+                                android:gravity="center|left"
+                                android:paddingLeft="16dp"
+                                android:text="@string/name"
+                                android:textAllCaps="true"
+                                android:textSize="18sp"/>
+
+                            <com.maxcriser.cards.view.EditTextViews.RobotoThinEditText
+                                android:id="@+id/rename_discount_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"
+                                android:hint="@string/enter_name_of_the_card"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                android:paddingLeft="16dp"
+                                android:textAllCaps="true"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/gray_light"
+                                android:textSize="16sp"/>
+
+                        </LinearLayout>
 
                         <com.maxcriser.cards.view.TextViews.RobotoThinTextView
                             android:id="@+id/title_show_discount"
@@ -41,47 +74,60 @@
                             android:text="@string/name"
                             android:textAllCaps="true"
                             android:textSize="18sp"/>
-                    </LinearLayout>
+                    </FrameLayout>
 
-                    <com.maxcriser.cards.view.TextViews.EANP72TextView
-                        android:id="@+id/show_barcode"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="220dp"
                         android:layout_gravity="center"
                         android:background="@color/white"
                         android:gravity="center"
-                        android:padding="16dp"
-                        android:text="@string/sim_barcode"
-                        android:textColor="@color/black"
-                        android:textSize="130sp"/>
+                        android:paddingBottom="16dp"
+                        android:paddingTop="16dp"
+                        android:textColor="@color/black">
+
+                        <com.maxcriser.cards.view.TextViews.EANP72TextView
+                            android:id="@+id/show_barcode"
+                            android:layout_width="match_parent"
+                            android:layout_height="105dp"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="25dp"
+                            android:gravity="center"
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:textSize="170sp"/>
+                    </FrameLayout>
 
                     <LinearLayout
-                        android:gravity="left"
-                        android:layout_marginTop="5dp"
-                        android:background="@color/bluelight_500"
+                        android:visibility="gone"
+                        android:orientation="horizontal"
+                        android:id="@+id/linear_frame_actions_discount"
                         android:layout_width="match_parent"
-                        android:layout_height="48dp">
+                        android:layout_height="48dp"
+                        android:background="@color/bluelight_500">
 
-                        <ImageButton
-                            android:layout_weight="1"
+                        <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                            android:onClick="onCancelDiscountClicked"
+                            android:textAllCaps="true"
+                            android:gravity="center"
+                            android:text="@string/cancel"
+                            android:textColor="@color/white"
                             android:background="?attr/selectableItemBackground"
-                            android:src="@drawable/ic_delete_black_24dp"
-                            android:layout_width="48dp"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
                             android:layout_height="48dp"/>
 
-                        <ImageButton
-                            android:layout_weight="1"
+                        <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                            android:onClick="onOkDiscountClicked"
+                            android:textAllCaps="true"
+                            android:gravity="center"
+                            android:text="@string/ok"
+                            android:textColor="@color/white"
                             android:background="?attr/selectableItemBackground"
-                            android:src="@drawable/ic_more_vert_black_24dp"
-                            android:layout_width="48dp"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
                             android:layout_height="48dp"/>
 
-                        <ImageButton
-                            android:layout_weight="1"
-                            android:background="?attr/selectableItemBackground"
-                            android:src="@drawable/ic_edit_black_24dp"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"/>
 
                     </LinearLayout>
 

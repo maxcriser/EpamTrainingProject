@@ -18,7 +18,6 @@ import com.maxcriser.cards.database.annotations.dbFloat;
 import com.maxcriser.cards.database.annotations.dbInteger;
 import com.maxcriser.cards.database.annotations.dbPrimaryKey;
 import com.maxcriser.cards.database.annotations.dbString;
-import com.maxcriser.cards.holder.ContextHolder;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
@@ -141,6 +140,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }.execute();
     }
 
+
     public synchronized void insert(final Class<?> pModel,
                                     final ContentValues pValues,
                                     @Nullable final OnResultCallback<Long, Void> pCallback) {
@@ -216,6 +216,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 if (pCallback != null) {
                     pCallback.onSuccess(pInteger);
                 }
+            }
+        }.execute();
+    }
+
+    public synchronized void edit(final Class<?> pModel,
+                                  final String column,
+                                  final String newValue,
+                                  final String searchColumn,
+                                  final String valueOfSearchColumn, @Nullable final OnResultCallback<Void, Void> pCallback) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                final SQLiteDatabase database = getReadableDatabase();
+                String sql = "UPDATE " + getTableName(pModel) + " SET " + column + " = '" + newValue + "' WHERE " + searchColumn + " = " + valueOfSearchColumn;
+                database.execSQL(sql);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void pVoid) {
+                pCallback.onSuccess(pVoid);
             }
         }.execute();
     }

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.ui.create.Discount;
+import com.maxcriser.cards.view.TextViews.RobotoThinTextView;
 
 import net.sourceforge.zbar.Config;
 import net.sourceforge.zbar.Image;
@@ -26,8 +27,8 @@ import static android.view.View.GONE;
 
 public class BarcodeScanner extends AppCompatActivity {
 
-    private Button mCancel;
-    private Button mOk;
+    private RobotoThinTextView mCancel;
+    private RobotoThinTextView mOk;
     private TextView mSolution;
     private FrameLayout mFrameSolution;
     private TextView mBottomText;
@@ -54,8 +55,8 @@ public class BarcodeScanner extends AppCompatActivity {
 
         setContentView(R.layout.barcode_scanner);
 
-        mOk = (Button) findViewById(R.id.button_ok);
-        mCancel = (Button) findViewById(R.id.button_cancel);
+        mOk = (RobotoThinTextView) findViewById(R.id.button_ok);
+        mCancel = (RobotoThinTextView) findViewById(R.id.button_cancel);
         mSolution = (TextView) findViewById(R.id.solution_of_scan);
         mFrameSolution = (FrameLayout) findViewById(R.id.frame_solution_of_scan);
         mBottomText = (TextView) findViewById(R.id.bottom_text_barcode_scan);

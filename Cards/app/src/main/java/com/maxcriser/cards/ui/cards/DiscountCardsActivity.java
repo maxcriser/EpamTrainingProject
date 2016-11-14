@@ -9,12 +9,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.maxcriser.cards.R;
+import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.barcode.BarcodeScanner;
 import com.maxcriser.cards.constant.StaticPageNames;
+import com.maxcriser.cards.database.DatabaseHelper;
+import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.handler.RecyclerItemClickListener;
 import com.maxcriser.cards.reader.TypesCardsReader;
 import com.maxcriser.cards.ui.adapter.CursorDiscountAdapter;
@@ -24,12 +30,22 @@ import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
 
 import java.util.List;
 
+import static android.view.View.GONE;
+
 public class DiscountCardsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final int LOADER_DISCOUNT_ID = 1;
 
+    ProgressBar mProgressBarDiscount;
+    DatabaseHelper dbHelper;
     RecyclerView discountCards;
+    LinearLayoutManager mLayoutManager;
     CursorDiscountAdapter adapter;
+
+    public static final String EXTRA_DISCOUNT_ID = "discount_id_extra";
+    public static final String EXTRA_DISCOUNT_TITLE = "discount_title_extra";
+    public static final String EXTRA_DISCOUNT_BARCODE = "discount_barcode_extra";
+    public static final String EXTRA_DISCOUNT_COLOR = "discount_color_extra";
 
     int pixels;
 
@@ -42,38 +58,76 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
         RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
         title.setText(StaticPageNames.DISCOUNT_TITLE);
 
+        dbHelper = DatabaseHelper.getInstance(this, 1);
+
         final TypesCardsReader tcReader = TypesCardsReader.getInstance();
         tcReader.setDiscountCards();
         final List<String> myDiscountCards = tcReader.getDiscountCards();
 
         discountCards = (RecyclerView) findViewById(R.id.discount_cards_recycler_view);
         discountCards.setHasFixedSize(true);
-        discountCards.setLayoutManager(new LinearLayoutManager(this));
+        mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
+        discountCards.setLayoutManager(mLayoutManager);
         getSupportLoaderManager().restartLoader(LOADER_DISCOUNT_ID, null, this);
 
-//        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0,
-//                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-//
-//            @Override
-//            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-//                return false;
-//            }
-//
-//            @Override
-//            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-//                myDiscountCards.remove(viewHolder.getAdapterPosition());
-//                discountCards.getAdapter().notifyItemRemoved(viewHolder.getAdapterPosition());
-////                TODO remove to database myTickets (viewHolder.getAdapterPosition)
-//            }
-//        };
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
-//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-//        itemTouchHelper.attachToRecyclerView(discountCards);
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                TextView cardTitle = (TextView) viewHolder.itemView.findViewById(R.id.title_main_cards);
+                Integer id = (Integer) cardTitle.getTag();
+                dbHelper.delete(ModelDiscountCards.class, null, ModelDiscountCards.DISCOUNT_ID + " = ?", String.valueOf(id));
+//                TODO FIX incorrect animation delete
+//                discountCards.getAdapter().notifyItemRemoved(viewHolder.getAdapterPosition());
+                onResume();
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(discountCards);
 
         discountCards.addOnItemTouchListener(new RecyclerItemClickListener(this, discountCards, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                startActivity(new Intent(DiscountCardsActivity.this, ShowDiscountCard.class));
+                TextView mTitle = (TextView) view.findViewById(R.id.title_main_cards);
+                int id = (Integer) mTitle.getTag();
+
+                dbHelper.query(new OnResultCallback<Cursor, Void>() {
+                    @Override
+                    public void onSuccess(Cursor pCursor) {
+                        if (pCursor.moveToFirst()) {
+                            String cardID = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.DISCOUNT_ID));
+                            String cardTitle = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.DISCOUNT_TITLE));
+                            String cardBarcode = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.DISCOUNT_BARCODE));
+                            String cardColor = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.DISCOUNT_BACKGROUND_COLOR));
+
+                            Intent intent = new Intent(DiscountCardsActivity.this, ShowDiscountCard.class);
+                            intent.putExtra(EXTRA_DISCOUNT_ID, cardID);
+                            intent.putExtra(EXTRA_DISCOUNT_TITLE, cardTitle);
+                            intent.putExtra(EXTRA_DISCOUNT_BARCODE, cardBarcode);
+                            intent.putExtra(EXTRA_DISCOUNT_COLOR, cardColor);
+                            startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Exception pE) {
+                        Toast.makeText(DiscountCardsActivity.this, "Cannot find card", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onProgressChanged(Void pVoid) {
+                    }
+                }, "*", ModelDiscountCards.class, "WHERE "
+                        + ModelDiscountCards.DISCOUNT_ID + " = ?", String.valueOf(id));
             }
 
             @Override
@@ -81,9 +135,6 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
 
             }
         }));
-
-
-
 
 //        discountCards.addOnScrollListener(new RecyclerView.OnScrollListener() {
 //            @Override
@@ -132,9 +183,19 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        LinearLayout linearEmpty = (LinearLayout) findViewById(R.id.empty_page_id_fragment);
+        if (data.getCount() == 0) {
+            linearEmpty.setVisibility(View.VISIBLE);
+            discountCards.setVisibility(GONE);
+        } else {
+            linearEmpty.setVisibility(GONE);
+            discountCards.setVisibility(View.VISIBLE);
+        }
         adapter = new CursorDiscountAdapter(data, this, R.layout.discount_item);
         discountCards.swapAdapter(adapter, true);
 
+//        mProgressBarDiscount = (ProgressBar) findViewById(R.id.progressbar_discount);
+//        mProgressBarDiscount.setVisibility(GONE);
     }
 
     @Override
