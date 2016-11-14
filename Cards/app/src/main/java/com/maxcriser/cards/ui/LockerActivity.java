@@ -70,7 +70,7 @@ public class LockerActivity extends AppCompatActivity {
     Handler.Callback hc = new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            error(250);
+            error();
             return false;
         }
     };
@@ -301,7 +301,7 @@ public class LockerActivity extends AppCompatActivity {
         }
     }
 
-    public void error(int time) {
+    public void error() {
         onDeleteClicked(null);
     }
 

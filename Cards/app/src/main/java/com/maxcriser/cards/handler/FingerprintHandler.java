@@ -17,7 +17,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     private CancellationSignal cancellationSignal;
     private Context appContext;
-    LockerActivity mLockerActivity = new LockerActivity();
+    private LockerActivity mLockerActivity = new LockerActivity();
 
     public FingerprintHandler(Context context) {
         appContext = context;

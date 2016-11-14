@@ -3,6 +3,7 @@ package com.maxcriser.cards.ui.pager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,8 +52,8 @@ public class ViewPagerPreviewCard extends Fragment {
         ImageView imageView = (ImageView) view.findViewById(R.id.icon_bank_cards);
         try {
             imageView.setImageResource((Integer) icon);
-        }catch(Exception e) {
-
+        } catch (Exception e) {
+            Log.d("ExceptionViewPager", e.toString());
         }
 
         ColorCardsSG color = previewColors.get(pageNumberDiscount);

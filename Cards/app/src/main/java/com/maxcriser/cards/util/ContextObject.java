@@ -2,7 +2,7 @@ package com.maxcriser.cards.util;
 
 import android.content.Context;
 
-public final class ContextObject {
+final class ContextObject {
 
     private static ContextObject sContextObject;
 

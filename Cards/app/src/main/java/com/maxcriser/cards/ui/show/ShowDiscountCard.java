@@ -36,7 +36,7 @@ public class ShowDiscountCard extends Activity {
     RobotoThinEditText editName;
     String editString;
     EANP72TextView barcodeView;
-    LinearLayout linearFrameTitle;
+//    LinearLayout linearFrameTitle;
     LinearLayout linearFrameAction;
     String id;
     String title;

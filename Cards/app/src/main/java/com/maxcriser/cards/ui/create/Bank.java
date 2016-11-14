@@ -109,21 +109,21 @@ public class Bank extends AppCompatActivity {
             public void onPageSelected(int position) {
                 myTypeCard = previewTypes.get(position);
                 Log.d("TAG", myTypeCard);
-                if (myTypeCard == VISA) {
+                if (myTypeCard.equals(VISA)) {
                     ViewPagerPreviewCard.icon = R.drawable.type_visa;
-                } else if (myTypeCard == MAESTRO) {
+                } else if (myTypeCard.equals(MAESTRO)) {
                     ViewPagerPreviewCard.icon = R.drawable.type_maestro;
-                } else if (myTypeCard == MASTERCARD) {
+                } else if (myTypeCard.equals(MASTERCARD)) {
                     ViewPagerPreviewCard.icon = R.drawable.type_mastercard;
-                } else if (myTypeCard == AMEX) {
+                } else if (myTypeCard.equals(AMEX)) {
                     ViewPagerPreviewCard.icon = R.drawable.type_amex;
-                } else if (myTypeCard == WESTERN_UNION) {
+                } else if (myTypeCard.equals(WESTERN_UNION)) {
                     ViewPagerPreviewCard.icon = R.drawable.type_western_union;
-                } else if (myTypeCard == JCB) {
+                } else if (myTypeCard.equals(JCB)) {
                     ViewPagerPreviewCard.icon = R.drawable.type_jcb;
-                } else if (myTypeCard == DINERS_CLUB) {
+                } else if (myTypeCard.equals(DINERS_CLUB)) {
                     ViewPagerPreviewCard.icon = R.drawable.type_diners_club;
-                } else if (myTypeCard == BELCARD) {
+                } else if (myTypeCard.equals(BELCARD)) {
                     ViewPagerPreviewCard.icon = R.drawable.type_belcard;
                 }
                 pagerTemplate.setAdapter(pagerAdapterTemplate);

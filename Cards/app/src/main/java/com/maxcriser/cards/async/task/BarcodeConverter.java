@@ -9,7 +9,6 @@ public class BarcodeConverter implements Task<String, String, String> {
     @Override
     public String doInBackground(String pS, ProgressCallback<String> pStringProgressCallback) throws Exception {
         BarcodeBuilder mBarcodeBuilder = new BarcodeBuilder(pS);
-        String converted = mBarcodeBuilder.getCode();
-        return converted;
+        return mBarcodeBuilder.getCode();
     }
 }

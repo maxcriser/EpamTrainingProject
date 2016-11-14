@@ -46,9 +46,7 @@ public class BarcodeBuilder {
         String letters = "ABCDEFGHIJ";
         int position = Integer.valueOf(digit);
 
-        String solutionValue = letters.substring(position, position + 1);
-
-        return solutionValue;
+        return letters.substring(position, position + 1);
 
     }
 
@@ -56,9 +54,7 @@ public class BarcodeBuilder {
         String letters = "abcdefghij";
         int position = Integer.valueOf(digit);
 
-        String solutionValue = letters.substring(position, position + 1);
-
-        return solutionValue;
+        return letters.substring(position, position + 1);
 
     }
 
@@ -159,9 +155,7 @@ public class BarcodeBuilder {
         }
 
 
-        String solutionValue = leftCode + "-" + rightCode + "!";
-
-        return solutionValue;
+        return leftCode + "-" + rightCode + "!";
     }
 
     private void parse() {

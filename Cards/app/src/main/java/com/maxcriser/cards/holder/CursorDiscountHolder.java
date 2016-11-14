@@ -10,8 +10,8 @@ import com.maxcriser.cards.R;
 
 public class CursorDiscountHolder extends RecyclerView.ViewHolder {
 
-    public TextView mTitle;
     public ImageView mIcon;
+    public TextView mTitle;
     public FrameLayout mLinearCard;
 
     public CursorDiscountHolder(View itemView) {

@@ -57,7 +57,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Nullable
-    public static String getTableCreateQuery(final Class<?> pModel) {
+    private static String getTableCreateQuery(final Class<?> pModel) {
         final Table table = pModel.getAnnotation(Table.class);
         if (table != null) {
             try {
@@ -236,7 +236,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             @Override
             protected void onPostExecute(Void pVoid) {
-                pCallback.onSuccess(pVoid);
+                if (pCallback != null) {
+                    pCallback.onSuccess(pVoid);
+                }
             }
         }.execute();
     }

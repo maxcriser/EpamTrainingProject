@@ -15,7 +15,6 @@ import java.util.List;
 
 public class BankRecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolderTypes> {
 
-
     private List<String> mItems;
     private LayoutInflater mInflater;
     private Object mView;
@@ -30,8 +29,7 @@ public class BankRecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder
     public RecyclerViewHolderTypes onCreateViewHolder(ViewGroup parent, int viewType) {
         View myView = mInflater.inflate((Integer) mView, parent, false);
 
-        RecyclerViewHolderTypes viewHolder = new RecyclerViewHolderTypes(myView);
-        return viewHolder;
+        return new RecyclerViewHolderTypes(myView);
     }
 
     @Override

@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.ui.create.Bank;
 
 import static com.maxcriser.cards.constant.BankCardTypes.AMEX;
 import static com.maxcriser.cards.constant.BankCardTypes.BELCARD;
@@ -20,7 +19,7 @@ import static com.maxcriser.cards.constant.BankCardTypes.VISA;
 import static com.maxcriser.cards.constant.BankCardTypes.WESTERN_UNION;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
 
-public class ViewPagerPreviewType extends Fragment{
+public class ViewPagerPreviewType extends Fragment {
 
     static final String ARGUMENT_PAGE_NUMBER_TYPE = "arg_page_number_type";
 
@@ -61,7 +60,7 @@ public class ViewPagerPreviewType extends Fragment{
             tvPage.setImageResource(R.drawable.type_jcb);
         } else if (type.equals(DINERS_CLUB)) {
             tvPage.setImageResource(R.drawable.type_diners_club);
-        } else if(type.equals(BELCARD)){
+        } else if (type.equals(BELCARD)) {
             tvPage.setImageResource(R.drawable.type_belcard);
         }
         return view;

@@ -7,7 +7,7 @@ import com.maxcriser.cards.database.models.ModelTickets;
 
 public final class ModelList {
 
-    public static final Class<?>[] MODELS =
+    static final Class<?>[] MODELS =
             {
                     ModelDiscountCards.class,
                     ModelBankCards.class,

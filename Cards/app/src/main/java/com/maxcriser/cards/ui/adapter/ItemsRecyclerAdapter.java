@@ -29,8 +29,7 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolde
     public RecyclerViewHolderTypes onCreateViewHolder(ViewGroup parent, int viewType) {
         View myView = mInflater.inflate((Integer) mView, parent, false);
 
-        RecyclerViewHolderTypes viewHolder = new RecyclerViewHolderTypes(myView);
-        return viewHolder;
+        return new RecyclerViewHolderTypes(myView);
     }
 
     @Override

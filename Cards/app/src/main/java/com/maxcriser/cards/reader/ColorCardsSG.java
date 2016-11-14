@@ -5,15 +5,15 @@ public class ColorCardsSG {
     String nameColorCards;
     String codeColorCards;
 
-    public ColorCardsSG() {
+    ColorCardsSG() {
 
     }
 
-    public void setNameColorCards(String pNameColorCards) {
+    void setNameColorCards(String pNameColorCards) {
         nameColorCards = pNameColorCards;
     }
 
-    public void setCodeColorCards(String pCodeColorCards) {
+    void setCodeColorCards(String pCodeColorCards) {
         codeColorCards = pCodeColorCards;
     }
 

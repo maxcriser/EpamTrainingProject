@@ -19,7 +19,7 @@ public class PreviewReader {
 
     private static PreviewReader sPreviewReader;
 
-    PreviewReader() {
+    private PreviewReader() {
         previewColors = new ArrayList<>();
     }
 
@@ -35,7 +35,7 @@ public class PreviewReader {
         typeCard.add(BELCARD);
     }
 
-    public void addPreviewColors(String name, String color){
+    private void addPreviewColors(String name, String color){
         ColorCardsSG listTableItems = new ColorCardsSG();
         listTableItems.setNameColorCards(name);
         listTableItems.setCodeColorCards(color);

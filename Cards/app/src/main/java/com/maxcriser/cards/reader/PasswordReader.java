@@ -6,7 +6,7 @@ public class PasswordReader {
 
     private String mPassword;
 
-    PasswordReader() {
+    private PasswordReader() {
 
     }
 

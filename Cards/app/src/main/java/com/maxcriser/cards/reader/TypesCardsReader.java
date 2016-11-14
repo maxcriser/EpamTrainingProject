@@ -88,7 +88,7 @@ public class TypesCardsReader {
         nfcCards.add("NFC 2");
     }
 
-    TypesCardsReader() {
+    private TypesCardsReader() {
 
     }
 
