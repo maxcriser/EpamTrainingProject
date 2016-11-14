@@ -67,6 +67,7 @@
                         </LinearLayout>
 
                         <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                            android:textColor="@color/white"
                             android:id="@+id/title_show_discount"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"

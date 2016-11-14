@@ -22,7 +22,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.constant.PinKeyboard;
+import com.maxcriser.cards.constant.Keyboard;
 import com.maxcriser.cards.handler.FingerprintHandler;
 import com.maxcriser.cards.reader.PasswordReader;
 import com.maxcriser.cards.ui.cards.BankCardsActivity;
@@ -245,43 +245,43 @@ public class LockerActivity extends AppCompatActivity {
     }
 
     public void zeroInput(View view) {
-        inputPassword(PinKeyboard.BUTTON_ZERO);
+        inputPassword(Keyboard.BUTTON_ZERO);
     }
 
     public void oneInput(View view) {
-        inputPassword(PinKeyboard.BUTTON_ONE);
+        inputPassword(Keyboard.BUTTON_ONE);
     }
 
     public void twoInput(View view) {
-        inputPassword(PinKeyboard.BUTTON_TWO);
+        inputPassword(Keyboard.BUTTON_TWO);
     }
 
     public void threeInput(View view) {
-        inputPassword(PinKeyboard.BUTTON_THREE);
+        inputPassword(Keyboard.BUTTON_THREE);
     }
 
     public void fourInput(View view) {
-        inputPassword(PinKeyboard.BUTTON_FOUR);
+        inputPassword(Keyboard.BUTTON_FOUR);
     }
 
     public void fiveInput(View view) {
-        inputPassword(PinKeyboard.BUTTON_FIVE);
+        inputPassword(Keyboard.BUTTON_FIVE);
     }
 
     public void sixInput(View view) {
-        inputPassword(PinKeyboard.BUTTON_SIX);
+        inputPassword(Keyboard.BUTTON_SIX);
     }
 
     public void sevenInput(View view) {
-        inputPassword(PinKeyboard.BUTTON_SEVEN);
+        inputPassword(Keyboard.BUTTON_SEVEN);
     }
 
     public void eightInput(View view) {
-        inputPassword(PinKeyboard.BUTTON_EIGHT);
+        inputPassword(Keyboard.BUTTON_EIGHT);
     }
 
     public void nineInput(View view) {
-        inputPassword(PinKeyboard.BUTTON_NINE);
+        inputPassword(Keyboard.BUTTON_NINE);
     }
 
     public void setBackgroundCircles(boolean flag, ImageView... args) {

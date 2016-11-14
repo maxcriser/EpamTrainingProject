@@ -1,6 +1,5 @@
 package com.maxcriser.cards.ui;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.database.custom.ListTableItems;
+import com.maxcriser.cards.reader.ColorCardsSG;
 import com.maxcriser.cards.holder.ContextHolder;
 import com.maxcriser.cards.reader.PreviewReader;
 
@@ -16,7 +15,7 @@ import java.util.List;
 
 public class LaunchScreenActivity extends AppCompatActivity {
 
-    public static List<ListTableItems> previewColors;
+    public static List<ColorCardsSG> previewColors;
     public static List<String> previewTypes;
 
     @Override

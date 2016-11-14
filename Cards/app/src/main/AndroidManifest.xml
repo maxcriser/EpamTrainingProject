@@ -2,14 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.maxcriser.cards">
 
-
     <uses-permission android:name="android.permission.CAMERA"/>
 
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
 
@@ -51,14 +48,6 @@
                   android:screenOrientation="portrait"/>
 
         <activity android:name=".ui.cards.TicketsActivity"
-                  android:configChanges="orientation"
-                  android:screenOrientation="portrait"/>
-
-        <activity android:name=".ui.cards.OpenBankCards"
-                  android:configChanges="orientation"
-                  android:screenOrientation="portrait"/>
-
-        <activity android:name=".ui.cards.ProtectedBankCards"
                   android:configChanges="orientation"
                   android:screenOrientation="portrait"/>
 

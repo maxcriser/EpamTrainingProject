@@ -10,9 +10,9 @@ import android.view.View;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.StaticPageNames;
-import com.maxcriser.cards.ui.adapter.ItemsRecyclerAdapter;
 import com.maxcriser.cards.reader.TypesCardsReader;
 import com.maxcriser.cards.ui.TakePhotoActivity;
+import com.maxcriser.cards.ui.adapter.ItemsRecyclerAdapter;
 import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
 
 import java.util.List;

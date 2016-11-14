@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.StaticPageNames;
-import com.maxcriser.cards.database.custom.ListTableItems;
+import com.maxcriser.cards.reader.ColorCardsSG;
 import com.maxcriser.cards.ui.adapter.MyFragmentPagerAdapterTemplate;
 import com.maxcriser.cards.ui.pager.ViewPagerPreviewCard;
 import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
@@ -38,7 +38,7 @@ public class Bank extends AppCompatActivity {
     PagerAdapter pagerAdapterTypes;
     PagerAdapter pagerAdapterTemplate;
 
-    ListTableItems listColors;
+    ColorCardsSG listColors;
     String myColorName;
     String myColorCode;
     String myTypeCard;
@@ -57,8 +57,8 @@ public class Bank extends AppCompatActivity {
         // VIEWPAGER template start)
 
         listColors = previewColors.get(0);
-        myColorName = listColors.getNameColorTable();
-        myColorCode = listColors.getCodeColorTable();
+        myColorName = listColors.getNameColorCards();
+        myColorCode = listColors.getCodeColorCards();
         Log.d("TAG", myColorName + " " + myColorCode);
 
         PAGE_COUNT_TEMPLATE = previewColors.size();
@@ -74,8 +74,8 @@ public class Bank extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 listColors = previewColors.get(position);
-                myColorName = listColors.getNameColorTable();
-                myColorCode = listColors.getCodeColorTable();
+                myColorName = listColors.getNameColorCards();
+                myColorCode = listColors.getCodeColorCards();
                 Log.d("TAG", myColorName + " " + myColorCode);
                 currentPositionColors = position;
             }
@@ -123,7 +123,7 @@ public class Bank extends AppCompatActivity {
                     ViewPagerPreviewCard.icon = R.drawable.type_jcb;
                 } else if (myTypeCard == DINERS_CLUB) {
                     ViewPagerPreviewCard.icon = R.drawable.type_diners_club;
-                } else if (myTypeCard == BELCARD){
+                } else if (myTypeCard == BELCARD) {
                     ViewPagerPreviewCard.icon = R.drawable.type_belcard;
                 }
                 pagerTemplate.setAdapter(pagerAdapterTemplate);

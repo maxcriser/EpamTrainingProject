@@ -1,6 +1,6 @@
 package com.maxcriser.cards.constant;
 
-public class PinKeyboard {
+public class Keyboard {
 
     public static final String BUTTON_ZERO = "0";
     public static final String BUTTON_ONE = "1";

@@ -18,6 +18,7 @@ public class PasswordReader {
     }
 
     public void setPassword() {
+        //TODO read from db or
         mPassword = "1234";
     }
 

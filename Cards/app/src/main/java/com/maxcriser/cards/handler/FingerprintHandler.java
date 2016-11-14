@@ -59,7 +59,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     @Override
     public void onAuthenticationSucceeded(
-        FingerprintManager.AuthenticationResult result) {
+            FingerprintManager.AuthenticationResult result) {
         mLockerActivity.start();
     }
 }

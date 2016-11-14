@@ -10,7 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.database.custom.ListTableItems;
+import com.maxcriser.cards.reader.ColorCardsSG;
 import com.maxcriser.cards.view.TextViews.RobotoThinTextView;
 
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
@@ -55,9 +55,9 @@ public class ViewPagerPreviewCard extends Fragment {
 
         }
 
-        ListTableItems color = previewColors.get(pageNumberDiscount);
-        mLinearCard.setBackgroundColor(Color.parseColor(color.getCodeColorTable()));
-        tvPage.setText(color.getNameColorTable());
+        ColorCardsSG color = previewColors.get(pageNumberDiscount);
+        mLinearCard.setBackgroundColor(Color.parseColor(color.getCodeColorCards()));
+        tvPage.setText(color.getNameColorCards());
 
         return view;
     }

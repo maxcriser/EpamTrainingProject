@@ -15,7 +15,6 @@ import java.util.List;
 
 public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolderTypes> {
 
-
     private List<String> mItems;
     private LayoutInflater mInflater;
     private Object mView;
@@ -41,7 +40,7 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolde
 
         try {
             holder.mLinearCard.setBackgroundColor(Color.parseColor(mItems.get(position)));
-        } catch (Exception e){
+        } catch (Exception e) {
             Log.d("Log:", e.toString());
         }
         holder.mTitle.setText(mItems.get(position));

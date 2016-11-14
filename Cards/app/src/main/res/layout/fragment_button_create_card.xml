@@ -4,6 +4,7 @@
        android:layout_height="match_parent">
 
     <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+        android:textColor="@color/white"
         android:onClick="onCreateCardClicked"
         android:layout_width="match_parent"
         android:layout_height="30dp"

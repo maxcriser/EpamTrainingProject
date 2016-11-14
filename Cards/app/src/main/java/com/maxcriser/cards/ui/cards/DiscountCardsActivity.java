@@ -161,8 +161,9 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
     @Override
     protected void onResume() {
         super.onResume();
-        if (getSupportLoaderManager().getLoader(LOADER_DISCOUNT_ID) != null) {
-            getSupportLoaderManager().getLoader(LOADER_DISCOUNT_ID).forceLoad();
+        LoaderManager supportLoaderManager = getSupportLoaderManager();
+        if (supportLoaderManager.getLoader(LOADER_DISCOUNT_ID) != null) {
+            supportLoaderManager.getLoader(LOADER_DISCOUNT_ID).forceLoad();
         }
     }
 

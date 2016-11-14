@@ -1,7 +1,5 @@
 package com.maxcriser.cards.reader;
 
-import com.maxcriser.cards.database.custom.ListTableItems;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +14,7 @@ import static com.maxcriser.cards.constant.BankCardTypes.WESTERN_UNION;
 
 public class PreviewReader {
 
-    private List<ListTableItems> previewColors;
+    private List<ColorCardsSG> previewColors;
     private List<String> typeCard;
 
     private static PreviewReader sPreviewReader;
@@ -38,9 +36,9 @@ public class PreviewReader {
     }
 
     public void addPreviewColors(String name, String color){
-        ListTableItems listTableItems = new ListTableItems();
-        listTableItems.setNameColorTable(name);
-        listTableItems.setCodeColorTable(color);
+        ColorCardsSG listTableItems = new ColorCardsSG();
+        listTableItems.setNameColorCards(name);
+        listTableItems.setCodeColorCards(color);
 
         previewColors.add(listTableItems);
     }
@@ -68,7 +66,7 @@ public class PreviewReader {
         addPreviewColors("blue grey", "#607D8B");
     }
 
-    public List<ListTableItems> getPreviewColors() {
+    public List<ColorCardsSG> getPreviewColors() {
         return previewColors;
     }
 

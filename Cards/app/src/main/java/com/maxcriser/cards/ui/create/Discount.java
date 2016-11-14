@@ -2,9 +2,7 @@ package com.maxcriser.cards.ui.create;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.FalseAsyncTask;
 import com.maxcriser.cards.async.OnResultCallback;
@@ -21,8 +17,8 @@ import com.maxcriser.cards.async.task.BarcodeConverter;
 import com.maxcriser.cards.barcode.BarcodeScanner;
 import com.maxcriser.cards.constant.StaticPageNames;
 import com.maxcriser.cards.database.DatabaseHelper;
-import com.maxcriser.cards.database.custom.ListTableItems;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
+import com.maxcriser.cards.reader.ColorCardsSG;
 import com.maxcriser.cards.ui.adapter.MyFragmentPagerAdapterTemplate;
 import com.maxcriser.cards.view.TextViews.EANP72TextView;
 import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
@@ -44,7 +40,7 @@ public class Discount extends AppCompatActivity {
     EANP72TextView mEANP72TextView;
     String mBarcode;
 
-    ListTableItems listColors;
+    ColorCardsSG listColors;
     String myColorName;
     String myColorCode;
     String title; // database
@@ -84,8 +80,8 @@ public class Discount extends AppCompatActivity {
         });
 
         listColors = previewColors.get(0);
-        myColorName = listColors.getNameColorTable();
-        myColorCode = listColors.getCodeColorTable();
+        myColorName = listColors.getNameColorCards();
+        myColorCode = listColors.getCodeColorCards();
         Log.d("TAG", myColorName + " " + myColorCode);
 
         PAGE_COUNT = previewColors.size();
@@ -102,8 +98,8 @@ public class Discount extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 listColors = previewColors.get(position);
-                myColorName = listColors.getNameColorTable();
-                myColorCode = listColors.getCodeColorTable();
+                myColorName = listColors.getNameColorCards();
+                myColorCode = listColors.getCodeColorCards();
                 Log.d("TAG", myColorName + " " + myColorCode);
 
             }
@@ -139,19 +135,19 @@ public class Discount extends AppCompatActivity {
             cvNewDiscount.put(ModelDiscountCards.DISCOUNT_ID, (Integer) null);
 
             db.insert(ModelDiscountCards.class, cvNewDiscount, new OnResultCallback<Long, Void>() {
-            @Override
-            public void onSuccess(Long pLong) {
-                Log.d("MyID", pLong.toString());
-            }
+                @Override
+                public void onSuccess(Long pLong) {
+                    Log.d("MyID", pLong.toString());
+                }
 
-            @Override
-            public void onError(Exception pE) {
-            }
+                @Override
+                public void onError(Exception pE) {
+                }
 
-            @Override
-            public void onProgressChanged(Void pVoid) {
-            }
-        });
+                @Override
+                public void onProgressChanged(Void pVoid) {
+                }
+            });
 
             onBackClicked(null);
         }
