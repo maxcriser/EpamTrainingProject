@@ -5,16 +5,16 @@ import com.maxcriser.cards.database.annotations.dbInteger;
 import com.maxcriser.cards.database.annotations.dbPrimaryKey;
 import com.maxcriser.cards.database.annotations.dbString;
 
-@Table(name = "previewColors")
-public final class ModelPreviewColors {
+@Table(name = "colorTable")
+public final class ModelColors {
 
     @dbPrimaryKey
     @dbInteger
-    public static final String COLORS_ID = "_id";
+    public static final String COLOR_ID = "_id";
 
     @dbString
-    public static final String COLOR_NAME = "colorName";
+    public static final String COLOR_NAME = "name";
 
     @dbString
-    public static final String COLOR_CODE = "colorCode";
+    public static final String COLOR_CODE = "code";
 }

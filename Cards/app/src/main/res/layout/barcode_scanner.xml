@@ -17,10 +17,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+        <com.maxcriser.cards.view.TextViews.RobotoThin
+            android:textAllCaps="true"
             android:id="@+id/solution_of_scan"
             android:gravity="center"
-            android:textColor="@color/white"
+            android:textColor="@color/text_white"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="34sp"
@@ -32,23 +33,23 @@
             android:layout_width="match_parent"
             android:layout_height="48dp">
 
-            <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+            <com.maxcriser.cards.view.TextViews.RobotoThin
                 android:textAllCaps="true"
                 android:gravity="center"
                 android:id="@+id/button_cancel"
                 android:text="@string/cancel"
-                android:textColor="@color/white"
+                android:textColor="@color/text_white"
                 android:background="?attr/selectableItemBackground"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"/>
 
-            <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+            <com.maxcriser.cards.view.TextViews.RobotoThin
                 android:textAllCaps="true"
                 android:gravity="center"
                 android:id="@+id/button_ok"
                 android:text="@string/ok"
-                android:textColor="@color/white"
+                android:textColor="@color/text_white"
                 android:background="?attr/selectableItemBackground"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
@@ -58,11 +59,11 @@
 
     </FrameLayout>
 
-    <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+    <com.maxcriser.cards.view.TextViews.RobotoThin
+        android:textAllCaps="true"
         android:id="@+id/bottom_text_barcode_scan"
         android:gravity="center"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
+        android:textColor="@color/text_white"
         android:text="@string/place_a_barcode_on_camera_to_scan_it"
         android:layout_gravity="bottom"
         android:background="@color/gray_shadow"

@@ -3,6 +3,7 @@ package com.maxcriser.cards.ui.cards;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -10,7 +11,8 @@ import android.view.View;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.StaticPageNames;
-import com.maxcriser.cards.reader.TypesCardsReader;
+import com.maxcriser.cards.reader.deleteTypesCardsReader;
+import com.maxcriser.cards.ui.CamereCaptureAndDisplayImage;
 import com.maxcriser.cards.ui.TakePhotoActivity;
 import com.maxcriser.cards.ui.adapter.ItemsRecyclerAdapter;
 import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
@@ -25,16 +27,22 @@ public class TicketsActivity extends AppCompatActivity {
     RecyclerView tickets;
     View buttonNewTicket;
 
+    CardView toolbarBack;
+    CardView toolbarSearch;
+
     //TODO if this page is empty - fragment_empty_page.xml visibility VISIBLE
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tickets);
 
+        toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
+        toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
+
         RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
         title.setText(StaticPageNames.TICKETS_TITLE);
 
-        final TypesCardsReader tcReader = TypesCardsReader.getInstance();
+        final deleteTypesCardsReader tcReader = deleteTypesCardsReader.getInstance();
         tcReader.setTickets();
 
         tickets = (RecyclerView) findViewById(R.id.tickets_recycler_view);
@@ -74,5 +82,19 @@ public class TicketsActivity extends AppCompatActivity {
 
     public void onAddNewClicked(View view) {
         startActivity(new Intent(TicketsActivity.this, TakePhotoActivity.class));
+    }
+
+    public void onToolbarBackClicked(View view) {
+        tickets.smoothScrollToPosition(0);
+    }
+
+    public void onSearchClicked(View view) {
+        toolbarBack.setVisibility(GONE);
+        toolbarSearch.setVisibility(View.VISIBLE);
+    }
+
+    public void onBackSearchClicked(View view) {
+        toolbarBack.setVisibility(View.VISIBLE);
+        toolbarSearch.setVisibility(GONE);
     }
 }

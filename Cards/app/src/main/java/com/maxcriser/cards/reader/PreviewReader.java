@@ -35,7 +35,7 @@ public class PreviewReader {
         typeCard.add(BELCARD);
     }
 
-    private void addPreviewColors(String name, String color){
+    private void addPreviewColors(String name, String color) {
         ColorCardsSG listTableItems = new ColorCardsSG();
         listTableItems.setNameColorCards(name);
         listTableItems.setCodeColorCards(color);
@@ -44,26 +44,13 @@ public class PreviewReader {
     }
 
     public void setPreviewColors() {
-
-        addPreviewColors("standard", "#0b8c8f");
-        addPreviewColors("red", "#F44336");
-        addPreviewColors("pink", "#E91E63");
-        addPreviewColors("purple", "#9C27B0");
-        addPreviewColors("deep purple", "#673AB7");
-        addPreviewColors("indigo", "#3F51B5");
-        addPreviewColors("blue", "#2196F3");
-        addPreviewColors("light blue", "#03A9F4");
-        addPreviewColors("cyan", "#00BCD4");
-        addPreviewColors("teal", "#009688");
-        addPreviewColors("green", "#4CAF50");
-        addPreviewColors("light green", "#8BC34A");
-        addPreviewColors("lime", "#CDDC39");
-        addPreviewColors("amber", "#FFC107");
-        addPreviewColors("orange", "#FF9800");
-        addPreviewColors("deep orange", "#FF5722");
-        addPreviewColors("brown", "#795548");
-        addPreviewColors("grey", "#9E9E9E");
-        addPreviewColors("blue grey", "#607D8B");
+        addPreviewColors("Standard", "#00abbf");
+        addPreviewColors("Pink", "#e71e62");
+        addPreviewColors("Purple", "#663ab5");
+        addPreviewColors("Blue", "#03A9F4");
+        addPreviewColors("Cyan", "#00BCD4");
+        addPreviewColors("Teal", "#009688");
+        addPreviewColors("Lime", "#CDDC39");
     }
 
     public List<ColorCardsSG> getPreviewColors() {

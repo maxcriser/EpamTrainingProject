@@ -3,19 +3,20 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent">
 
+
     <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include layout="@layout/fragment_toolbar_back"/>
         <include layout="@layout/fragment_add_new_card"/>
+        <include layout="@layout/fragment_toolbar_search"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <include layout="@layout/fragment_toolbar_back"/>
 
             <android.support.v7.widget.RecyclerView
                 xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,6 +24,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
+                android:paddingBottom="16dp"
+                android:paddingTop="@dimen/height_toolbar"
                 android:scrollbars="vertical"/>
 
 
@@ -39,12 +42,11 @@
                     android:background="@drawable/ic_layers_black_24dp"/>
 
                 <TextView
-                    android:textAllCaps="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/text_empty_page"
-                    android:textColor="@color/gray_light"
+                    android:textColor="@color/text_black"
                     android:textSize="24sp"/>
 
             </LinearLayout>

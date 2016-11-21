@@ -5,19 +5,19 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-public class RobotoThinTextView extends TextView {
+public class RobotoThin extends TextView {
 
-    public RobotoThinTextView(Context context) {
+    public RobotoThin(Context context) {
         super(context);
         init();
     }
 
-    public RobotoThinTextView(Context context, AttributeSet attrs) {
+    public RobotoThin(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public RobotoThinTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public RobotoThin(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }

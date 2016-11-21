@@ -3,34 +3,48 @@ package com.maxcriser.cards.ui.cards;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.StaticPageNames;
 import com.maxcriser.cards.handler.RecyclerItemClickListener;
-import com.maxcriser.cards.reader.TypesCardsReader;
+import com.maxcriser.cards.reader.deleteTypesCardsReader;
 import com.maxcriser.cards.ui.adapter.ItemsRecyclerAdapter;
 import com.maxcriser.cards.ui.create.Bank;
 import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
 
 import java.util.List;
 
+import static android.view.View.GONE;
+
 public class BankCardsActivity extends AppCompatActivity {
 
     RecyclerView viewBankCards;
+    CardView toolbarBack;
+    CardView toolbarSearch;
+    EditText searchEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_cards);
+        searchEdit = (EditText) findViewById(R.id.search_edit);
+        searchEdit.addTextChangedListener(new SearchTextListener());
+
+        toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
+        toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
 
         RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
         title.setText(StaticPageNames.BANK_TITLE);
 
-        final TypesCardsReader tcReader = TypesCardsReader.getInstance();
+        final deleteTypesCardsReader tcReader = deleteTypesCardsReader.getInstance();
         tcReader.setBankCards();
 
         final List<String> myBankCards = tcReader.getBankCards();
@@ -84,5 +98,36 @@ public class BankCardsActivity extends AppCompatActivity {
         startActivity(new Intent(BankCardsActivity.this, Bank.class));
 //        Intent intent = new Intent(BankCardsActivity.this, Bank.class);
 //        startActivity(intent);
+    }
+
+    public void onToolbarBackClicked(View view) {
+        viewBankCards.smoothScrollToPosition(0);
+    }
+
+    public void onSearchClicked(View view) {
+        toolbarBack.setVisibility(GONE);
+        toolbarSearch.setVisibility(View.VISIBLE);
+    }
+
+    public void onBackSearchClicked(View view) {
+        toolbarBack.setVisibility(View.VISIBLE);
+        toolbarSearch.setVisibility(GONE);
+    }
+
+    private class SearchTextListener implements TextWatcher {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
     }
 }

@@ -3,12 +3,8 @@ package com.maxcriser.cards.ui.show;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.view.TextViews.EANP72TextView;
-import com.maxcriser.cards.view.TextViews.RobotoThinTextView;
 
 public class ShowBankCard extends Activity {
 

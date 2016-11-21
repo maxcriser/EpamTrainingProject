@@ -18,7 +18,7 @@
                 android:layout_height="56dp"
                 android:layout_margin="8dp">
 
-                <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                <com.maxcriser.cards.view.TextViews.NotoSans
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:gravity="center"
@@ -43,7 +43,7 @@
                 android:layout_height="56dp"
                 android:layout_margin="8dp">
 
-                <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                <com.maxcriser.cards.view.TextViews.NotoSans
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:gravity="center"
@@ -66,7 +66,7 @@
                 android:layout_height="56dp"
                 android:layout_margin="8dp">
 
-                <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                <com.maxcriser.cards.view.TextViews.NotoSans
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:gravity="center"
@@ -98,7 +98,7 @@
                 android:layout_height="56dp"
                 android:layout_margin="8dp">
 
-                <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                <com.maxcriser.cards.view.TextViews.NotoSans
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:gravity="center"
@@ -121,7 +121,7 @@
                 android:layout_height="56dp"
                 android:layout_margin="8dp">
 
-                <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                <com.maxcriser.cards.view.TextViews.NotoSans
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:gravity="center"
@@ -146,7 +146,7 @@
                 android:layout_height="56dp"
                 android:layout_margin="8dp">
 
-                <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                <com.maxcriser.cards.view.TextViews.NotoSans
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:gravity="center"
@@ -177,7 +177,7 @@
                 android:layout_height="56dp"
                 android:layout_margin="8dp">
 
-                <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                <com.maxcriser.cards.view.TextViews.NotoSans
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:gravity="center"
@@ -201,7 +201,7 @@
                 android:layout_margin="8dp">
 
 
-                <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                <com.maxcriser.cards.view.TextViews.NotoSans
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:gravity="center"
@@ -224,7 +224,7 @@
                 android:layout_height="56dp"
                 android:layout_margin="8dp">
 
-                <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                <com.maxcriser.cards.view.TextViews.NotoSans
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:gravity="center"
@@ -262,7 +262,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp">
 
-                <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                <com.maxcriser.cards.view.TextViews.NotoSans
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:gravity="center"

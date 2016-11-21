@@ -6,10 +6,14 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -22,13 +26,10 @@ import com.maxcriser.cards.constant.StaticPageNames;
 import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.handler.RecyclerItemClickListener;
-import com.maxcriser.cards.reader.TypesCardsReader;
 import com.maxcriser.cards.ui.adapter.CursorDiscountAdapter;
 import com.maxcriser.cards.ui.adapter.DiscountCursorLoader;
 import com.maxcriser.cards.ui.show.ShowDiscountCard;
 import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
-
-import java.util.List;
 
 import static android.view.View.GONE;
 
@@ -41,6 +42,9 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
     RecyclerView discountCards;
     LinearLayoutManager mLayoutManager;
     CursorDiscountAdapter adapter;
+    CardView toolbarBack;
+    CardView toolbarSearch;
+    EditText searchEdit;
 
     public static final String EXTRA_DISCOUNT_ID = "discount_id_extra";
     public static final String EXTRA_DISCOUNT_TITLE = "discount_title_extra";
@@ -54,15 +58,16 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discount_cards);
+        searchEdit = (EditText) findViewById(R.id.search_edit);
+        searchEdit.addTextChangedListener(new SearchTextListener());
+
+        toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
+        toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
 
         RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
         title.setText(StaticPageNames.DISCOUNT_TITLE);
 
         dbHelper = DatabaseHelper.getInstance(this, 1);
-
-        final TypesCardsReader tcReader = TypesCardsReader.getInstance();
-        tcReader.setDiscountCards();
-        final List<String> myDiscountCards = tcReader.getDiscountCards();
 
         discountCards = (RecyclerView) findViewById(R.id.discount_cards_recycler_view);
         discountCards.setHasFixedSize(true);
@@ -192,7 +197,7 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
             linearEmpty.setVisibility(GONE);
             discountCards.setVisibility(View.VISIBLE);
         }
-        adapter = new CursorDiscountAdapter(data, this, R.layout.discount_item);
+        adapter = new CursorDiscountAdapter(data, this, R.layout.item_discount);
         discountCards.swapAdapter(adapter, true);
 
 //        mProgressBarDiscount = (ProgressBar) findViewById(R.id.progressbar_discount);
@@ -202,5 +207,36 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         discountCards.swapAdapter(null, true);
+    }
+
+    public void onToolbarBackClicked(View view) {
+        discountCards.smoothScrollToPosition(0);
+    }
+
+    public void onSearchClicked(View view) {
+        toolbarBack.setVisibility(GONE);
+        toolbarSearch.setVisibility(View.VISIBLE);
+    }
+
+    public void onBackSearchClicked(View view) {
+        toolbarBack.setVisibility(View.VISIBLE);
+        toolbarSearch.setVisibility(GONE);
+    }
+
+    private class SearchTextListener implements TextWatcher {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
     }
 }

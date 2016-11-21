@@ -24,7 +24,7 @@ public class MyFragmentPagerAdapterTemplate extends FragmentPagerAdapter {
         if (adapter == 1)
             return ViewPagerPreviewType.newInstance(position);
         else if (adapter == 2)
-            return ViewPagerPreviewCard.newInstance(position, R.layout.discount_item);
+            return ViewPagerPreviewCard.newInstance(position, R.layout.item_discount);
         else
             return ViewPagerPreviewCard.newInstance(position, R.layout.item_list_bank);
     }

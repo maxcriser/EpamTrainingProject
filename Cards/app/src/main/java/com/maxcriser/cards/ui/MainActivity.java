@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
         final TypesCardsReader tcReader = TypesCardsReader.getInstance();
         tcReader.setTypesCards();
-
         final List<String> types = tcReader.getTypesCards();
 
         typesCards = (RecyclerView) findViewById(R.id.types_cards_recycler_view);
@@ -88,6 +87,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void onMenuClicked(View view) {
         drawerLayout.openDrawer(lv);
+    }
+
+    public void onToolbarClicked(View view) {
+        typesCards.smoothScrollToPosition(0);
     }
 
     private class DrawerItemClickListener implements AdapterView.OnItemClickListener {

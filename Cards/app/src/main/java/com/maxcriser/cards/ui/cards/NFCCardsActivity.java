@@ -2,6 +2,7 @@ package com.maxcriser.cards.ui.cards;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -10,25 +11,32 @@ import android.view.View;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.StaticPageNames;
 import com.maxcriser.cards.handler.RecyclerItemClickListener;
-import com.maxcriser.cards.reader.TypesCardsReader;
+import com.maxcriser.cards.reader.deleteTypesCardsReader;
 import com.maxcriser.cards.ui.adapter.ItemsRecyclerAdapter;
 import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
 
 import java.util.List;
 
+import static android.view.View.GONE;
+
 public class NFCCardsActivity extends AppCompatActivity {
 
     RecyclerView viewNFCItems;
+    CardView toolbarBack;
+    CardView toolbarSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc_cards);
 
+        toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
+        toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
+
         RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
         title.setText(StaticPageNames.NFC_TITLE);
 
-        final TypesCardsReader tcReader = TypesCardsReader.getInstance();
+        final deleteTypesCardsReader tcReader = deleteTypesCardsReader.getInstance();
         tcReader.setNfcCards();
 
         final List<String> myNFCItems = tcReader.getNfcCards();
@@ -75,5 +83,19 @@ public class NFCCardsActivity extends AppCompatActivity {
 
     public void onBackClicked(View view) {
         super.onBackPressed();
+    }
+
+    public void onToolbarBackClicked(View view) {
+        viewNFCItems.smoothScrollToPosition(0);
+    }
+
+    public void onSearchClicked(View view) {
+        toolbarBack.setVisibility(GONE);
+        toolbarSearch.setVisibility(View.VISIBLE);
+    }
+
+    public void onBackSearchClicked(View view) {
+        toolbarBack.setVisibility(View.VISIBLE);
+        toolbarSearch.setVisibility(GONE);
     }
 }

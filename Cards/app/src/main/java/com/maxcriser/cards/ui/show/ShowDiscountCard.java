@@ -21,7 +21,7 @@ import com.maxcriser.cards.ui.cards.DiscountCardsActivity;
 import com.maxcriser.cards.view.EditTextViews.RobotoThinEditText;
 import com.maxcriser.cards.view.TextViews.EANP72TextView;
 import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
-import com.maxcriser.cards.view.TextViews.RobotoThinTextView;
+import com.maxcriser.cards.view.TextViews.NotoSans;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -32,7 +32,7 @@ public class ShowDiscountCard extends Activity {
     FloatingActionButton floatingActionButtonDelete, floatingActionButtonEdit;
     LinearLayout editLinear;
 
-    RobotoThinTextView titleView;
+    NotoSans titleView;
     RobotoThinEditText editName;
     String editString;
     EANP72TextView barcodeView;
@@ -61,6 +61,9 @@ public class ShowDiscountCard extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_discount);
 
+        RobotoRegularTextView titleToolbar = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
+        titleToolbar.setText(title);
+
         mHandler = new Handler(hc);
 
         animScaleDown = AnimationUtils.loadAnimation(ShowDiscountCard.this, R.anim.scale_down);
@@ -72,8 +75,6 @@ public class ShowDiscountCard extends Activity {
         editLinear = (LinearLayout) findViewById(R.id.linear_edit_frame_title_discount);
         editName = (RobotoThinEditText) findViewById(R.id.rename_discount_title);
         // titleView
-        RobotoRegularTextView titleToolbar = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
-        titleToolbar.setText(title);
 
         dbHelper = DatabaseHelper.getInstance(this, 1);
 
@@ -106,7 +107,7 @@ public class ShowDiscountCard extends Activity {
         barcode = barcodeIntent.getStringExtra(DiscountCardsActivity.EXTRA_DISCOUNT_BARCODE);
         color = barcodeIntent.getStringExtra(DiscountCardsActivity.EXTRA_DISCOUNT_COLOR);
 
-        titleView = (RobotoThinTextView) findViewById(R.id.title_show_discount);
+        titleView = (NotoSans) findViewById(R.id.title_show_discount);
         titleView.setText(title);
 
         barcodeView = (EANP72TextView) findViewById(R.id.show_barcode);

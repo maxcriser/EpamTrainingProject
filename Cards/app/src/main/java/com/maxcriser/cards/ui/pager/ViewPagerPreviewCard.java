@@ -9,10 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.reader.ColorCardsSG;
-import com.maxcriser.cards.view.TextViews.RobotoThinTextView;
+import com.maxcriser.cards.view.TextViews.NotoSans;
 
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
@@ -48,7 +49,7 @@ public class ViewPagerPreviewCard extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate((Integer) previewView, null);
 
-        RobotoThinTextView tvPage = (RobotoThinTextView) view.findViewById(R.id.title_main_cards);
+        TextView tvPage = (TextView) view.findViewById(R.id.title_main_cards);
         FrameLayout mLinearCard = (FrameLayout) view.findViewById(R.id.linear_card);
         ImageView imageView = (ImageView) view.findViewById(R.id.icon_bank_cards);
         try {

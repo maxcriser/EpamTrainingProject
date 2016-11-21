@@ -31,7 +31,7 @@ public class CursorDiscountAdapter extends RecyclerView.Adapter<CursorDiscountHo
 
     @Override
     public void onBindViewHolder(CursorDiscountHolder holder, int position) {
-        if(mCursor.moveToPosition(position)) {
+        if (mCursor.moveToPosition(position)) {
 
             holder.mLinearCard.setBackgroundColor(Color.parseColor(mCursor
                     .getString(mCursor.getColumnIndex(ModelDiscountCards.DISCOUNT_BACKGROUND_COLOR))));

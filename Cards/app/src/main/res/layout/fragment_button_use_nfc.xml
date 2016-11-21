@@ -3,15 +3,15 @@
        android:layout_width="match_parent"
        android:layout_height="match_parent">
 
-    <com.maxcriser.cards.view.TextViews.RobotoThinTextView
-        android:textColor="@color/white"
+    <com.maxcriser.cards.view.TextViews.NotoSans
+        android:textColor="@color/text_white"
         android:textSize="16sp"
         android:gravity="center"
-        android:text="USE NFC"
+        android:text="Use NFC"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@color/bluelight_500" android:id="@+id/robotoThinTextView2">
 
-    </com.maxcriser.cards.view.TextViews.RobotoThinTextView>
+    </com.maxcriser.cards.view.TextViews.NotoSans>
 
 </merge>

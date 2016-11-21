@@ -12,6 +12,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.maxcriser.cards.R;
+
 public final class ViewSetter extends View implements View.OnTouchListener {
 
     private final Paint paint;
@@ -32,7 +34,7 @@ public final class ViewSetter extends View implements View.OnTouchListener {
         super(context);
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        maskColor = Color.CYAN;
+        maskColor = Color.TRANSPARENT;
         frameColor = Color.BLACK;
         cornerColor = Color.WHITE;
         WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -78,7 +80,7 @@ public final class ViewSetter extends View implements View.OnTouchListener {
         int height = canvas.getHeight();
 
         // Draw the exterior (i.e. outside the framing rect) darkened
-        paint.setColor(maskColor);
+        paint.setColor(Color.argb(153, 255, 255, 255));
         canvas.drawRect(0, 0, width, frame.top, paint);
         canvas.drawRect(0, frame.top, frame.left, frame.bottom + 1, paint);
         canvas.drawRect(frame.right + 1, frame.top, width, frame.bottom + 1,

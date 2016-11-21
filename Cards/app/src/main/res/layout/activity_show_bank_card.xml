@@ -33,13 +33,12 @@
                         android:background="@color/bluelight_500"
                         android:orientation="horizontal">
 
-                        <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                        <com.maxcriser.cards.view.TextViews.NotoSans
                             android:id="@+id/title_show_discount"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
                             android:gravity="center|center"
                             android:text="@string/name"
-                            android:textAllCaps="true"
                             android:textSize="18sp"/>
                     </LinearLayout>
 
@@ -47,7 +46,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="@color/white"
+                        android:background="@color/text_toolbar"
                         android:gravity="center"
                         android:orientation="vertical"
                         android:padding="8dp"
@@ -61,13 +60,13 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp">
 
-                            <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                            <com.maxcriser.cards.view.TextViews.NotoSans
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Nm umber:"
                                 android:textSize="20sp"/>
 
-                            <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                            <com.maxcriser.cards.view.TextViews.NotoSans
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="16dp"
@@ -81,13 +80,13 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp">
 
-                            <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                            <com.maxcriser.cards.view.TextViews.NotoSans
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="PIN:"
                                 android:textSize="20sp"/>
 
-                            <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                            <com.maxcriser.cards.view.TextViews.NotoSans
                                 android:id="@+id/robotoThinTextView"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -102,13 +101,13 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp">
 
-                            <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                            <com.maxcriser.cards.view.TextViews.NotoSans
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Type:"
                                 android:textSize="20sp"/>
 
-                            <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                            <com.maxcriser.cards.view.TextViews.NotoSans
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="16dp"
@@ -123,13 +122,13 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp">
 
-                            <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                            <com.maxcriser.cards.view.TextViews.NotoSans
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Any information:"
                                 android:textSize="20sp"/>
 
-                            <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+                            <com.maxcriser.cards.view.TextViews.NotoSans
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="16dp"

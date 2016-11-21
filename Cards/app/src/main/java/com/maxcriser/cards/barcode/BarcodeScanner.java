@@ -9,13 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.ui.create.Discount;
-import com.maxcriser.cards.view.TextViews.RobotoThinTextView;
+import com.maxcriser.cards.view.TextViews.NotoSans;
+import com.maxcriser.cards.view.TextViews.RobotoThin;
 
 import net.sourceforge.zbar.Config;
 import net.sourceforge.zbar.Image;
@@ -27,11 +26,11 @@ import static android.view.View.GONE;
 
 public class BarcodeScanner extends AppCompatActivity {
 
-    private RobotoThinTextView mCancel;
-    private RobotoThinTextView mOk;
-    private TextView mSolution;
+    private RobotoThin mCancel;
+    private RobotoThin mOk;
+    private RobotoThin mSolution;
+    private RobotoThin mBottomText;
     private FrameLayout mFrameSolution;
-    private TextView mBottomText;
 
     private Camera mCamera;
     private CameraPreview mPreview;
@@ -55,11 +54,11 @@ public class BarcodeScanner extends AppCompatActivity {
 
         setContentView(R.layout.barcode_scanner);
 
-        mOk = (RobotoThinTextView) findViewById(R.id.button_ok);
-        mCancel = (RobotoThinTextView) findViewById(R.id.button_cancel);
-        mSolution = (TextView) findViewById(R.id.solution_of_scan);
+        mOk = (RobotoThin) findViewById(R.id.button_ok);
+        mCancel = (RobotoThin) findViewById(R.id.button_cancel);
+        mSolution = (RobotoThin) findViewById(R.id.solution_of_scan);
         mFrameSolution = (FrameLayout) findViewById(R.id.frame_solution_of_scan);
-        mBottomText = (TextView) findViewById(R.id.bottom_text_barcode_scan);
+        mBottomText = (RobotoThin) findViewById(R.id.bottom_text_barcode_scan);
 
         initControls();
     }

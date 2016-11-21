@@ -19,7 +19,6 @@
             android:background="@drawable/ic_layers_black_24dp"/>
 
         <TextView
-            android:textAllCaps="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

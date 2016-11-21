@@ -9,8 +9,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <com.maxcriser.cards.view.TextViews.RobotoThinTextView
-            android:textAllCaps="true"
+        <com.maxcriser.cards.view.TextViews.NotoSans
             android:layout_weight="10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp">
 
-            <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+            <com.maxcriser.cards.view.TextViews.NotoSans
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_gravity="left|bottom"
@@ -78,11 +77,10 @@
                 android:gravity="bottom"
                 android:onClick="onCancelClicked"
                 android:text="@string/cancel"
-                android:textAllCaps="true"
                 android:textColor="@color/gray_light"
                 android:textSize="24sp"/>
 
-            <com.maxcriser.cards.view.TextViews.RobotoThinTextView
+            <com.maxcriser.cards.view.TextViews.NotoSans
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_gravity="right|bottom"
@@ -91,7 +89,6 @@
                 android:gravity="bottom"
                 android:onClick="onDeleteClicked"
                 android:text="@string/delete"
-                android:textAllCaps="true"
                 android:textColor="@color/gray_light"
                 android:textSize="24sp"/>
 
