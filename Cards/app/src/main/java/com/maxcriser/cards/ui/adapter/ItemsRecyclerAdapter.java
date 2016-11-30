@@ -42,19 +42,6 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolde
 
         holder.mTitle.setText(mItems.get(position));
         holder.mTitle.setTag(holder);
-
-        String title = holder.mTitle.getText().toString();
-
-        if (title.equals(NFC_TITLE)) {
-            holder.mIcon.setImageResource(R.drawable.icon_nfc);
-        } else if (title.equals(BANK_TITLE)) {
-            holder.mIcon.setImageResource(R.drawable.icon_bank_cards);
-        } else if (title.equals(DISCOUNT_TITLE)) {
-            holder.mIcon.setImageResource(R.drawable.icon_discount_cards);
-        } else if (title.equals(TICKETS_TITLE)) {
-            holder.mIcon.setImageResource(R.drawable.icon_tickets);
-        }
-
     }
 
     @Override

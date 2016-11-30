@@ -214,6 +214,8 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
     }
 
     public void onSearchClicked(View view) {
+        searchEdit.requestFocus();
+        searchEdit.setText("");
         toolbarBack.setVisibility(GONE);
         toolbarSearch.setVisibility(View.VISIBLE);
     }

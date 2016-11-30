@@ -36,6 +36,7 @@
                 android:textStyle="bold"/>
 
             <ImageButton
+                android:id="@+id/search_image_toolbar"
                 android:layout_width="@dimen/height_toolbar"
                 android:layout_height="@dimen/height_toolbar"
                 android:layout_weight="1"

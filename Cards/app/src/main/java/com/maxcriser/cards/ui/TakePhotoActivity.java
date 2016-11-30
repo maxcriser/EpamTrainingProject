@@ -41,6 +41,7 @@ public class TakePhotoActivity extends Activity implements SurfaceHolder.Callbac
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -75,7 +76,8 @@ public class TakePhotoActivity extends Activity implements SurfaceHolder.Callbac
     protected void onResume() {
         super.onResume();
         camera = Camera.open();
-        camera.setDisplayOrientation(90);
+        // TODO: 21.11.2016 uncomment
+//        camera.setDisplayOrientation(90);
     }
 
     @Override
@@ -113,16 +115,19 @@ public class TakePhotoActivity extends Activity implements SurfaceHolder.Callbac
         // здесь корректируем размер отображаемого preview, чтобы не было
         // искажений
 
+        // TODO: 21.11.2016 uncomment
 //        camera.setDisplayOrientation(0);
+
+        // TODO: 21.11.2016 uncomment
+//        Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+//        int width = display.getWidth();
+//        int height = display.getHeight();
+//
+//        lp.height = height;
+//        lp.width = width;
+
         lp.width = previewSurfaceWidth;
         lp.height = (int) (previewSurfaceWidth / aspect);
-
-        Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        int width = display.getWidth();
-        int height = display.getHeight();
-
-        lp.height = height;
-        lp.width = width;
 
         preview.setLayoutParams(lp);
         camera.startPreview();
@@ -160,20 +165,14 @@ public class TakePhotoActivity extends Activity implements SurfaceHolder.Callbac
     }
 
     private void cropFile(File in, File out, Rect rect) {
-            try {
+        try {
             BitmapFactory.Options o = new BitmapFactory.Options();
 
             Bitmap inb = BitmapFactory.decodeStream(new FileInputStream(in), null, o);
-
-            Matrix matrix = new Matrix();
-            matrix.postRotate(90);
-
-            inb = Bitmap.createBitmap(inb, 0, 0, inb.getWidth(), inb.getHeight(), matrix, true);
-//            Bitmap outb = Bitmap.createBitmap(inb, rect.bottom, rect.top, rect.width(), rect.height()   );
-                Bitmap outb = inb;
+//            Bitmap outb = Bitmap.createBitmap(inb, rect.bottom, rect.top, rect.width(), rect.height());
+            Bitmap outb = inb;
             FileOutputStream os = new FileOutputStream(out);
-//            outb.compress(Bitmap.CompressFormat.JPEG, 85, os);
-            inb.compress(Bitmap.CompressFormat.JPEG, 85, os);
+            outb.compress(Bitmap.CompressFormat.JPEG, 85, os);
             os.flush();
             os.close();
             in.delete();

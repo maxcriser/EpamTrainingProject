@@ -9,11 +9,12 @@ import android.view.View;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.StaticPageNames;
-import com.maxcriser.cards.reader.ColorCardsSG;
+import com.maxcriser.cards.reader.Colors;
 import com.maxcriser.cards.ui.adapter.MyFragmentPagerAdapterTemplate;
 import com.maxcriser.cards.ui.pager.ViewPagerPreviewCard;
 import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
 
+import static android.view.View.GONE;
 import static com.maxcriser.cards.constant.BankCardTypes.AMEX;
 import static com.maxcriser.cards.constant.BankCardTypes.BELCARD;
 import static com.maxcriser.cards.constant.BankCardTypes.DINERS_CLUB;
@@ -39,7 +40,7 @@ public class Bank extends AppCompatActivity {
     PagerAdapter pagerAdapterTypes;
     PagerAdapter pagerAdapterTemplate;
 
-    ColorCardsSG listColors;
+    Colors listColors;
     String myColorName;
     String myColorCode;
     String myTypeCard;
@@ -49,6 +50,7 @@ public class Bank extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bank_card);
+        findViewById(R.id.search_image_toolbar).setVisibility(GONE);
 
         currentPositionColors = 0;
 
@@ -155,4 +157,6 @@ public class Bank extends AppCompatActivity {
     public void onCreateCardClicked(View view) {
     }
 
+    public void onToolbarBackClicked(View view) {
+    }
 }

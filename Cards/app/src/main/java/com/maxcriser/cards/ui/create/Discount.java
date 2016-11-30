@@ -18,11 +18,12 @@ import com.maxcriser.cards.barcode.BarcodeScanner;
 import com.maxcriser.cards.constant.StaticPageNames;
 import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
-import com.maxcriser.cards.reader.ColorCardsSG;
+import com.maxcriser.cards.reader.Colors;
 import com.maxcriser.cards.ui.adapter.MyFragmentPagerAdapterTemplate;
 import com.maxcriser.cards.view.TextViews.EANP72TextView;
 import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
 
+import static android.view.View.GONE;
 import static com.maxcriser.cards.constant.ViewPagerTemplate.ID_DISCOUNT_ITEM;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
@@ -41,7 +42,7 @@ public class Discount extends AppCompatActivity {
     EANP72TextView mEANP72TextView;
     String mBarcode;
 
-    ColorCardsSG listColors;
+    Colors listColors;
     String myColorName;
     String myColorCode;
     String title; // database
@@ -52,6 +53,8 @@ public class Discount extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_discount);
+        //TODO in close to search pages
+        findViewById(R.id.search_image_toolbar).setVisibility(GONE);
 
         db = DatabaseHelper.getInstance(this, 1);
 
@@ -152,5 +155,8 @@ public class Discount extends AppCompatActivity {
 
             onBackClicked(null);
         }
+    }
+
+    public void onToolbarBackClicked(View view) {
     }
 }

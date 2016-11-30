@@ -14,7 +14,7 @@ import static com.maxcriser.cards.constant.BankCardTypes.WESTERN_UNION;
 
 public class PreviewReader {
 
-    private List<ColorCardsSG> previewColors;
+    private List<Colors> previewColors;
     private List<String> typeCard;
 
     private static PreviewReader sPreviewReader;
@@ -36,7 +36,7 @@ public class PreviewReader {
     }
 
     private void addPreviewColors(String name, String color) {
-        ColorCardsSG listTableItems = new ColorCardsSG();
+        Colors listTableItems = new Colors();
         listTableItems.setNameColorCards(name);
         listTableItems.setCodeColorCards(color);
 
@@ -53,7 +53,7 @@ public class PreviewReader {
         addPreviewColors("Lime", "#CDDC39");
     }
 
-    public List<ColorCardsSG> getPreviewColors() {
+    public List<Colors> getPreviewColors() {
         return previewColors;
     }
 

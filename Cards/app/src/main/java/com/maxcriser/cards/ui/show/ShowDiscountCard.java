@@ -61,6 +61,8 @@ public class ShowDiscountCard extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_discount);
 
+        findViewById(R.id.search_image_toolbar).setVisibility(GONE);
+
         RobotoRegularTextView titleToolbar = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
         titleToolbar.setText(title);
 

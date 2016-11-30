@@ -12,8 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.reader.ColorCardsSG;
-import com.maxcriser.cards.view.TextViews.NotoSans;
+import com.maxcriser.cards.reader.Colors;
 
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
@@ -58,7 +57,7 @@ public class ViewPagerPreviewCard extends Fragment {
             Log.d(EXCEPTION_VP, e.toString());
         }
 
-        ColorCardsSG color = previewColors.get(pageNumberDiscount);
+        Colors color = previewColors.get(pageNumberDiscount);
         mLinearCard.setBackgroundColor(Color.parseColor(color.getCodeColorCards()));
         tvPage.setText(color.getNameColorCards());
 

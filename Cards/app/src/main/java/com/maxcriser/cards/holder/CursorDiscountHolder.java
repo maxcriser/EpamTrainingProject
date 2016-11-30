@@ -19,6 +19,5 @@ public class CursorDiscountHolder extends RecyclerView.ViewHolder {
 
         mLinearCard = (FrameLayout) itemView.findViewById(R.id.linear_card);
         mTitle = (TextView) itemView.findViewById(R.id.title_main_cards);
-        mIcon = (ImageView) itemView.findViewById(R.id.icon_main_cards);
     }
 }

@@ -17,6 +17,39 @@
     <string name="card_color">Card color</string>
     <string name="enter_name_of_card">Enter name of card...</string>
     <string name="enter_name_of_the_card">Enter name of the card...</string>
+    <string name="search_your_cards">Search your cards</string>
+    <string name="nfc">NFC</string>
+    <string name="now_all_contactless_cards_in_your_mobile_phone">Now all contactless cards in your
+        mobile phone
+    </string>
+    <string name="keep_your_tickets_on_the_same_device">Keep your tickets on the same device
+    </string>
+    <string name="tickets">Tickets</string>
+    <string name="to_use_the_discount_cards_are_now_much_easier">To use the discount cards are now
+        much easier
+    </string>
+    <string name="discount_cards">Discount cards</string>
+    <string name="keep_your_credit_cards_for_quick_access">Keep your credit cards for quick access
+    </string>
+    <string name="credit_cards">Credit cards</string>
+    <string name="_0">0</string>
+    <string name="_9">9</string>
+    <string name="_8">8</string>
+    <string name="_7">7</string>
+    <string name="_6">6</string>
+    <string name="_5">5</string>
+    <string name="_4">4</string>
+    <string name="_3">3</string>
+    <string name="_2">2</string>
+    <string name="_1">1</string>
+    <string name="abc">ABC</string>
+    <string name="def">DEF</string>
+    <string name="ghi">GHI</string>
+    <string name="jkl">JKL</string>
+    <string name="mno">MNO</string>
+    <string name="pqrs">PQRS</string>
+    <string name="tuv">TUV</string>
+    <string name="wxyz">WXYZ</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>

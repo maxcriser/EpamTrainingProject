@@ -1,11 +1,11 @@
 package com.maxcriser.cards.reader;
 
-public class ColorCardsSG {
+public class Colors {
 
     String nameColorCards;
     String codeColorCards;
 
-    ColorCardsSG() {
+    Colors() {
 
     }
 

@@ -6,83 +6,96 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/card_view"
         android:orientation="vertical">
 
         <LinearLayout
+            android:layout_marginTop="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center">
 
-            <FrameLayout
+            <LinearLayout
+                android:onClick="oneInput"
+                android:layout_weight="1"
                 android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_margin="8dp">
+                android:layout_height="68dp"
+                android:orientation="vertical">
 
-                <com.maxcriser.cards.view.TextViews.NotoSans
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:gravity="center"
-                    android:text="1"
-                    android:textColor="@color/gray_light"
-                    android:textSize="32sp"/>
-
-
-                <ImageButton
+                <com.maxcriser.cards.view.TextViews.RobotoThin
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:id="@+id/button_one"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:background="@drawable/ripple_press_button"
-                    android:onClick="oneInput"
-                    android:src="@drawable/ic_button_pin_24dp"
-                    android:textSize="32sp"/>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_margin="8dp">
-
-                <com.maxcriser.cards.view.TextViews.NotoSans
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="2"
-                    android:textColor="@color/gray_light"
-                    android:textSize="30sp"/>
+                    android:text="@string/_1"
+                    android:textColor="@color/text_white"
+                    android:textSize="@dimen/keyboard_number_size"/>
 
-                <ImageButton
+                <com.maxcriser.cards.view.TextViews.RobotoThin
+                    android:layout_marginTop="-6dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/gray_shadow"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:onClick="twoInput"
+                android:layout_weight="1"
+                android:layout_width="56dp"
+                android:layout_height="68dp"
+                android:orientation="vertical">
+
+                <com.maxcriser.cards.view.TextViews.RobotoThin
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:id="@+id/button_two"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:background="@drawable/ripple_press_button"
-                    android:onClick="twoInput"
-                    android:src="@drawable/ic_button_pin_24dp"/>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_margin="8dp">
-
-                <com.maxcriser.cards.view.TextViews.NotoSans
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="3"
-                    android:textColor="@color/gray_light"
-                    android:textSize="30sp"/>
+                    android:text="@string/_2"
+                    android:textColor="@color/text_white"
+                    android:textSize="@dimen/keyboard_number_size"/>
 
-                <ImageButton
+                <com.maxcriser.cards.view.TextViews.RobotoThin
+                    android:layout_marginTop="-6dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/abc"
+                    android:textColor="@color/gray_shadow"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:onClick="threeInput"
+                android:layout_weight="1"
+                android:layout_width="56dp"
+                android:layout_height="68dp"
+                android:orientation="vertical">
+
+                <com.maxcriser.cards.view.TextViews.RobotoThin
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:id="@+id/button_three"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:background="@drawable/ripple_press_button"
-                    android:onClick="threeInput"
-                    android:src="@drawable/ic_button_pin_24dp"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/_3"
+                    android:textColor="@color/text_white"
+                    android:textSize="@dimen/keyboard_number_size"/>
 
-            </FrameLayout>
+                <com.maxcriser.cards.view.TextViews.RobotoThin
+                    android:layout_marginTop="-6dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/def"
+                    android:textColor="@color/gray_shadow"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -92,77 +105,89 @@
             android:layout_margin="2dp"
             android:gravity="center">
 
-
-            <FrameLayout
+            <LinearLayout
+                android:onClick="fourInput"
+                android:layout_weight="1"
                 android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_margin="8dp">
+                android:layout_height="68dp"
+                android:orientation="vertical">
 
-                <com.maxcriser.cards.view.TextViews.NotoSans
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:gravity="center"
-                    android:text="4"
-                    android:textColor="@color/gray_light"
-                    android:textSize="30sp"/>
-
-                <ImageButton
+                <com.maxcriser.cards.view.TextViews.RobotoThin
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:id="@+id/button_four"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:background="@drawable/ripple_press_button"
-                    android:onClick="fourInput"
-                    android:src="@drawable/ic_button_pin_24dp"/>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_margin="8dp">
-
-                <com.maxcriser.cards.view.TextViews.NotoSans
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="5"
-                    android:textColor="@color/gray_light"
-                    android:textSize="30sp"/>
+                    android:text="@string/_4"
+                    android:textColor="@color/text_white"
+                    android:textSize="@dimen/keyboard_number_size"/>
 
-                <ImageButton
+                <com.maxcriser.cards.view.TextViews.RobotoThin
+                    android:layout_marginTop="-6dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/ghi"
+                    android:textColor="@color/gray_shadow"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:onClick="fiveInput"
+                android:layout_weight="1"
+                android:layout_width="56dp"
+                android:layout_height="68dp"
+                android:orientation="vertical">
+
+                <com.maxcriser.cards.view.TextViews.RobotoThin
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:id="@+id/button_five"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:background="@drawable/ripple_press_button"
-                    android:onClick="fiveInput"
-                    android:src="@drawable/ic_button_pin_24dp"
-                    android:text="5"
-                    android:textSize="32sp"/>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_margin="8dp">
-
-                <com.maxcriser.cards.view.TextViews.NotoSans
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="6"
-                    android:textColor="@color/gray_light"
-                    android:textSize="30sp"/>
+                    android:text="@string/_5"
+                    android:textColor="@color/text_white"
+                    android:textSize="@dimen/keyboard_number_size"/>
 
-                <ImageButton
+                <com.maxcriser.cards.view.TextViews.RobotoThin
+                    android:layout_marginTop="-6dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/jkl"
+                    android:textColor="@color/gray_shadow"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:onClick="sixInput"
+                android:layout_weight="1"
+                android:layout_width="56dp"
+                android:layout_height="68dp"
+                android:orientation="vertical">
+
+                <com.maxcriser.cards.view.TextViews.RobotoThin
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:id="@+id/button_six"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:background="@drawable/ripple_press_button"
-                    android:onClick="sixInput"
-                    android:src="@drawable/ic_button_pin_24dp"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/_6"
+                    android:textColor="@color/text_white"
+                    android:textSize="@dimen/keyboard_number_size"/>
 
-            </FrameLayout>
+                <com.maxcriser.cards.view.TextViews.RobotoThin
+                    android:layout_marginTop="-6dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/mno"
+                    android:textColor="@color/gray_shadow"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -172,120 +197,143 @@
             android:layout_margin="2dp"
             android:gravity="center">
 
-            <FrameLayout
+            <LinearLayout
+                android:onClick="sevenInput"
+                android:layout_weight="1"
                 android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_margin="8dp">
+                android:layout_height="68dp"
+                android:orientation="vertical">
 
-                <com.maxcriser.cards.view.TextViews.NotoSans
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:gravity="center"
-                    android:text="7"
-                    android:textColor="@color/gray_light"
-                    android:textSize="30sp"/>
-
-                <ImageButton
+                <com.maxcriser.cards.view.TextViews.RobotoThin
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:id="@+id/button_seven"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:background="@drawable/ripple_press_button"
-                    android:onClick="sevenInput"
-                    android:src="@drawable/ic_button_pin_24dp"/>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_margin="8dp">
-
-
-                <com.maxcriser.cards.view.TextViews.NotoSans
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="8"
-                    android:textColor="@color/gray_light"
-                    android:textSize="30sp"/>
+                    android:text="@string/_7"
+                    android:textColor="@color/text_white"
+                    android:textSize="@dimen/keyboard_number_size"/>
 
-                <ImageButton
+                <com.maxcriser.cards.view.TextViews.RobotoThin
+                    android:layout_marginTop="-6dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/pqrs"
+                    android:textColor="@color/gray_shadow"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:onClick="eightInput"
+                android:layout_weight="1"
+                android:layout_width="56dp"
+                android:layout_height="68dp"
+                android:orientation="vertical">
+
+                <com.maxcriser.cards.view.TextViews.RobotoThin
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:id="@+id/button_eight"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:background="@drawable/ripple_press_button"
-                    android:onClick="eightInput"
-                    android:src="@drawable/ic_button_pin_24dp"/>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_margin="8dp">
-
-                <com.maxcriser.cards.view.TextViews.NotoSans
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="9"
-                    android:textColor="@color/gray_light"
-                    android:textSize="30sp"/>
+                    android:text="@string/_8"
+                    android:textColor="@color/text_white"
+                    android:textSize="@dimen/keyboard_number_size"/>
 
-                <ImageButton
+                <com.maxcriser.cards.view.TextViews.RobotoThin
+                    android:layout_marginTop="-6dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/tuv"
+                    android:textColor="@color/gray_shadow"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:onClick="nineInput"
+                android:layout_weight="1"
+                android:layout_width="56dp"
+                android:layout_height="68dp"
+                android:orientation="vertical">
+
+                <com.maxcriser.cards.view.TextViews.RobotoThin
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:id="@+id/button_nine"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:background="@drawable/ripple_press_button"
-                    android:onClick="nineInput"
-                    android:src="@drawable/ic_button_pin_24dp"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/_9"
+                    android:textColor="@color/text_white"
+                    android:textSize="@dimen/keyboard_number_size"/>
 
-            </FrameLayout>
+                <com.maxcriser.cards.view.TextViews.RobotoThin
+                    android:layout_marginTop="-6dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/wxyz"
+                    android:textColor="@color/gray_shadow"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="12dp"
             android:gravity="center">
 
-            <ImageView
+            <LinearLayout
+                android:layout_weight="1"
                 android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_marginRight="8dp"/>
+                android:layout_height="68dp"
+                android:orientation="vertical">
 
+            </LinearLayout>
 
-            <FrameLayout
+            <LinearLayout
+                android:onClick="zeroInput"
+                android:layout_weight="1"
                 android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp">
+                android:layout_height="68dp"
+                android:orientation="vertical">
 
-                <com.maxcriser.cards.view.TextViews.NotoSans
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textColor="@color/gray_light"
-                    android:textSize="30sp"/>
-
-                <ImageButton
+                <com.maxcriser.cards.view.TextViews.RobotoThin
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:id="@+id/button_zero"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:background="@drawable/ripple_press_button"
-                    android:onClick="zeroInput"
-                    android:src="@drawable/ic_button_pin_24dp"
-                    android:text="0"
-                    android:textSize="32sp"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/_0"
+                    android:textColor="@color/text_white"
+                    android:textSize="@dimen/keyboard_number_size"/>
 
-            </FrameLayout>
+            </LinearLayout>
 
-            <ImageView
+            <LinearLayout
+                android:onClick="onDeleteClicked"
+                android:layout_weight="1"
                 android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_marginLeft="8dp"/>
+                android:layout_height="68dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:layout_marginTop="12dp"
+                    android:layout_gravity="center"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_backspace_black_24dp"/>
+
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>

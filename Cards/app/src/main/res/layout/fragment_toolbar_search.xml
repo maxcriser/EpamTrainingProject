@@ -25,17 +25,19 @@
                 android:src="@drawable/ic_arrow_back_black_24dp" />
 
             <EditText
+                android:background="@android:color/transparent"
                 android:id="@+id/search_edit"
-                android:layout_marginRight="16dp"
-                android:cursorVisible="false"
+                android:paddingRight="16dp"
+                android:cursorVisible="true"
                 android:paddingLeft="16dp"
-                android:hint="Search your cards"
+                android:hint="@string/search_your_cards"
                 android:layout_weight="100"
                 android:textColor="@color/text_toolbar"
-                android:gravity="left|center"
+                android:gravity="start|center"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/height_toolbar"
-                android:textSize="18sp"/>
+                android:textSize="18sp"
+                android:maxLines="1"/>
 
         </LinearLayout>
 

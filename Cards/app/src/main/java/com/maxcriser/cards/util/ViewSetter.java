@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -67,6 +68,7 @@ public final class ViewSetter extends View implements View.OnTouchListener {
         int newHeight = frame.height() + deltaHeight;
         int leftOffset = (screenResolution.x - newWidth) / 2;
         int topOffset = (screenResolution.y - newHeight) / 2;
+        Log.d("ADJUSTFRAMINGRECT", "topOffset" + topOffset + "leftOffset" + leftOffset + "newHeight" + newHeight + "newWidth" + newWidth);
         frame = new Rect(leftOffset, topOffset, leftOffset + newWidth,
                 topOffset + newHeight);
     }

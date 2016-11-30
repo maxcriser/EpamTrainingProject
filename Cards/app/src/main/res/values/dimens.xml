@@ -8,5 +8,7 @@
     <dimen name="textSize_text_launchscreen">48sp</dimen>
     <dimen name="height_toolbar">56dp</dimen>
     <dimen name="margin_left_title_toolbar">72dp</dimen>
-    <dimen name="pin_button_size">16dp</dimen>
+    <dimen name="pin_button_size">12dp</dimen>
+    <dimen name="main_cardview_height">96dp</dimen>
+    <dimen name="keyboard_number_size">36sp</dimen>
 </resources>
