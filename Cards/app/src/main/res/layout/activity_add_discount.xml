@@ -35,7 +35,7 @@
                             android:background="@color/bluelight_500"
                             android:orientation="horizontal">
 
-                            <com.maxcriser.cards.view.TextViews.NotoSans
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="48dp"
                                 android:gravity="center|left"
@@ -52,7 +52,7 @@
                                 android:inputType="text"
                                 android:maxLines="1"
                                 android:paddingLeft="16dp"
-                                android:textColor="@color/text_toolbar"
+                                android:textColor="@color/text_white"
                                 android:textColorHint="@color/gray_light"
                                 android:textSize="16sp"/>
 
@@ -79,21 +79,36 @@
 
                         </FrameLayout>
 
-                        <com.maxcriser.cards.view.TextViews.NotoSans
-                            android:layout_width="match_parent"
-                            android:layout_height="48dp"
-                            android:background="@color/bluelight_500"
-                            android:gravity="center"
-                            android:paddingLeft="16dp"
-                            android:text="Card color"
-                            android:textColor="@color/text_white"
-                            android:textSize="18sp"/>
-
                     </LinearLayout>
 
                 </android.support.v7.widget.CardView>
 
-                <include layout="@layout/fragment_viewpager_preview_colors"/>
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@color/bluelight_500"
+                        android:gravity="center"
+                        android:paddingLeft="16dp"
+                        android:text="Card color"
+                        android:textColor="@color/text_white"
+                        android:textSize="18sp"/>
+
+                    <include layout="@layout/fragment_viewpager_preview_colors"/>
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
 
                 <include layout="@layout/fragment_button_create_card"/>
 
