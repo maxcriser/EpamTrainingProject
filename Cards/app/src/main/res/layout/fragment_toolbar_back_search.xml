@@ -19,7 +19,7 @@
                 android:layout_width="@dimen/height_toolbar"
                 android:layout_height="@dimen/height_toolbar"
                 android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="onBackClicked"
                 android:src="@drawable/ic_arrow_back_black_24dp"/>
 
@@ -40,7 +40,7 @@
                 android:layout_width="@dimen/height_toolbar"
                 android:layout_height="@dimen/height_toolbar"
                 android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="onSearchClicked"
                 android:src="@drawable/ic_search_24dp"/>
 

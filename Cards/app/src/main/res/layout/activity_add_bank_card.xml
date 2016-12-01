@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/fragment_toolbar_back"/>
+        <include layout="@layout/fragment_toolbar_back_search"/>
 
         <ScrollView
             android:layout_width="match_parent"

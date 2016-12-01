@@ -16,6 +16,7 @@ public class CursorDiscountAdapter extends RecyclerView.Adapter<CursorDiscountHo
     private final Cursor mCursor;
     private final Context mContext;
     private Object mView;
+    private String ddd;
 
     public CursorDiscountAdapter(Cursor pCursor, Context pContext, Object mObject) {
         mCursor = pCursor;
@@ -25,14 +26,14 @@ public class CursorDiscountAdapter extends RecyclerView.Adapter<CursorDiscountHo
 
     @Override
     public CursorDiscountHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(mContext).inflate((Integer) mView, parent, false);
-        return new CursorDiscountHolder(view);
+            final View view = LayoutInflater.from(mContext).inflate((Integer) mView, parent, false);
+            return new CursorDiscountHolder(view);
     }
 
     @Override
     public void onBindViewHolder(CursorDiscountHolder holder, int position) {
         if (mCursor.moveToPosition(position)) {
-
+            ddd = mCursor.getString(mCursor.getColumnIndex(ModelDiscountCards.DISCOUNT_TITLE));
             holder.mLinearCard.setBackgroundColor(Color.parseColor(mCursor
                     .getString(mCursor.getColumnIndex(ModelDiscountCards.DISCOUNT_BACKGROUND_COLOR))));
 

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="96dp"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     android:layout_marginTop="16dp"
@@ -20,7 +20,7 @@
     <FrameLayout
         android:id="@+id/linear_card"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="96dp"
         android:gravity="center">
 
         <LinearLayout
@@ -39,19 +39,7 @@
                 android:gravity="center|start"
                 android:textAppearance="?attr/textAppearanceListItem"
                 android:textColor="@color/text_white"
-                android:textSize="24sp"/>
-            <TextView
-                android:layout_gravity="start"
-                android:layout_marginLeft="16dp"
-                android:id="@+id/subtitle_main_cards"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center|start"
-                tools:text = "Keep your credit cards for quick access"
-                android:textAppearance="?attr/textAppearanceListItem"
-                android:textColor="@color/text_white"
-                android:textSize="14sp"
-                android:textStyle="normal"/>
+                android:textSize="20sp"/>
 
             <ImageView
                 android:id="@+id/nfc_cards_icon"

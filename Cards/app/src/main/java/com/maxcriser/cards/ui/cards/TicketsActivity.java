@@ -12,8 +12,7 @@ import android.view.View;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.StaticPageNames;
 import com.maxcriser.cards.reader.deleteTypesCardsReader;
-import com.maxcriser.cards.ui.CamereCaptureAndDisplayImage;
-import com.maxcriser.cards.ui.TakePhotoActivity;
+import com.maxcriser.cards.ui.TestCamera;
 import com.maxcriser.cards.ui.adapter.ItemsRecyclerAdapter;
 import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
 
@@ -81,7 +80,8 @@ public class TicketsActivity extends AppCompatActivity {
     }
 
     public void onAddNewClicked(View view) {
-        startActivity(new Intent(TicketsActivity.this, TakePhotoActivity.class));
+        // TODO TakePhotoActivity.class
+        startActivity(new Intent(TicketsActivity.this, TestCamera.class));
     }
 
     public void onToolbarBackClicked(View view) {

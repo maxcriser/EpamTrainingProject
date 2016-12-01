@@ -1,5 +1,6 @@
 package com.maxcriser.cards.ui.cards;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -13,9 +14,9 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +38,6 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
 
     public static final int LOADER_DISCOUNT_ID = 1;
 
-    ProgressBar mProgressBarDiscount;
     DatabaseHelper dbHelper;
     RecyclerView discountCards;
     LinearLayoutManager mLayoutManager;
@@ -51,9 +51,6 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
     public static final String EXTRA_DISCOUNT_BARCODE = "discount_barcode_extra";
     public static final String EXTRA_DISCOUNT_COLOR = "discount_color_extra";
 
-    int pixels;
-
-    //TODO if this page is empty - fragment_empty_page.xml visibility VISIBLE
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,8 +87,8 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
                 TextView cardTitle = (TextView) viewHolder.itemView.findViewById(R.id.title_main_cards);
                 Integer id = (Integer) cardTitle.getTag();
                 dbHelper.delete(ModelDiscountCards.class, null, ModelDiscountCards.DISCOUNT_ID + " = ?", String.valueOf(id));
-//                TODO FIX incorrect animation delete
-//                discountCards.getAdapter().notifyItemRemoved(viewHolder.getAdapterPosition());
+                // TODO FIX incorrect animation delete
+                // discountCards.getAdapter().notifyItemRemoved(viewHolder.getAdapterPosition());
                 onResume();
             }
         };
@@ -140,27 +137,6 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
 
             }
         }));
-
-//        discountCards.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-//                    float height = recyclerView.getLayoutManager().getHeight();
-//                    int posit = (int) Math.floor(pixels / height);
-//                    if ((pixels % height) > (height / 2)) {
-//                        posit += 1;
-//                    }
-//                    recyclerView.smoothScrollBy(0, (int) Math.floor(posit * height - pixels));
-//                }
-//            }
-//
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//                pixels += dy;
-//            }
-//        });
     }
 
     @Override
@@ -199,9 +175,6 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
         }
         adapter = new CursorDiscountAdapter(data, this, R.layout.item_discount);
         discountCards.swapAdapter(adapter, true);
-
-//        mProgressBarDiscount = (ProgressBar) findViewById(R.id.progressbar_discount);
-//        mProgressBarDiscount.setVisibility(GONE);
     }
 
     @Override
@@ -210,14 +183,17 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
     }
 
     public void onToolbarBackClicked(View view) {
-        discountCards.smoothScrollToPosition(0);
+        discountCards.smoothScrollToPosition(adapter.getItemCount());
     }
 
     public void onSearchClicked(View view) {
-        searchEdit.requestFocus();
-        searchEdit.setText("");
-        toolbarBack.setVisibility(GONE);
         toolbarSearch.setVisibility(View.VISIBLE);
+        toolbarBack.setVisibility(GONE);
+        searchEdit.setText("");
+        searchEdit.clearFocus();
+        searchEdit.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(searchEdit, InputMethodManager.SHOW_IMPLICIT);
     }
 
     public void onBackSearchClicked(View view) {

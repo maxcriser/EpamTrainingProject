@@ -3,7 +3,6 @@
        android:layout_width="match_parent"
        android:layout_height="match_parent">
 
-    <include layout="@layout/fragment_toolbar_back"/>
     <include layout="@layout/floating_menu_show"/>
 
     <LinearLayout
@@ -11,7 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/fragment_toolbar_back"/>
+        <include layout="@layout/fragment_toolbar_back_search"/>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -47,6 +46,7 @@
                                 android:visibility="gone">
 
                                 <TextView
+                                    android:textColor="@color/text_white"
                                     android:layout_width="wrap_content"
                                     android:layout_height="48dp"
                                     android:gravity="center|left"

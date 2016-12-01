@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -32,11 +33,10 @@ public class ShowDiscountCard extends Activity {
     FloatingActionButton floatingActionButtonDelete, floatingActionButtonEdit;
     LinearLayout editLinear;
 
-    NotoSans titleView;
+    TextView titleView;
     RobotoThinEditText editName;
     String editString;
     EANP72TextView barcodeView;
-//    LinearLayout linearFrameTitle;
     LinearLayout linearFrameAction;
     String id;
     String title;
@@ -60,11 +60,7 @@ public class ShowDiscountCard extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_discount);
-
-//        findViewById(R.id.search_image_toolbar).setVisibility(GONE);
-
-//        RobotoRegularTextView titleToolbar = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
-//        titleToolbar.setText(title);
+        findViewById(R.id.search_image_toolbar).setVisibility(GONE);
 
         mHandler = new Handler(hc);
 
@@ -76,7 +72,6 @@ public class ShowDiscountCard extends Activity {
 
         editLinear = (LinearLayout) findViewById(R.id.linear_edit_frame_title_discount);
         editName = (RobotoThinEditText) findViewById(R.id.rename_discount_title);
-        // titleView
 
         dbHelper = DatabaseHelper.getInstance(this, 1);
 
@@ -92,7 +87,6 @@ public class ShowDiscountCard extends Activity {
         });
         floatingActionButtonEdit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
                 editLinear.setVisibility(VISIBLE);
                 titleView.setVisibility(GONE);
                 linearFrameAction.setVisibility(VISIBLE);
@@ -109,16 +103,13 @@ public class ShowDiscountCard extends Activity {
         barcode = barcodeIntent.getStringExtra(DiscountCardsActivity.EXTRA_DISCOUNT_BARCODE);
         color = barcodeIntent.getStringExtra(DiscountCardsActivity.EXTRA_DISCOUNT_COLOR);
 
-        titleView = (NotoSans) findViewById(R.id.title_show_discount);
+        titleView = (TextView) findViewById(R.id.title_show_discount);
         titleView.setText(title);
 
         barcodeView = (EANP72TextView) findViewById(R.id.show_barcode);
         barcodeView.setText(barcode);
 
         linearFrameAction = (LinearLayout) findViewById(R.id.linear_frame_actions_discount);
-//        linearFrameAction.setBackgroundColor(Color.parseColor(color));
-//        linearFrameTitle = (LinearLayout) findViewById(R.id.linear_frame_title_discount);
-//        linearFrameTitle.setBackgroundColor(Color.parseColor(color));
 
         WindowManager.LayoutParams layoutParam = getWindow().getAttributes();
         layoutParam.screenBrightness = 1.0f;
@@ -131,7 +122,6 @@ public class ShowDiscountCard extends Activity {
     }
 
     public void onCancelDiscountClicked(View view) {
-        // отмена изменений titleView
         editLinear.setVisibility(GONE);
         titleView.setVisibility(VISIBLE);
         linearFrameAction.setVisibility(GONE);
@@ -170,11 +160,5 @@ public class ShowDiscountCard extends Activity {
                     }
                 });
 
-    }
-
-    public void onSearchClicked(View view) {
-    }
-
-    public void onToolbarBackClicked(View view) {
     }
 }

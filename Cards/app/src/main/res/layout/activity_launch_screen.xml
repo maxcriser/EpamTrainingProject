@@ -6,7 +6,7 @@
        android:layout_height="match_parent"
        tools:context="com.maxcriser.cards.ui.LaunchScreenActivity">
 
-    <com.maxcriser.cards.view.TextViews.NotoSans
+    <com.maxcriser.cards.view.TextViews.RobotoThin
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

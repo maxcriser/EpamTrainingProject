@@ -27,7 +27,7 @@
             android:layout_gravity="bottom"
             android:layout_width="@dimen/height_toolbar"
             android:layout_height="@dimen/height_toolbar"
-            android:background="?attr/selectableItemBackground"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:onClick="onMenuClicked"
             android:src="@drawable/ic_menu_black_24dp" android:id="@+id/imageButton"/>
 
