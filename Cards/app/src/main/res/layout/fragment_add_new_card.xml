@@ -5,17 +5,14 @@
        android:layout_height="match_parent">
 
     <android.support.design.widget.FloatingActionButton
-        android:background="?attr/selectableItemBackgroundBorderless"
         android:id="@+id/new_discount_card"
         android:onClick="onAddNewClicked"
-        android:layout_marginRight="18dp"
-        android:layout_marginBottom="18dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:src="@drawable/ic_add_black_24dp"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_margin="16dp"
         app:backgroundTint="#FFDA4336"
-        app:borderWidth="0dp"
-        app:elevation="6dp"
-        app:fabSize="normal" />
+        android:src="@drawable/ic_add_black_24dp"/>
+
 </merge>

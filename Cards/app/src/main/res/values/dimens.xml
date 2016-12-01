@@ -4,11 +4,18 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="padding_logo_launchscreen">52dp</dimen>
     <dimen name="marginBottom_logo_launchscreen">0dp</dimen>
-    <dimen name="marginBottom_text_launchscreen">40dp</dimen>
-    <dimen name="textSize_text_launchscreen">48sp</dimen>
+    <dimen name="marginBottom_text_launch_screen">40dp</dimen>
+    <dimen name="logo_size_launch_screen">148dp</dimen>
+    <dimen name="textSize_text_launch_screen">48sp</dimen>
     <dimen name="height_toolbar">56dp</dimen>
     <dimen name="margin_left_title_toolbar">72dp</dimen>
     <dimen name="pin_button_size">12dp</dimen>
     <dimen name="main_cardview_height">96dp</dimen>
     <dimen name="keyboard_number_size">36sp</dimen>
+    <dimen name="barcode_frame_height">160dp</dimen>
+    <dimen name="barcode_height">90dp</dimen>
+    <dimen name="text_size_title_card_24dp">24sp</dimen>
+    <dimen name="text_size_subhead_card_24dp">14sp</dimen>
+    <dimen name="margin_crcl_PIN">8dp</dimen>
+    <dimen name="barcode_scan_size">34sp</dimen>
 </resources>

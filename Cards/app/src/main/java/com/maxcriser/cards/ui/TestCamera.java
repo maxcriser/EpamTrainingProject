@@ -1,102 +1,82 @@
 package com.maxcriser.cards.ui;
 
-import java.io.File;
-import java.io.FileOutputStream;
-
 import android.app.Activity;
-import android.hardware.Camera;
-import android.hardware.Camera.PictureCallback;
-import android.media.CamcorderProfile;
-import android.media.MediaRecorder;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
+import android.provider.MediaStore;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.maxcriser.cards.R;
 
 public class TestCamera extends Activity {
 
-    SurfaceView surfaceView;
-    Camera camera;
-    MediaRecorder mediaRecorder;
-
-    File photoFile;
-    File videoFile;
+    final int CAMERA_CAPTURE = 1;
+    final int PIC_CROP = 2;
+    private Uri picUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.testcamera);
-
-        File pictures = Environment
-                .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        photoFile = new File(pictures, Environment.getExternalStorageDirectory() + "/img/" + "myphoto.jpg");
-
-        surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
-
-        SurfaceHolder holder = surfaceView.getHolder();
-        holder.addCallback(new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-                try {
-                    camera.setPreviewDisplay(holder);
-                    camera.startPreview();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format,
-                                       int width, int height) {
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-            }
-        });
-
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        camera = Camera.open();
+    public void onClick(View v) {
+        try {
+            // Намерение для запуска камеры
+            Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(captureIntent, CAMERA_CAPTURE);
+        } catch (ActivityNotFoundException e) {
+            // Выводим сообщение об ошибке
+            String errorMessage = "Ваше устройство не поддерживает съемку";
+            Toast toast = Toast
+                    .makeText(this, errorMessage, Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        releaseMediaRecorder();
-        if (camera != null)
-            camera.release();
-        camera = null;
+
+    public void performCrop() {
+        try {
+            // Намерение для кадрирования. Не все устройства поддерживают его
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            cropIntent.setDataAndType(picUri, "image/*");
+            cropIntent.putExtra("crop", "true");
+            cropIntent.putExtra("aspectX", 1);
+            cropIntent.putExtra("aspectY", 1);
+            cropIntent.putExtra("outputX", 256);
+            cropIntent.putExtra("outputY", 256);
+            cropIntent.putExtra("return-data", true);
+            startActivityForResult(cropIntent, PIC_CROP);
+        } catch (ActivityNotFoundException anfe) {
+            String errorMessage = "Извините, но ваше устройство не поддерживает кадрирование";
+            Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
-    public void onClickPicture(View view) {
-        camera.takePicture(null, null, new PictureCallback() {
-            @Override
-            public void onPictureTaken(byte[] data, Camera camera) {
-                try {
-                    FileOutputStream fos = new FileOutputStream(photoFile);
-                    fos.write(data);
-                    fos.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            // Вернулись от приложения Камера
+            if (requestCode == CAMERA_CAPTURE) {
+                // Получим Uri снимка
+                picUri = data.getData();
+                // кадрируем его
+                performCrop();
             }
-        });
-
-    }
-
-    private void releaseMediaRecorder() {
-        if (mediaRecorder != null) {
-            mediaRecorder.reset();
-            mediaRecorder.release();
-            mediaRecorder = null;
-            camera.lock();
+            // Вернулись из операции кадрирования
+            else if (requestCode == PIC_CROP) {
+                Bundle extras = data.getExtras();
+                // Получим кадрированное изображение
+                Bitmap thePic = extras.getParcelable("data");
+                // передаём его в ImageView
+                ImageView picView = (ImageView) findViewById(R.id.picture);
+                picView.setImageBitmap(thePic);
+            }
         }
     }
 }

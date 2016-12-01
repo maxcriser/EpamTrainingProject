@@ -64,7 +64,7 @@ public class Discount extends AppCompatActivity {
         Intent barcodeIntent = getIntent();
         mBarcode = barcodeIntent.getStringExtra(BarcodeScanner.TAG_BARCODE);
         mEANP72TextView = (EANP72TextView) findViewById(R.id.generate_barcode);
-        mEditText = (EditText) findViewById(R.id.id_edittext_name_discount);
+        mEditText = (EditText) findViewById(R.id.id_edit_text_name_discount);
 
         FalseAsyncTask barcodeGenerator = new FalseAsyncTask();
         barcodeGenerator.execute(new BarcodeConverter(), mBarcode, new OnResultCallback<String, String>() {

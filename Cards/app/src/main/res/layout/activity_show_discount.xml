@@ -46,12 +46,12 @@
                                 android:visibility="gone">
 
                                 <TextView
-                                    android:textColor="@color/text_white"
                                     android:layout_width="wrap_content"
                                     android:layout_height="48dp"
-                                    android:gravity="center|left"
+                                    android:gravity="center|start"
                                     android:paddingLeft="16dp"
                                     android:text="@string/name"
+                                    android:textColor="@color/text_white"
                                     android:textSize="18sp"/>
 
                                 <com.maxcriser.cards.view.EditTextViews.RobotoThinEditText
@@ -90,13 +90,13 @@
                             <com.maxcriser.cards.view.TextViews.EANP72TextView
                                 android:id="@+id/show_barcode"
                                 android:layout_width="match_parent"
-                                android:layout_height="105dp"
+                                android:layout_height="104dp"
                                 android:layout_gravity="center"
-                                android:layout_marginRight="25dp"
+                                android:layout_marginRight="24dp"
                                 android:gravity="center"
                                 android:text=""
                                 android:textColor="@color/black"
-                                android:textSize="170sp"/>
+                                android:textSize="172sp"/>
                         </FrameLayout>
 
                         <LinearLayout

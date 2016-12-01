@@ -38,7 +38,7 @@
                             <com.maxcriser.cards.view.TextViews.NotoSans
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:gravity="center|left"
+                                android:gravity="center|start"
                                 android:paddingLeft="16dp"
                                 android:text="@string/name"
                                 android:textColor="@color/text_white"
@@ -51,7 +51,6 @@
                                 android:inputType="text"
                                 android:maxLines="1"
                                 android:paddingLeft="16dp"
-                                android:textAllCaps="true"
                                 android:textColor="@color/text_toolbar"
                                 android:textColorHint="@color/gray_light"
                                 android:textSize="16sp"/>
@@ -89,12 +88,8 @@
 
                 <include layout="@layout/fragment_button_create_card"/>
 
-
             </LinearLayout>
-
         </ScrollView>
-
     </LinearLayout>
-
 
 </merge>
