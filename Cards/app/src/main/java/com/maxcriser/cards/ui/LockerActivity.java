@@ -3,8 +3,10 @@ package com.maxcriser.cards.ui;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.KeyguardManager;
+import android.app.LauncherActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
@@ -18,13 +20,10 @@ import android.security.keystore.KeyProperties;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.constant.Keyboard;
 import com.maxcriser.cards.handler.FingerprintHandler;
 import com.maxcriser.cards.reader.PasswordReader;
 import com.maxcriser.cards.ui.cards.BankCardsActivity;
@@ -43,6 +42,17 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+
+import static com.maxcriser.cards.constant.constants.BUTTON_EIGHT;
+import static com.maxcriser.cards.constant.constants.BUTTON_FIVE;
+import static com.maxcriser.cards.constant.constants.BUTTON_FOUR;
+import static com.maxcriser.cards.constant.constants.BUTTON_NINE;
+import static com.maxcriser.cards.constant.constants.BUTTON_ONE;
+import static com.maxcriser.cards.constant.constants.BUTTON_SEVEN;
+import static com.maxcriser.cards.constant.constants.BUTTON_SIX;
+import static com.maxcriser.cards.constant.constants.BUTTON_THREE;
+import static com.maxcriser.cards.constant.constants.BUTTON_TWO;
+import static com.maxcriser.cards.constant.constants.BUTTON_ZERO;
 
 public class LockerActivity extends AppCompatActivity {
 
@@ -83,6 +93,8 @@ public class LockerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pin_protected);
         mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         intent = getIntent();
+
+        Toast.makeText(this, LaunchScreenActivity.loadPassword, Toast.LENGTH_SHORT).show();
 
         mHandler = new Handler(hc);
 
@@ -247,43 +259,43 @@ public class LockerActivity extends AppCompatActivity {
     }
 
     public void zeroInput(View view) {
-        inputPassword(Keyboard.BUTTON_ZERO);
+        inputPassword(BUTTON_ZERO);
     }
 
     public void oneInput(View view) {
-        inputPassword(Keyboard.BUTTON_ONE);
+        inputPassword(BUTTON_ONE);
     }
 
     public void twoInput(View view) {
-        inputPassword(Keyboard.BUTTON_TWO);
+        inputPassword(BUTTON_TWO);
     }
 
     public void threeInput(View view) {
-        inputPassword(Keyboard.BUTTON_THREE);
+        inputPassword(BUTTON_THREE);
     }
 
     public void fourInput(View view) {
-        inputPassword(Keyboard.BUTTON_FOUR);
+        inputPassword(BUTTON_FOUR);
     }
 
     public void fiveInput(View view) {
-        inputPassword(Keyboard.BUTTON_FIVE);
+        inputPassword(BUTTON_FIVE);
     }
 
     public void sixInput(View view) {
-        inputPassword(Keyboard.BUTTON_SIX);
+        inputPassword(BUTTON_SIX);
     }
 
     public void sevenInput(View view) {
-        inputPassword(Keyboard.BUTTON_SEVEN);
+        inputPassword(BUTTON_SEVEN);
     }
 
     public void eightInput(View view) {
-        inputPassword(Keyboard.BUTTON_EIGHT);
+        inputPassword(BUTTON_EIGHT);
     }
 
     public void nineInput(View view) {
-        inputPassword(Keyboard.BUTTON_NINE);
+        inputPassword(BUTTON_NINE);
     }
 
     public void setBackgroundCircles(boolean flag, ImageView... args) {

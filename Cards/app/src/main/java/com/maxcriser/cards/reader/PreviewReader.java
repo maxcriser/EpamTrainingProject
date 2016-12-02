@@ -3,14 +3,14 @@ package com.maxcriser.cards.reader;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.maxcriser.cards.constant.BankCardTypes.AMEX;
-import static com.maxcriser.cards.constant.BankCardTypes.BELCARD;
-import static com.maxcriser.cards.constant.BankCardTypes.DINERS_CLUB;
-import static com.maxcriser.cards.constant.BankCardTypes.JCB;
-import static com.maxcriser.cards.constant.BankCardTypes.MAESTRO;
-import static com.maxcriser.cards.constant.BankCardTypes.MASTERCARD;
-import static com.maxcriser.cards.constant.BankCardTypes.VISA;
-import static com.maxcriser.cards.constant.BankCardTypes.WESTERN_UNION;
+import static com.maxcriser.cards.constant.constants.AMEX;
+import static com.maxcriser.cards.constant.constants.BELCARD;
+import static com.maxcriser.cards.constant.constants.DINERS_CLUB;
+import static com.maxcriser.cards.constant.constants.JCB;
+import static com.maxcriser.cards.constant.constants.MAESTRO;
+import static com.maxcriser.cards.constant.constants.MASTERCARD;
+import static com.maxcriser.cards.constant.constants.VISA;
+import static com.maxcriser.cards.constant.constants.WESTERN_UNION;
 
 public class PreviewReader {
 

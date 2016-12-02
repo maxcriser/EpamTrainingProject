@@ -1,7 +1,10 @@
 package com.maxcriser.cards.ui;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -28,29 +31,25 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static com.maxcriser.cards.constant.constants.URL_JSON_LOCATION;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    private final int IDD_CHECK_CATS = 3;
-    AlertDialog.Builder builder;
 
     CardView credit;
     CardView discount;
     CardView tickets;
     CardView nfc;
-    String pCountry = "_country";
-    String pCountryCode = "_country code";
-    String pIsp = "_isp";
-    String pQuery = "_query";
-    String pTimezone = "_timezone";
-
-    public static String LOG_TAG = "my_log";
+    String pCountry = "#country";
+    String pCountryCode = "#country code";
+    String pIsp = "#isp";
+    String pQuery = "#query";
+    String pTimezone = "#timezone";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        new ParseLocation().execute();
 
         credit = (CardView) findViewById(R.id.main_credit_card);
         discount = (CardView) findViewById(R.id.main_discount_card);
@@ -71,6 +70,21 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    private NetworkInfo getNetworkInfo(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo();
+    }
+
+    private boolean isConnected(Context context) {
+        NetworkInfo info = this.getNetworkInfo(context);
+        return (info != null && info.isConnected());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new ParseLocation().execute();
+    }
 
     @Override
     public void onBackPressed() {
@@ -98,13 +112,24 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         } else if (id == R.id.nav_location) {
+
+            String title;
+            String message;
+            if (isConnected(this)) {
+                title = getString(R.string.location);
+                message = "Country: " + pCountry + ", " + pCountryCode + "\n" +
+                        "Timezone: " + pTimezone + "\n" +
+                        "Query: " + pQuery + "\n\n" +
+                        pIsp;
+            } else {
+                title = getString(R.string.no_internet_connection);
+                message = getString(R.string.looks_like_iconnection);
+            }
+
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-            alertDialogBuilder.setTitle(R.string.location);
+            alertDialogBuilder.setTitle(title);
             alertDialogBuilder
-                    .setMessage("Country: " + pCountry + ", " + pCountryCode + "\n" +
-                            "Timezone: " + pTimezone + "\n" +
-                            "Query: " + pQuery + "\n\n" +
-                            pIsp)
+                    .setMessage(message)
                     .setCancelable(false)
                     .setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
@@ -113,7 +138,6 @@ public class MainActivity extends AppCompatActivity
                     });
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -130,7 +154,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected String doInBackground(Void... params) {
             try {
-                URL url = new URL("http://ip-api.com/json");
+                URL url = new URL(URL_JSON_LOCATION);
 
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");

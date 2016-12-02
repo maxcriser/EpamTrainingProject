@@ -8,23 +8,23 @@ import android.util.Log;
 import android.view.View;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.constant.StaticPageNames;
 import com.maxcriser.cards.reader.Colors;
 import com.maxcriser.cards.ui.adapter.MyFragmentPagerAdapterTemplate;
 import com.maxcriser.cards.ui.pager.ViewPagerPreviewCard;
 import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
 
 import static android.view.View.GONE;
-import static com.maxcriser.cards.constant.BankCardTypes.AMEX;
-import static com.maxcriser.cards.constant.BankCardTypes.BELCARD;
-import static com.maxcriser.cards.constant.BankCardTypes.DINERS_CLUB;
-import static com.maxcriser.cards.constant.BankCardTypes.JCB;
-import static com.maxcriser.cards.constant.BankCardTypes.MAESTRO;
-import static com.maxcriser.cards.constant.BankCardTypes.MASTERCARD;
-import static com.maxcriser.cards.constant.BankCardTypes.VISA;
-import static com.maxcriser.cards.constant.BankCardTypes.WESTERN_UNION;
-import static com.maxcriser.cards.constant.ViewPagerTemplate.ID_BANK_CARD_ITEM;
-import static com.maxcriser.cards.constant.ViewPagerTemplate.ID_BANK_CARD_ITEM_TYPE;
+import static com.maxcriser.cards.constant.constants.AMEX;
+import static com.maxcriser.cards.constant.constants.BELCARD;
+import static com.maxcriser.cards.constant.constants.DINERS_CLUB;
+import static com.maxcriser.cards.constant.constants.ID_BANK_CARD_ITEM;
+import static com.maxcriser.cards.constant.constants.ID_BANK_CARD_ITEM_TYPE;
+import static com.maxcriser.cards.constant.constants.JCB;
+import static com.maxcriser.cards.constant.constants.MAESTRO;
+import static com.maxcriser.cards.constant.constants.MASTERCARD;
+import static com.maxcriser.cards.constant.constants.NEW_BANK_TITLE;
+import static com.maxcriser.cards.constant.constants.VISA;
+import static com.maxcriser.cards.constant.constants.WESTERN_UNION;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
 
@@ -55,7 +55,7 @@ public class Bank extends AppCompatActivity {
         currentPositionColors = 0;
 
         RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
-        title.setText(StaticPageNames.NEW_BANK_TITLE);
+        title.setText(NEW_BANK_TITLE);
 
         // VIEWPAGER template start)
 

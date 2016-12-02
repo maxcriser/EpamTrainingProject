@@ -9,7 +9,6 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.constant.StaticPageNames;
 import com.maxcriser.cards.handler.RecyclerItemClickListener;
 import com.maxcriser.cards.reader.deleteTypesCardsReader;
 import com.maxcriser.cards.ui.adapter.ItemsRecyclerAdapter;
@@ -18,6 +17,7 @@ import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
 import java.util.List;
 
 import static android.view.View.GONE;
+import static com.maxcriser.cards.constant.constants.NFC_TITLE;
 
 public class NFCCardsActivity extends AppCompatActivity {
 
@@ -34,7 +34,7 @@ public class NFCCardsActivity extends AppCompatActivity {
         toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
 
         RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
-        title.setText(StaticPageNames.NFC_TITLE);
+        title.setText(NFC_TITLE);
 
         final deleteTypesCardsReader tcReader = deleteTypesCardsReader.getInstance();
         tcReader.setNfcCards();

@@ -15,7 +15,6 @@ import com.maxcriser.cards.async.FalseAsyncTask;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.task.BarcodeConverter;
 import com.maxcriser.cards.barcode.BarcodeScanner;
-import com.maxcriser.cards.constant.StaticPageNames;
 import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.reader.Colors;
@@ -24,7 +23,8 @@ import com.maxcriser.cards.view.TextViews.EANP72TextView;
 import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
 
 import static android.view.View.GONE;
-import static com.maxcriser.cards.constant.ViewPagerTemplate.ID_DISCOUNT_ITEM;
+import static com.maxcriser.cards.constant.constants.ID_DISCOUNT_ITEM;
+import static com.maxcriser.cards.constant.constants.NEW_DISCOUNT_TITLE;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
 public class Discount extends AppCompatActivity {
@@ -59,7 +59,7 @@ public class Discount extends AppCompatActivity {
         db = DatabaseHelper.getInstance(this, 1);
 
         RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
-        title.setText(StaticPageNames.NEW_DISCOUNT_TITLE);
+        title.setText(NEW_DISCOUNT_TITLE);
 
         Intent barcodeIntent = getIntent();
         mBarcode = barcodeIntent.getStringExtra(BarcodeScanner.TAG_BARCODE);

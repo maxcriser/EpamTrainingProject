@@ -23,7 +23,6 @@ import android.widget.Toast;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.barcode.BarcodeScanner;
-import com.maxcriser.cards.constant.StaticPageNames;
 import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.handler.RecyclerItemClickListener;
@@ -33,6 +32,7 @@ import com.maxcriser.cards.ui.show.ShowDiscountCard;
 import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
 
 import static android.view.View.GONE;
+import static com.maxcriser.cards.constant.constants.DISCOUNT_TITLE;
 
 public class DiscountCardsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -62,7 +62,7 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
         toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
 
         RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
-        title.setText(StaticPageNames.DISCOUNT_TITLE);
+        title.setText(DISCOUNT_TITLE);
 
         dbHelper = DatabaseHelper.getInstance(this, 1);
 

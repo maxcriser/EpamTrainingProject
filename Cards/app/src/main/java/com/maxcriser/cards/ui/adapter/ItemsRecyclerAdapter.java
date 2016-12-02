@@ -2,21 +2,13 @@ package com.maxcriser.cards.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.maxcriser.cards.R;
 import com.maxcriser.cards.holder.RecyclerViewHolderTypes;
 
 import java.util.List;
-
-import static com.maxcriser.cards.constant.StaticPageNames.BANK_TITLE;
-import static com.maxcriser.cards.constant.StaticPageNames.DISCOUNT_TITLE;
-import static com.maxcriser.cards.constant.StaticPageNames.NFC_TITLE;
-import static com.maxcriser.cards.constant.StaticPageNames.TICKETS_TITLE;
-
 
 public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolderTypes> {
 
