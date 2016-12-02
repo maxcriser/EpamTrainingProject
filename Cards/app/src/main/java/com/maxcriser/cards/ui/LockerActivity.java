@@ -68,8 +68,6 @@ public class LockerActivity extends AppCompatActivity {
 
     String builderPassword;
 
-    PasswordReader check;
-
     private static final String KEY_NAME = "finger_key";
 
     private FingerprintManager fingerprintManager;
@@ -99,9 +97,6 @@ public class LockerActivity extends AppCompatActivity {
         mHandler = new Handler(hc);
 
         builderPassword = "";
-
-        check = PasswordReader.getInstance();
-        check.setPassword();
 
         firstCircle = (ImageView) findViewById(R.id.crlcOne);
         secondCircle = (ImageView) findViewById(R.id.crlcTwo);
@@ -247,7 +242,7 @@ public class LockerActivity extends AppCompatActivity {
             setBackgroundCircle(thirdCircle);
         } else if (length == 4) {
             setBackgroundCircle(fourthCircle);
-            if (builderPassword.equals(check.getPassword())) {
+            if (builderPassword.equals(LaunchScreenActivity.loadPassword)) {
                 start();
             } else {
                 //TODO animation

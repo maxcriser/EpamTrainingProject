@@ -24,7 +24,7 @@ public class LaunchScreenActivity extends AppCompatActivity {
     public static String loadPassword;
 
     SharedPreferences mSharedPreferences;
-    final String PASSWORD_TAG = "shared_password";
+    public static final String PASSWORD_TAG = "shared_password";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +32,6 @@ public class LaunchScreenActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_launch_screen);
-
-        savePassword();
         loadPassword();
 
         //TODO APP
@@ -60,15 +58,10 @@ public class LaunchScreenActivity extends AppCompatActivity {
         }, 1500);
     }
 
-    void savePassword() {
-        mSharedPreferences = getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor ed = mSharedPreferences.edit();
-        ed.putString(PASSWORD_TAG, UNDEFENDED).apply();
-    }
-
+    // TODO PUBLIC MODE
     void loadPassword() {
         mSharedPreferences = getPreferences(MODE_PRIVATE);
-        loadPassword = mSharedPreferences.getString(PASSWORD_TAG, UNDEFENDED);
+        loadPassword = mSharedPreferences.getString(PASSWORD_TAG, "TTTest");
         Toast.makeText(this, loadPassword, Toast.LENGTH_SHORT).show();
     }
 }

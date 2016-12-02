@@ -60,8 +60,9 @@
     </string>
     <string name="btn_continue">continue</string>
     <string name="shared_input_password_first">To protect your credit cards please install the
-        security pin code
+        security PIN
     </string>
+    <string name="confirm_your_pin">\nConfirm your PIN</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>
