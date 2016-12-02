@@ -23,6 +23,10 @@
     <item android:title="Communicate">
         <menu>
             <item
+                android:id="@+id/nav_location"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Location"/>
+            <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Share"/>

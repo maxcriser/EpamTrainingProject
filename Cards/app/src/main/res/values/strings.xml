@@ -53,6 +53,7 @@
     <string name="pqrs">PQRS</string>
     <string name="tuv">TUV</string>
     <string name="wxyz">WXYZ</string>
+    <string name="location">Location</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>
