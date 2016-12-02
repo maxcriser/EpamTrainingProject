@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.ui.cards.DiscountCardsActivity;
@@ -45,6 +44,8 @@ public class MainActivity extends AppCompatActivity
     String pQuery = "_query";
     String pTimezone = "_timezone";
 
+    public static String LOG_TAG = "my_log";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -161,7 +163,7 @@ public class MainActivity extends AppCompatActivity
                 dataJsonObj = new JSONObject(strJson);
 
                 pCountry = dataJsonObj.getString("country");
-                pCountry = dataJsonObj.getString("countryCode");
+                pCountryCode = dataJsonObj.getString("countryCode");
                 pIsp = dataJsonObj.getString("isp");
                 pQuery = dataJsonObj.getString("query");
                 pTimezone = dataJsonObj.getString("timezone");
