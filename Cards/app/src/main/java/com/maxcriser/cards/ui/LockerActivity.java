@@ -63,9 +63,8 @@ public class LockerActivity extends AppCompatActivity {
     ImageView thirdCircle;
     ImageView fourthCircle;
     Vibrator mVibrator;
-
     Intent intent;
-
+    String intentLockedPage;
     String builderPassword;
 
     private static final String KEY_NAME = "finger_key";
@@ -91,11 +90,10 @@ public class LockerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pin_protected);
         mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         intent = getIntent();
+        intentLockedPage = intent.getStringExtra(MainActivity.TYPE_LOCKED_SCREEN);
 
         Toast.makeText(this, LaunchScreenActivity.loadPassword, Toast.LENGTH_SHORT).show();
-
         mHandler = new Handler(hc);
-
         builderPassword = "";
 
         firstCircle = (ImageView) findViewById(R.id.crlcOne);
@@ -315,7 +313,11 @@ public class LockerActivity extends AppCompatActivity {
     }
 
     public void start() {
-        //TODO getExtra from activity to start after access
-        startActivity(new Intent(LockerActivity.this, BankCardsActivity.class));
+        if(intentLockedPage.equals(MainActivity.CREDIT_CARD)) {
+            startActivity(new Intent(LockerActivity.this, BankCardsActivity.class));
+        } else {
+            Intent intent = new Intent(LockerActivity.this, SetupPIN.class);
+            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY));
+        }
     }
 }

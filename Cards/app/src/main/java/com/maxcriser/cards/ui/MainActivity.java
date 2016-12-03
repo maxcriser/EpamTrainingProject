@@ -36,6 +36,9 @@ import static com.maxcriser.cards.constant.constants.URL_JSON_LOCATION;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final String TYPE_LOCKED_SCREEN = "type_locked_screen";
+    public static final String CREDIT_CARD = "credit_card";
+    public static final String SETUP_PIN = "setup_pin";
     public static final String TEXT_PLAIN = "text/plain";
     public static final String SHARE_BODY = "Donwloads my application on playmarket: cards_application.com";
     public static final String SHARE_TITLE = "Cards application";
@@ -105,11 +108,15 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_camera) {
+
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_pin) {
+            Intent intent = new Intent(MainActivity.this, LockerActivity.class);
+            intent.putExtra(TYPE_LOCKED_SCREEN, SETUP_PIN);
+            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY));
 
         } else if (id == R.id.nav_share) {
             String shareBody = SHARE_BODY;
@@ -221,7 +228,10 @@ public class MainActivity extends AppCompatActivity
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.main_credit_card:
-                    startActivity(new Intent(MainActivity.this, LockerActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
+                    Intent intent = new Intent(MainActivity.this, LockerActivity.class);
+                    intent.putExtra(TYPE_LOCKED_SCREEN, CREDIT_CARD);
+                    startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY));
+
                     break;
                 case R.id.main_discount_card:
                     startActivity(new Intent(MainActivity.this, DiscountCardsActivity.class));

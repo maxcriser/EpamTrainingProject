@@ -91,6 +91,7 @@ public class SetupPIN extends AppCompatActivity {
 
                     SharedPreferences mSharedPreferences = getPreferences(MODE_PRIVATE);
                     SharedPreferences.Editor ed = mSharedPreferences.edit();
+                    Toast.makeText(SetupPIN.this, "password: " + password + " tag: " + LaunchScreenActivity.PASSWORD_TAG, Toast.LENGTH_LONG).show();
                     ed.putString(LaunchScreenActivity.PASSWORD_TAG, LaunchScreenActivity.loadPassword).apply();
                     Toast.makeText(SetupPIN.this, "save: " + LaunchScreenActivity.loadPassword, Toast.LENGTH_LONG).show();
 
