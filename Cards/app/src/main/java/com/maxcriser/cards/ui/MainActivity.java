@@ -36,6 +36,10 @@ import static com.maxcriser.cards.constant.constants.URL_JSON_LOCATION;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final String TEXT_PLAIN = "text/plain";
+    public static final String SHARE_BODY = "Donwloads my application on playmarket: cards_application.com";
+    public static final String SHARE_TITLE = "Cards application";
+    public static final String SHARE_USING = "Share using";
     CardView credit;
     CardView discount;
     CardView tickets;
@@ -108,11 +112,16 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
+            String shareBody = SHARE_BODY;
+            String shareSub = SHARE_TITLE;
 
-        } else if (id == R.id.nav_send) {
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType(TEXT_PLAIN);
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+            startActivity(Intent.createChooser(sharingIntent, SHARE_USING));
 
         } else if (id == R.id.nav_location) {
-
             String title;
             String message;
             if (isConnected(this)) {

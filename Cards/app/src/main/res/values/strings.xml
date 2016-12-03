@@ -63,6 +63,7 @@
         security PIN
     </string>
     <string name="confirm_your_pin">\nConfirm your PIN</string>
+    <string name="version">Version: 1.0.0.0 (1)</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>
