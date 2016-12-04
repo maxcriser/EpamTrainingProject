@@ -88,11 +88,12 @@ public class SetupPIN extends AppCompatActivity {
                 if (password.equals(inputText.getText().toString())) {
                     btnContinue.setEnabled(true);
                     LaunchScreenActivity.loadPassword = password;
+                    LaunchScreenActivity.mSharedPreferences =
+                            getSharedPreferences(LaunchScreenActivity.PASSWORD_TAG, MODE_PRIVATE);
+                    SharedPreferences.Editor editSharedPassword = LaunchScreenActivity.mSharedPreferences.edit();
+                    editSharedPassword.putString(LaunchScreenActivity.PASSWORD_TAG, password).apply();
 
-                    SharedPreferences mSharedPreferences = getPreferences(MODE_PRIVATE);
-                    SharedPreferences.Editor ed = mSharedPreferences.edit();
                     Toast.makeText(SetupPIN.this, "password: " + password + " tag: " + LaunchScreenActivity.PASSWORD_TAG, Toast.LENGTH_LONG).show();
-                    ed.putString(LaunchScreenActivity.PASSWORD_TAG, LaunchScreenActivity.loadPassword).apply();
                     Toast.makeText(SetupPIN.this, "save: " + LaunchScreenActivity.loadPassword, Toast.LENGTH_LONG).show();
 
                     Intent intent = new Intent(SetupPIN.this, MainActivity.class);

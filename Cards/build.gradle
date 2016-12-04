@@ -22,4 +22,4 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-ext.supportLibraryVersion = "24.2.1"
+ext.supportLibraryVersion = "25.0.0"

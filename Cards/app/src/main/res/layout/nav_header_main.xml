@@ -15,22 +15,22 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:paddingTop="16dp"
-        app:srcCompat="@android:drawable/sym_def_app_icon"/>
+        app:srcCompat="@drawable/logo"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
-        android:text="Android Studio"
+        android:text="Cards application"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="android.studio@android.com"/>
+        android:text="mv.maxcriser@gmail.com"/>
 
 </LinearLayout>
