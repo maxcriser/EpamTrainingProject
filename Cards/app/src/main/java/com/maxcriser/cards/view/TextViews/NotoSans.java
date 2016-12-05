@@ -22,12 +22,11 @@ public class NotoSans extends TextView {
         init();
     }
 
-    //TODO may be
     //Roboto-Light.tff
     //Roboto-LightItalic.tff in name Cards
     //Roboto-Regular in title toolbar
     //Thin and ThinItalic
-    //
+
     private void init() {
         if (!isInEditMode()) {
             Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/NotoSans-Bold.ttf");

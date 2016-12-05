@@ -54,7 +54,6 @@ import static com.maxcriser.cards.constant.constants.BUTTON_ZERO;
 public class LockerActivity extends AppCompatActivity {
 
     Handler mHandler;
-
     ImageView firstCircle;
     ImageView secondCircle;
     ImageView thirdCircle;
@@ -65,7 +64,6 @@ public class LockerActivity extends AppCompatActivity {
     String builderPassword;
 
     private static final String KEY_NAME = "finger_key";
-
     private FingerprintManager fingerprintManager;
     private KeyguardManager keyguardManager;
     private KeyStore keyStore;
@@ -126,8 +124,6 @@ public class LockerActivity extends AppCompatActivity {
                 }
 
                 if (!fingerprintManager.hasEnrolledFingerprints()) {
-
-                    // This happens when no fingerprints are registered.
                     Toast.makeText(this,
                             "Register at least one fingerprint in Settings",
                             Toast.LENGTH_LONG).show();
@@ -214,21 +210,13 @@ public class LockerActivity extends AppCompatActivity {
         }
     }
 
-    public void onCancelClicked(View view) {
-        super.onBackPressed();
-    }
-
     public void setBackgroundCircle(ImageView v) {
         v.setBackgroundResource(R.drawable.ic_lens_black_24dp);
     }
 
     public void inputPassword(String number) {
-
         builderPassword += number;
-
-        // TODO length
         Integer length = builderPassword.length();
-
         if (length == 1) {
             setBackgroundCircle(firstCircle);
         } else if (length == 2) {
@@ -240,7 +228,6 @@ public class LockerActivity extends AppCompatActivity {
             if (builderPassword.equals(LaunchScreenActivity.loadPassword)) {
                 start();
             } else {
-                //TODO animation
                 mVibrator.vibrate(200);
                 setBackgroundCircles(false, firstCircle, secondCircle, thirdCircle, fourthCircle);
                 mHandler.sendEmptyMessageDelayed(1, 350);
@@ -310,7 +297,6 @@ public class LockerActivity extends AppCompatActivity {
     }
 
     public void start() {
-        Class dsa = BankCardsActivity.class;
         if (intentLockedPage.equals(MainActivity.CREDIT_CARD)) {
             startActivity(new Intent(LockerActivity.this, BankCardsActivity.class));
         } else {

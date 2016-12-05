@@ -4,47 +4,45 @@
                                     android:id="@+id/card_view"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginEnd="16dp"
+                                    android:layout_marginStart="16dp"
                                     android:layout_marginTop="16dp"
-                                    android:layout_marginLeft="16dp"
-                                    android:layout_marginRight="16dp"
+                                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                                    card_view:cardBackgroundColor="@color/card_view"
                                     card_view:cardCornerRadius="2dp"
-                                    card_view:cardElevation="2dp"
-                                    android:foreground="?attr/selectableItemBackground"
-                                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+                                    card_view:cardElevation="2dp">
 
-    <!--Material design card-->
-
-    <FrameLayout
-        android:gravity="center"
+<FrameLayout
         android:id="@+id/linear_card"
-        android:background="@color/bluelight_500"
         android:layout_width="match_parent"
-        android:layout_height="112dp">
+        android:layout_height="112dp"
+        android:gravity="center">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <ImageView
-                android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:layout_marginTop="16dp"
                 android:background="@color/gray_shadow"/>
 
             <com.maxcriser.cards.view.TextViews.NotoSans
-                android:textStyle="bold"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
                 android:id="@+id/title_main_cards"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/title_of_cards"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="@color/text_white"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="@string/title_of_cards"
                 android:textAppearance="?attr/textAppearanceListItem"
-                android:textSize="16sp" />
+                android:textColor="@color/text_white"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
         </LinearLayout>
     </FrameLayout>

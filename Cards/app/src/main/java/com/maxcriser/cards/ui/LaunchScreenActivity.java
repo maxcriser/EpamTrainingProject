@@ -67,7 +67,6 @@ public class LaunchScreenActivity extends AppCompatActivity {
         }, 1500);
     }
 
-    // TODO PUBLIC MODE
     void loadPassword() {
         mSharedPreferences = getSharedPreferences(PASSWORD_TAG, MODE_PRIVATE);
         loadPassword = mSharedPreferences.getString(PASSWORD_TAG, UNDEFENDED);

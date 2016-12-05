@@ -37,17 +37,17 @@ import static com.maxcriser.cards.constant.constants.DISCOUNT_TITLE;
 
 public class DiscountCardsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    public static final int LOADER_DISCOUNT_ID = 1;
-
     DatabaseHelper dbHelper;
+
     RecyclerView discountCards;
     LinearLayoutManager mLayoutManager;
     CursorDiscountAdapter adapter;
     CardView toolbarBack;
     CardView toolbarSearch;
     EditText searchEdit;
-
+    private String searchText;
     public static final String EXTRA_DISCOUNT_ID = "discount_id_extra";
+    public static final int LOADER_DISCOUNT_ID = 1;
     public static final String EXTRA_DISCOUNT_TITLE = "discount_title_extra";
     public static final String EXTRA_DISCOUNT_BARCODE = "discount_barcode_extra";
     public static final String EXTRA_DISCOUNT_COLOR = "discount_color_extra";
@@ -57,6 +57,23 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discount_cards);
         searchEdit = (EditText) findViewById(R.id.search_edit);
+        searchEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence pCharSequence, int pI, int pI1, int pI2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence pCharSequence, int pI, int pI1, int pI2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable pEditable) {
+                searchText = pEditable.toString();
+                getSupportLoaderManager().restartLoader(LOADER_DISCOUNT_ID, null, DiscountCardsActivity.this);
+            }
+        });
 
         toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
         toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
@@ -160,7 +177,7 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new DiscountCursorLoader(this);
+        return new DiscountCursorLoader(this, searchText);
     }
 
     @Override
@@ -174,27 +191,8 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
             discountCards.setVisibility(View.VISIBLE);
         }
 
-        adapter = new CursorDiscountAdapter(data, DiscountCardsActivity.this, R.layout.item_discount, "");
+        adapter = new CursorDiscountAdapter(data, DiscountCardsActivity.this, R.layout.item_discount);
         discountCards.setAdapter(adapter);
-
-        searchEdit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence pCharSequence, int pI, int pI1, int pI2) {
-                Log.d("mytag", "before");
-            }
-
-            @Override
-            public void onTextChanged(CharSequence pCharSequence, int pI, int pI1, int pI2) {
-                Log.d("mytag", "changed");
-            }
-
-            @Override
-            public void afterTextChanged(Editable pEditable) {
-                Log.d("mytag", "after");
-                adapter = new CursorDiscountAdapter(data, DiscountCardsActivity.this, R.layout.item_discount, pEditable.toString());
-                discountCards.setAdapter(adapter);
-            }
-        });
     }
 
     @Override
@@ -203,7 +201,8 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
     }
 
     public void onToolbarBackClicked(View view) {
-//        discountCards.smoothScrollToPosition(adapter.getItemCount());
+        Toast.makeText(this, "" + adapter.getItemCount(), Toast.LENGTH_LONG).show();
+        discountCards.smoothScrollToPosition(adapter.getItemCount()-1);
     }
 
     public void onSearchClicked(View view) {
@@ -219,5 +218,8 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
     public void onBackSearchClicked(View view) {
         toolbarBack.setVisibility(View.VISIBLE);
         toolbarSearch.setVisibility(GONE);
+        searchEdit.setText("");
+        searchText=searchEdit.getText().toString();
+        getSupportLoaderManager().restartLoader(LOADER_DISCOUNT_ID, null, DiscountCardsActivity.this);
     }
 }

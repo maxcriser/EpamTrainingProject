@@ -39,7 +39,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:gravity="center|start"
-                                android:paddingLeft="16dp"
+                                android:paddingStart="16dp"
+                                android:paddingEnd="4dp"
                                 android:text="@string/name"
                                 android:textColor="@color/text_white"
                                 android:textSize="18sp"/>
@@ -50,7 +51,8 @@
                                 android:hint="@string/enter_name_of_card"
                                 android:inputType="text"
                                 android:maxLines="1"
-                                android:paddingLeft="16dp"
+                                android:paddingStart="16dp"
+                                android:paddingEnd="8dp"
                                 android:textColor="@color/text_toolbar"
                                 android:textColorHint="@color/gray_light"
                                 android:textSize="16sp"/>
@@ -75,7 +77,6 @@
                             android:layout_height="48dp"
                             android:background="@color/bluelight_500"
                             android:gravity="center"
-                            android:paddingLeft="16dp"
                             android:text="@string/card_color"
                             android:textColor="@color/text_white"
                             android:textSize="18sp"/>
