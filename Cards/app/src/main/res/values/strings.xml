@@ -64,6 +64,12 @@
     </string>
     <string name="confirm_your_pin">\nConfirm your PIN</string>
     <string name="version">Version: 1.0.0.0 (1)</string>
+    <string name="night_mode">Night mode</string>
+    <string name="share">Share</string>
+    <string name="title_second_group">Communicate</string>
+    <string name="attach_the_card_to_the_device_to_read">Attach the card to the device to read
+    </string>
+    <string name="scanned_the_code_right_here">Scanned code right here</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>

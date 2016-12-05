@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <include layout="@layout/fragment_toolbar_back_search"/>
         <include layout="@layout/fragment_line_search"/>
 
@@ -33,5 +32,4 @@
         </LinearLayout>
 
     </FrameLayout>
-
 </merge>

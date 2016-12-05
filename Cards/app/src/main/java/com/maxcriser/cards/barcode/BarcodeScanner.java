@@ -13,7 +13,6 @@ import android.widget.FrameLayout;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.ui.create.Discount;
-import com.maxcriser.cards.view.TextViews.NotoSans;
 import com.maxcriser.cards.view.TextViews.RobotoThin;
 
 import net.sourceforge.zbar.Config;
@@ -52,7 +51,7 @@ public class BarcodeScanner extends AppCompatActivity {
         attrs.flags = WindowManager.LayoutParams.FLAG_FULLSCREEN;
         getWindow().setAttributes(attrs);
 
-        setContentView(R.layout.barcode_scanner);
+        setContentView(R.layout.activity_barcode_scanner);
 
         mOk = (RobotoThin) findViewById(R.id.button_ok);
         mCancel = (RobotoThin) findViewById(R.id.button_cancel);

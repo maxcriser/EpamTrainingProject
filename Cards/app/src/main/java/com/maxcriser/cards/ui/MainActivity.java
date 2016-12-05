@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.nfc.NfcAdapter;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,9 +39,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
+import static android.view.View.GONE;
 import static com.maxcriser.cards.constant.constants.URL_JSON_LOCATION;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.REQUEST_CAMERA;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.REQUEST_WRITE_STORAGE;
@@ -48,6 +48,7 @@ import static com.maxcriser.cards.ui.LaunchScreenActivity.REQUEST_WRITE_STORAGE;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private NfcAdapter mNfcAdapter;
     public static final String TYPE_LOCKED_SCREEN = "type_locked_screen";
     public static final String CREDIT_CARD = "credit_card";
     public static final String SETUP_PIN = "setup_pin";
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity
     String pQuery = "#query";
     String pTimezone = "#timezone";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +76,11 @@ public class MainActivity extends AppCompatActivity
         discount = (CardView) findViewById(R.id.main_discount_card);
         tickets = (CardView) findViewById(R.id.main_tickets_card);
         nfc = (CardView) findViewById(R.id.main_nfc_card);
+
+        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        if (mNfcAdapter == null) {
+            nfc.setVisibility(GONE);
+        }
 
         credit.setOnClickListener(new onClickListener());
         discount.setOnClickListener(new onClickListener());
@@ -91,9 +98,9 @@ public class MainActivity extends AppCompatActivity
         // TODO: 04.12.2016 FIX last HashMap / Linked
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
 //            for (HashMap.Entry<Integer, String> permission : LaunchScreenActivity.REQUESTS.entrySet()) {
-                getPermission(REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                getPermission(REQUEST_CAMERA, Manifest.permission.CAMERA);
-            }
+            getPermission(REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            getPermission(REQUEST_CAMERA, Manifest.permission.CAMERA);
+        }
 //        }
     }
 
@@ -155,7 +162,8 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_slideshow) {
 
-        } else*/ if (id == R.id.nav_pin) {
+        } else*/
+        if (id == R.id.nav_pin) {
             Intent intent = new Intent(MainActivity.this, LockerActivity.class);
             intent.putExtra(TYPE_LOCKED_SCREEN, SETUP_PIN);
             startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY));

@@ -1,5 +1,6 @@
 package com.maxcriser.cards.ui.cards;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -11,6 +12,7 @@ import android.view.View;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.handler.RecyclerItemClickListener;
 import com.maxcriser.cards.reader.deleteTypesCardsReader;
+import com.maxcriser.cards.ui.NFCReaderActivity;
 import com.maxcriser.cards.ui.adapter.ItemsRecyclerAdapter;
 import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
 
@@ -97,5 +99,11 @@ public class NFCCardsActivity extends AppCompatActivity {
     public void onBackSearchClicked(View view) {
         toolbarBack.setVisibility(View.VISIBLE);
         toolbarSearch.setVisibility(GONE);
+    }
+
+    public void onAddNewClicked(View view) {
+        Intent intent = new Intent(this,
+                NFCReaderActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
     }
 }

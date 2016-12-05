@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="transparent">#00ffffff</color>
+    <color name="night_mode">#303030</color>
     <color name="gray_3">#262626</color>
     <color name="bluelight_500">#00897b</color>
     <color name="bluelight_600">#097173</color>
