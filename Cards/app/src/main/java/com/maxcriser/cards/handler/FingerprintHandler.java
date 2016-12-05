@@ -15,7 +15,6 @@ import com.maxcriser.cards.ui.LockerActivity;
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
 
-    private CancellationSignal cancellationSignal;
     private Context appContext;
     private LockerActivity mLockerActivity = new LockerActivity();
 
@@ -26,7 +25,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     public void startAuth(FingerprintManager manager,
                           FingerprintManager.CryptoObject cryptoObject) {
 
-        cancellationSignal = new CancellationSignal();
+        CancellationSignal cancellationSignal = new CancellationSignal();
 
         if (ActivityCompat.checkSelfPermission(appContext,
                 Manifest.permission.USE_FINGERPRINT) !=

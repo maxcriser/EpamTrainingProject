@@ -7,7 +7,6 @@ public class deleteTypesCardsReader {
 
     private static deleteTypesCardsReader sDeleteTypesCardsReader;
 
-    private List<String> typesCards;
     private List<String> tickets;
     private List<String> bankCards;
     private List<String> nfcCards;
@@ -49,14 +48,6 @@ public class deleteTypesCardsReader {
         tickets.add("Ticket to ASS");
     }
 
-    public void setTypesCards() {
-        typesCards = new ArrayList<>();
-        typesCards.add("Credit cards");
-        typesCards.add("Discount cards");
-        typesCards.add("Tickets");
-        typesCards.add("NFC items");
-    }
-
     public void setNfcCards() {
         nfcCards = new ArrayList<>();
         nfcCards.add("NFC 1");
@@ -86,10 +77,6 @@ public class deleteTypesCardsReader {
 
     public List<String> getTickets() {
         return tickets;
-    }
-
-    public List<String> getTypesCards() {
-        return typesCards;
     }
 
     public List<String> getBankCards() {

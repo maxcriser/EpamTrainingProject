@@ -2,12 +2,8 @@ package com.maxcriser.cards.reader;
 
 public class Colors {
 
-    String nameColorCards;
-    String codeColorCards;
-
-    Colors() {
-
-    }
+    private String nameColorCards;
+    private String codeColorCards;
 
     void setNameColorCards(String pNameColorCards) {
         nameColorCards = pNameColorCards;

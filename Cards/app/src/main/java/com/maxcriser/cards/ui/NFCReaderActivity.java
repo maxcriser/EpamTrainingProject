@@ -76,8 +76,6 @@ public class NFCReaderActivity extends AppCompatActivity {
                 Log.d(TAG, "Wrong mime type: " + type);
             }
         } else if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)) {
-
-            // In case we would still use the Tech Discovered Intent
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             String[] techList = tag.getTechList();
             String searchedTech = Ndef.class.getName();
@@ -108,7 +106,6 @@ public class NFCReaderActivity extends AppCompatActivity {
         } catch (IntentFilter.MalformedMimeTypeException e) {
             throw new RuntimeException("Check your mime type.");
         }
-
         adapter.enableForegroundDispatch(activity, pendingIntent, filters, techList);
     }
 
@@ -121,14 +118,12 @@ public class NFCReaderActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Tag... params) {
             Tag tag = params[0];
-
             Ndef ndef = Ndef.get(tag);
             if (ndef == null) {
                 return null;
             }
 
             NdefMessage ndefMessage = ndef.getCachedNdefMessage();
-
             NdefRecord[] records = ndefMessage.getRecords();
             for (NdefRecord ndefRecord : records) {
                 if (ndefRecord.getTnf() == NdefRecord.TNF_WELL_KNOWN && Arrays.equals(ndefRecord.getType(), NdefRecord.RTD_TEXT)) {
@@ -139,7 +134,6 @@ public class NFCReaderActivity extends AppCompatActivity {
                     }
                 }
             }
-
             return null;
         }
 

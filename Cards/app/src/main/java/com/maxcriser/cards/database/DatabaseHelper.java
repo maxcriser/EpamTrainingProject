@@ -28,16 +28,15 @@ import java.util.Locale;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_HELPER = "DatabaseHelper";
+    private static final String DATABASE_HELPER = "DatabaseHelper";
     private static DatabaseHelper mHelper;
-    private static final String mDatabaseName = "database.cards.theCriser";
+    private static final String mDatabaseName = "database.cards.thecriser";
     private static final String SQL_TABLE_CREATE_TEMPLATE = "CREATE TABLE IF NOT EXISTS %s (%s);";
     private static final String SQL_TABLE_CREATE_FIELD_TEMPLATE = "%s %s%s";
-    public static final int CURRENT_VERSION = 1;
 
     private DatabaseHelper(Context pContext, int pVersion) {
         super(pContext, mDatabaseName, null, pVersion);
-//        ContextHolder.getInstance().getContext().deleteDatabase(mDatabaseName);
+        ContextHolder.getInstance().getContext().deleteDatabase(mDatabaseName);
         getWritableDatabase();
     }
 

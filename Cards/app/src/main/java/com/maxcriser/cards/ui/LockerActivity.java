@@ -3,10 +3,8 @@ package com.maxcriser.cards.ui;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.KeyguardManager;
-import android.app.LauncherActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
@@ -25,7 +23,6 @@ import android.widget.Toast;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.handler.FingerprintHandler;
-import com.maxcriser.cards.reader.PasswordReader;
 import com.maxcriser.cards.ui.cards.BankCardsActivity;
 
 import java.io.IOException;
@@ -313,7 +310,7 @@ public class LockerActivity extends AppCompatActivity {
     }
 
     public void start() {
-        if(intentLockedPage.equals(MainActivity.CREDIT_CARD)) {
+        if (intentLockedPage.equals(MainActivity.CREDIT_CARD)) {
             startActivity(new Intent(LockerActivity.this, BankCardsActivity.class));
         } else {
             Intent intent = new Intent(LockerActivity.this, SetupPIN.class);

@@ -32,7 +32,6 @@ public class BarcodeScanner extends AppCompatActivity {
     private FrameLayout mFrameSolution;
 
     private Camera mCamera;
-    private CameraPreview mPreview;
     private Handler autoFocusHandler;
 
     private ImageScanner scanner;
@@ -72,11 +71,11 @@ public class BarcodeScanner extends AppCompatActivity {
         scanner.setConfig(0, Config.X_DENSITY, 3);
         scanner.setConfig(0, Config.Y_DENSITY, 3);
 
-        mPreview = new CameraPreview(BarcodeScanner.this,
+        CameraPreview preview1 = new CameraPreview(BarcodeScanner.this,
                 mCamera, previewCb, autoFocusCB);
 
         FrameLayout preview = (FrameLayout) findViewById(R.id.cameraPreview);
-        preview.addView(mPreview);
+        preview.addView(preview1);
     }
 
 
