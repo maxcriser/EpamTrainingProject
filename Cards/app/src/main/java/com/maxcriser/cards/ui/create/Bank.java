@@ -39,25 +39,20 @@ public class Bank extends AppCompatActivity {
     ViewPager pagerTemplate;
     PagerAdapter pagerAdapterTypes;
     PagerAdapter pagerAdapterTemplate;
-
     Colors listColors;
     String myColorName;
     String myColorCode;
     String myTypeCard;
-    // Color mColor - putExtra
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bank_card);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
-
         currentPositionColors = 0;
 
         RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
         title.setText(NEW_BANK_TITLE);
-
-        // VIEWPAGER template start)
 
         listColors = previewColors.get(0);
         myColorName = listColors.getNameColorCards();
@@ -91,20 +86,15 @@ public class Bank extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int state) {
             }
-
         });
 
-//        Preview Colors
         myTypeCard = previewTypes.get(0);
         Log.d(BANK, myTypeCard);
-
         PAGE_COUNT = previewTypes.size();
-
         pagerTypes = (ViewPager) findViewById(R.id.type_card);
         pagerAdapterTypes = new MyFragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 ID_BANK_CARD_ITEM_TYPE,
                 PAGE_COUNT);
-
         pagerTypes.setAdapter(pagerAdapterTypes);
         ViewPagerPreviewCard.icon = R.drawable.type_visa;
         pagerTypes.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -112,22 +102,31 @@ public class Bank extends AppCompatActivity {
             public void onPageSelected(int position) {
                 myTypeCard = previewTypes.get(position);
                 Log.d(BANK, myTypeCard);
-                if (myTypeCard.equals(VISA)) {
-                    ViewPagerPreviewCard.icon = R.drawable.type_visa;
-                } else if (myTypeCard.equals(MAESTRO)) {
-                    ViewPagerPreviewCard.icon = R.drawable.type_maestro;
-                } else if (myTypeCard.equals(MASTERCARD)) {
-                    ViewPagerPreviewCard.icon = R.drawable.type_mastercard;
-                } else if (myTypeCard.equals(AMEX)) {
-                    ViewPagerPreviewCard.icon = R.drawable.type_amex;
-                } else if (myTypeCard.equals(WESTERN_UNION)) {
-                    ViewPagerPreviewCard.icon = R.drawable.type_western_union;
-                } else if (myTypeCard.equals(JCB)) {
-                    ViewPagerPreviewCard.icon = R.drawable.type_jcb;
-                } else if (myTypeCard.equals(DINERS_CLUB)) {
-                    ViewPagerPreviewCard.icon = R.drawable.type_diners_club;
-                } else if (myTypeCard.equals(BELCARD)) {
-                    ViewPagerPreviewCard.icon = R.drawable.type_belcard;
+                switch (myTypeCard) {
+                    case VISA:
+                        ViewPagerPreviewCard.icon = R.drawable.type_visa;
+                        break;
+                    case MAESTRO:
+                        ViewPagerPreviewCard.icon = R.drawable.type_maestro;
+                        break;
+                    case MASTERCARD:
+                        ViewPagerPreviewCard.icon = R.drawable.type_mastercard;
+                        break;
+                    case AMEX:
+                        ViewPagerPreviewCard.icon = R.drawable.type_amex;
+                        break;
+                    case WESTERN_UNION:
+                        ViewPagerPreviewCard.icon = R.drawable.type_western_union;
+                        break;
+                    case JCB:
+                        ViewPagerPreviewCard.icon = R.drawable.type_jcb;
+                        break;
+                    case DINERS_CLUB:
+                        ViewPagerPreviewCard.icon = R.drawable.type_diners_club;
+                        break;
+                    case BELCARD:
+                        ViewPagerPreviewCard.icon = R.drawable.type_belcard;
+                        break;
                 }
                 pagerTemplate.setAdapter(pagerAdapterTemplate);
                 pagerTemplate.setCurrentItem(currentPositionColors);

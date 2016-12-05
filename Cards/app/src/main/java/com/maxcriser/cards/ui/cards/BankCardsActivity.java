@@ -68,7 +68,6 @@ public class BankCardsActivity extends AppCompatActivity {
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                 myBankCards.remove(viewHolder.getAdapterPosition());
                 viewBankCards.getAdapter().notifyItemRemoved(viewHolder.getAdapterPosition());
-                //TODO remove to database myTickets (viewHolder.getAdapterPosition)
             }
         };
 

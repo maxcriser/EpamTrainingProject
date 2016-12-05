@@ -14,7 +14,6 @@ public class RecyclerViewHolderTypes extends RecyclerView.ViewHolder {
 
     public RecyclerViewHolderTypes(View itemView) {
         super(itemView);
-
         mLinearCard = (FrameLayout) itemView.findViewById(R.id.linear_card);
         mTitle = (TextView) itemView.findViewById(R.id.title_main_cards);
     }

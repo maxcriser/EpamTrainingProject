@@ -25,13 +25,11 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolde
     @Override
     public RecyclerViewHolderTypes onCreateViewHolder(ViewGroup parent, int viewType) {
         View myView = mInflater.inflate((Integer) mView, parent, false);
-
         return new RecyclerViewHolderTypes(myView);
     }
 
     @Override
     public void onBindViewHolder(RecyclerViewHolderTypes holder, int position) {
-
         holder.mTitle.setText(mItems.get(position));
         holder.mTitle.setTag(holder);
     }

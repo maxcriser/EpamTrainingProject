@@ -30,7 +30,6 @@ public class MyFragmentPagerAdapterTemplate extends FragmentPagerAdapter {
     }
 
     @Override
-
     public int getCount() {
         return page;
     }

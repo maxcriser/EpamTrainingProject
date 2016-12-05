@@ -14,10 +14,10 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.FalseAsyncTask;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.task.BarcodeConverter;
-import com.maxcriser.cards.barcode.BarcodeScanner;
 import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.reader.Colors;
+import com.maxcriser.cards.ui.BarcodeScanner;
 import com.maxcriser.cards.ui.adapter.MyFragmentPagerAdapterTemplate;
 import com.maxcriser.cards.view.TextViews.EANP72TextView;
 import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
@@ -47,15 +47,12 @@ public class Discount extends AppCompatActivity {
     String myColorCode;
     String title; // database
     String generateBarcode; // database
-    // Color mColor - putExtra
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_discount);
-        //TODO in close to search pages
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
-
         db = DatabaseHelper.getInstance(this, 1);
 
         RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);

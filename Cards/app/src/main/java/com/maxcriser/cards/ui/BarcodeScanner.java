@@ -1,4 +1,4 @@
-package com.maxcriser.cards.barcode;
+package com.maxcriser.cards.ui;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.maxcriser.cards.R;
+import com.maxcriser.cards.barcode.CameraPreview;
 import com.maxcriser.cards.ui.create.Discount;
 import com.maxcriser.cards.view.TextViews.RobotoThin;
 

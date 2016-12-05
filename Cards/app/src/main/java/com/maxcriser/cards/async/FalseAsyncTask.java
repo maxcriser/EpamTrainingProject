@@ -5,10 +5,10 @@ import java.util.concurrent.Executors;
 
 public class FalseAsyncTask {
 
-    private final int COUNT_CORES = 3;
     private ExecutorService mExecutorService;
 
     public FalseAsyncTask() {
+        int COUNT_CORES = 3;
         this.mExecutorService = Executors.newFixedThreadPool(COUNT_CORES);
     }
 

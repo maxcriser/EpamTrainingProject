@@ -18,8 +18,6 @@ public class Colors {
     }
 
     public String getCodeColorCards() {
-
         return codeColorCards;
     }
-
 }

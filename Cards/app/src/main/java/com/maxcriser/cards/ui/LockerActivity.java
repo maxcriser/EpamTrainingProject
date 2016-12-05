@@ -310,6 +310,7 @@ public class LockerActivity extends AppCompatActivity {
     }
 
     public void start() {
+        Class dsa = BankCardsActivity.class;
         if (intentLockedPage.equals(MainActivity.CREDIT_CARD)) {
             startActivity(new Intent(LockerActivity.this, BankCardsActivity.class));
         } else {

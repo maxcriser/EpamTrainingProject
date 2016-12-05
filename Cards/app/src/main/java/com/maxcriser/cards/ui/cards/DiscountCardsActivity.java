@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -22,10 +23,10 @@ import android.widget.Toast;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
-import com.maxcriser.cards.barcode.BarcodeScanner;
 import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.handler.RecyclerItemClickListener;
+import com.maxcriser.cards.ui.BarcodeScanner;
 import com.maxcriser.cards.ui.adapter.CursorDiscountAdapter;
 import com.maxcriser.cards.ui.adapter.DiscountCursorLoader;
 import com.maxcriser.cards.ui.show.ShowDiscountCard;
@@ -56,7 +57,6 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discount_cards);
         searchEdit = (EditText) findViewById(R.id.search_edit);
-        searchEdit.addTextChangedListener(new SearchTextListener());
 
         toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
         toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
@@ -84,11 +84,11 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+//                discountCards.getAdapter().notifyItemRemoved(viewHolder.getAdapterPosition());
                 TextView cardTitle = (TextView) viewHolder.itemView.findViewById(R.id.title_main_cards);
                 Integer id = (Integer) cardTitle.getTag();
                 dbHelper.delete(ModelDiscountCards.class, null, ModelDiscountCards.DISCOUNT_ID + " = ?", String.valueOf(id));
                 // TODO FIX incorrect animation delete
-                // discountCards.getAdapter().notifyItemRemoved(viewHolder.getAdapterPosition());
                 onResume();
             }
         };
@@ -153,8 +153,8 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
     }
 
     public void onAddNewClicked(View view) {
-        Intent intent = new Intent(this, BarcodeScanner.class)
-                .addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        Intent intent = new Intent(this,
+                BarcodeScanner.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
     }
 
@@ -164,7 +164,7 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+    public void onLoadFinished(Loader<Cursor> loader, final Cursor data) {
         LinearLayout linearEmpty = (LinearLayout) findViewById(R.id.empty_page_id_fragment);
         if (data.getCount() == 0) {
             linearEmpty.setVisibility(View.VISIBLE);
@@ -173,8 +173,28 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
             linearEmpty.setVisibility(GONE);
             discountCards.setVisibility(View.VISIBLE);
         }
-        adapter = new CursorDiscountAdapter(data, this, R.layout.item_discount);
-        discountCards.swapAdapter(adapter, true);
+
+        adapter = new CursorDiscountAdapter(data, DiscountCardsActivity.this, R.layout.item_discount, "");
+        discountCards.setAdapter(adapter);
+
+        searchEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence pCharSequence, int pI, int pI1, int pI2) {
+                Log.d("mytag", "before");
+            }
+
+            @Override
+            public void onTextChanged(CharSequence pCharSequence, int pI, int pI1, int pI2) {
+                Log.d("mytag", "changed");
+            }
+
+            @Override
+            public void afterTextChanged(Editable pEditable) {
+                Log.d("mytag", "after");
+                adapter = new CursorDiscountAdapter(data, DiscountCardsActivity.this, R.layout.item_discount, pEditable.toString());
+                discountCards.setAdapter(adapter);
+            }
+        });
     }
 
     @Override
@@ -183,7 +203,7 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
     }
 
     public void onToolbarBackClicked(View view) {
-        discountCards.smoothScrollToPosition(adapter.getItemCount());
+//        discountCards.smoothScrollToPosition(adapter.getItemCount());
     }
 
     public void onSearchClicked(View view) {
@@ -199,22 +219,5 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
     public void onBackSearchClicked(View view) {
         toolbarBack.setVisibility(View.VISIBLE);
         toolbarSearch.setVisibility(GONE);
-    }
-
-    private class SearchTextListener implements TextWatcher {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
     }
 }

@@ -30,6 +30,6 @@
             <include layout="@layout/fragment_empty_page"/>
 
         </LinearLayout>
-
     </FrameLayout>
+
 </merge>
