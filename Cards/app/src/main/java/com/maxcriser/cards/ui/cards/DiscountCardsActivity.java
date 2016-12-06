@@ -3,6 +3,7 @@ package com.maxcriser.cards.ui.cards;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -12,7 +13,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.style.StyleSpan;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -60,15 +65,8 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discount_cards);
-
+        initViews();
         getSupportLoaderManager().restartLoader(LOADER_DISCOUNT_ID, null, this);
-        noResultFor = (TextView) findViewById(R.id.frame_no_results_for);
-        toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
-        discountCards = (RecyclerView) findViewById(R.id.discount_cards_recycler_view);
-        toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
-        clearSearch = (ImageView) findViewById(R.id.clearSearch);
-        searchEdit = (EditText) findViewById(R.id.search_edit);
-        title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
         searchEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence pCharSequence, int pI, int pI1, int pI2) {
@@ -169,6 +167,18 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
         }));
     }
 
+    private void initViews() {
+        linearEmpty = (LinearLayout) findViewById(R.id.empty_page_id_fragment);
+        noResultFor = (TextView) findViewById(R.id.frame_no_results_for);
+        toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
+        discountCards = (RecyclerView) findViewById(R.id.discount_cards_recycler_view);
+        toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
+        clearSearch = (ImageView) findViewById(R.id.clearSearch);
+        searchEdit = (EditText) findViewById(R.id.search_edit);
+        title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
+
+    }
+
     @Override
     public void onBackPressed() {
         if (toolbarSearch.getVisibility() == View.VISIBLE) {
@@ -204,10 +214,12 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, final Cursor data) {
-        linearEmpty = (LinearLayout) findViewById(R.id.empty_page_id_fragment);
         if (data.getCount() == 0) {
             if (!searchText.equals("")) {
-                noResultFor.setText("Say what?! No result for '" + searchText + "'");
+                // TODO: 06.12.2016 CHECK IF(LANG_ENG) LANG_RUS for spannable
+                Spannable text = new SpannableString(getString(R.string.no_result_for) + " '" + searchText + "'");
+                text.setSpan(new StyleSpan(Typeface.BOLD), 26, text.length() - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                noResultFor.setText(text);
                 noResultFor.setVisibility(View.VISIBLE);
             } else {
                 linearEmpty.setVisibility(View.VISIBLE);

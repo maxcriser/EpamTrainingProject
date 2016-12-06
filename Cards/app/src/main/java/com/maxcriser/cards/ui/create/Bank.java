@@ -43,15 +43,15 @@ public class Bank extends AppCompatActivity {
     String myColorName;
     String myColorCode;
     String myTypeCard;
+    RobotoRegularTextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bank_card);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
+        initViews();
         currentPositionColors = 0;
-
-        RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
         title.setText(NEW_BANK_TITLE);
 
         listColors = previewColors.get(0);
@@ -61,7 +61,6 @@ public class Bank extends AppCompatActivity {
 
         PAGE_COUNT_TEMPLATE = previewColors.size();
 
-        pagerTemplate = (ViewPager) findViewById(R.id.pager);
         pagerTemplate.setPageMargin(pagerMargin);
         pagerAdapterTemplate = new MyFragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 ID_BANK_CARD_ITEM,
@@ -91,7 +90,6 @@ public class Bank extends AppCompatActivity {
         myTypeCard = previewTypes.get(0);
         Log.d(BANK, myTypeCard);
         PAGE_COUNT = previewTypes.size();
-        pagerTypes = (ViewPager) findViewById(R.id.type_card);
         pagerAdapterTypes = new MyFragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 ID_BANK_CARD_ITEM_TYPE,
                 PAGE_COUNT);
@@ -142,6 +140,12 @@ public class Bank extends AppCompatActivity {
             }
 
         });
+    }
+
+    private void initViews() {
+        title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
+        pagerTemplate = (ViewPager) findViewById(R.id.pager);
+        pagerTypes = (ViewPager) findViewById(R.id.type_card);
     }
 
     @Override

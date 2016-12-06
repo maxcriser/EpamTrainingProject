@@ -33,15 +33,20 @@ public class SetupPIN extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_pin);
 
-        title = (TextView) findViewById(R.id.title_setup_pin);
-        btnContinue = (Button) findViewById(R.id.btn_continue_setup);
-        btnCancel = (Button) findViewById(R.id.btn_cancel_setup);
-        inputText = (EditText) findViewById(R.id.setup_pin_edit_text);
+        initViews();
+
         inputText.addTextChangedListener(new PinChangeListener());
         btnContinue.setOnClickListener(new ContinueClickListener());
         btnCancel.setOnClickListener(new CancelClickListener());
 
         page = Page.FIRST;
+    }
+
+    private void initViews(){
+        title = (TextView) findViewById(R.id.title_setup_pin);
+        btnContinue = (Button) findViewById(R.id.btn_continue_setup);
+        btnCancel = (Button) findViewById(R.id.btn_cancel_setup);
+        inputText = (EditText) findViewById(R.id.setup_pin_edit_text);
     }
 
     private class PinChangeListener implements TextWatcher {

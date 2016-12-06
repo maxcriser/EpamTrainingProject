@@ -26,24 +26,18 @@ public class NFCCardsActivity extends AppCompatActivity {
     RecyclerView viewNFCItems;
     CardView toolbarBack;
     CardView toolbarSearch;
+    RobotoRegularTextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc_cards);
+        initViews();
 
-        toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
-        toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
-
-        RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
         title.setText(NFC_TITLE);
-
         final deleteTypesCardsReader tcReader = deleteTypesCardsReader.getInstance();
         tcReader.setNfcCards();
-
         final List<String> myNFCItems = tcReader.getNfcCards();
-
-        viewNFCItems = (RecyclerView) findViewById(R.id.nfc_items_recycler_view);
 
         ItemsRecyclerAdapter adapter = new ItemsRecyclerAdapter(this, myNFCItems, R.layout.item_list);
         viewNFCItems.setAdapter(adapter);
@@ -82,6 +76,14 @@ public class NFCCardsActivity extends AppCompatActivity {
         }));
 
     }
+
+    private void initViews(){
+        toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
+        toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
+        title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
+        viewNFCItems = (RecyclerView) findViewById(R.id.nfc_items_recycler_view);
+    }
+
 
     public void onBackClicked(View view) {
         super.onBackPressed();

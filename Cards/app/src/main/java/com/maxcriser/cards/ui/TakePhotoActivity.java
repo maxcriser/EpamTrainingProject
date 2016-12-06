@@ -36,6 +36,8 @@ public class TakePhotoActivity extends Activity implements SurfaceHolder.Callbac
     private Camera camera;
     private SurfaceView preview;
     private ViewSetter mViewSetter;
+    FrameLayout frameEditor;
+    ImageButton shotBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,8 +49,8 @@ public class TakePhotoActivity extends Activity implements SurfaceHolder.Callbac
 
         setContentView(R.layout.activity_takephoto);
 
-        FrameLayout frameEditor = (FrameLayout) findViewById(R.id.frame_take_photo);
-        preview = (SurfaceView) findViewById(R.id.surface_take_photo);
+        initViews();
+
         SurfaceHolder surfaceHolder = preview.getHolder();
         surfaceHolder.addCallback(this);
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -58,7 +60,6 @@ public class TakePhotoActivity extends Activity implements SurfaceHolder.Callbac
         mViewSetter.setOnTouchListener(mViewSetter);
         frameEditor.addView(mViewSetter, LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
 
-        ImageButton shotBtn = (ImageButton) findViewById(R.id.btn_take_photo);
         shotBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +71,12 @@ public class TakePhotoActivity extends Activity implements SurfaceHolder.Callbac
                 });
             }
         });
+    }
+
+    private void initViews() {
+        frameEditor = (FrameLayout) findViewById(R.id.frame_take_photo);
+        preview = (SurfaceView) findViewById(R.id.surface_take_photo);
+        shotBtn = (ImageButton) findViewById(R.id.btn_take_photo);
     }
 
     @Override

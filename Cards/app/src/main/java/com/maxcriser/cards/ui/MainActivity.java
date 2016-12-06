@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity
     String pIsp = "#isp";
     String pQuery = "#query";
     String pTimezone = "#timezone";
+    DrawerLayout drawer;
+    NavigationView navigationView;
 
 
     @Override
@@ -72,10 +74,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        credit = (CardView) findViewById(R.id.main_credit_card);
-        discount = (CardView) findViewById(R.id.main_discount_card);
-        tickets = (CardView) findViewById(R.id.main_tickets_card);
-        nfc = (CardView) findViewById(R.id.main_nfc_card);
+        initViews();
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (mNfcAdapter == null) {
@@ -87,12 +86,10 @@ public class MainActivity extends AppCompatActivity
         tickets.setOnClickListener(new onClickListener());
         nfc.setOnClickListener(new onClickListener());
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, null, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         // TODO: 04.12.2016 FIX last HashMap / Linked
@@ -102,6 +99,17 @@ public class MainActivity extends AppCompatActivity
             getPermission(REQUEST_CAMERA, Manifest.permission.CAMERA);
         }
 //        }
+    }
+
+    public void initViews(){
+
+        credit = (CardView) findViewById(R.id.main_credit_card);
+        discount = (CardView) findViewById(R.id.main_discount_card);
+        tickets = (CardView) findViewById(R.id.main_tickets_card);
+        nfc = (CardView) findViewById(R.id.main_nfc_card);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+
     }
 
     @TargetApi(23)
@@ -144,7 +152,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -206,7 +213,6 @@ public class MainActivity extends AppCompatActivity
             alertDialog.show();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -266,7 +272,6 @@ public class MainActivity extends AppCompatActivity
 
 
     public void onMenuClicked(View view) {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.openDrawer(GravityCompat.START);
     }
 

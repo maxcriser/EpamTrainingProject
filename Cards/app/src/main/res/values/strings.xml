@@ -71,6 +71,7 @@
     </string>
     <string name="scanned_the_code_right_here">Scanned code right here</string>
     <string name="say_what_no_results_for_test">Say what?! No results for \'test\'</string>
+    <string name="no_result_for">Say what?! No result for</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>

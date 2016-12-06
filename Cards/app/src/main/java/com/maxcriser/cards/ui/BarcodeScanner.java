@@ -42,24 +42,27 @@ public class BarcodeScanner extends AppCompatActivity {
 
     public static final String TAG_BARCODE = "barcode";
     private String scanResult;
+    FrameLayout preview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         WindowManager.LayoutParams attrs = getWindow().getAttributes();
         attrs.flags = WindowManager.LayoutParams.FLAG_FULLSCREEN;
         getWindow().setAttributes(attrs);
-
         setContentView(R.layout.activity_barcode_scanner);
 
+        initViews();
+        initControls();
+    }
+
+    private void initViews() {
+        preview = (FrameLayout) findViewById(R.id.cameraPreview);
         mOk = (RobotoThin) findViewById(R.id.button_ok);
         mCancel = (RobotoThin) findViewById(R.id.button_cancel);
         mSolution = (RobotoThin) findViewById(R.id.solution_of_scan);
         mFrameSolution = (FrameLayout) findViewById(R.id.frame_solution_of_scan);
         mBottomText = (RobotoThin) findViewById(R.id.bottom_text_barcode_scan);
-
-        initControls();
     }
 
     private void initControls() {
@@ -75,7 +78,6 @@ public class BarcodeScanner extends AppCompatActivity {
         CameraPreview preview1 = new CameraPreview(BarcodeScanner.this,
                 mCamera, previewCb, autoFocusCB);
 
-        FrameLayout preview = (FrameLayout) findViewById(R.id.cameraPreview);
         preview.addView(preview1);
     }
 

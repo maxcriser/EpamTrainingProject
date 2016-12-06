@@ -45,24 +45,21 @@ public class Discount extends AppCompatActivity {
     Colors listColors;
     String myColorName;
     String myColorCode;
-    String title; // database
+    String titleStr; // database
     String generateBarcode; // database
+    RobotoRegularTextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_discount);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
+        initViews();
+
         db = DatabaseHelper.getInstance(this, 1);
-
-        RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
         title.setText(NEW_DISCOUNT_TITLE);
-
         Intent barcodeIntent = getIntent();
         mBarcode = barcodeIntent.getStringExtra(BarcodeScanner.TAG_BARCODE);
-        mEANP72TextView = (EANP72TextView) findViewById(R.id.generate_barcode);
-        mEditText = (EditText) findViewById(R.id.id_edit_text_name_discount);
-
         FalseAsyncTask barcodeGenerator = new FalseAsyncTask();
         barcodeGenerator.execute(new BarcodeConverter(), mBarcode, new OnResultCallback<String, String>() {
             @Override
@@ -87,7 +84,6 @@ public class Discount extends AppCompatActivity {
 
         PAGE_COUNT = previewColors.size();
 
-        pager = (ViewPager) findViewById(R.id.pager);
         pager.setPageMargin(pagerMargin);
         pagerAdapter = new MyFragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 ID_DISCOUNT_ITEM,
@@ -117,6 +113,13 @@ public class Discount extends AppCompatActivity {
         });
     }
 
+    private void initViews() {
+        title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
+        mEANP72TextView = (EANP72TextView) findViewById(R.id.generate_barcode);
+        mEditText = (EditText) findViewById(R.id.id_edit_text_name_discount);
+        pager = (ViewPager) findViewById(R.id.pager);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -127,10 +130,10 @@ public class Discount extends AppCompatActivity {
     }
 
     public void onCreateCardClicked(View view) {
-        title = mEditText.getText().toString();
-        if (!title.equals("")) {
+        titleStr = mEditText.getText().toString();
+        if (!titleStr.equals("")) {
             cvNewDiscount = new ContentValues();
-            cvNewDiscount.put(ModelDiscountCards.DISCOUNT_TITLE, title);
+            cvNewDiscount.put(ModelDiscountCards.DISCOUNT_TITLE, titleStr);
             cvNewDiscount.put(ModelDiscountCards.DISCOUNT_BARCODE, generateBarcode);
             cvNewDiscount.put(ModelDiscountCards.DISCOUNT_BACKGROUND_COLOR, myColorCode);
             cvNewDiscount.put(ModelDiscountCards.DISCOUNT_ID, (Integer) null);

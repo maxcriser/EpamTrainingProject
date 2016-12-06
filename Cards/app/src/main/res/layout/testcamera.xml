@@ -3,25 +3,57 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:paddingBottom="@dimen/activity_vertical_margin"
-              android:paddingLeft="@dimen/activity_horizontal_margin"
-              android:paddingRight="@dimen/activity_horizontal_margin"
-              android:paddingTop="@dimen/activity_vertical_margin"
-              tools:context=".MainActivity" >
+              tools:context=".ui.TestCamera">
 
-    <Button
-        android:id="@+id/buttonCapture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:onClick="onClick"
-        android:text="Запустить камеру" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/picture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@color/card_view" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:onClick="onRotate"
+                android:text="rotate"/>
+
+
+            <Button
+                android:id="@+id/buttonCapture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:onClick="onClick"
+                android:text="@string/ok"/>
+
+            <com.isseiaoki.simplecropview.CropImageView
+                xmlns:custom="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/cropImageView"
+                android:layout_weight="1"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:scv_crop_mode="fit_image"
+                custom:scv_background_color="@android:color/holo_orange_light"
+                custom:scv_handle_color="@android:color/darker_gray"
+                custom:scv_guide_color="@android:color/holo_green_light"
+                custom:scv_overlay_color="@android:color/holo_red_light"
+                custom:scv_frame_color="@android:color/holo_blue_dark"
+                custom:scv_handle_size="14dp"
+                custom:scv_touch_padding="8dp"
+                custom:scv_handle_show_mode="show_always"
+                custom:scv_guide_show_mode="show_always"
+                custom:scv_min_frame_size="50dp"
+                custom:scv_frame_stroke_weight="1dp"
+                custom:scv_guide_stroke_weight="1dp"/>
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

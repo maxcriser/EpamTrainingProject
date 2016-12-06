@@ -91,10 +91,7 @@ public class LockerActivity extends AppCompatActivity {
         mHandler = new Handler(hc);
         builderPassword = "";
 
-        firstCircle = (ImageView) findViewById(R.id.crlcOne);
-        secondCircle = (ImageView) findViewById(R.id.crlcTwo);
-        thirdCircle = (ImageView) findViewById(R.id.crlcThree);
-        fourthCircle = (ImageView) findViewById(R.id.crlcFour);
+        initViews();
 
 //        TODO FIX BUG At least finger
         if (Build.VERSION.SDK_INT >= 23) {
@@ -144,6 +141,13 @@ public class LockerActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private void initViews() {
+        firstCircle = (ImageView) findViewById(R.id.crlcOne);
+        secondCircle = (ImageView) findViewById(R.id.crlcTwo);
+        thirdCircle = (ImageView) findViewById(R.id.crlcThree);
+        fourthCircle = (ImageView) findViewById(R.id.crlcFour);
     }
 
     @TargetApi(23)

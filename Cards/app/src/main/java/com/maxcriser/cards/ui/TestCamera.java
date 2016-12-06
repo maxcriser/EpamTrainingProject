@@ -1,23 +1,33 @@
 package com.maxcriser.cards.ui;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.isseiaoki.simplecropview.CropImageView;
+import com.isseiaoki.simplecropview.callback.CropCallback;
+import com.isseiaoki.simplecropview.callback.LoadCallback;
+import com.isseiaoki.simplecropview.callback.SaveCallback;
 import com.maxcriser.cards.R;
+
+import java.io.File;
 
 public class TestCamera extends Activity {
 
-    final int CAMERA_CAPTURE = 1;
-    final int PIC_CROP = 2;
-    private Uri picUri;
+    CropImageView mCropView;
+    private ImageView mImageView;
+    public final String APP_TAG = "MyCustomApp";
+    public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
+    public String photoFileName = "photo.jpg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,58 +35,86 @@ public class TestCamera extends Activity {
         setContentView(R.layout.testcamera);
     }
 
-    public void onClick(View v) {
-        try {
-            // Намерение для запуска камеры
-            Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(captureIntent, CAMERA_CAPTURE);
-        } catch (ActivityNotFoundException e) {
-            // Выводим сообщение об ошибке
-            String errorMessage = "Ваше устройство не поддерживает съемку";
-            Toast toast = Toast
-                    .makeText(this, errorMessage, Toast.LENGTH_SHORT);
-            toast.show();
+    public void onClick(View view) {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileName)); // set the image file name
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Uri takenPhotoUri = getPhotoFileUri(photoFileName);
 
-    public void performCrop() {
-        try {
-            // Намерение для кадрирования. Не все устройства поддерживают его
-            Intent cropIntent = new Intent("com.android.camera.action.CROP");
-            cropIntent.setDataAndType(picUri, "image/*");
-            cropIntent.putExtra("crop", "true");
-            cropIntent.putExtra("aspectX", 1);
-            cropIntent.putExtra("aspectY", 1);
-            cropIntent.putExtra("outputX", 256);
-            cropIntent.putExtra("outputY", 256);
-            cropIntent.putExtra("return-data", true);
-            startActivityForResult(cropIntent, PIC_CROP);
-        } catch (ActivityNotFoundException anfe) {
-            String errorMessage = "Извините, но ваше устройство не поддерживает кадрирование";
-            Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
-            toast.show();
+                mCropView = (CropImageView) findViewById(R.id.cropImageView);
+                mCropView.setCropMode(CropImageView.CropMode.RATIO_4_3);
+                mCropView.setHandleSizeInDp(2);
+
+                mCropView.startLoad(
+
+                        takenPhotoUri,
+
+                        new LoadCallback() {
+                            @Override
+                            public void onSuccess() {}
+
+                            @Override
+                            public void onError() {}
+                        });
+
+//                mCropView.startCrop(
+//
+//                        takenPhotoUri,
+//
+//                        new CropCallback() {
+//                            @Override
+//                            public void onSuccess(Bitmap cropped) {}
+//
+//                            @Override
+//                            public void onError() {}
+//                        },
+//
+//                        new SaveCallback() {
+//                            @Override
+//                            public void onSuccess(Uri outputUri) {}
+//
+//                            @Override
+//                            public void onError() {}
+//                        }
+//                );
+
+//                Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
+//                ImageView ivPreview = (ImageView) findViewById(R.id.picture);
+//                ivPreview.setImageURI(takenPhotoUri);
+            } else { // Result was a failure
+                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            // Вернулись от приложения Камера
-            if (requestCode == CAMERA_CAPTURE) {
-                // Получим Uri снимка
-                picUri = data.getData();
-                // кадрируем его
-                performCrop();
+    public Uri getPhotoFileUri(String fileName) {
+        if (isExternalStorageAvailable()) {
+            File mediaStorageDir = new File(
+                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
+
+            if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
+                Log.d(APP_TAG, "failed to create directory");
             }
-            // Вернулись из операции кадрирования
-            else if (requestCode == PIC_CROP) {
-                Bundle extras = data.getExtras();
-                // Получим кадрированное изображение
-                Bitmap thePic = extras.getParcelable("data");
-                // передаём его в ImageView
-                ImageView picView = (ImageView) findViewById(R.id.picture);
-                picView.setImageBitmap(thePic);
-            }
+            return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
         }
+        return null;
+    }
+
+    private boolean isExternalStorageAvailable() {
+        String state = Environment.getExternalStorageState();
+        return state.equals(Environment.MEDIA_MOUNTED);
+    }
+
+    public void onRotate(View view) {
+        mCropView.rotateImage(CropImageView.RotateDegrees.ROTATE_90D); // rotate clockwise by 90 degrees
     }
 }

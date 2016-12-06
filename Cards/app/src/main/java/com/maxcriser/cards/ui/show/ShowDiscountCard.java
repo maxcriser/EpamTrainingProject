@@ -21,8 +21,6 @@ import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.ui.cards.DiscountCardsActivity;
 import com.maxcriser.cards.view.EditTextViews.RobotoThinEditText;
 import com.maxcriser.cards.view.TextViews.EANP72TextView;
-import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
-import com.maxcriser.cards.view.TextViews.NotoSans;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -61,22 +59,17 @@ public class ShowDiscountCard extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_discount);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
-
+        initViews();
         mHandler = new Handler(hc);
 
         animScaleDown = AnimationUtils.loadAnimation(ShowDiscountCard.this, R.anim.scale_down);
         animScaleUp = AnimationUtils.loadAnimation(ShowDiscountCard.this, R.anim.scale_up);
 
-        materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
         registerForContextMenu(materialDesignFAM);
 
-        editLinear = (LinearLayout) findViewById(R.id.linear_edit_frame_title_discount);
-        editName = (RobotoThinEditText) findViewById(R.id.rename_discount_title);
 
         dbHelper = DatabaseHelper.getInstance(this, 1);
 
-        floatingActionButtonDelete = (FloatingActionButton) findViewById(R.id.floating_delete_button);
-        floatingActionButtonEdit = (FloatingActionButton) findViewById(R.id.floating_edit_button);
 
         floatingActionButtonDelete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -103,17 +96,25 @@ public class ShowDiscountCard extends Activity {
         barcode = barcodeIntent.getStringExtra(DiscountCardsActivity.EXTRA_DISCOUNT_BARCODE);
         color = barcodeIntent.getStringExtra(DiscountCardsActivity.EXTRA_DISCOUNT_COLOR);
 
-        titleView = (TextView) findViewById(R.id.title_show_discount);
         titleView.setText(title);
 
-        barcodeView = (EANP72TextView) findViewById(R.id.show_barcode);
         barcodeView.setText(barcode);
 
-        linearFrameAction = (LinearLayout) findViewById(R.id.linear_frame_actions_discount);
 
         WindowManager.LayoutParams layoutParam = getWindow().getAttributes();
         layoutParam.screenBrightness = 1.0f;
         getWindow().setAttributes(layoutParam);
+    }
+
+    private void initViews() {
+        materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
+        editLinear = (LinearLayout) findViewById(R.id.linear_edit_frame_title_discount);
+        editName = (RobotoThinEditText) findViewById(R.id.rename_discount_title);
+        floatingActionButtonDelete = (FloatingActionButton) findViewById(R.id.floating_delete_button);
+        floatingActionButtonEdit = (FloatingActionButton) findViewById(R.id.floating_edit_button);
+        titleView = (TextView) findViewById(R.id.title_show_discount);
+        barcodeView = (EANP72TextView) findViewById(R.id.show_barcode);
+        linearFrameAction = (LinearLayout) findViewById(R.id.linear_frame_actions_discount);
     }
 
     public void onBackClicked(View view) {

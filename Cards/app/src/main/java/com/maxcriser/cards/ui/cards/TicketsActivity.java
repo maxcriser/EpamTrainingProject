@@ -26,22 +26,18 @@ public class TicketsActivity extends AppCompatActivity {
     RecyclerView tickets;
     CardView toolbarBack;
     CardView toolbarSearch;
+    RobotoRegularTextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tickets);
-
-        toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
-        toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
-
-        RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
+        initViews();
         title.setText(TICKETS_TITLE);
 
         final deleteTypesCardsReader tcReader = deleteTypesCardsReader.getInstance();
         tcReader.setTickets();
 
-        tickets = (RecyclerView) findViewById(R.id.tickets_recycler_view);
 
         final List<String> myTickets = tcReader.getTickets();
 
@@ -70,6 +66,13 @@ public class TicketsActivity extends AppCompatActivity {
             ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
             itemTouchHelper.attachToRecyclerView(tickets);
         }
+    }
+
+    private void initViews(){
+        toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
+        toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
+        tickets = (RecyclerView) findViewById(R.id.tickets_recycler_view);
+        title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
     }
 
     public void onBackClicked(View view) {

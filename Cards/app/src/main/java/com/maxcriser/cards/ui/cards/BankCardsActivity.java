@@ -30,26 +30,20 @@ public class BankCardsActivity extends AppCompatActivity {
     CardView toolbarBack;
     CardView toolbarSearch;
     EditText searchEdit;
+    RobotoRegularTextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_cards);
-        searchEdit = (EditText) findViewById(R.id.search_edit);
+        initViews();
         searchEdit.addTextChangedListener(new SearchTextListener());
-
-        toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
-        toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
-
-        RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
         title.setText(BANK_TITLE);
 
         final deleteTypesCardsReader tcReader = deleteTypesCardsReader.getInstance();
         tcReader.setBankCards();
 
         final List<String> myBankCards = tcReader.getBankCards();
-
-        viewBankCards = (RecyclerView) findViewById(R.id.types_bank_cards_recycler_view);
 
         ItemsRecyclerAdapter adapter = new ItemsRecyclerAdapter(this, myBankCards, R.layout.item_list_bank);
         viewBankCards.setAdapter(adapter);
@@ -85,7 +79,14 @@ public class BankCardsActivity extends AppCompatActivity {
 
             }
         }));
+    }
 
+    private void initViews(){
+        searchEdit = (EditText) findViewById(R.id.search_edit);
+        toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
+        toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
+        title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
+        viewBankCards = (RecyclerView) findViewById(R.id.types_bank_cards_recycler_view);
     }
 
     public void onBackClicked(View view) {

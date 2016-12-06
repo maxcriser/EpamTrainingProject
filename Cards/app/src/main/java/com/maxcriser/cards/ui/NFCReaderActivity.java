@@ -34,7 +34,7 @@ public class NFCReaderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc_reader);
 
-        mTextView = (TextView) findViewById(R.id.textView_explanation);
+        initViews();
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (!mNfcAdapter.isEnabled()) {
@@ -43,6 +43,10 @@ public class NFCReaderActivity extends AppCompatActivity {
             Toast.makeText(this, "NFC is activated.", Toast.LENGTH_SHORT).show();
         }
         handleIntent(getIntent());
+    }
+
+    private void initViews() {
+        mTextView = (TextView) findViewById(R.id.textView_explanation);
     }
 
     @Override
