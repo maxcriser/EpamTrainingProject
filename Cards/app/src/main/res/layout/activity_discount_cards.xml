@@ -28,6 +28,7 @@
                 android:scrollbars="vertical"/>
 
             <include layout="@layout/fragment_empty_page"/>
+            <include layout="@layout/fragment_no_results_for"/>
 
         </LinearLayout>
     </FrameLayout>

@@ -13,10 +13,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,10 +42,14 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
     RecyclerView discountCards;
     LinearLayoutManager mLayoutManager;
     CursorDiscountAdapter adapter;
+    LinearLayout linearEmpty;
     CardView toolbarBack;
     CardView toolbarSearch;
     EditText searchEdit;
-    private String searchText;
+    TextView noResultFor;
+    ImageView clearSearch;
+    RobotoRegularTextView title;
+    private String searchText = "";
     public static final String EXTRA_DISCOUNT_ID = "discount_id_extra";
     public static final int LOADER_DISCOUNT_ID = 1;
     public static final String EXTRA_DISCOUNT_TITLE = "discount_title_extra";
@@ -56,7 +60,15 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discount_cards);
+
+        getSupportLoaderManager().restartLoader(LOADER_DISCOUNT_ID, null, this);
+        noResultFor = (TextView) findViewById(R.id.frame_no_results_for);
+        toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
+        discountCards = (RecyclerView) findViewById(R.id.discount_cards_recycler_view);
+        toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
+        clearSearch = (ImageView) findViewById(R.id.clearSearch);
         searchEdit = (EditText) findViewById(R.id.search_edit);
+        title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
         searchEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence pCharSequence, int pI, int pI1, int pI2) {
@@ -70,26 +82,26 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
 
             @Override
             public void afterTextChanged(Editable pEditable) {
+                if (!pEditable.toString().equals("")) {
+                    clearSearch.setVisibility(View.VISIBLE);
+                } else {
+                    clearSearch.setVisibility(View.GONE);
+                }
                 searchText = pEditable.toString();
                 getSupportLoaderManager().restartLoader(LOADER_DISCOUNT_ID, null, DiscountCardsActivity.this);
             }
         });
 
-        toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
-        toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
 
-        RobotoRegularTextView title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
         title.setText(DISCOUNT_TITLE);
 
         dbHelper = DatabaseHelper.getInstance(this, 1);
 
-        discountCards = (RecyclerView) findViewById(R.id.discount_cards_recycler_view);
         discountCards.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setReverseLayout(true);
         mLayoutManager.setStackFromEnd(true);
         discountCards.setLayoutManager(mLayoutManager);
-        getSupportLoaderManager().restartLoader(LOADER_DISCOUNT_ID, null, this);
 
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -106,7 +118,8 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
                 Integer id = (Integer) cardTitle.getTag();
                 dbHelper.delete(ModelDiscountCards.class, null, ModelDiscountCards.DISCOUNT_ID + " = ?", String.valueOf(id));
                 // TODO FIX incorrect animation delete
-                onResume();
+//                onResume();
+                getSupportLoaderManager().restartLoader(LOADER_DISCOUNT_ID, null, DiscountCardsActivity.this);
             }
         };
 
@@ -157,6 +170,15 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
     }
 
     @Override
+    public void onBackPressed() {
+        if (toolbarSearch.getVisibility() == View.VISIBLE) {
+            onBackSearchClicked(null);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         LoaderManager supportLoaderManager = getSupportLoaderManager();
@@ -182,11 +204,17 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, final Cursor data) {
-        LinearLayout linearEmpty = (LinearLayout) findViewById(R.id.empty_page_id_fragment);
+        linearEmpty = (LinearLayout) findViewById(R.id.empty_page_id_fragment);
         if (data.getCount() == 0) {
-            linearEmpty.setVisibility(View.VISIBLE);
+            if (!searchText.equals("")) {
+                noResultFor.setText("Say what?! No result for '" + searchText + "'");
+                noResultFor.setVisibility(View.VISIBLE);
+            } else {
+                linearEmpty.setVisibility(View.VISIBLE);
+            }
             discountCards.setVisibility(GONE);
         } else {
+            noResultFor.setVisibility(GONE);
             linearEmpty.setVisibility(GONE);
             discountCards.setVisibility(View.VISIBLE);
         }
@@ -202,7 +230,7 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
 
     public void onToolbarBackClicked(View view) {
         Toast.makeText(this, "" + adapter.getItemCount(), Toast.LENGTH_LONG).show();
-        discountCards.smoothScrollToPosition(adapter.getItemCount()-1);
+        discountCards.smoothScrollToPosition(adapter.getItemCount() - 1);
     }
 
     public void onSearchClicked(View view) {
@@ -219,7 +247,11 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
         toolbarBack.setVisibility(View.VISIBLE);
         toolbarSearch.setVisibility(GONE);
         searchEdit.setText("");
-        searchText=searchEdit.getText().toString();
+        searchText = searchEdit.getText().toString();
         getSupportLoaderManager().restartLoader(LOADER_DISCOUNT_ID, null, DiscountCardsActivity.this);
+    }
+
+    public void onClearSearchClicked(View view) {
+        searchEdit.setText("");
     }
 }

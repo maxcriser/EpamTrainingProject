@@ -29,9 +29,9 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:id="@+id/search_edit"
-                android:paddingRight="16dp"
                 android:cursorVisible="true"
-                android:paddingLeft="16dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="8dp"
                 android:hint="@string/search_your_cards"
                 android:layout_weight="100"
                 android:textColor="@color/text_toolbar"
@@ -39,7 +39,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/height_toolbar"
                 android:textSize="18sp"
-                android:maxLines="1"/>
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:maxLines="1" />
+
+            <ImageButton
+                android:visibility="gone"
+                android:layout_weight="1"
+                android:id="@+id/clearSearch"
+                android:onClick="onClearSearchClicked"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_width="@dimen/height_toolbar"
+                android:layout_height="@dimen/height_toolbar"
+                android:src="@drawable/ic_close_black_24dp" />
 
         </LinearLayout>
 
