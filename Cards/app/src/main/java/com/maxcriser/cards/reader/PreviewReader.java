@@ -44,8 +44,9 @@ public class PreviewReader {
     }
 
     public void setPreviewColors() {
-        addPreviewColors("Teal", "#009688");
-        addPreviewColors("Cyan", "#00BCD4");
+        addPreviewColors("TEAL", "#009688");
+        addPreviewColors("CYAN", "#00BCD4");
+        addPreviewColors("BLUE GRAY", "#607D8B");
     }
 
     public List<Colors> getPreviewColors() {

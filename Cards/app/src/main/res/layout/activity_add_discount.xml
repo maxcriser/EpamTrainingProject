@@ -76,15 +76,6 @@
                             android:textColor="@color/black"
                             android:textSize="120sp"/>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:text="@string/card_color"
-                            android:textColor="@color/text_toolbar"
-                            android:textSize="16sp"/>
-
                         <include layout="@layout/fragment_viewpager_preview_colors"/>
                         <include layout="@layout/fragment_cancel_save"/>
 

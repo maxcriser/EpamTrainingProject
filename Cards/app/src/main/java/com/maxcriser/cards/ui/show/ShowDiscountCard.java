@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,7 +20,6 @@ import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.ui.cards.DiscountCardsActivity;
-import com.maxcriser.cards.view.EditTextViews.EditText;
 import com.maxcriser.cards.view.TextViews.EANP72TextView;
 
 import static android.view.View.GONE;
@@ -117,7 +117,7 @@ public class ShowDiscountCard extends Activity {
     }
 
     public void onBackClicked(View view) {
-        // handler close materialFloating
+        // TODO: 07.12.2016   handler close materialFloating
         super.onBackPressed();
     }
 
@@ -159,5 +159,8 @@ public class ShowDiscountCard extends Activity {
 
                     }
                 });
+    }
+
+    public void onToolbarBackClicked(View view) {
     }
 }

@@ -41,7 +41,6 @@
                                 android:id="@+id/linear_edit_frame_title_discount"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@color/bluelight_500"
                                 android:orientation="horizontal"
                                 android:visibility="gone">
 
@@ -54,11 +53,10 @@
                                     android:textColor="@color/text_toolbar"
                                     android:textSize="18sp"/>
 
-                                <com.maxcriser.cards.view.EditTextViews.EditText
+                                <EditText
                                     android:id="@+id/rename_discount_title"
                                     android:layout_width="match_parent"
                                     android:layout_height="48dp"
-                                    android:hint="@string/enter_name_of_the_card"
                                     android:inputType="text"
                                     android:maxLines="1"
                                     android:paddingLeft="16dp"

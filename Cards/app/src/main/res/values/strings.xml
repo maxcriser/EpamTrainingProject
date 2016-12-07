@@ -74,8 +74,12 @@
     <string name="no_result_for">Say what?! No result for</string>
     <string name="add_a_new_card">add a new card</string>
     <string name="save">SAVE</string>
-    <string name="add_to_calendar">Create calendar event</string>
+    <string name="add_to_calendar">Add event to Calendar</string>
     <string name="title">Title</string>
+    <string name="owner">Owner</string>
+    <string name="john_michael_johnson">John Michael Johnson</string>
+    <string name="_16_jan_2016">16 Jan 2016</string>
+    <string name="_6_00_pm">6:00 PM</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>

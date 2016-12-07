@@ -12,82 +12,88 @@
     android:layout_marginTop="8dp"
     android:foreground="?attr/selectableItemBackgroundBorderless"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    card_view:cardBackgroundColor="@color/card_view"
     card_view:cardCornerRadius="2dp" card_view:cardElevation="2dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <FrameLayout
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_weight="75">
-
-            <TextView
-                tools:text = "Credit cards"
-                android:maxLines="3"
-                android:layout_gravity="center"
-                android:gravity="center|start"
-                android:id="@+id/title_main_cards"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textAppearance="?attr/textAppearanceListItem"
-                android:textColor="@color/text_white"
-                android:textSize="20sp"/>
-
-            <TextView
-                android:text = "Maxim Zakharenka Vyacheslavovich"
-                android:maxLines="2"
-                android:layout_gravity="bottom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center|start"
-                android:textAppearance="?attr/textAppearanceListItem"
-                android:textColor="@color/text_white"
-                android:textSize="10sp"/>
-
-        </FrameLayout>
-
-        <include layout="@layout/fragment_dots_ticket"/>
+    <FrameLayout android:id="@+id/linear_card"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:background="@color/card_view">
 
         <LinearLayout
-            android:background="@android:color/white"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_width="96dp"
-            android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-            <com.maxcriser.cards.view.TextViews.RobotoThin
-                android:textColor="@color/text_toolbar"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:text="16 SEPT. 2016"
-                android:layout_marginStart="6dp"
-                android:layout_marginEnd="6dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="75"
+                android:gravity="center">
 
-            <TextView
-                android:layout_marginTop="-4dp"
-                android:textColor="@color/text_toolbar"
-                android:textSize="18sp"
+                <TextView
+                    android:id="@+id/title_main_cards"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center|start"
+                    android:maxLines="3"
+                    android:textAppearance="?attr/textAppearanceListItem"
+                    android:textColor="@color/text_white"
+                    android:textSize="20sp"
+                    tools:text="Name"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:gravity="center|start"
+                    android:maxLines="2"
+                    android:text="@string/john_michael_johnson"
+                    android:textAppearance="?attr/textAppearanceListItem"
+                    android:textColor="@color/text_white"
+                    android:textSize="12sp"/>
+
+            </FrameLayout>
+
+            <include layout="@layout/fragment_dots_ticket"/>
+
+            <LinearLayout
+                android:layout_width="96dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
                 android:gravity="center"
-                android:text="12:30 AM"
-                android:layout_marginStart="6dp"
-                android:layout_marginEnd="6dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:orientation="vertical">
+
+                <com.maxcriser.cards.view.TextViews.RobotoThin
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginStart="6dp"
+                    android:gravity="center"
+                    android:text="@string/_16_jan_2016"
+                    android:textColor="@color/text_toolbar"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="-4dp"
+                    android:gravity="center"
+                    android:text="@string/_6_00_pm"
+                    android:textColor="@color/text_toolbar"
+                    android:textSize="18sp"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </FrameLayout>
 
 </android.support.v7.widget.CardView>

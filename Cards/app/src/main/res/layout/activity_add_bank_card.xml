@@ -45,7 +45,7 @@
                                 android:textColor="@color/text_white"
                                 android:textSize="18sp"/>
 
-                            <com.maxcriser.cards.view.EditTextViews.EditText
+                            <EditText
                                 android:layout_width="match_parent"
                                 android:layout_height="48dp"
                                 android:hint="@string/enter_name_of_card"
