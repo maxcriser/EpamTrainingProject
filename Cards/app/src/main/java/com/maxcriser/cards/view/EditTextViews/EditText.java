@@ -5,18 +5,18 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
-public class RobotoThinEditText extends EditText {
-    public RobotoThinEditText(Context context) {
+public class EditText extends EditText {
+    public EditText(Context context) {
         super(context);
         init();
     }
 
-    public RobotoThinEditText(Context context, AttributeSet attrs) {
+    public EditText(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public RobotoThinEditText(Context context, AttributeSet attrs, int defStyleAttr) {
+    public EditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }

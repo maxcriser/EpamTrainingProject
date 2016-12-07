@@ -35,7 +35,7 @@ import com.maxcriser.cards.ui.BarcodeScanner;
 import com.maxcriser.cards.ui.adapter.CursorDiscountAdapter;
 import com.maxcriser.cards.ui.adapter.DiscountCursorLoader;
 import com.maxcriser.cards.ui.show.ShowDiscountCard;
-import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
+import com.maxcriser.cards.view.TextViews.RobotoRegular;
 
 import static android.view.View.GONE;
 import static com.maxcriser.cards.constant.constants.DISCOUNT_TITLE;
@@ -53,7 +53,7 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
     EditText searchEdit;
     TextView noResultFor;
     ImageView clearSearch;
-    RobotoRegularTextView title;
+    RobotoRegular title;
     private String searchText = "";
     public static final String EXTRA_DISCOUNT_ID = "discount_id_extra";
     public static final int LOADER_DISCOUNT_ID = 1;
@@ -175,7 +175,7 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
         toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
         clearSearch = (ImageView) findViewById(R.id.clearSearch);
         searchEdit = (EditText) findViewById(R.id.search_edit);
-        title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
+        title = (RobotoRegular) findViewById(R.id.title_toolbar);
 
     }
 

@@ -5,19 +5,19 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-public class RobotoRegularTextView extends TextView {
+public class RobotoRegular extends TextView {
 
-    public RobotoRegularTextView(Context context) {
+    public RobotoRegular(Context context) {
         super(context);
         init();
     }
 
-    public RobotoRegularTextView(Context context, AttributeSet attrs) {
+    public RobotoRegular(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public RobotoRegularTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public RobotoRegular(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }

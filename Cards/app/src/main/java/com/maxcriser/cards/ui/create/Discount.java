@@ -20,7 +20,7 @@ import com.maxcriser.cards.reader.Colors;
 import com.maxcriser.cards.ui.BarcodeScanner;
 import com.maxcriser.cards.ui.adapter.MyFragmentPagerAdapterTemplate;
 import com.maxcriser.cards.view.TextViews.EANP72TextView;
-import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
+import com.maxcriser.cards.view.TextViews.RobotoRegular;
 
 import static android.view.View.GONE;
 import static com.maxcriser.cards.constant.constants.ID_DISCOUNT_ITEM;
@@ -47,7 +47,7 @@ public class Discount extends AppCompatActivity {
     String myColorCode;
     String titleStr; // database
     String generateBarcode; // database
-    RobotoRegularTextView title;
+    RobotoRegular title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +114,7 @@ public class Discount extends AppCompatActivity {
     }
 
     private void initViews() {
-        title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
+        title = (RobotoRegular) findViewById(R.id.title_toolbar);
         mEANP72TextView = (EANP72TextView) findViewById(R.id.generate_barcode);
         mEditText = (EditText) findViewById(R.id.id_edit_text_name_discount);
         pager = (ViewPager) findViewById(R.id.pager);
@@ -158,5 +158,9 @@ public class Discount extends AppCompatActivity {
     }
 
     public void onToolbarBackClicked(View view) {
+    }
+
+    public void onCancelClicked(View view) {
+        onBackClicked(null);
     }
 }

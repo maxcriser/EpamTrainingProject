@@ -14,7 +14,7 @@ import com.maxcriser.cards.handler.RecyclerItemClickListener;
 import com.maxcriser.cards.reader.deleteTypesCardsReader;
 import com.maxcriser.cards.ui.NFCReaderActivity;
 import com.maxcriser.cards.ui.adapter.ItemsRecyclerAdapter;
-import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
+import com.maxcriser.cards.view.TextViews.RobotoRegular;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class NFCCardsActivity extends AppCompatActivity {
     RecyclerView viewNFCItems;
     CardView toolbarBack;
     CardView toolbarSearch;
-    RobotoRegularTextView title;
+    RobotoRegular title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +80,7 @@ public class NFCCardsActivity extends AppCompatActivity {
     private void initViews(){
         toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
         toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
-        title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
+        title = (RobotoRegular) findViewById(R.id.title_toolbar);
         viewNFCItems = (RecyclerView) findViewById(R.id.nfc_items_recycler_view);
     }
 

@@ -12,12 +12,12 @@
     <string name="ok">OK</string>
     <string name="place_a_barcode_on_camera_to_scan_it">Place a barcode on camera to scan it</string>
     <string name="sim_barcode">1234567891011</string>
-    <string name="name">Name:</string>
+    <string name="name">Name</string>
     <string name="create_card">Create card</string>
     <string name="delete">Delete</string>
     <string name="enter_pin">Enter PIN</string>
     <string name="add_a_new">add a new</string>
-    <string name="card_color">Select card color</string>
+    <string name="card_color">Card color</string>
     <string name="enter_name_of_card">Enter name of card...</string>
     <string name="enter_name_of_the_card">Enter name of the card...</string>
     <string name="search_your_cards">Search your cards</string>
@@ -72,6 +72,10 @@
     <string name="scanned_the_code_right_here">Scanned code right here</string>
     <string name="say_what_no_results_for_test">Say what?! No results for \'test\'</string>
     <string name="no_result_for">Say what?! No result for</string>
+    <string name="add_a_new_card">add a new card</string>
+    <string name="save">SAVE</string>
+    <string name="add_to_calendar">Create calendar event</string>
+    <string name="title">Title</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>

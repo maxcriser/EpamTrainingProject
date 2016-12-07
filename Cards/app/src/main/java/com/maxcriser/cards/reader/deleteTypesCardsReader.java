@@ -25,27 +25,11 @@ public class deleteTypesCardsReader {
 
     public void setTickets() {
         tickets = new ArrayList<>();
-        tickets.add("Ticket to HOME");
-        tickets.add("ticket to ITALY");
-        tickets.add("ticket to ITALY");
-        tickets.add("ticket to ITALY");
-        tickets.add("ticket to ITALY");
-        tickets.add("ticket to ITALY");
-        tickets.add("ticket to ITALY");
-        tickets.add("ticket to ITALY");
-        tickets.add("ticket to ITALY");
-        tickets.add("ticket to ITALY");
-        tickets.add("ticket to ITALY");
-        tickets.add("ticket to ITALY");
-        tickets.add("ticket to ITALY");
-        tickets.add("ticket to ITALY");
-        tickets.add("ticket to ITALY");
-        tickets.add("ticket to ITALY");
-        tickets.add("ticket to ITALY");
-        tickets.add("ticket to ITALY");
-        tickets.add("ticket to ITALY");
-        tickets.add("ticket to ITALY");
-        tickets.add("Ticket to ASS");
+        tickets.add("Home");
+        tickets.add("United States");
+        tickets.add("Belarus, Minsk");
+        tickets.add("Rome");
+        tickets.add("Antananarivo");
     }
 
     public void setNfcCards() {

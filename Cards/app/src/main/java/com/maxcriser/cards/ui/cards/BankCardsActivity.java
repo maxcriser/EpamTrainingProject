@@ -17,7 +17,7 @@ import com.maxcriser.cards.handler.RecyclerItemClickListener;
 import com.maxcriser.cards.reader.deleteTypesCardsReader;
 import com.maxcriser.cards.ui.adapter.ItemsRecyclerAdapter;
 import com.maxcriser.cards.ui.create.Bank;
-import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
+import com.maxcriser.cards.view.TextViews.RobotoRegular;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class BankCardsActivity extends AppCompatActivity {
     CardView toolbarBack;
     CardView toolbarSearch;
     EditText searchEdit;
-    RobotoRegularTextView title;
+    RobotoRegular title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +85,7 @@ public class BankCardsActivity extends AppCompatActivity {
         searchEdit = (EditText) findViewById(R.id.search_edit);
         toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
         toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
-        title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
+        title = (RobotoRegular) findViewById(R.id.title_toolbar);
         viewBankCards = (RecyclerView) findViewById(R.id.types_bank_cards_recycler_view);
     }
 

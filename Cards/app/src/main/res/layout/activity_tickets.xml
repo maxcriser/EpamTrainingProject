@@ -24,7 +24,7 @@
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
                 android:paddingBottom="16dp"
-                android:paddingTop="@dimen/height_toolbar"
+                android:paddingTop="66dp"
                 android:scrollbars="vertical"/>
 
         </LinearLayout>

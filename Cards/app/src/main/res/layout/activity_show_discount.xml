@@ -32,10 +32,10 @@
                         android:orientation="vertical">
 
                         <FrameLayout
+                            android:background="@color/gray_bottom_create_card"
                             android:id="@+id/linear_frame_title_discount"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/bluelight_500">
+                            android:layout_height="match_parent">
 
                             <LinearLayout
                                 android:id="@+id/linear_edit_frame_title_discount"
@@ -51,10 +51,10 @@
                                     android:gravity="center|start"
                                     android:paddingLeft="16dp"
                                     android:text="@string/name"
-                                    android:textColor="@color/text_white"
+                                    android:textColor="@color/text_toolbar"
                                     android:textSize="18sp"/>
 
-                                <com.maxcriser.cards.view.EditTextViews.RobotoThinEditText
+                                <com.maxcriser.cards.view.EditTextViews.EditText
                                     android:id="@+id/rename_discount_title"
                                     android:layout_width="match_parent"
                                     android:layout_height="48dp"
@@ -62,8 +62,7 @@
                                     android:inputType="text"
                                     android:maxLines="1"
                                     android:paddingLeft="16dp"
-                                    android:textColor="@color/text_white"
-                                    android:textColorHint="@color/gray_light"
+                                    android:textColor="@color/text_toolbar"
                                     android:textSize="16sp"/>
 
                             </LinearLayout>
@@ -74,9 +73,14 @@
                                 android:layout_height="48dp"
                                 android:gravity="center|center"
                                 android:text="@string/name"
-                                android:textColor="@color/text_white"
+                                android:textColor="@color/text_toolbar"
                                 android:textSize="18sp"/>
                         </FrameLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="@color/text_toolbar"/>
 
                         <FrameLayout
                             android:layout_width="match_parent"
@@ -102,31 +106,11 @@
                         <LinearLayout
                             android:id="@+id/linear_frame_actions_discount"
                             android:layout_width="match_parent"
-                            android:layout_height="48dp"
-                            android:background="@color/bluelight_500"
+                            android:layout_height="56dp"
                             android:orientation="horizontal"
                             android:visibility="gone">
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="48dp"
-                                android:layout_weight="1"
-                                android:background="?attr/selectableItemBackground"
-                                android:gravity="center"
-                                android:onClick="onCancelDiscountClicked"
-                                android:text="@string/cancel"
-                                android:textColor="@color/text_white"/>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="48dp"
-                                android:layout_weight="1"
-                                android:background="?attr/selectableItemBackground"
-                                android:gravity="center"
-                                android:onClick="onOkDiscountClicked"
-                                android:text="@string/ok"
-                                android:textColor="@color/text_white"/>
-
+                            <include layout="@layout/fragment_cancel_save"/>
 
                         </LinearLayout>
 

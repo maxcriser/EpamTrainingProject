@@ -33,6 +33,7 @@ public class constants {
     public static final int ID_BANK_CARD_ITEM = 0;
     public static final int ID_BANK_CARD_ITEM_TYPE = 1;
     public static final int ID_DISCOUNT_ITEM = 2;
+    public static final int ID_TICKET_ITEM = 3;
 
     public static final String URL_JSON_LOCATION = "http://ip-api.com/json";
 }

@@ -13,7 +13,8 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.reader.deleteTypesCardsReader;
 import com.maxcriser.cards.ui.TestCamera;
 import com.maxcriser.cards.ui.adapter.ItemsRecyclerAdapter;
-import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
+import com.maxcriser.cards.ui.create.Ticket;
+import com.maxcriser.cards.view.TextViews.RobotoRegular;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class TicketsActivity extends AppCompatActivity {
     RecyclerView tickets;
     CardView toolbarBack;
     CardView toolbarSearch;
-    RobotoRegularTextView title;
+    RobotoRegular title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class TicketsActivity extends AppCompatActivity {
         if (myTickets.isEmpty()) {
             tickets.setVisibility(GONE);
         } else {
-            ItemsRecyclerAdapter adapter = new ItemsRecyclerAdapter(this, myTickets, R.layout.item_list);
+            ItemsRecyclerAdapter adapter = new ItemsRecyclerAdapter(this, myTickets, R.layout.item_ticket);
             tickets.setAdapter(adapter);
             tickets.setHasFixedSize(true);
             tickets.setLayoutManager(new LinearLayoutManager(this));
@@ -72,7 +73,7 @@ public class TicketsActivity extends AppCompatActivity {
         toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
         toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
         tickets = (RecyclerView) findViewById(R.id.tickets_recycler_view);
-        title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
+        title = (RobotoRegular) findViewById(R.id.title_toolbar);
     }
 
     public void onBackClicked(View view) {
@@ -81,7 +82,7 @@ public class TicketsActivity extends AppCompatActivity {
 
     public void onAddNewClicked(View view) {
         // TODO TakePhotoActivity.class
-        startActivity(new Intent(TicketsActivity.this, TestCamera.class));
+        startActivity(new Intent(TicketsActivity.this, Ticket.class));
     }
 
     public void onToolbarBackClicked(View view) {

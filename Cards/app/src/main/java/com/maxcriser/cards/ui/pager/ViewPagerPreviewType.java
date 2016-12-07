@@ -43,7 +43,6 @@ public class ViewPagerPreviewType extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.preview_type_item, null);
-        // pageNumberType
         ImageView tvPage = (ImageView) view.findViewById(R.id.icon_type_card);
         String type = previewTypes.get(pageNumberType);
         if (type.equals(VISA)) {

@@ -11,7 +11,7 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.reader.Colors;
 import com.maxcriser.cards.ui.adapter.MyFragmentPagerAdapterTemplate;
 import com.maxcriser.cards.ui.pager.ViewPagerPreviewCard;
-import com.maxcriser.cards.view.TextViews.RobotoRegularTextView;
+import com.maxcriser.cards.view.TextViews.RobotoRegular;
 
 import static android.view.View.GONE;
 import static com.maxcriser.cards.constant.constants.AMEX;
@@ -43,7 +43,7 @@ public class Bank extends AppCompatActivity {
     String myColorName;
     String myColorCode;
     String myTypeCard;
-    RobotoRegularTextView title;
+    RobotoRegular title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,7 +143,7 @@ public class Bank extends AppCompatActivity {
     }
 
     private void initViews() {
-        title = (RobotoRegularTextView) findViewById(R.id.title_toolbar);
+        title = (RobotoRegular) findViewById(R.id.title_toolbar);
         pagerTemplate = (ViewPager) findViewById(R.id.pager);
         pagerTypes = (ViewPager) findViewById(R.id.type_card);
     }

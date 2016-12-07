@@ -19,7 +19,7 @@ import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.ui.cards.DiscountCardsActivity;
-import com.maxcriser.cards.view.EditTextViews.RobotoThinEditText;
+import com.maxcriser.cards.view.EditTextViews.EditText;
 import com.maxcriser.cards.view.TextViews.EANP72TextView;
 
 import static android.view.View.GONE;
@@ -32,7 +32,7 @@ public class ShowDiscountCard extends Activity {
     LinearLayout editLinear;
 
     TextView titleView;
-    RobotoThinEditText editName;
+    EditText editName;
     String editString;
     EANP72TextView barcodeView;
     LinearLayout linearFrameAction;
@@ -100,7 +100,6 @@ public class ShowDiscountCard extends Activity {
 
         barcodeView.setText(barcode);
 
-
         WindowManager.LayoutParams layoutParam = getWindow().getAttributes();
         layoutParam.screenBrightness = 1.0f;
         getWindow().setAttributes(layoutParam);
@@ -109,7 +108,7 @@ public class ShowDiscountCard extends Activity {
     private void initViews() {
         materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
         editLinear = (LinearLayout) findViewById(R.id.linear_edit_frame_title_discount);
-        editName = (RobotoThinEditText) findViewById(R.id.rename_discount_title);
+        editName = (EditText) findViewById(R.id.rename_discount_title);
         floatingActionButtonDelete = (FloatingActionButton) findViewById(R.id.floating_delete_button);
         floatingActionButtonEdit = (FloatingActionButton) findViewById(R.id.floating_edit_button);
         titleView = (TextView) findViewById(R.id.title_show_discount);
@@ -122,7 +121,7 @@ public class ShowDiscountCard extends Activity {
         super.onBackPressed();
     }
 
-    public void onCancelDiscountClicked(View view) {
+    public void onCancelClicked(View view) {
         editLinear.setVisibility(GONE);
         titleView.setVisibility(VISIBLE);
         linearFrameAction.setVisibility(GONE);
@@ -130,7 +129,7 @@ public class ShowDiscountCard extends Activity {
         materialDesignFAM.startAnimation(animScaleUp);
     }
 
-    public void onOkDiscountClicked(View view) {
+    public void onCreateCardClicked(View view) {
         editString = editName.getText().toString();
         titleView.setText(editString);
         editLinear.setVisibility(GONE);
@@ -160,6 +159,5 @@ public class ShowDiscountCard extends Activity {
 
                     }
                 });
-
     }
 }
