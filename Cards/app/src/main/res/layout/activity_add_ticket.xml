@@ -52,6 +52,7 @@
                         android:textSize="16sp"/>
 
                     <EditText
+                        android:id="@+id/title_name_ticket"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"

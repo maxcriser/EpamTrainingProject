@@ -2,13 +2,16 @@ package com.maxcriser.cards.ui.create;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -41,8 +44,10 @@ public class Ticket extends AppCompatActivity {
     PagerAdapter pagerAdapter;
 
     Colors listColors;
+    CheckBox checkBox;
     String myColorName;
     String myColorCode;
+    EditText ticketTitle;
     RobotoRegular title;
 
     @Override
@@ -92,6 +97,8 @@ public class Ticket extends AppCompatActivity {
     }
 
     private void initViews() {
+        checkBox = (CheckBox) findViewById(R.id.add_to_calendar);
+        ticketTitle = (EditText) findViewById(R.id.title_name_ticket);
         title = (RobotoRegular) findViewById(R.id.title_toolbar);
         pager = (ViewPager) findViewById(R.id.pager);
         date = (TextView) findViewById(R.id.date);
@@ -155,5 +162,20 @@ public class Ticket extends AppCompatActivity {
 
     public void onBackPhotoClicked(View view) {
 
+    }
+
+    public void onCreateCardClicked(View view) {
+        if (!ticketTitle.getText().toString().equals("")) {
+            if (checkBox.isChecked()) {
+                Intent intent = new Intent(Intent.ACTION_EDIT);
+                intent.setType("vnd.android.cursor.item/event");
+                intent.putExtra("beginTime", calendar.getTimeInMillis());
+                intent.putExtra("allDay", false);
+                intent.putExtra("rrule", "FREQ=YEARLY");
+                intent.putExtra("endTime", calendar.getTimeInMillis() + 60 * 60 * 1000);
+                intent.putExtra("title", ticketTitle.getText().toString());
+                startActivity(intent);
+            }
+        }
     }
 }
