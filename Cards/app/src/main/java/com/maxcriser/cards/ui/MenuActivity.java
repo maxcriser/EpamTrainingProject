@@ -45,7 +45,7 @@ import static com.maxcriser.cards.constant.constants.URL_JSON_LOCATION;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.REQUEST_CAMERA;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.REQUEST_WRITE_STORAGE;
 
-public class MainActivity extends AppCompatActivity
+public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private NfcAdapter mNfcAdapter;
@@ -86,8 +86,10 @@ public class MainActivity extends AppCompatActivity
         tickets.setOnClickListener(new onClickListener());
         nfc.setOnClickListener(new onClickListener());
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, null, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, null,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
@@ -101,7 +103,7 @@ public class MainActivity extends AppCompatActivity
 //        }
     }
 
-    public void initViews(){
+    public void initViews() {
 
         credit = (CardView) findViewById(R.id.main_credit_card);
         discount = (CardView) findViewById(R.id.main_discount_card);
@@ -109,7 +111,6 @@ public class MainActivity extends AppCompatActivity
         nfc = (CardView) findViewById(R.id.main_nfc_card);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-
     }
 
     @TargetApi(23)
@@ -161,7 +162,7 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         /*if (id == R.id.nav_camera) {
 
@@ -171,7 +172,7 @@ public class MainActivity extends AppCompatActivity
 
         } else*/
         if (id == R.id.nav_pin) {
-            Intent intent = new Intent(MainActivity.this, LockerActivity.class);
+            Intent intent = new Intent(MenuActivity.this, LockerActivity.class);
             intent.putExtra(TYPE_LOCKED_SCREEN, SETUP_PIN);
             startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY));
 
@@ -199,7 +200,7 @@ public class MainActivity extends AppCompatActivity
                 message = getString(R.string.looks_like_iconnection);
             }
 
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MenuActivity.this);
             alertDialogBuilder.setTitle(title);
             alertDialogBuilder
                     .setMessage(message)
@@ -283,19 +284,19 @@ public class MainActivity extends AppCompatActivity
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.main_credit_card:
-                    Intent intent = new Intent(MainActivity.this, LockerActivity.class);
+                    Intent intent = new Intent(MenuActivity.this, LockerActivity.class);
                     intent.putExtra(TYPE_LOCKED_SCREEN, CREDIT_CARD);
                     startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY));
 
                     break;
                 case R.id.main_discount_card:
-                    startActivity(new Intent(MainActivity.this, DiscountCardsActivity.class));
+                    startActivity(new Intent(MenuActivity.this, DiscountCardsActivity.class));
                     break;
                 case R.id.main_nfc_card:
-                    startActivity(new Intent(MainActivity.this, NFCCardsActivity.class));
+                    startActivity(new Intent(MenuActivity.this, NFCCardsActivity.class));
                     break;
                 case R.id.main_tickets_card:
-                    startActivity(new Intent(MainActivity.this, TicketsActivity.class));
+                    startActivity(new Intent(MenuActivity.this, TicketsActivity.class));
                     break;
             }
         }

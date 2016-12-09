@@ -80,6 +80,10 @@
     <string name="john_michael_johnson">John Michael Johnson</string>
     <string name="_16_jan_2016">16 Jan 2016</string>
     <string name="_6_00_pm">6:00 PM</string>
+    <string name="front">FRONT</string>
+    <string name="back">BACK</string>
+    <string name="photo_editor">Photo editor</string>
+    <string name="done">DONE</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>

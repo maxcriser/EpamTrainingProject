@@ -16,203 +16,210 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.CardView
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                card_view:cardCornerRadius="2dp"
-                card_view:cardElevation="2dp">
+                android:padding="8dp">
 
-                <LinearLayout android:layout_width="match_parent"
-                              android:layout_height="wrap_content"
-                              android:orientation="vertical">
-
-                    <com.maxcriser.cards.view.TextViews.RobotoRegular
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:gravity="center|start"
-                        android:paddingStart="16dp"
-                        android:text="@string/add_a_new_card"
-                        android:textAllCaps="true"
-                        android:textColor="@color/text_toolbar"
-                        android:textSize="16sp"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0.4dp"
-                        android:background="@color/text_toolbar"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:text="@string/name"
-                        android:textColor="@color/text_toolbar"
-                        android:textSize="16sp"/>
-
-                    <EditText
-                        android:id="@+id/title_name_ticket"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginStart="16dp"
-                        android:inputType="text"
-                        android:textSize="18sp"
-                        tools:text="United States, Washington"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:text="@string/owner"
-                        android:textColor="@color/text_toolbar"
-                        android:textSize="16sp"/>
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginStart="16dp"
-                        android:inputType="text"
-                        android:textSize="18sp"
-                        tools:text="Barac Obama"/>
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    card_view:cardCornerRadius="2dp"
+                    card_view:cardElevation="2dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-                        <android.support.v7.widget.CardView
-                            android:layout_width="wrap_content"
-                            android:layout_height="36dp"
-                            android:layout_gravity="center"
+                        <com.maxcriser.cards.view.TextViews.RobotoRegular
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:gravity="center|start"
+                            android:paddingStart="16dp"
+                            android:text="@string/add_a_new_card"
+                            android:textAllCaps="true"
+                            android:textColor="@color/text_toolbar"
+                            android:textSize="16sp"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.4dp"
+                            android:background="@color/text_toolbar"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/name"
+                            android:textColor="@color/text_toolbar"
+                            android:textSize="16sp"/>
+
+                        <EditText
+                            android:id="@+id/title_name_ticket"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginEnd="16dp"
                             android:layout_marginStart="16dp"
-                            android:layout_weight="1"
-                            card_view:cardCornerRadius="2dp"
-                            card_view:cardElevation="2dp">
+                            android:inputType="text"
+                            android:textSize="18sp"
+                            tools:text="New York"/>
 
-                            <com.maxcriser.cards.view.TextViews.RobotoThin
-                                android:id="@+id/date"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="start"
-                                android:layout_marginStart="16dp"
-                                android:gravity="center"
-                                android:onClick="onDateClicked"
-                                android:textColor="@color/text_toolbar"
-                                android:textSize="16sp"
-                                tools:text="16 SEPT 2016"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/owner"
+                            android:textColor="@color/text_toolbar"
+                            android:textSize="16sp"/>
 
-                            <com.maxcriser.cards.view.TextViews.RobotoThin
-                                android:id="@+id/time"
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginStart="16dp"
+                            android:inputType="text"
+                            android:textSize="18sp"
+                            tools:text="Will Smith"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center">
+
+                            <android.support.v7.widget.CardView
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="end"
+                                android:layout_height="36dp"
+                                android:layout_gravity="center"
                                 android:layout_marginEnd="16dp"
-                                android:gravity="center|end"
-                                android:onClick="onTimeClicked"
-                                android:textAllCaps="true"
-                                android:textColor="@color/text_toolbar"
-                                android:textSize="16sp"
-                                tools:text="12:30 PM"/>
+                                android:layout_marginStart="16dp"
+                                android:layout_weight="1"
+                                card_view:cardCornerRadius="2dp"
+                                card_view:cardElevation="2dp">
 
-                        </android.support.v7.widget.CardView>
+                                <com.maxcriser.cards.view.TextViews.RobotoThin
+                                    android:id="@+id/date"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="start"
+                                    android:layout_marginStart="16dp"
+                                    android:gravity="center"
+                                    android:onClick="onDateClicked"
+                                    android:textColor="@color/text_toolbar"
+                                    android:textSize="16sp"
+                                    tools:text="16 SEPT 2016"/>
 
-                    </LinearLayout>
+                                <com.maxcriser.cards.view.TextViews.RobotoThin
+                                    android:id="@+id/time"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="end"
+                                    android:layout_marginEnd="16dp"
+                                    android:gravity="center|end"
+                                    android:onClick="onTimeClicked"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/text_toolbar"
+                                    android:textSize="16sp"
+                                    tools:text="12:30 PM"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="112dp">
+                            </android.support.v7.widget.CardView>
 
-                        <android.support.v7.widget.CardView
-                            android:onClick="onFrontPhotoClicked"
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_margin="16dp"
-                            android:layout_weight="1"
-                            android:background="@color/card_view"
-                            card_view:cardCornerRadius="2dp"
-                            card_view:cardElevation="2dp">
+                            android:layout_height="112dp">
 
-                            <ImageView
+                            <android.support.v7.widget.CardView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@color/card_view"/>
+                                android:layout_gravity="center"
+                                android:layout_margin="16dp"
+                                android:layout_weight="1"
+                                card_view:cardCornerRadius="2dp"
+                                card_view:cardElevation="2dp">
 
-                            <ImageView android:layout_width="36dp"
-                                       android:layout_height="36dp"
-                                       android:layout_gravity="center"
-                                       android:background="@drawable/ic_camera"/>
+                                <ImageView
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/ic_camera"/>
 
-                            <com.maxcriser.cards.view.TextViews.RobotoThin
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="bottom"
-                                android:layout_marginBottom="4dp"
-                                android:gravity="center"
-                                android:text="FRONT"
-                                android:textColor="@color/text_white"/>
+                                <com.maxcriser.cards.view.TextViews.RobotoThin
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:layout_marginBottom="4dp"
+                                    android:gravity="center"
+                                    android:text="@string/front"
+                                    android:textColor="@color/text_toolbar"/>
 
-                        </android.support.v7.widget.CardView>
+                                <ImageView
+                                    android:id="@+id/front_photo"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:onClick="onFrontPhotoClicked"
+                                    android:scaleType="centerCrop"/>
 
-                        <android.support.v7.widget.CardView
-                            android:onClick="onBackPhotoClicked"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_margin="16dp"
-                            android:layout_weight="1"
-                            android:background="@color/card_view"
-                            card_view:cardCornerRadius="2dp"
-                            card_view:cardElevation="2dp">
+                            </android.support.v7.widget.CardView>
 
-                            <ImageView
+                            <android.support.v7.widget.CardView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@color/bluelight_500"/>
+                                android:layout_gravity="center"
+                                android:layout_margin="16dp"
+                                android:layout_weight="1"
+                                card_view:cardCornerRadius="2dp"
+                                card_view:cardElevation="2dp">
 
-                            <ImageView android:layout_width="36dp"
-                                       android:layout_height="36dp"
-                                       android:layout_gravity="center"
-                                       android:background="@drawable/ic_camera"/>
+                                <ImageView
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/ic_camera"/>
 
-                            <com.maxcriser.cards.view.TextViews.RobotoThin
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="bottom"
-                                android:layout_marginBottom="4dp"
-                                android:gravity="center"
-                                android:text="BACK"
-                                android:textColor="@color/text_white"/>
+                                <com.maxcriser.cards.view.TextViews.RobotoThin
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:layout_marginBottom="4dp"
+                                    android:gravity="center"
+                                    android:text="@string/back"
+                                    android:textColor="@color/text_toolbar"/>
 
-                        </android.support.v7.widget.CardView>
+                                <ImageView
+                                    android:id="@+id/back_photo"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:onClick="onBackPhotoClicked"
+                                    android:scaleType="centerCrop"/>
 
+                            </android.support.v7.widget.CardView>
+
+                        </LinearLayout>
+
+                        <include layout="@layout/fragment_viewpager_preview_colors"/>
+
+                        <CheckBox
+                            android:id="@+id/add_to_calendar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginStart="16dp"
+                            android:text="@string/add_to_calendar"
+                            android:textColor="@color/text_toolbar"
+                            android:textSize="16sp"/>
+
+                        <include layout="@layout/fragment_cancel_save"/>
                     </LinearLayout>
-
-                    <include layout="@layout/fragment_viewpager_preview_colors"/>
-
-                    <CheckBox
-                        android:id="@+id/add_to_calendar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginStart="16dp"
-                        android:text="@string/add_to_calendar"
-                        android:textColor="@color/text_toolbar"
-                        android:textSize="16sp"/>
-
-                    <include layout="@layout/fragment_cancel_save"/>
-
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
+                </android.support.v7.widget.CardView>
+            </FrameLayout>
         </ScrollView>
     </LinearLayout>
-
 </merge>

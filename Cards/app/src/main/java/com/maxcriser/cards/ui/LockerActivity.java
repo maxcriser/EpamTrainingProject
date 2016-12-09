@@ -85,7 +85,7 @@ public class LockerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pin_protected);
         mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         intent = getIntent();
-        intentLockedPage = intent.getStringExtra(MainActivity.TYPE_LOCKED_SCREEN);
+        intentLockedPage = intent.getStringExtra(MenuActivity.TYPE_LOCKED_SCREEN);
 
         Toast.makeText(this, LaunchScreenActivity.loadPassword, Toast.LENGTH_SHORT).show();
         mHandler = new Handler(hc);
@@ -301,7 +301,7 @@ public class LockerActivity extends AppCompatActivity {
     }
 
     public void start() {
-        if (intentLockedPage.equals(MainActivity.CREDIT_CARD)) {
+        if (intentLockedPage.equals(MenuActivity.CREDIT_CARD)) {
             startActivity(new Intent(LockerActivity.this, BankCardsActivity.class));
         } else {
             Intent intent = new Intent(LockerActivity.this, SetupPIN.class);

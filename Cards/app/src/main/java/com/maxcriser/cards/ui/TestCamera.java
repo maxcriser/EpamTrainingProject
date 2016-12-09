@@ -26,7 +26,7 @@ public class TestCamera extends Activity {
     CropImageView mCropView;
     private ImageView mImageView;
     public final String APP_TAG = "MyCustomApp";
-    public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
+    public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1001;
     public String photoFileName = "photo.jpg";
 
     @Override

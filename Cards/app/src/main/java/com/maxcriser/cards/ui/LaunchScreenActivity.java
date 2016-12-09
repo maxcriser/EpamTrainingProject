@@ -20,7 +20,7 @@ public class LaunchScreenActivity extends AppCompatActivity {
 
     public static final int REQUEST_CAMERA = 1;
     public static final int REQUEST_WRITE_STORAGE = 1;
-    public static final LinkedHashMap<Integer, String> REQUESTS = new LinkedHashMap<Integer, String>();
+    public static final LinkedHashMap<Integer, String> REQUESTS = new LinkedHashMap<>();
 
     static {
         REQUESTS.put(REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -55,7 +55,7 @@ public class LaunchScreenActivity extends AppCompatActivity {
         if (loadPassword.equals(UNDEFENDED)) {
             intent = new Intent(LaunchScreenActivity.this, SetupPIN.class);
         } else {
-            intent = new Intent(LaunchScreenActivity.this, MainActivity.class);
+            intent = new Intent(LaunchScreenActivity.this, MenuActivity.class);
         }
         startActivity(intent);
         finish();

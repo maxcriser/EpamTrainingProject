@@ -101,7 +101,7 @@ public class SetupPIN extends AppCompatActivity {
                     Toast.makeText(SetupPIN.this, "password: " + password + " tag: " + LaunchScreenActivity.PASSWORD_TAG, Toast.LENGTH_LONG).show();
                     Toast.makeText(SetupPIN.this, "save: " + LaunchScreenActivity.loadPassword, Toast.LENGTH_LONG).show();
 
-                    Intent intent = new Intent(SetupPIN.this, MainActivity.class);
+                    Intent intent = new Intent(SetupPIN.this, MenuActivity.class);
                     startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 }
             }

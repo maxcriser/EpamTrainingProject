@@ -3,7 +3,10 @@ package com.maxcriser.cards.ui.create;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,15 +15,19 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.reader.Colors;
+import com.maxcriser.cards.ui.PhotoEditor;
 import com.maxcriser.cards.ui.adapter.MyFragmentPagerAdapterTemplate;
 import com.maxcriser.cards.view.TextViews.RobotoRegular;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -33,9 +40,15 @@ import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 public class Ticket extends AppCompatActivity {
 
     public static final String DISCOUNT = "Ticket";
+    public final String APP_TAG = "thecrisertakephoto";
+    public String photoFileName = "photo.jpg";
+    public final static int CAPTURE_IMAGE_FRONT = 1001;
+    public final static int CAPTURE_IMAGE_BACK = 1010;
     DatabaseHelper db;
     TextView date;
     TextView time;
+    ImageView frontPhoto;
+    ImageView backPhoto;
     Calendar calendar = Calendar.getInstance();
 
     static int PAGE_COUNT;
@@ -74,7 +87,11 @@ public class Ticket extends AppCompatActivity {
                 PAGE_COUNT);
 
         pager.setAdapter(pagerAdapter);
-        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
 
             @Override
             public void onPageSelected(int position) {
@@ -85,18 +102,49 @@ public class Ticket extends AppCompatActivity {
             }
 
             @Override
-            public void onPageScrolled(int position, float positionOffset,
-                                       int positionOffsetPixels) {
-            }
-
-            @Override
             public void onPageScrollStateChanged(int state) {
-            }
 
+            }
         });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAPTURE_IMAGE_FRONT || requestCode == CAPTURE_IMAGE_BACK) {
+            if (resultCode == RESULT_OK) {
+                Uri takenPhotoUri = getPhotoFileUri(photoFileName);
+//                Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
+                if (requestCode == CAPTURE_IMAGE_FRONT) {
+                    frontPhoto.setImageURI(takenPhotoUri);
+                } else {
+                    backPhoto.setImageURI(takenPhotoUri);
+                }
+            } else {
+                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private boolean isExternalStorageAvailable() {
+        String state = Environment.getExternalStorageState();
+        return state.equals(Environment.MEDIA_MOUNTED);
+    }
+
+    public Uri getPhotoFileUri(String fileName) {
+        if (isExternalStorageAvailable()) {
+            File mediaStorageDir = new File(
+                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
+            if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
+                Log.d(APP_TAG, "failed to create directory");
+            }
+            return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
+        }
+        return null;
+    }
+
     private void initViews() {
+        frontPhoto = (ImageView) findViewById(R.id.front_photo);
+        backPhoto = (ImageView) findViewById(R.id.back_photo);
         checkBox = (CheckBox) findViewById(R.id.add_to_calendar);
         ticketTitle = (EditText) findViewById(R.id.title_name_ticket);
         title = (RobotoRegular) findViewById(R.id.title_toolbar);
@@ -157,24 +205,35 @@ public class Ticket extends AppCompatActivity {
     }
 
     public void onFrontPhotoClicked(View view) {
-
+        startActivity(new Intent(this, PhotoEditor.class));
+//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileName)); // set the image file name
+//
+//        if (intent.resolveActivity(getPackageManager()) != null) {
+//            startActivityForResult(intent, CAPTURE_IMAGE_FRONT);
+//        }
     }
 
     public void onBackPhotoClicked(View view) {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileName)); // set the image file name
 
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, CAPTURE_IMAGE_BACK);
+        }
     }
 
     public void onCreateCardClicked(View view) {
         if (!ticketTitle.getText().toString().equals("")) {
             if (checkBox.isChecked()) {
-                Intent intent = new Intent(Intent.ACTION_EDIT);
-                intent.setType("vnd.android.cursor.item/event");
-                intent.putExtra("beginTime", calendar.getTimeInMillis());
-                intent.putExtra("allDay", false);
-                intent.putExtra("rrule", "FREQ=YEARLY");
-                intent.putExtra("endTime", calendar.getTimeInMillis() + 60 * 60 * 1000);
-                intent.putExtra("title", ticketTitle.getText().toString());
-                startActivity(intent);
+//                Intent intent = new Intent(Intent.ACTION_EDIT);
+//                intent.setType("vnd.android.cursor.item/event");
+//                intent.putExtra("beginTime", calendar.getTimeInMillis());
+//                intent.putExtra("allDay", false);
+//                intent.putExtra("rrule", "FREQ=YEARLY");
+//                intent.putExtra("endTime", calendar.getTimeInMillis() + 60 * 60 * 1000);
+//                intent.putExtra("title", ticketTitle.getText().toString());
+//                startActivity(intent);
             }
         }
     }
