@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -65,6 +66,8 @@ public class Ticket extends AppCompatActivity {
     String myColorCode;
     EditText ticketTitle;
     RobotoRegular title;
+    FrameLayout removeFront;
+    FrameLayout removeBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,12 +125,16 @@ public class Ticket extends AppCompatActivity {
                     Intent intent = new Intent(this, PhotoEditor.class);
                     intent.putExtra("uri", takenPhotoUri.toString());
                     startActivityForResult(intent, EDIT_IMAGE_FRONT);
+                    removeFront.setVisibility(View.VISIBLE);
+                    frontPhoto.setClickable(false);
 //                    frontPhoto.setImageURI(takenPhotoUri);
                 } else {
                     Uri takenPhotoUri = getPhotoFileUri(photoFileNameBack);
                     Intent intent = new Intent(this, PhotoEditor.class);
                     intent.putExtra("uri", takenPhotoUri.toString());
                     startActivityForResult(intent, EDIT_IMAGE_BACK);
+                    removeBack.setVisibility(View.VISIBLE);
+                    backPhoto.setClickable(false);
 //                    backPhoto.setImageURI(takenPhotoUri);
                 }
             } else {
@@ -137,10 +144,6 @@ public class Ticket extends AppCompatActivity {
         if (requestCode == EDIT_IMAGE_FRONT) {
             Uri editFrontUri = Uri.parse(data.getStringExtra("uri"));
             frontPhoto.setImageURI(editFrontUri);
-            Intent galleryIntent = new Intent(Intent.ACTION_VIEW, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            galleryIntent.setDataAndType(editFrontUri, "image/*");
-            galleryIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(galleryIntent);
         } else if (requestCode == EDIT_IMAGE_BACK) {
             Uri editBackUri = Uri.parse(data.getStringExtra("uri"));
             backPhoto.setImageURI(editBackUri);
@@ -173,6 +176,8 @@ public class Ticket extends AppCompatActivity {
         pager = (ViewPager) findViewById(R.id.pager);
         date = (TextView) findViewById(R.id.date);
         time = (TextView) findViewById(R.id.time);
+        removeBack = (FrameLayout) findViewById(R.id.remove_back);
+        removeFront = (FrameLayout) findViewById(R.id.remove_front);
     }
 
     void setDateOnView() {
@@ -257,5 +262,17 @@ public class Ticket extends AppCompatActivity {
                 startActivity(intent);
             }
         }
+    }
+
+    public void onRemoveBackClicked(View view) {
+        backPhoto.setImageURI(null);
+        backPhoto.setClickable(true);
+        removeBack.setVisibility(GONE);
+    }
+
+    public void onRemoveFrontClicked(View view) {
+        frontPhoto.setImageURI(null);
+        frontPhoto.setClickable(true);
+        removeFront.setVisibility(GONE);
     }
 }

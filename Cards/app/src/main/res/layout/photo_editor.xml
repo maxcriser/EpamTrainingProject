@@ -84,7 +84,6 @@
                 android:textSize="16sp"/>
 
         </LinearLayout>
-
     </LinearLayout>
 
     <include layout="@layout/fragment_please_wait"/>
