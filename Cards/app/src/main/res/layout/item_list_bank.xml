@@ -4,58 +4,114 @@
                                     android:id="@+id/card_view"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="16dp"
-                                    android:layout_marginStart="16dp"
                                     android:layout_marginEnd="16dp"
-                                    card_view:cardCornerRadius="2dp"
-                                    card_view:cardElevation="2dp"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginTop="16dp"
                                     android:foreground="?attr/selectableItemBackground"
-                                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+                                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                                    card_view:cardCornerRadius="2dp"
+                                    card_view:cardElevation="2dp">
 
     <!--Material design card-->
 
     <FrameLayout
         android:id="@+id/linear_card"
         android:layout_width="match_parent"
-        android:layout_height="112dp"
+        android:layout_height="164dp"
         android:background="@color/bluelight_500"
         android:gravity="center">
 
+        <com.maxcriser.cards.view.TextViews.NotoSans
+            android:id="@+id/title_main_cards"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:gravity="center|start"
+            android:text="@string/title_of_cards"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:id="@+id/icon_bank_cards"
-                android:layout_width="80dp"
-                android:layout_height="50dp"
-                android:layout_margin="16dp"
-                android:scaleType="centerCrop"
-                android:background="@drawable/type_visa"/>
-
-            <com.maxcriser.cards.view.TextViews.NotoSans
-                android:layout_weight="1000"
-                android:id="@+id/title_main_cards"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center|start"
-                android:text="@string/title_of_cards"
-                android:textAppearance="?attr/textAppearanceListItem"
-                android:textColor="@color/text_white"
-                android:textSize="16sp"
+            <com.maxcriser.cards.view.TextViews.RobotoThin
+                android:id="@+id/number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:text="@string/_4000_1234_5678_9123"
+                android:textColor="@android:color/white"
+                android:textSize="26sp"
                 android:textStyle="bold"/>
 
-            <ImageView
-                android:visibility="gone"
-                android:id="@+id/nfc_cards_icon"
-                android:layout_margin="8dp"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="-8dp"
+                android:text="@string/_4000"
+                android:textColor="@android:color/black"
+                android:textSize="12sp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
                 android:layout_gravity="center"
-                android:layout_weight="1"
-                android:src="@drawable/icon_nfc"
-                android:layout_width="36dp"
-                android:layout_height="36dp"/>
+                android:layout_marginTop="-10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/valid_thru"
+                    android:textColor="@android:color/black"
+                    android:textSize="8sp"/>
+
+                <com.maxcriser.cards.view.TextViews.RobotoThin
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="4dp"
+                    android:gravity="center"
+                    android:text="@string/_02_16"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom"
+            android:layout_margin="4dp"
+            android:gravity="bottom">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_weight="1"
+                android:text="@string/john_johnson"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"/>
+
+            <ImageView
+                android:id="@+id/icon_bank_cards"
+                android:layout_width="70dp"
+                android:layout_height="45dp"
+                android:layout_gravity="bottom"
+                android:layout_margin="4dp"
+                android:background="@drawable/type_visa"/>
+
+        </LinearLayout>
+
     </FrameLayout>
 </android.support.v7.widget.CardView>

@@ -26,6 +26,7 @@ import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.reader.Colors;
 import com.maxcriser.cards.ui.PhotoEditor;
 import com.maxcriser.cards.ui.adapter.MyFragmentPagerAdapterTemplate;
+import com.maxcriser.cards.util.UniqueStringGenerator;
 import com.maxcriser.cards.view.TextViews.RobotoRegular;
 
 import java.io.File;
@@ -42,8 +43,8 @@ public class Ticket extends AppCompatActivity {
 
     public static final String DISCOUNT = "Ticket";
     public final String APP_TAG = "thecrisertakephoto";
-    public String photoFileNameFront = "front_photo.jpg";
-    public String photoFileNameBack = "back_photo.jpg";
+    public String photoFileNameFront;
+    public String photoFileNameBack;
     public final static int CAPTURE_IMAGE_FRONT = 1001;
     public final static int CAPTURE_IMAGE_BACK = 1010;
     public final static int EDIT_IMAGE_FRONT = 1011;
@@ -75,6 +76,8 @@ public class Ticket extends AppCompatActivity {
         setContentView(R.layout.activity_add_ticket);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
         initViews();
+        photoFileNameFront = "ticket-" + UniqueStringGenerator.getUniqueString() + "front_photo.jpg";
+        photoFileNameBack = "ticket-" + UniqueStringGenerator.getUniqueString() + "back_photo.jpg";
         setDateOnView();
         setTimeOnView();
 
@@ -149,6 +152,17 @@ public class Ticket extends AppCompatActivity {
             backPhoto.setImageURI(editBackUri);
         }
     }
+
+//    public static File savebitmap(Bitmap bmp, String fileName) throws IOException {
+//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+//        bmp.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
+//        File f = new File(getApplicationContext().getFilesDir() + fileName);
+//        f.createNewFile();
+//        FileOutputStream fo = new FileOutputStream(f);
+//        fo.write(bytes.toByteArray());
+//        fo.close();
+//        return f;
+//    }
 
     private boolean isExternalStorageAvailable() {
         String state = Environment.getExternalStorageState();

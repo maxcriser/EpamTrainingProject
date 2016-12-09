@@ -152,10 +152,9 @@ public class PhotoEditor extends AppCompatActivity {
                 new SaveCallback() {
                     @Override
                     public void onSuccess(Uri outputUri) {
-                        photoUri = outputUri;
                         mProgressBar.setVisibility(View.GONE);
                         Intent intent = new Intent();
-                        intent.putExtra("uri", photoUri.toString());
+                        intent.putExtra("uri", outputUri.toString());
                         setResult(RESULT_OK, intent);
                         finish();
                     }

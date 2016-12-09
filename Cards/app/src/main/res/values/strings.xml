@@ -85,6 +85,14 @@
     <string name="photo_editor">Photo editor</string>
     <string name="done">DONE</string>
     <string name="please_wait">Please wait...</string>
+    <string name="bank">Bank</string>
+    <string name="number">Number</string>
+    <string name="valid_thru">VALID\nTHRU</string>
+    <string name="cardholder">Cardholder</string>
+    <string name="_4000_1234_5678_9123">4000 1234 5678 9123</string>
+    <string name="_4000">4000</string>
+    <string name="_02_16">02/16</string>
+    <string name="john_johnson">JOHN JOHNSON</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>

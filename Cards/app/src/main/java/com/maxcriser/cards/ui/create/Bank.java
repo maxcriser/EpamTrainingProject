@@ -1,17 +1,24 @@
 package com.maxcriser.cards.ui.create;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.DatePicker;
+import android.widget.TextView;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.reader.Colors;
 import com.maxcriser.cards.ui.adapter.MyFragmentPagerAdapterTemplate;
 import com.maxcriser.cards.ui.pager.ViewPagerPreviewCard;
 import com.maxcriser.cards.view.TextViews.RobotoRegular;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import static android.view.View.GONE;
 import static com.maxcriser.cards.constant.constants.AMEX;
@@ -44,6 +51,8 @@ public class Bank extends AppCompatActivity {
     String myColorCode;
     String myTypeCard;
     RobotoRegular title;
+    Calendar calendar = Calendar.getInstance();
+    TextView date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +60,7 @@ public class Bank extends AppCompatActivity {
         setContentView(R.layout.activity_add_bank_card);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
         initViews();
+        setDateOnView();
         currentPositionColors = 0;
         title.setText(NEW_BANK_TITLE);
 
@@ -62,6 +72,7 @@ public class Bank extends AppCompatActivity {
         PAGE_COUNT_TEMPLATE = previewColors.size();
 
         pagerTemplate.setPageMargin(pagerMargin);
+        pagerTemplate.setMinimumHeight(156);
         pagerAdapterTemplate = new MyFragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 ID_BANK_CARD_ITEM,
                 PAGE_COUNT_TEMPLATE);
@@ -143,6 +154,7 @@ public class Bank extends AppCompatActivity {
     }
 
     private void initViews() {
+        date = (TextView) findViewById(R.id.date);
         title = (RobotoRegular) findViewById(R.id.title_toolbar);
         pagerTemplate = (ViewPager) findViewById(R.id.pager);
         pagerTypes = (ViewPager) findViewById(R.id.type_card);
@@ -162,4 +174,27 @@ public class Bank extends AppCompatActivity {
 
     public void onToolbarBackClicked(View view) {
     }
+
+    void setDateOnView() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/yy", Locale.US);
+        date.setText(dateFormat.format(calendar.getTime()));
+    }
+
+    DatePickerDialog.OnDateSetListener dateCallBack = new DatePickerDialog.OnDateSetListener() {
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, month);
+            calendar.set(Calendar.DAY_OF_MONTH, day);
+            setDateOnView();
+        }
+    };
+
+    public void onDateClicked(View view) {
+        DatePickerDialog tpd = new DatePickerDialog(this, dateCallBack,
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH));
+        tpd.show();
+    }
+
 }
