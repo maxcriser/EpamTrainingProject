@@ -5,14 +5,12 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.isseiaoki.simplecropview.CropImageView;
@@ -31,7 +29,7 @@ public class PhotoEditor extends AppCompatActivity {
     public final static int CAPTURE_IMAGE_BACK = 1010;
     CropImageView image;
     FrameLayout mProgressBar;
-
+    Uri photoUri;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +45,15 @@ public class PhotoEditor extends AppCompatActivity {
         image.setGuideStrokeWeightInDp(1);
         image.setTouchPaddingInDp(24);
         image.setMinFrameSizeInDp(150);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            String uri_Str = bundle.getString("uri");
+            photoUri = Uri.parse(uri_Str);
+            startCrop(photoUri);
+        } else {
+            finish();
+        }
     }
 
     void initViews() {
@@ -58,54 +65,32 @@ public class PhotoEditor extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_FRONT || requestCode == CAPTURE_IMAGE_BACK) {
             if (resultCode == RESULT_OK) {
-                mProgressBar.setVisibility(View.VISIBLE);
                 Uri takenPhotoUri = getPhotoFileUri(photoFileName);
-                Uri cropPhotoUri;
+                photoUri = takenPhotoUri;
 //                Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
-                image.startLoad(
+                startCrop(photoUri);
 
-                        takenPhotoUri,
-
-                        new LoadCallback() {
-                            @Override
-                            public void onSuccess() {
-                            }
-
-                            @Override
-                            public void onError() {
-                                Toast.makeText(PhotoEditor.this, "Can not load image, please try again", Toast.LENGTH_LONG).show();
-                            }
-                        });
-
-                image.startCrop(
-
-                        takenPhotoUri,
-
-                        new CropCallback() {
-                            @Override
-                            public void onSuccess(Bitmap cropped) {
-                                mProgressBar.setVisibility(View.GONE);
-                            }
-
-                            @Override
-                            public void onError() {
-                                mProgressBar.setVisibility(View.GONE);
-                                Toast.makeText(PhotoEditor.this, "Can not load image to crop, please try again", Toast.LENGTH_LONG).show();
-                            }
-                        },
-
-                        new SaveCallback() {
-                            @Override
-                            public void onSuccess(Uri outputUri) {}
-
-                            @Override
-                            public void onError() {}
-                        }
-                );
             } else {
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    void startCrop(Uri uri) {
+        image.startLoad(
+
+                uri,
+
+                new LoadCallback() {
+                    @Override
+                    public void onSuccess() {
+                    }
+
+                    @Override
+                    public void onError() {
+                        Toast.makeText(PhotoEditor.this, "Can not load image, please try again", Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     public void onPhotoAgainClicked(View view) {
@@ -138,6 +123,49 @@ public class PhotoEditor extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    public void onReusedClicked(View view) {
+    public void onLeftRotate(View view) {
+        image.rotateImage(CropImageView.RotateDegrees.ROTATE_M90D);
+    }
+
+    public void onRightRotate(View view) {
+        image.rotateImage(CropImageView.RotateDegrees.ROTATE_90D);
+    }
+
+    public void onDoneClicked(View view) {
+        mProgressBar.setVisibility(View.VISIBLE);
+        image.startCrop(
+
+                photoUri,
+
+                new CropCallback() {
+                    @Override
+                    public void onSuccess(Bitmap cropped) {
+
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                },
+
+                new SaveCallback() {
+                    @Override
+                    public void onSuccess(Uri outputUri) {
+                        photoUri = outputUri;
+                        mProgressBar.setVisibility(View.GONE);
+                        Intent intent = new Intent();
+                        intent.putExtra("uri", photoUri.toString());
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
+
+                    @Override
+                    public void onError() {
+                        mProgressBar.setVisibility(View.GONE);
+                        Toast.makeText(PhotoEditor.this, "Can not load image to crop, please try again", Toast.LENGTH_LONG).show();
+                    }
+                }
+        );
     }
 }

@@ -41,9 +41,12 @@ public class Ticket extends AppCompatActivity {
 
     public static final String DISCOUNT = "Ticket";
     public final String APP_TAG = "thecrisertakephoto";
-    public String photoFileName = "photo.jpg";
+    public String photoFileNameFront = "front_photo.jpg";
+    public String photoFileNameBack = "back_photo.jpg";
     public final static int CAPTURE_IMAGE_FRONT = 1001;
     public final static int CAPTURE_IMAGE_BACK = 1010;
+    public final static int EDIT_IMAGE_FRONT = 1011;
+    public final static int EDIT_IMAGE_BACK = 1100;
     DatabaseHelper db;
     TextView date;
     TextView time;
@@ -110,18 +113,37 @@ public class Ticket extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAPTURE_IMAGE_FRONT || requestCode == CAPTURE_IMAGE_BACK) {
+        if (requestCode == CAPTURE_IMAGE_FRONT ||
+                requestCode == CAPTURE_IMAGE_BACK) {
             if (resultCode == RESULT_OK) {
-                Uri takenPhotoUri = getPhotoFileUri(photoFileName);
 //                Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
                 if (requestCode == CAPTURE_IMAGE_FRONT) {
-                    frontPhoto.setImageURI(takenPhotoUri);
+                    Uri takenPhotoUri = getPhotoFileUri(photoFileNameFront);
+                    Intent intent = new Intent(this, PhotoEditor.class);
+                    intent.putExtra("uri", takenPhotoUri.toString());
+                    startActivityForResult(intent, EDIT_IMAGE_FRONT);
+//                    frontPhoto.setImageURI(takenPhotoUri);
                 } else {
-                    backPhoto.setImageURI(takenPhotoUri);
+                    Uri takenPhotoUri = getPhotoFileUri(photoFileNameBack);
+                    Intent intent = new Intent(this, PhotoEditor.class);
+                    intent.putExtra("uri", takenPhotoUri.toString());
+                    startActivityForResult(intent, EDIT_IMAGE_BACK);
+//                    backPhoto.setImageURI(takenPhotoUri);
                 }
             } else {
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
+        }
+        if (requestCode == EDIT_IMAGE_FRONT) {
+            Uri editFrontUri = Uri.parse(data.getStringExtra("uri"));
+            frontPhoto.setImageURI(editFrontUri);
+            Intent galleryIntent = new Intent(Intent.ACTION_VIEW, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            galleryIntent.setDataAndType(editFrontUri, "image/*");
+            galleryIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(galleryIntent);
+        } else if (requestCode == EDIT_IMAGE_BACK) {
+            Uri editBackUri = Uri.parse(data.getStringExtra("uri"));
+            backPhoto.setImageURI(editBackUri);
         }
     }
 
@@ -205,18 +227,17 @@ public class Ticket extends AppCompatActivity {
     }
 
     public void onFrontPhotoClicked(View view) {
-        startActivity(new Intent(this, PhotoEditor.class));
-//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileName)); // set the image file name
-//
-//        if (intent.resolveActivity(getPackageManager()) != null) {
-//            startActivityForResult(intent, CAPTURE_IMAGE_FRONT);
-//        }
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileNameFront)); // set the image file name
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, CAPTURE_IMAGE_FRONT);
+        }
     }
 
     public void onBackPhotoClicked(View view) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileName)); // set the image file name
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileNameBack)); // set the image file name
 
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, CAPTURE_IMAGE_BACK);
@@ -226,14 +247,14 @@ public class Ticket extends AppCompatActivity {
     public void onCreateCardClicked(View view) {
         if (!ticketTitle.getText().toString().equals("")) {
             if (checkBox.isChecked()) {
-//                Intent intent = new Intent(Intent.ACTION_EDIT);
-//                intent.setType("vnd.android.cursor.item/event");
-//                intent.putExtra("beginTime", calendar.getTimeInMillis());
-//                intent.putExtra("allDay", false);
-//                intent.putExtra("rrule", "FREQ=YEARLY");
-//                intent.putExtra("endTime", calendar.getTimeInMillis() + 60 * 60 * 1000);
-//                intent.putExtra("title", ticketTitle.getText().toString());
-//                startActivity(intent);
+                Intent intent = new Intent(Intent.ACTION_EDIT);
+                intent.setType("vnd.android.cursor.item/event");
+                intent.putExtra("beginTime", calendar.getTimeInMillis());
+                intent.putExtra("allDay", false);
+                intent.putExtra("rrule", "FREQ=YEARLY");
+                intent.putExtra("endTime", calendar.getTimeInMillis() + 60 * 60 * 1000);
+                intent.putExtra("title", ticketTitle.getText().toString());
+                startActivity(intent);
             }
         }
     }

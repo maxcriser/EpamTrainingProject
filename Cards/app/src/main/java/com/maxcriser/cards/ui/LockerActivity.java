@@ -62,14 +62,12 @@ public class LockerActivity extends AppCompatActivity {
     Intent intent;
     String intentLockedPage;
     String builderPassword;
+    Integer durationVibrateError = 200;
+    Integer durationVibrateInput = 10;
 
     private static final String KEY_NAME = "finger_key";
-    private FingerprintManager fingerprintManager;
-    private KeyguardManager keyguardManager;
     private KeyStore keyStore;
-    private KeyGenerator keyGenerator;
     private Cipher cipher;
-    private FingerprintManager.CryptoObject cryptoObject;
 
     Handler.Callback hc = new Handler.Callback() {
         @Override
@@ -96,10 +94,8 @@ public class LockerActivity extends AppCompatActivity {
 //        TODO FIX BUG At least finger
         if (Build.VERSION.SDK_INT >= 23) {
 
-            keyguardManager =
-                    (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
-            fingerprintManager =
-                    (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
+            KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+            FingerprintManager fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
 
             if (fingerprintManager.isHardwareDetected() && fingerprintManager.hasEnrolledFingerprints()) {
 
@@ -129,6 +125,7 @@ public class LockerActivity extends AppCompatActivity {
 
                 generateKey();
 
+                FingerprintManager.CryptoObject cryptoObject;
                 if (cipherInit()) {
                     cryptoObject =
                             new FingerprintManager.CryptoObject(cipher);
@@ -158,6 +155,7 @@ public class LockerActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        KeyGenerator keyGenerator;
         try {
             keyGenerator = KeyGenerator.getInstance(
                     KeyProperties.KEY_ALGORITHM_AES,
@@ -232,7 +230,7 @@ public class LockerActivity extends AppCompatActivity {
             if (builderPassword.equals(LaunchScreenActivity.loadPassword)) {
                 start();
             } else {
-                mVibrator.vibrate(200);
+                mVibrator.vibrate(durationVibrateError);
                 setBackgroundCircles(false, firstCircle, secondCircle, thirdCircle, fourthCircle);
                 mHandler.sendEmptyMessageDelayed(1, 350);
             }
@@ -241,42 +239,52 @@ public class LockerActivity extends AppCompatActivity {
 
     public void zeroInput(View view) {
         inputPassword(BUTTON_ZERO);
+        mVibrator.vibrate(durationVibrateInput);
     }
 
     public void oneInput(View view) {
         inputPassword(BUTTON_ONE);
+        mVibrator.vibrate(durationVibrateInput);
     }
 
     public void twoInput(View view) {
         inputPassword(BUTTON_TWO);
+        mVibrator.vibrate(durationVibrateInput);
     }
 
     public void threeInput(View view) {
         inputPassword(BUTTON_THREE);
+        mVibrator.vibrate(durationVibrateInput);
     }
 
     public void fourInput(View view) {
         inputPassword(BUTTON_FOUR);
+        mVibrator.vibrate(durationVibrateInput);
     }
 
     public void fiveInput(View view) {
         inputPassword(BUTTON_FIVE);
+        mVibrator.vibrate(durationVibrateInput);
     }
 
     public void sixInput(View view) {
         inputPassword(BUTTON_SIX);
+        mVibrator.vibrate(durationVibrateInput);
     }
 
     public void sevenInput(View view) {
         inputPassword(BUTTON_SEVEN);
+        mVibrator.vibrate(durationVibrateInput);
     }
 
     public void eightInput(View view) {
         inputPassword(BUTTON_EIGHT);
+        mVibrator.vibrate(durationVibrateInput);
     }
 
     public void nineInput(View view) {
         inputPassword(BUTTON_NINE);
+        mVibrator.vibrate(durationVibrateInput);
     }
 
     public void setBackgroundCircles(boolean flag, ImageView... args) {

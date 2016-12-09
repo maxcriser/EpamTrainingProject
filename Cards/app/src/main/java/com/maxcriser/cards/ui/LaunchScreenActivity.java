@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.test.espresso.core.deps.guava.collect.ImmutableMap;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
@@ -13,19 +14,19 @@ import com.maxcriser.cards.holder.ContextHolder;
 import com.maxcriser.cards.reader.Colors;
 import com.maxcriser.cards.reader.PreviewReader;
 
-import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LaunchScreenActivity extends AppCompatActivity {
 
-    public static final int REQUEST_CAMERA = 1;
-    public static final int REQUEST_WRITE_STORAGE = 1;
-    public static final LinkedHashMap<Integer, String> REQUESTS = new LinkedHashMap<>();
-
-    static {
-        REQUESTS.put(REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        REQUESTS.put(REQUEST_CAMERA, Manifest.permission.CAMERA);
-    }
+    public static final byte REQUEST_CAMERA = 0;
+    public static final byte REQUEST_WRITE_STORAGE = 1;
+    public static final byte REQUEST_CALENDAR = 3;
+    public static final Map<Byte, String> REQUESTS = ImmutableMap.of(
+            REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            REQUEST_CAMERA, Manifest.permission.CAMERA,
+            REQUEST_CALENDAR, Manifest.permission.WRITE_CALENDAR
+    );
 
     public static List<Colors> previewColors;
     public static List<String> previewTypes;

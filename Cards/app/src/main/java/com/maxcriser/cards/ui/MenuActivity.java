@@ -39,11 +39,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 import static android.view.View.GONE;
 import static com.maxcriser.cards.constant.constants.URL_JSON_LOCATION;
-import static com.maxcriser.cards.ui.LaunchScreenActivity.REQUEST_CAMERA;
-import static com.maxcriser.cards.ui.LaunchScreenActivity.REQUEST_WRITE_STORAGE;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -94,13 +93,12 @@ public class MenuActivity extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        // TODO: 04.12.2016 FIX last HashMap / Linked
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-//            for (HashMap.Entry<Integer, String> permission : LaunchScreenActivity.REQUESTS.entrySet()) {
-            getPermission(REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            getPermission(REQUEST_CAMERA, Manifest.permission.CAMERA);
+            for (Map.Entry<Byte, String> entry : LaunchScreenActivity.REQUESTS.entrySet()
+                    ) {
+                getPermission(entry.getKey(), entry.getValue());
+            }
         }
-//        }
     }
 
     public void initViews() {
@@ -114,7 +112,7 @@ public class MenuActivity extends AppCompatActivity
     }
 
     @TargetApi(23)
-    private void getPermission(final Integer CODE, final String PERMISSION) {
+    private void getPermission(final byte CODE, final String PERMISSION) {
         if (ContextCompat.checkSelfPermission(this, PERMISSION) != PackageManager.PERMISSION_GRANTED) {
             if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 Toast.makeText(this, "Application need access to saved information", Toast.LENGTH_SHORT).show();
