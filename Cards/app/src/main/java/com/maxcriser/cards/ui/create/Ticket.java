@@ -41,7 +41,7 @@ import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
 public class Ticket extends AppCompatActivity {
 
-    public static final String DISCOUNT = "Ticket";
+    public static final String TICKET = "Ticket";
     public final String APP_TAG = "thecrisertakephoto";
     public String photoFileNameFront;
     public String photoFileNameBack;
@@ -87,7 +87,7 @@ public class Ticket extends AppCompatActivity {
         listColors = previewColors.get(0);
         myColorName = listColors.getNameColorCards();
         myColorCode = listColors.getCodeColorCards();
-        Log.d(DISCOUNT, myColorName + " " + myColorCode);
+        Log.d(TICKET, myColorName + " " + myColorCode);
         PAGE_COUNT = previewColors.size();
 
         pager.setPageMargin(pagerMargin);
@@ -107,7 +107,7 @@ public class Ticket extends AppCompatActivity {
                 listColors = previewColors.get(position);
                 myColorName = listColors.getNameColorCards();
                 myColorCode = listColors.getCodeColorCards();
-                Log.d(DISCOUNT, myColorName + " " + myColorCode);
+                Log.d(TICKET, myColorName + " " + myColorCode);
             }
 
             @Override

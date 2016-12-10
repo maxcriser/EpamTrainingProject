@@ -93,6 +93,7 @@
     <string name="_4000">4000</string>
     <string name="_02_16">02/16</string>
     <string name="john_johnson">JOHN JOHNSON</string>
+    <string name="pin">PIN</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>

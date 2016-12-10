@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.FalseAsyncTask;
@@ -152,8 +153,9 @@ public class Discount extends AppCompatActivity {
                 public void onProgressChanged(Void pVoid) {
                 }
             });
-
             onBackClicked(null);
+        } else {
+            Toast.makeText(this, "Please fill all fields and try again", Toast.LENGTH_LONG).show();
         }
     }
 

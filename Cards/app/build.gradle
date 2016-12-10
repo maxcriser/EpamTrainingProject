@@ -42,11 +42,12 @@ dependencies {
     testCompile "org.mockito:mockito-core:1.10.19"
     testCompile 'org.robolectric:robolectric:3.1.2'
     testCompile 'org.robolectric:shadows-support-v4:3.0'
+    testCompile 'junit:junit:4.12'
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile 'junit:junit:4.12'
+    compile 'com.github.pinball83:masked-edittext:1.0.3'
     compile 'com.android.support.test.espresso:espresso-core:2.2.2'
     compile 'com.isseiaoki:simplecropview:1.1.4'
     compile 'me.dm7.barcodescanner:zbar:1.9'
