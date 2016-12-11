@@ -89,8 +89,6 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
                 getSupportLoaderManager().restartLoader(LOADER_DISCOUNT_ID, null, DiscountCardsActivity.this);
             }
         });
-
-
         title.setText(DISCOUNT_TITLE);
 
         dbHelper = DatabaseHelper.getInstance(this, 1);
@@ -176,7 +174,6 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
         clearSearch = (ImageView) findViewById(R.id.clearSearch);
         searchEdit = (EditText) findViewById(R.id.search_edit);
         title = (RobotoRegular) findViewById(R.id.title_toolbar);
-
     }
 
     @Override

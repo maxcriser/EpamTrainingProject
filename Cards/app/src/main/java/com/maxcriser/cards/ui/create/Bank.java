@@ -1,6 +1,7 @@
 package com.maxcriser.cards.ui.create;
 
 import android.app.DatePickerDialog;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,9 @@ import android.widget.Toast;
 
 import com.github.pinball83.maskededittext.MaskedEditText;
 import com.maxcriser.cards.R;
+import com.maxcriser.cards.async.OnResultCallback;
+import com.maxcriser.cards.database.DatabaseHelper;
+import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.reader.Colors;
 import com.maxcriser.cards.ui.PhotoEditor;
 import com.maxcriser.cards.ui.adapter.MyFragmentPagerAdapterTemplate;
@@ -59,6 +63,9 @@ public class Bank extends AppCompatActivity {
     ImageView backPhoto;
     FrameLayout removeFront;
     FrameLayout removeBack;
+    ContentValues cvNewCredit;
+    DatabaseHelper db;
+
 
     public static final String BANK = "Bank";
     int currentPositionColors;
@@ -88,6 +95,8 @@ public class Bank extends AppCompatActivity {
         setContentView(R.layout.activity_add_bank_card);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
         initViews();
+        db = DatabaseHelper.getInstance(this, 1);
+
         setDateOnView();
         currentPositionColors = 0;
         title.setText(NEW_BANK_TITLE);
@@ -297,11 +306,36 @@ public class Bank extends AppCompatActivity {
         String pinStr = pin.getText().toString();
         String validThru = validDate.getText().toString();
         String type = myTypeCard;
-        String color = myColorName;
+        String color = myColorCode;
         if(bankStr.equals("") || cardholderStr.equals("") || numberStr.equals("") || validThru.equals("") || type.equals("") || color.equals("")){
+            Log.d("fill", bankStr + "\n" + cardholderStr + "\n" + numberStr + "\n" + pinStr + "\n" + validThru + "\n" + type + "\n" + color);
             Toast.makeText(this, "Please fill all fields and try again", Toast.LENGTH_LONG).show();
         } else {
+            cvNewCredit = new ContentValues();
+            cvNewCredit.put(ModelBankCards.BANK_TITLE, bankStr);
+            cvNewCredit.put(ModelBankCards.BANK_CARDHOLDER, cardholderStr);
+            cvNewCredit.put(ModelBankCards.BANK_NUMBER, numberStr);
+            cvNewCredit.put(ModelBankCards.BANK_PIN, pinStr);
+            cvNewCredit.put(ModelBankCards.BANK_VALID, validThru);
+            cvNewCredit.put(ModelBankCards.BANK_TYPE, type);
+            cvNewCredit.put(ModelBankCards.BANK_BACKGROUND_COLOR, color);
+            cvNewCredit.put(ModelBankCards.BANK_ID, (Integer) null);
 
+            db.insert(ModelBankCards.class, cvNewCredit, new OnResultCallback<Long, Void>() {
+                @Override
+                public void onSuccess(Long pLong) {
+                    Log.d("BANK " + " ID", pLong.toString());
+                }
+
+                @Override
+                public void onError(Exception pE) {
+                }
+
+                @Override
+                public void onProgressChanged(Void pVoid) {
+                }
+            });
+            onBackClicked(null);
         }
     }
 

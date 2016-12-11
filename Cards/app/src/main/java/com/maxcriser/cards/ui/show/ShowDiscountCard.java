@@ -57,7 +57,7 @@ public class ShowDiscountCard extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_discount);
+        setContentView(R.layout.activity_items);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
         initViews();
         mHandler = new Handler(hc);

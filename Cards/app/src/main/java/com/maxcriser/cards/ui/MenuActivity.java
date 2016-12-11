@@ -42,6 +42,10 @@ import java.net.URL;
 import java.util.Map;
 
 import static android.view.View.GONE;
+import static com.maxcriser.cards.constant.constants.BANK_TITLE;
+import static com.maxcriser.cards.constant.constants.DISCOUNT_TITLE;
+import static com.maxcriser.cards.constant.constants.NFC_TITLE;
+import static com.maxcriser.cards.constant.constants.TICKETS_TITLE;
 import static com.maxcriser.cards.constant.constants.URL_JSON_LOCATION;
 
 public class MenuActivity extends AppCompatActivity
@@ -49,6 +53,7 @@ public class MenuActivity extends AppCompatActivity
 
     private NfcAdapter mNfcAdapter;
     public static final String TYPE_LOCKED_SCREEN = "type_locked_screen";
+    public static final String TYPE_ITEMS = "type_items";
     public static final String CREDIT_CARD = "credit_card";
     public static final String SETUP_PIN = "setup_pin";
     public static final String TEXT_PLAIN = "text/plain";
@@ -278,23 +283,29 @@ public class MenuActivity extends AppCompatActivity
     }
 
     private class onClickListener implements View.OnClickListener {
+        Intent intent;
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.main_credit_card:
-                    Intent intent = new Intent(MenuActivity.this, LockerActivity.class);
+                    intent = new Intent(MenuActivity.this, LockerActivity.class);
                     intent.putExtra(TYPE_LOCKED_SCREEN, CREDIT_CARD);
                     startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY));
-
                     break;
                 case R.id.main_discount_card:
-                    startActivity(new Intent(MenuActivity.this, DiscountCardsActivity.class));
+                    intent = new Intent(MenuActivity.this, DiscountCardsActivity.class);
+                    intent.putExtra(TYPE_ITEMS, DISCOUNT_TITLE);
+                    startActivity(intent);
                     break;
                 case R.id.main_nfc_card:
-                    startActivity(new Intent(MenuActivity.this, NFCCardsActivity.class));
+                    intent = new Intent(MenuActivity.this, NFCCardsActivity.class);
+                    intent.putExtra(TYPE_ITEMS, NFC_TITLE);
+                    startActivity(intent);
                     break;
                 case R.id.main_tickets_card:
-                    startActivity(new Intent(MenuActivity.this, TicketsActivity.class));
+                    intent = new Intent(MenuActivity.this, TicketsActivity.class);
+                    intent.putExtra(TYPE_ITEMS, TICKETS_TITLE);
+                    startActivity(intent);
                     break;
             }
         }
