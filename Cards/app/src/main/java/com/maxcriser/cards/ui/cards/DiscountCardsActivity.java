@@ -112,7 +112,7 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
 //                discountCards.getAdapter().notifyItemRemoved(viewHolder.getAdapterPosition());
                 TextView cardTitle = (TextView) viewHolder.itemView.findViewById(R.id.title_main_cards);
                 Integer id = (Integer) cardTitle.getTag();
-                dbHelper.delete(ModelDiscountCards.class, null, ModelDiscountCards.DISCOUNT_ID + " = ?", String.valueOf(id));
+                dbHelper.delete(ModelDiscountCards.class, null, ModelDiscountCards.ID + " = ?", String.valueOf(id));
                 // TODO FIX incorrect animation delete
 //                onResume();
                 getSupportLoaderManager().restartLoader(LOADER_DISCOUNT_ID, null, DiscountCardsActivity.this);
@@ -132,10 +132,10 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
                     @Override
                     public void onSuccess(Cursor pCursor) {
                         if (pCursor.moveToFirst()) {
-                            String cardID = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.DISCOUNT_ID));
-                            String cardTitle = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.DISCOUNT_TITLE));
-                            String cardBarcode = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.DISCOUNT_BARCODE));
-                            String cardColor = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.DISCOUNT_BACKGROUND_COLOR));
+                            String cardID = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.ID));
+                            String cardTitle = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.TITLE));
+                            String cardBarcode = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.BARCODE));
+                            String cardColor = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.BACKGROUND_COLOR));
 
                             Intent intent = new Intent(DiscountCardsActivity.this, ShowDiscountCard.class);
                             intent.putExtra(EXTRA_DISCOUNT_ID, cardID);
@@ -155,7 +155,7 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
                     public void onProgressChanged(Void pVoid) {
                     }
                 }, "*", ModelDiscountCards.class, "WHERE "
-                        + ModelDiscountCards.DISCOUNT_ID + " = ?", String.valueOf(id));
+                        + ModelDiscountCards.ID + " = ?", String.valueOf(id));
             }
 
             @Override

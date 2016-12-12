@@ -10,17 +10,17 @@ public final class ModelTickets {
 
     @dbPrimaryKey
     @dbInteger
-    public static final String TICKETS_ID = "_id";
+    public static final String ID = "_id";
 
     @dbString
-    public static final String TICKETS_TITLE = "title";
+    public static final String TITLE = "title";
 
     @dbString
-    public static final String TICKETS_PHOTO_FIRST = "firstPhoto";
+    public static final String PHOTO_FIRST = "firstPhoto";
 
     @dbString
-    public static final String TICKETS_PHOTO_SECOND = "secondPhoto";
+    public static final String PHOTO_SECOND = "secondPhoto";
 
     @dbString
-    public static final String TICKETS_BACKGROUND_COLOR = "backgroundColor";
+    public static final String BACKGROUND_COLOR = "backgroundColor";
 }

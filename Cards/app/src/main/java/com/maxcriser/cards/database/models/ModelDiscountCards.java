@@ -10,14 +10,14 @@ public final class ModelDiscountCards {
 
     @dbPrimaryKey
     @dbInteger
-    public static final String DISCOUNT_ID = "_id";
+    public static final String ID = "_id";
 
     @dbString
-    public static final String DISCOUNT_TITLE = "title";
+    public static final String TITLE = "title";
 
     @dbString
-    public static final String DISCOUNT_BARCODE = "barcode";
+    public static final String BARCODE = "barcode";
 
     @dbString
-    public static final String DISCOUNT_BACKGROUND_COLOR = "backgroundColor";
+    public static final String BACKGROUND_COLOR = "backgroundColor";
 }

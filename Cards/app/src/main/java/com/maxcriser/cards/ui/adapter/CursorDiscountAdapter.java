@@ -33,10 +33,10 @@ public class CursorDiscountAdapter extends RecyclerView.Adapter<CursorDiscountHo
     public void onBindViewHolder(CursorDiscountHolder holder, int position) {
         if (mCursor.moveToPosition(position)) {
             holder.mLinearCard.setBackgroundColor(Color.parseColor(mCursor
-                    .getString(mCursor.getColumnIndex(ModelDiscountCards.DISCOUNT_BACKGROUND_COLOR))));
+                    .getString(mCursor.getColumnIndex(ModelDiscountCards.BACKGROUND_COLOR))));
             holder.mTitle.setText(mCursor
-                    .getString(mCursor.getColumnIndex(ModelDiscountCards.DISCOUNT_TITLE)));
-            holder.mTitle.setTag(mCursor.getInt(mCursor.getColumnIndex(ModelDiscountCards.DISCOUNT_ID)));
+                    .getString(mCursor.getColumnIndex(ModelDiscountCards.TITLE)));
+            holder.mTitle.setTag(mCursor.getInt(mCursor.getColumnIndex(ModelDiscountCards.ID)));
         }
     }
 

@@ -134,10 +134,10 @@ public class Discount extends AppCompatActivity {
         titleStr = mEditText.getText().toString();
         if (!titleStr.equals("")) {
             cvNewDiscount = new ContentValues();
-            cvNewDiscount.put(ModelDiscountCards.DISCOUNT_TITLE, titleStr);
-            cvNewDiscount.put(ModelDiscountCards.DISCOUNT_BARCODE, generateBarcode);
-            cvNewDiscount.put(ModelDiscountCards.DISCOUNT_BACKGROUND_COLOR, myColorCode);
-            cvNewDiscount.put(ModelDiscountCards.DISCOUNT_ID, (Integer) null);
+            cvNewDiscount.put(ModelDiscountCards.TITLE, titleStr);
+            cvNewDiscount.put(ModelDiscountCards.BARCODE, generateBarcode);
+            cvNewDiscount.put(ModelDiscountCards.BACKGROUND_COLOR, myColorCode);
+            cvNewDiscount.put(ModelDiscountCards.ID, (Integer) null);
 
             db.insert(ModelDiscountCards.class, cvNewDiscount, new OnResultCallback<Long, Void>() {
                 @Override

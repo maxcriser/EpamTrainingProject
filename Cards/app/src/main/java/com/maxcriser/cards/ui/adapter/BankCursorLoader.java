@@ -10,7 +10,7 @@ import com.maxcriser.cards.database.models.ModelBankCards;
 
 public class BankCursorLoader extends CursorLoader {
 
-    private static String SQL_WITH_QUERY = "SELECT * FROM " + DatabaseHelper.getTableName(ModelBankCards.class) + " WHERE " + ModelBankCards.BANK_TITLE + " LIKE ? ";
+    private static String SQL_WITH_QUERY = "SELECT * FROM " + DatabaseHelper.getTableName(ModelBankCards.class) + " WHERE " + ModelBankCards.TITLE + " LIKE ? ";
     private static String SQL_ALL_ITEMS = "SELECT * FROM " + DatabaseHelper.getTableName(ModelBankCards.class);
     private DatabaseHelper db;
     private String mQuery;

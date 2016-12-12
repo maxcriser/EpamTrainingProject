@@ -11,6 +11,7 @@
         android:layout_height="match_parent">
 
         <include layout="@layout/fragment_toolbar_back_search"/>
+
         <include layout="@layout/fragment_line_search"/>
 
         <LinearLayout
@@ -28,6 +29,7 @@
                 android:scrollbars="vertical"/>
 
             <include layout="@layout/fragment_empty_page"/>
+
             <include layout="@layout/fragment_no_results_for"/>
 
         </LinearLayout>

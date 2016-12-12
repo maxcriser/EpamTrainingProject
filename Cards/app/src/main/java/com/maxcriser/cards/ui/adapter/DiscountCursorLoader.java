@@ -10,7 +10,7 @@ import com.maxcriser.cards.database.models.ModelDiscountCards;
 
 public class DiscountCursorLoader extends CursorLoader {
 
-    private static String SQL_WITH_QUERY = "SELECT * FROM " + DatabaseHelper.getTableName(ModelDiscountCards.class) + " WHERE " + ModelDiscountCards.DISCOUNT_TITLE + " LIKE ? ";
+    private static String SQL_WITH_QUERY = "SELECT * FROM " + DatabaseHelper.getTableName(ModelDiscountCards.class) + " WHERE " + ModelDiscountCards.TITLE + " LIKE ? ";
     private static String SQL_ALL_ITEMS = "SELECT * FROM " + DatabaseHelper.getTableName(ModelDiscountCards.class);
     private DatabaseHelper db;
     private String mQuery;

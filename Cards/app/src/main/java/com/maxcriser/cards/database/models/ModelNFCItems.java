@@ -10,14 +10,14 @@ public final class ModelNFCItems {
 
     @dbPrimaryKey
     @dbInteger
-    public static final String NFC_ID = "_id";
+    public static final String ID = "_id";
 
     @dbString
-    public static final String NFC_TITLE = "title";
+    public static final String TITLE = "title";
 
     @dbString
-    public static final String NFC_NFC = "nfc";
+    public static final String NFC = "nfc";
 
     @dbString
-    public static final String NFC_BACKGROUND_COLOR = "backgroundColor";
+    public static final String BACKGROUND_COLOR = "backgroundColor";
 }

@@ -34,7 +34,7 @@ public class CursorBankAdapter extends RecyclerView.Adapter<CursorBankHolder> {
     @Override
     public void onBindViewHolder(CursorBankHolder holder, int position) {
         if (mCursor.moveToPosition(position)) {
-            String type = mCursor.getString(mCursor.getColumnIndex(ModelBankCards.BANK_TYPE));
+            String type = mCursor.getString(mCursor.getColumnIndex(ModelBankCards.TYPE));
             Integer typeID;
             if (type.equals(constants.VISA)) {
                 typeID = R.drawable.type_visa;
@@ -55,12 +55,12 @@ public class CursorBankAdapter extends RecyclerView.Adapter<CursorBankHolder> {
             }
             holder.mIcon.setBackgroundResource(typeID);
             holder.mLinearCard.setBackgroundColor(Color.parseColor(mCursor
-                    .getString(mCursor.getColumnIndex(ModelBankCards.BANK_BACKGROUND_COLOR))));
+                    .getString(mCursor.getColumnIndex(ModelBankCards.BACKGROUND_COLOR))));
             holder.mTitle.setText(mCursor
-                    .getString(mCursor.getColumnIndex(ModelBankCards.BANK_TITLE)));
+                    .getString(mCursor.getColumnIndex(ModelBankCards.TITLE)));
             holder.mSubhead.setText(mCursor
-                    .getString(mCursor.getColumnIndex(ModelBankCards.BANK_CARDHOLDER)));
-            holder.mTitle.setTag(mCursor.getInt(mCursor.getColumnIndex(ModelBankCards.BANK_ID)));
+                    .getString(mCursor.getColumnIndex(ModelBankCards.CARDHOLDER)));
+            holder.mTitle.setTag(mCursor.getInt(mCursor.getColumnIndex(ModelBankCards.ID)));
         }
     }
 

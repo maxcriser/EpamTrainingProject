@@ -57,7 +57,7 @@ public class ShowDiscountCard extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_items);
+        setContentView(R.layout.activity_show_discount);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
         initViews();
         mHandler = new Handler(hc);
@@ -67,13 +67,12 @@ public class ShowDiscountCard extends Activity {
 
         registerForContextMenu(materialDesignFAM);
 
-
         dbHelper = DatabaseHelper.getInstance(this, 1);
 
 
         floatingActionButtonDelete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                dbHelper.delete(ModelDiscountCards.class, null, ModelDiscountCards.DISCOUNT_ID + " = ?", String.valueOf(id));
+                dbHelper.delete(ModelDiscountCards.class, null, ModelDiscountCards.ID + " = ?", String.valueOf(id));
                 onBackClicked(null);
 
             }
@@ -139,9 +138,9 @@ public class ShowDiscountCard extends Activity {
         materialDesignFAM.startAnimation(animScaleUp);
 
         dbHelper.edit(ModelDiscountCards.class,
-                ModelDiscountCards.DISCOUNT_TITLE,
+                ModelDiscountCards.TITLE,
                 editString,
-                ModelDiscountCards.DISCOUNT_ID,
+                ModelDiscountCards.ID,
                 String.valueOf(id),
                 new OnResultCallback<Void, Void>() {
                     @Override

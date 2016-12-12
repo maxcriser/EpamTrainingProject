@@ -22,8 +22,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.maxcriser.cards.R;
+import com.maxcriser.cards.constant.constants;
 import com.maxcriser.cards.handler.FingerprintHandler;
-import com.maxcriser.cards.ui.cards.BankCardsActivity;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
@@ -50,6 +50,7 @@ import static com.maxcriser.cards.constant.constants.BUTTON_SIX;
 import static com.maxcriser.cards.constant.constants.BUTTON_THREE;
 import static com.maxcriser.cards.constant.constants.BUTTON_TWO;
 import static com.maxcriser.cards.constant.constants.BUTTON_ZERO;
+import static com.maxcriser.cards.ui.MenuActivity.TYPE_LOCKED_SCREEN;
 
 public class LockerActivity extends AppCompatActivity {
 
@@ -83,7 +84,7 @@ public class LockerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pin_protected);
         mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         intent = getIntent();
-        intentLockedPage = intent.getStringExtra(MenuActivity.TYPE_LOCKED_SCREEN);
+        intentLockedPage = intent.getStringExtra(TYPE_LOCKED_SCREEN);
 
         Toast.makeText(this, LaunchScreenActivity.loadPassword, Toast.LENGTH_SHORT).show();
         mHandler = new Handler(hc);
@@ -310,7 +311,9 @@ public class LockerActivity extends AppCompatActivity {
 
     public void start() {
         if (intentLockedPage.equals(MenuActivity.CREDIT_CARD)) {
-            startActivity(new Intent(LockerActivity.this, BankCardsActivity.class));
+            intent = new Intent(LockerActivity.this, ItemsActivity.class);
+            MenuActivity.selectItem = constants.BANK_TITLE;
+            startActivity(intent);
         } else {
             Intent intent = new Intent(LockerActivity.this, SetupPIN.class);
             startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY));

@@ -97,6 +97,12 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:name=".ui.ItemsActivity"
+            android:windowSoftInputMode="adjustNothing"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".ui.cards.NFCCardsActivity"
             android:windowSoftInputMode="adjustNothing"
             android:configChanges="orientation"

@@ -307,19 +307,19 @@ public class Bank extends AppCompatActivity {
         String validThru = validDate.getText().toString();
         String type = myTypeCard;
         String color = myColorCode;
+        Log.d("fill", bankStr + "\n" + cardholderStr + "\n" + numberStr + "\n" + pinStr + "\n" + validThru + "\n" + type + "\n" + color);
         if(bankStr.equals("") || cardholderStr.equals("") || numberStr.equals("") || validThru.equals("") || type.equals("") || color.equals("")){
-            Log.d("fill", bankStr + "\n" + cardholderStr + "\n" + numberStr + "\n" + pinStr + "\n" + validThru + "\n" + type + "\n" + color);
             Toast.makeText(this, "Please fill all fields and try again", Toast.LENGTH_LONG).show();
         } else {
             cvNewCredit = new ContentValues();
-            cvNewCredit.put(ModelBankCards.BANK_TITLE, bankStr);
-            cvNewCredit.put(ModelBankCards.BANK_CARDHOLDER, cardholderStr);
-            cvNewCredit.put(ModelBankCards.BANK_NUMBER, numberStr);
-            cvNewCredit.put(ModelBankCards.BANK_PIN, pinStr);
-            cvNewCredit.put(ModelBankCards.BANK_VALID, validThru);
-            cvNewCredit.put(ModelBankCards.BANK_TYPE, type);
-            cvNewCredit.put(ModelBankCards.BANK_BACKGROUND_COLOR, color);
-            cvNewCredit.put(ModelBankCards.BANK_ID, (Integer) null);
+            cvNewCredit.put(ModelBankCards.TITLE, bankStr);
+            cvNewCredit.put(ModelBankCards.CARDHOLDER, cardholderStr);
+            cvNewCredit.put(ModelBankCards.NUMBER, numberStr);
+            cvNewCredit.put(ModelBankCards.PIN, pinStr);
+            cvNewCredit.put(ModelBankCards.VALID, validThru);
+            cvNewCredit.put(ModelBankCards.TYPE, type);
+            cvNewCredit.put(ModelBankCards.BACKGROUND_COLOR, color);
+            cvNewCredit.put(ModelBankCards.ID, (Integer) null);
 
             db.insert(ModelBankCards.class, cvNewCredit, new OnResultCallback<Long, Void>() {
                 @Override

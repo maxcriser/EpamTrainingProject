@@ -27,9 +27,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.ui.cards.DiscountCardsActivity;
-import com.maxcriser.cards.ui.cards.NFCCardsActivity;
-import com.maxcriser.cards.ui.cards.TicketsActivity;
+import com.maxcriser.cards.constant.constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,16 +40,11 @@ import java.net.URL;
 import java.util.Map;
 
 import static android.view.View.GONE;
-import static com.maxcriser.cards.constant.constants.BANK_TITLE;
-import static com.maxcriser.cards.constant.constants.DISCOUNT_TITLE;
-import static com.maxcriser.cards.constant.constants.NFC_TITLE;
-import static com.maxcriser.cards.constant.constants.TICKETS_TITLE;
 import static com.maxcriser.cards.constant.constants.URL_JSON_LOCATION;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private NfcAdapter mNfcAdapter;
     public static final String TYPE_LOCKED_SCREEN = "type_locked_screen";
     public static final String TYPE_ITEMS = "type_items";
     public static final String CREDIT_CARD = "credit_card";
@@ -60,6 +53,7 @@ public class MenuActivity extends AppCompatActivity
     public static final String SHARE_BODY = "Donwloads my application on playmarket: cards_application.com";
     public static final String SHARE_TITLE = "Cards application";
     public static final String SHARE_USING = "Share using";
+    public static String selectItem;
     CardView credit;
     CardView discount;
     CardView tickets;
@@ -72,7 +66,6 @@ public class MenuActivity extends AppCompatActivity
     DrawerLayout drawer;
     NavigationView navigationView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,8 +73,8 @@ public class MenuActivity extends AppCompatActivity
 
         initViews();
 
-        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        if (mNfcAdapter == null) {
+        NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        if (nfcAdapter == null) {
             nfc.setVisibility(GONE);
         }
 
@@ -284,6 +277,7 @@ public class MenuActivity extends AppCompatActivity
 
     private class onClickListener implements View.OnClickListener {
         Intent intent;
+
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
@@ -293,18 +287,18 @@ public class MenuActivity extends AppCompatActivity
                     startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY));
                     break;
                 case R.id.main_discount_card:
-                    intent = new Intent(MenuActivity.this, DiscountCardsActivity.class);
-                    intent.putExtra(TYPE_ITEMS, DISCOUNT_TITLE);
+                    intent = new Intent(MenuActivity.this, ItemsActivity.class);
+                    selectItem = constants.DISCOUNT_TITLE;
                     startActivity(intent);
                     break;
                 case R.id.main_nfc_card:
-                    intent = new Intent(MenuActivity.this, NFCCardsActivity.class);
-                    intent.putExtra(TYPE_ITEMS, NFC_TITLE);
+                    intent = new Intent(MenuActivity.this, ItemsActivity.class);
+                    selectItem = constants.NFC_TITLE;
                     startActivity(intent);
                     break;
                 case R.id.main_tickets_card:
-                    intent = new Intent(MenuActivity.this, TicketsActivity.class);
-                    intent.putExtra(TYPE_ITEMS, TICKETS_TITLE);
+                    intent = new Intent(MenuActivity.this, ItemsActivity.class);
+                    selectItem = constants.TICKETS_TITLE;
                     startActivity(intent);
                     break;
             }

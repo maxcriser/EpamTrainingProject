@@ -10,29 +10,29 @@ public final class ModelBankCards {
 
     @dbPrimaryKey
     @dbInteger
-    public static final String BANK_ID = "_id";
+    public static final String ID = "_id";
 
     @dbString
-    public static final String BANK_TYPE = "type"; // VISA / MASTERCARD and e.t.c.
+    public static final String TYPE = "type"; // VISA / MASTERCARD and e.t.c.
 
     @dbString
-    public static final String BANK_TITLE = "title";
+    public static final String TITLE = "title";
 
     @dbString
-    public static final String BANK_CARDHOLDER = "cardholder";
+    public static final String CARDHOLDER = "cardholder";
 
     @dbString
-    public static final String BANK_NUMBER = "number";
+    public static final String NUMBER = "number";
 
     @dbString
-    public static final String BANK_VALID = "valid";
+    public static final String VALID = "valid";
 
     @dbString
-    public static final String BANK_BACKGROUND_COLOR = "backgroundColor";
+    public static final String BACKGROUND_COLOR = "backgroundColor";
 
     @dbInteger
-    public static final String BANK_PIN = "pin";
+    public static final String PIN = "pin";
 
     @dbString
-    public static final String BANK_NFC = "nfc";
+    public static final String NFC = "nfc";
 }
