@@ -17,10 +17,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:padding="8dp">
 
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
@@ -29,138 +29,228 @@
                     card_view:cardCornerRadius="2dp"
                     card_view:cardElevation="2dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:orientation="vertical">
-
-                        <android.support.v7.widget.CardView
-                            android:id="@+id/linear_frame_title_discount"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="4dp"
-                            card_view:cardBackgroundColor="@color/gray_bottom_create_card"
-                            card_view:cardCornerRadius="0dp"
-                            card_view:cardElevation="4dp">
-
-                            <LinearLayout
-                                android:id="@+id/linear_edit_frame_title_discount"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:visibility="gone">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="48dp"
-                                    android:gravity="center|start"
-                                    android:paddingLeft="16dp"
-                                    android:text="@string/name"
-                                    android:textColor="@color/text_toolbar"
-                                    android:textSize="18sp"/>
-
-                                <EditText
-                                    android:id="@+id/rename_discount_title"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="48dp"
-                                    android:imeOptions="actionDone"
-                                    android:inputType="text"
-                                    android:maxLines="1"
-                                    android:paddingLeft="16dp"
-                                    android:textColor="@color/text_toolbar"
-                                    android:textSize="16sp"/>
-
-                            </LinearLayout>
-
-                            <TextView
-                                android:id="@+id/title_show_discount"
-                                android:layout_width="match_parent"
-                                android:layout_height="48dp"
-                                android:gravity="center|center"
-                                android:text="@string/name"
-                                android:textColor="@color/text_toolbar"
-                                android:textSize="18sp"/>
-                        </android.support.v7.widget.CardView>
-
-                        <android.support.v7.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="36dp"
-                            android:layout_gravity="center"
-                            android:layout_margin="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_weight="1"
-                            card_view:cardCornerRadius="2dp"
-                            card_view:cardElevation="2dp">
-
-                            <com.maxcriser.cards.view.TextViews.RobotoThin
-                                android:id="@+id/date"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="start"
-                                android:layout_marginStart="16dp"
-                                android:gravity="center"
-                                android:onClick="onDateClicked"
-                                android:textColor="@color/text_toolbar"
-                                android:textSize="16sp"
-                                tools:text="16 SEPT 2016"/>
-
-                            <com.maxcriser.cards.view.TextViews.RobotoThin
-                                android:id="@+id/time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="end"
-                                android:layout_marginEnd="16dp"
-                                android:gravity="center|end"
-                                android:onClick="onTimeClicked"
-                                android:textAllCaps="true"
-                                android:textColor="@color/text_toolbar"
-                                android:textSize="16sp"
-                                tools:text="12:30 PM"/>
-
-                        </android.support.v7.widget.CardView>
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
-                            <LinearLayout
-                                android:layout_width="100dp"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:padding="8dp">
+                            <android.support.v7.widget.CardView
+                                android:id="@+id/linear_frame_title_discount"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="4dp"
+                                card_view:cardBackgroundColor="@color/gray_bottom_create_card"
+                                card_view:cardCornerRadius="0dp"
+                                card_view:cardElevation="4dp">
+
+                                <LinearLayout
+                                    android:id="@+id/linear_edit_frame_title_discount"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    android:visibility="gone">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="48dp"
+                                        android:gravity="center|start"
+                                        android:paddingLeft="16dp"
+                                        android:text="@string/name"
+                                        android:textColor="@color/text_toolbar"
+                                        android:textSize="18sp"/>
+
+                                    <EditText
+                                        android:id="@+id/rename_discount_title"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="48dp"
+                                        android:imeOptions="actionDone"
+                                        android:inputType="text"
+                                        android:maxLines="1"
+                                        android:paddingLeft="16dp"
+                                        android:textColor="@color/text_toolbar"
+                                        android:textSize="16sp"/>
+
+                                </LinearLayout>
 
                                 <TextView
+                                    android:id="@+id/title_show_discount"
                                     android:layout_width="match_parent"
                                     android:layout_height="48dp"
-                                    android:gravity="center|end"
-                                    android:text="@string/cardholder_"
+                                    android:gravity="center|center"
+                                    android:text="@string/name"
                                     android:textColor="@color/text_toolbar"
-                                    android:textSize="16sp"/>
+                                    android:textSize="18sp"/>
+                            </android.support.v7.widget.CardView>
+
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"
+                                android:layout_marginTop="8dp">
+
+                                <android.support.v7.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="36dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginEnd="16dp"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_weight="1"
+                                    card_view:cardCornerRadius="2dp"
+                                    card_view:cardElevation="2dp">
+
+                                    <com.maxcriser.cards.view.TextViews.RobotoThin
+                                        android:id="@+id/date"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="start"
+                                        android:layout_marginStart="16dp"
+                                        android:gravity="center"
+                                        android:onClick="onDateClicked"
+                                        android:textColor="@color/text_toolbar"
+                                        android:textSize="16sp"
+                                        tools:text="16 SEPT 2016"/>
+
+                                    <com.maxcriser.cards.view.TextViews.RobotoThin
+                                        android:id="@+id/time"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="end"
+                                        android:layout_marginEnd="16dp"
+                                        android:gravity="center|end"
+                                        android:onClick="onTimeClicked"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/text_toolbar"
+                                        android:textSize="16sp"
+                                        tools:text="12:30 PM"/>
+
+                                </android.support.v7.widget.CardView>
+
+                            </FrameLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <LinearLayout
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:padding="8dp">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="48dp"
+                                        android:gravity="center|end"
+                                        android:text="@string/cardholder_"
+                                        android:textColor="@color/text_toolbar"
+                                        android:textSize="16sp"/>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:padding="8dp">
+
+                                    <EditText
+                                        android:id="@+id/cardholder"
+                                        android:layout_width="205dp"
+                                        android:layout_height="48dp"
+                                        android:enabled="false"
+                                        android:gravity="center|start"
+                                        android:maxLines="1"
+                                        android:textColor="@color/text_toolbar"
+                                        android:textSize="16sp"
+                                        tools:text="John Johnson"/>
+
+                                </LinearLayout>
 
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:padding="8dp">
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
 
-                                <EditText
-                                    android:id="@+id/cardholder"
-                                    android:layout_width="205dp"
-                                    android:layout_height="48dp"
-                                    android:enabled="false"
-                                    android:gravity="center|start"
-                                    android:maxLines="1"
-                                    android:textColor="@color/text_toolbar"
-                                    android:textSize="16sp"
-                                    tools:text="John Johnson"/>
+                                <android.support.v7.widget.CardView
+                                    android:layout_weight="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="124dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="16dp"
+                                    card_view:cardCornerRadius="2dp"
+                                    card_view:cardElevation="2dp">
+
+                                    <ImageView
+                                        android:layout_width="36dp"
+                                        android:layout_height="36dp"
+                                        android:layout_gravity="center"
+                                        android:background="@drawable/ic_camera"/>
+
+                                    <com.maxcriser.cards.view.TextViews.RobotoThin
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="bottom"
+                                        android:layout_marginBottom="4dp"
+                                        android:gravity="center"
+                                        android:text="@string/front"
+                                        android:textColor="@color/text_toolbar"/>
+
+                                    <ImageView
+                                        android:id="@+id/front_photo"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"/>
+
+                                </android.support.v7.widget.CardView>
+
+                                <android.support.v7.widget.CardView
+                                    android:layout_weight="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="124dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="16dp"
+                                    card_view:cardCornerRadius="2dp"
+                                    card_view:cardElevation="2dp">
+
+                                    <ImageView
+                                        android:layout_width="36dp"
+                                        android:layout_height="36dp"
+                                        android:layout_gravity="center"
+                                        android:background="@drawable/ic_camera"/>
+
+                                    <com.maxcriser.cards.view.TextViews.RobotoThin
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="bottom"
+                                        android:layout_marginBottom="4dp"
+                                        android:gravity="center"
+                                        android:text="@string/back"
+                                        android:textColor="@color/text_toolbar"/>
+
+                                    <ImageView
+                                        android:id="@+id/back_photo"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"/>
+
+                                </android.support.v7.widget.CardView>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/linear_frame_actions_discount"
+                                android:layout_width="match_parent"
+                                android:layout_height="56dp"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <include layout="@layout/fragment_cancel_save"/>
 
                             </LinearLayout>
 
@@ -168,100 +258,14 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                </android.support.v7.widget.CardView>
 
-                        <android.support.v7.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="112dp"
-                            android:layout_gravity="center"
-                            android:layout_margin="16dp"
-                            android:layout_weight="1"
-                            card_view:cardCornerRadius="2dp"
-                            card_view:cardElevation="2dp">
+            </FrameLayout>
 
-                            <ImageView
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
-                                android:layout_gravity="center"
-                                android:background="@drawable/ic_camera"/>
-
-                            <com.maxcriser.cards.view.TextViews.RobotoThin
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="bottom"
-                                android:layout_marginBottom="4dp"
-                                android:gravity="center"
-                                android:text="@string/front"
-                                android:textColor="@color/text_toolbar"/>
-
-                            <ImageView
-                                android:id="@+id/front_photo"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:scaleType="centerCrop"/>
-
-                        </android.support.v7.widget.CardView>
-
-                        <android.support.v7.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="112dp"
-                            android:layout_gravity="center"
-                            android:layout_margin="16dp"
-                            android:layout_weight="1"
-                            card_view:cardCornerRadius="2dp"
-                            card_view:cardElevation="2dp">
-
-                            <ImageView
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
-                                android:layout_gravity="center"
-                                android:background="@drawable/ic_camera"/>
-
-                            <com.maxcriser.cards.view.TextViews.RobotoThin
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="bottom"
-                                android:layout_marginBottom="4dp"
-                                android:gravity="center"
-                                android:text="@string/back"
-                                android:textColor="@color/text_toolbar"/>
-
-                            <ImageView
-                                android:id="@+id/back_photo"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:scaleType="centerCrop"/>
-
-                        </android.support.v7.widget.CardView>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/linear_frame_actions_discount"
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
-
-                        <include layout="@layout/fragment_cancel_save"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-    </FrameLayout>
-
-</ScrollView>
+        </ScrollView>
 
     </LinearLayout>
 
-<include layout="@layout/floating_menu_show"/>
+    <include layout="@layout/floating_menu_show"/>
 
-    </merge>
+</merge>

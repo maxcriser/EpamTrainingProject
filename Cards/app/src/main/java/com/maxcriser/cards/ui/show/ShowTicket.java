@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -19,22 +18,18 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
-import com.maxcriser.cards.constant.constants;
 import com.maxcriser.cards.database.DatabaseHelper;
-import com.maxcriser.cards.database.models.ModelBankCards;
+import com.maxcriser.cards.database.models.ModelTickets;
+import com.maxcriser.cards.view.TextViews.RobotoThin;
 
-import static android.text.InputType.TYPE_CLASS_TEXT;
-import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_BANK;
-import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_CARDHOLDER;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_COLOR;
-import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_ID;
-import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_NUMBER;
-import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_PIN;
-import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_TYPE;
-import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_VALID;
+import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_CARDHOLDER;
+import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_DATE;
+import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_ID;
+import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_TIME;
+import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_TITLE;
 
 public class ShowTicket extends Activity {
 
@@ -44,18 +39,18 @@ public class ShowTicket extends Activity {
     ScrollView mScrollView;
 
     Boolean showPin = false;
-    TextView editBank;
+    TextView editTitle;
     EditText editName;
-    String editString;
+    String editTitleStr;
     LinearLayout linearFrameAction;
     String id;
-    String bank;
-    String cardholder;
-    String number;
-    String pin;
-    String valid;
-    String type;
-    String color;
+    String titleStr;
+    String cardholderStr;
+    String dateStr;
+    String timeStr;
+    String colorStr;
+    RobotoThin date;
+    RobotoThin time;
     EditText editCardholder;
 
     DatabaseHelper dbHelper;
@@ -87,10 +82,9 @@ public class ShowTicket extends Activity {
 
         dbHelper = DatabaseHelper.getInstance(this, 1);
 
-
         floatingActionButtonDelete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                dbHelper.delete(ModelBankCards.class, null, ModelBankCards.ID + " = ?", String.valueOf(id));
+                dbHelper.delete(ModelTickets.class, null, ModelTickets.ID + " = ?", String.valueOf(id));
                 onBackClicked(null);
 
             }
@@ -99,54 +93,34 @@ public class ShowTicket extends Activity {
             public void onClick(View v) {
                 mScrollView.fullScroll(ScrollView.FOCUS_UP);
                 editLinear.setVisibility(VISIBLE);
-                editBank.setVisibility(GONE);
+                editTitle.setVisibility(GONE);
                 linearFrameAction.setVisibility(VISIBLE);
-                editString = editBank.getText().toString();
-                editName.setText(editString);
+                editTitleStr = editTitle.getText().toString();
+                editName.setText(editTitleStr);
                 materialDesignFAM.close(true);
                 mHandler.sendEmptyMessageDelayed(1, 300);
             }
         });
 
         Intent creditIntent = getIntent();
-        id = creditIntent.getStringExtra(EXTRA_BANK_ID);
-        bank = creditIntent.getStringExtra(EXTRA_BANK_BANK);
-        cardholder = creditIntent.getStringExtra(EXTRA_BANK_CARDHOLDER);
-        number = creditIntent.getStringExtra(EXTRA_BANK_NUMBER);
-        pin = creditIntent.getStringExtra(EXTRA_BANK_PIN);
-        valid = creditIntent.getStringExtra(EXTRA_BANK_VALID);
-        type = creditIntent.getStringExtra(EXTRA_BANK_TYPE);
-        color = creditIntent.getStringExtra(EXTRA_BANK_COLOR);
+        id = creditIntent.getStringExtra(EXTRA_TICKET_ID);
+        titleStr = creditIntent.getStringExtra(EXTRA_TICKET_TITLE);
+        cardholderStr = creditIntent.getStringExtra(EXTRA_TICKET_CARDHOLDER);
+        dateStr = creditIntent.getStringExtra(EXTRA_TICKET_DATE);
+        timeStr = creditIntent.getStringExtra(EXTRA_TICKET_TIME);
+        colorStr = creditIntent.getStringExtra(EXTRA_BANK_COLOR);
 
-        editBank.setText(bank);
-        editCardholder.setText(cardholder);
-        editNumber.setText(number);
-        editPin.setText(pin);
-        editValid.setText(valid);
-        Integer typeID;
-        if (type.equals(constants.VISA)) {
-            typeID = R.drawable.type_visa;
-        } else if (type.equals(constants.MASTERCARD)) {
-            typeID = R.drawable.type_mastercard;
-        } else if (type.equals(constants.AMEX)) {
-            typeID = R.drawable.type_amex;
-        } else if (type.equals(constants.MAESTRO)) {
-            typeID = R.drawable.type_maestro;
-        } else if (type.equals(constants.WESTERN_UNION)) {
-            typeID = R.drawable.type_western_union;
-        } else if (type.equals(constants.JCB)) {
-            typeID = R.drawable.type_jcb;
-        } else if (type.equals(constants.DINERS_CLUB)) {
-            typeID = R.drawable.type_diners_club;
-        } else {
-            typeID = R.drawable.type_belcard;
-        }
-        editType.setBackgroundResource(typeID);
+        editTitle.setText(titleStr);
+        editCardholder.setText(cardholderStr);
+        date.setText(dateStr);
+        time.setText(timeStr);
     }
 
     private void initViews() {
+        date = (RobotoThin) findViewById(R.id.date);
+        time = (RobotoThin) findViewById(R.id.time);
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
-        editBank = (TextView) findViewById(R.id.title_show_discount);
+        editTitle = (TextView) findViewById(R.id.title_show_discount);
         editCardholder = (EditText) findViewById(R.id.cardholder);
         materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
         editLinear = (LinearLayout) findViewById(R.id.linear_edit_frame_title_discount);
@@ -163,26 +137,26 @@ public class ShowTicket extends Activity {
 
     public void onCancelClicked(View view) {
         editLinear.setVisibility(GONE);
-        editBank.setVisibility(VISIBLE);
+        editTitle.setVisibility(VISIBLE);
         linearFrameAction.setVisibility(GONE);
         materialDesignFAM.setVisibility(VISIBLE);
         materialDesignFAM.startAnimation(animScaleUp);
     }
 
     public void onCreateCardClicked(View view) {
-        editString = editName.getText().toString();
-        if (!editString.equals("")) {
-            editBank.setText(editString);
+        editTitleStr = editName.getText().toString();
+        if (!editTitleStr.equals("")) {
+            editTitle.setText(editTitleStr);
             editLinear.setVisibility(GONE);
-            editBank.setVisibility(VISIBLE);
+            editTitle.setVisibility(VISIBLE);
             linearFrameAction.setVisibility(GONE);
             materialDesignFAM.setVisibility(VISIBLE);
             materialDesignFAM.startAnimation(animScaleUp);
 
-            dbHelper.edit(ModelBankCards.class,
-                    ModelBankCards.TITLE,
-                    editString,
-                    ModelBankCards.ID,
+            dbHelper.edit(ModelTickets.class,
+                    ModelTickets.TITLE,
+                    editTitleStr,
+                    ModelTickets.ID,
                     String.valueOf(id),
                     new OnResultCallback<Void, Void>() {
                         @Override
@@ -207,16 +181,6 @@ public class ShowTicket extends Activity {
     }
 
     public void onToolbarBackClicked(View view) {
-    }
 
-    public void onShowPinClicked(View view) {
-        showPin = !showPin;
-        if (showPin) {
-            editPin.setInputType(TYPE_TEXT_VARIATION_PASSWORD);
-            eye.setImageResource(R.drawable.eye_off);
-        } else {
-            editPin.setInputType(TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_PASSWORD);
-            eye.setImageResource(R.drawable.eye_on);
-        }
     }
 }
