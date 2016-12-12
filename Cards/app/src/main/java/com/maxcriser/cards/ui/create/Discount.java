@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.maxcriser.cards.R;
@@ -33,6 +34,7 @@ public class Discount extends AppCompatActivity {
     public static final String DISCOUNT = "Discount";
     ContentValues cvNewDiscount;
     DatabaseHelper db;
+    ScrollView mScrollView;
 
     static int PAGE_COUNT;
     static final int pagerMargin = 16;
@@ -115,6 +117,7 @@ public class Discount extends AppCompatActivity {
     }
 
     private void initViews() {
+        mScrollView = (ScrollView) findViewById(R.id.scrollView);
         title = (RobotoRegular) findViewById(R.id.title_toolbar);
         mEANP72TextView = (EANP72TextView) findViewById(R.id.generate_barcode);
         mEditText = (EditText) findViewById(R.id.id_edit_text_name_discount);
@@ -155,6 +158,7 @@ public class Discount extends AppCompatActivity {
             });
             onBackClicked(null);
         } else {
+            mScrollView.fullScroll(ScrollView.FOCUS_UP);
             Toast.makeText(this, "Please fill all fields and try again", Toast.LENGTH_LONG).show();
         }
     }

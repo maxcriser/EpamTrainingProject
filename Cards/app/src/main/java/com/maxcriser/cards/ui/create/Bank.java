@@ -16,6 +16,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,7 +66,7 @@ public class Bank extends AppCompatActivity {
     FrameLayout removeBack;
     ContentValues cvNewCredit;
     DatabaseHelper db;
-
+    ScrollView mScrollView;
 
     public static final String BANK = "Bank";
     int currentPositionColors;
@@ -191,6 +192,7 @@ public class Bank extends AppCompatActivity {
     }
 
     private void initViews() {
+        mScrollView = (ScrollView) findViewById(R.id.scrollView);
         bank = (EditText) findViewById(R.id.bank);
         cardholder = (EditText) findViewById(R.id.cardholder);
         number = (MaskedEditText) findViewById(R.id.number);
@@ -308,8 +310,9 @@ public class Bank extends AppCompatActivity {
         String type = myTypeCard;
         String color = myColorCode;
         Log.d("fill", bankStr + "\n" + cardholderStr + "\n" + numberStr + "\n" + pinStr + "\n" + validThru + "\n" + type + "\n" + color);
-        if(bankStr.equals("") || cardholderStr.equals("") || numberStr.equals("") || validThru.equals("") || type.equals("") || color.equals("")){
+        if (bankStr.equals("") || cardholderStr.equals("") || numberStr.equals("") || validThru.equals("") || type.equals("") || color.equals("")) {
             Toast.makeText(this, "Please fill all fields and try again", Toast.LENGTH_LONG).show();
+            mScrollView.fullScroll(ScrollView.FOCUS_UP);
         } else {
             cvNewCredit = new ContentValues();
             cvNewCredit.put(ModelBankCards.TITLE, bankStr);

@@ -11,7 +11,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -21,6 +23,8 @@ import com.maxcriser.cards.constant.constants;
 import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelBankCards;
 
+import static android.text.InputType.TYPE_CLASS_TEXT;
+import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_BANK;
@@ -37,7 +41,9 @@ public class ShowBankCard extends Activity {
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton floatingActionButtonDelete, floatingActionButtonEdit;
     LinearLayout editLinear;
+    ScrollView mScrollView;
 
+    Boolean showPin = false;
     TextView editBank;
     EditText editName;
     String editString;
@@ -55,6 +61,7 @@ public class ShowBankCard extends Activity {
     EditText editPin;
     EditText editValid;
     ImageView editType;
+    ImageView eye;
 
     DatabaseHelper dbHelper;
     Handler mHandler;
@@ -95,6 +102,7 @@ public class ShowBankCard extends Activity {
         });
         floatingActionButtonEdit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                mScrollView.fullScroll(ScrollView.FOCUS_UP);
                 editLinear.setVisibility(VISIBLE);
                 editBank.setVisibility(GONE);
                 linearFrameAction.setVisibility(VISIBLE);
@@ -142,6 +150,8 @@ public class ShowBankCard extends Activity {
     }
 
     private void initViews() {
+        mScrollView = (ScrollView) findViewById(R.id.scrollView);
+        eye = (ImageView) findViewById(R.id.eye);
         editBank = (TextView) findViewById(R.id.title_show_discount);
         editCardholder = (EditText) findViewById(R.id.cardholder);
         editNumber = (EditText) findViewById(R.id.number);
@@ -171,36 +181,52 @@ public class ShowBankCard extends Activity {
 
     public void onCreateCardClicked(View view) {
         editString = editName.getText().toString();
-        editBank.setText(editString);
-        editLinear.setVisibility(GONE);
-        editBank.setVisibility(VISIBLE);
-        linearFrameAction.setVisibility(GONE);
-        materialDesignFAM.setVisibility(VISIBLE);
-        materialDesignFAM.startAnimation(animScaleUp);
+        if (!editString.equals("")) {
+            editBank.setText(editString);
+            editLinear.setVisibility(GONE);
+            editBank.setVisibility(VISIBLE);
+            linearFrameAction.setVisibility(GONE);
+            materialDesignFAM.setVisibility(VISIBLE);
+            materialDesignFAM.startAnimation(animScaleUp);
 
-        dbHelper.edit(ModelBankCards.class,
-                ModelBankCards.TITLE,
-                editString,
-                ModelBankCards.ID,
-                String.valueOf(id),
-                new OnResultCallback<Void, Void>() {
-                    @Override
-                    public void onSuccess(Void pVoid) {
+            dbHelper.edit(ModelBankCards.class,
+                    ModelBankCards.TITLE,
+                    editString,
+                    ModelBankCards.ID,
+                    String.valueOf(id),
+                    new OnResultCallback<Void, Void>() {
+                        @Override
+                        public void onSuccess(Void pVoid) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onError(Exception pE) {
+                        @Override
+                        public void onError(Exception pE) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onProgressChanged(Void pVoid) {
+                        @Override
+                        public void onProgressChanged(Void pVoid) {
 
-                    }
-                });
+                        }
+                    });
+        } else {
+            mScrollView.fullScroll(ScrollView.FOCUS_UP);
+            Toast.makeText(this, R.string.empty_card_name, Toast.LENGTH_LONG).show();
+        }
     }
 
     public void onToolbarBackClicked(View view) {
+    }
+
+    public void onShowPinClicked(View view) {
+        showPin = !showPin;
+        if (showPin) {
+            editPin.setInputType(TYPE_TEXT_VARIATION_PASSWORD);
+            eye.setImageResource(R.drawable.eye_off);
+        } else {
+            editPin.setInputType(TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_PASSWORD);
+            eye.setImageResource(R.drawable.eye_on);
+        }
     }
 }

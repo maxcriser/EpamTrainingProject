@@ -13,6 +13,7 @@
         <include layout="@layout/fragment_toolbar_back_search"/>
 
         <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -38,11 +39,14 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
-                            <FrameLayout
+                            <android.support.v7.widget.CardView
                                 android:id="@+id/linear_frame_title_discount"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@color/gray_bottom_create_card">
+                                android:layout_marginBottom="4dp"
+                                card_view:cardCornerRadius="0dp"
+                                card_view:cardElevation="4dp"
+                                card_view:cardBackgroundColor="@color/gray_bottom_create_card">
 
                                 <LinearLayout
                                     android:id="@+id/linear_edit_frame_title_discount"
@@ -64,6 +68,7 @@
                                         android:id="@+id/rename_discount_title"
                                         android:layout_width="match_parent"
                                         android:layout_height="48dp"
+                                        android:imeOptions="actionDone"
                                         android:inputType="text"
                                         android:maxLines="1"
                                         android:paddingLeft="16dp"
@@ -80,25 +85,18 @@
                                     android:text="@string/name"
                                     android:textColor="@color/text_toolbar"
                                     android:textSize="18sp"/>
-                            </FrameLayout>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0.5dp"
-                                android:background="@color/text_toolbar"/>
-
+                            </android.support.v7.widget.CardView>
 
                             <FrameLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:background="@color/text_toolbar">
+                                android:layout_marginTop="8dp">
 
                                 <ImageView
                                     android:id="@+id/type_card"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="104dp"
                                     android:layout_height="56dp"
-                                    android:background="@android:color/white"/>
+                                    android:layout_gravity="center"/>
 
                             </FrameLayout>
 
@@ -115,7 +113,7 @@
 
                                     <TextView
                                         android:layout_width="match_parent"
-                                        android:layout_height="36dp"
+                                        android:layout_height="48dp"
                                         android:gravity="center|end"
                                         android:text="@string/cardholder_"
                                         android:textColor="@color/text_toolbar"
@@ -123,7 +121,7 @@
 
                                     <TextView
                                         android:layout_width="match_parent"
-                                        android:layout_height="36dp"
+                                        android:layout_height="48dp"
                                         android:gravity="center|end"
                                         android:text="@string/number_"
                                         android:textColor="@color/text_toolbar"
@@ -131,7 +129,7 @@
 
                                     <TextView
                                         android:layout_width="match_parent"
-                                        android:layout_height="36dp"
+                                        android:layout_height="48dp"
                                         android:gravity="center|end"
                                         android:text="@string/pin_"
                                         android:textColor="@color/text_toolbar"
@@ -139,7 +137,7 @@
 
                                     <TextView
                                         android:layout_width="match_parent"
-                                        android:layout_height="36dp"
+                                        android:layout_height="48dp"
                                         android:gravity="center|end"
                                         android:text="@string/valid_thru"
                                         android:textColor="@color/text_toolbar"
@@ -156,7 +154,8 @@
                                     <EditText
                                         android:id="@+id/cardholder"
                                         android:layout_width="205dp"
-                                        android:layout_height="36dp"
+                                        android:layout_height="48dp"
+                                        android:enabled="false"
                                         android:gravity="center|start"
                                         android:maxLines="1"
                                         android:textColor="@color/text_toolbar"
@@ -166,26 +165,52 @@
                                     <EditText
                                         android:id="@+id/number"
                                         android:layout_width="match_parent"
-                                        android:layout_height="36dp"
+                                        android:layout_height="48dp"
+                                        android:enabled="false"
                                         android:gravity="center|start"
                                         android:textColor="@color/text_toolbar"
                                         android:textSize="16sp"
                                         tools:text="4444 0000 4444 0000"/>
 
 
-                                    <EditText
-                                        android:id="@+id/pin"
+                                    <LinearLayout
                                         android:layout_width="match_parent"
-                                        android:layout_height="36dp"
-                                        android:gravity="center|start"
-                                        android:textColor="@color/text_toolbar"
-                                        android:textSize="16sp"
-                                        tools:text="2552"/>
+                                        android:layout_height="48dp">
+
+                                        <EditText
+                                            android:id="@+id/pin"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="48dp"
+                                            android:layout_weight="1"
+                                            android:enabled="false"
+                                            android:gravity="center|start"
+                                            android:inputType="numberPassword"
+                                            android:textColor="@color/text_toolbar"
+                                            android:textSize="16sp"
+                                            tools:text="2552"/>
+
+                                        <FrameLayout
+                                            android:layout_width="48dp"
+                                            android:layout_height="48dp"
+                                            android:onClick="onShowPinClicked">
+
+                                            <ImageView
+                                                android:id="@+id/eye"
+                                                android:layout_width="24dp"
+                                                android:layout_height="24dp"
+                                                android:layout_gravity="center"
+                                                android:background="?attr/selectableItemBackgroundBorderless"
+                                                android:src="@drawable/eye_on"/>
+
+                                        </FrameLayout>
+                                    </LinearLayout>
+
 
                                     <EditText
                                         android:id="@+id/valid"
                                         android:layout_width="match_parent"
-                                        android:layout_height="36dp"
+                                        android:layout_height="48dp"
+                                        android:enabled="false"
                                         android:gravity="center|start"
                                         android:textColor="@color/text_toolbar"
                                         android:textSize="16sp"

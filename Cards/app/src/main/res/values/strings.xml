@@ -97,6 +97,7 @@
     <string name="cardholder_">Cardholder:</string>
     <string name="number_">Number:</string>
     <string name="pin_">PIN:</string>
+    <string name="empty_card_name">Card name can not be empty</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>

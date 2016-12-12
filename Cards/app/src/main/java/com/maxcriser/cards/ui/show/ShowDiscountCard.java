@@ -11,7 +11,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -19,7 +21,6 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
-import com.maxcriser.cards.ui.cards.DiscountCardsActivity;
 import com.maxcriser.cards.view.TextViews.EANP72TextView;
 
 import static android.view.View.GONE;
@@ -34,6 +35,7 @@ public class ShowDiscountCard extends Activity {
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton floatingActionButtonDelete, floatingActionButtonEdit;
     LinearLayout editLinear;
+    ScrollView mScrollView;
 
     TextView titleView;
     EditText editName;
@@ -68,11 +70,8 @@ public class ShowDiscountCard extends Activity {
 
         animScaleDown = AnimationUtils.loadAnimation(ShowDiscountCard.this, R.anim.scale_down);
         animScaleUp = AnimationUtils.loadAnimation(ShowDiscountCard.this, R.anim.scale_up);
-
         registerForContextMenu(materialDesignFAM);
-
         dbHelper = DatabaseHelper.getInstance(this, 1);
-
 
         floatingActionButtonDelete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -83,6 +82,7 @@ public class ShowDiscountCard extends Activity {
         });
         floatingActionButtonEdit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                mScrollView.fullScroll(ScrollView.FOCUS_UP);
                 editLinear.setVisibility(VISIBLE);
                 titleView.setVisibility(GONE);
                 linearFrameAction.setVisibility(VISIBLE);
@@ -109,6 +109,7 @@ public class ShowDiscountCard extends Activity {
     }
 
     private void initViews() {
+        mScrollView = (ScrollView) findViewById(R.id.scrollView);
         materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
         editLinear = (LinearLayout) findViewById(R.id.linear_edit_frame_title_discount);
         editName = (EditText) findViewById(R.id.rename_discount_title);
@@ -122,7 +123,7 @@ public class ShowDiscountCard extends Activity {
     public void onBackClicked(View view) {
         // TODO: 07.12.2016   handler close materialFloating
         super.onBackPressed();
-    }
+        }
 
     public void onCancelClicked(View view) {
         editLinear.setVisibility(GONE);
@@ -134,34 +135,39 @@ public class ShowDiscountCard extends Activity {
 
     public void onCreateCardClicked(View view) {
         editString = editName.getText().toString();
-        titleView.setText(editString);
-        editLinear.setVisibility(GONE);
-        titleView.setVisibility(VISIBLE);
-        linearFrameAction.setVisibility(GONE);
-        materialDesignFAM.setVisibility(VISIBLE);
-        materialDesignFAM.startAnimation(animScaleUp);
+        if (!editString.equals("")) {
+            titleView.setText(editString);
+            editLinear.setVisibility(GONE);
+            titleView.setVisibility(VISIBLE);
+            linearFrameAction.setVisibility(GONE);
+            materialDesignFAM.setVisibility(VISIBLE);
+            materialDesignFAM.startAnimation(animScaleUp);
 
-        dbHelper.edit(ModelDiscountCards.class,
-                ModelDiscountCards.TITLE,
-                editString,
-                ModelDiscountCards.ID,
-                String.valueOf(id),
-                new OnResultCallback<Void, Void>() {
-                    @Override
-                    public void onSuccess(Void pVoid) {
+            dbHelper.edit(ModelDiscountCards.class,
+                    ModelDiscountCards.TITLE,
+                    editString,
+                    ModelDiscountCards.ID,
+                    String.valueOf(id),
+                    new OnResultCallback<Void, Void>() {
+                        @Override
+                        public void onSuccess(Void pVoid) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onError(Exception pE) {
+                        @Override
+                        public void onError(Exception pE) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onProgressChanged(Void pVoid) {
+                        @Override
+                        public void onProgressChanged(Void pVoid) {
 
-                    }
-                });
+                        }
+                    });
+        } else {
+            mScrollView.fullScroll(ScrollView.FOCUS_UP);
+            Toast.makeText(this, R.string.empty_card_name, Toast.LENGTH_LONG).show();
+        }
     }
 
     public void onToolbarBackClicked(View view) {
