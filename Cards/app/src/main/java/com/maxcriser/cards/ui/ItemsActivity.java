@@ -18,6 +18,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -190,6 +191,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
                                 intent.putExtra(EXTRA_DISCOUNT_TITLE, cardTitle);
                                 intent.putExtra(EXTRA_DISCOUNT_BARCODE, cardBarcode);
                                 intent.putExtra(EXTRA_DISCOUNT_COLOR, cardColor);
+                                Log.d("TAG", cardBarcode);
                                 startActivity(intent);
 
                             } else if (typeItems.equals(TICKETS_TITLE)) {

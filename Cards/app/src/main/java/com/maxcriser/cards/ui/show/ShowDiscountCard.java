@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -97,6 +98,7 @@ public class ShowDiscountCard extends Activity {
         id = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_ID);
         title = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_TITLE);
         barcode = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_BARCODE);
+        Log.d("TAG2", barcode);
         color = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_COLOR);
 
         titleView.setText(title);
