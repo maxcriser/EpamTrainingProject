@@ -46,13 +46,17 @@ public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String TYPE_LOCKED_SCREEN = "type_locked_screen";
-    public static final String TYPE_ITEMS = "type_items";
     public static final String CREDIT_CARD = "credit_card";
     public static final String SETUP_PIN = "setup_pin";
     public static final String TEXT_PLAIN = "text/plain";
     public static final String SHARE_BODY = "Donwloads my application on playmarket: cards_application.com";
     public static final String SHARE_TITLE = "Cards application";
     public static final String SHARE_USING = "Share using";
+    static final String COUNTRY_ID = "country";
+    static final String COUNTRY_CODE_ID = "countryCode";
+    static final String ISP_ID = "isp";
+    static final String QUERY_ID = "query";
+    static final String TIMEZONE_ID = "timezone";
     public static String selectItem;
     CardView credit;
     CardView discount;
@@ -113,9 +117,9 @@ public class MenuActivity extends AppCompatActivity
     private void getPermission(final byte CODE, final String PERMISSION) {
         if (ContextCompat.checkSelfPermission(this, PERMISSION) != PackageManager.PERMISSION_GRANTED) {
             if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                Toast.makeText(this, "Application need access to saved information", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.application_need_access, Toast.LENGTH_SHORT).show();
             } else if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                Toast.makeText(this, "Application need to save information", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.application_need_access, Toast.LENGTH_SHORT).show();
             }
             ActivityCompat.requestPermissions(this, new String[]{PERMISSION}, CODE);
         }
@@ -126,7 +130,7 @@ public class MenuActivity extends AppCompatActivity
         if (grantResults.length == 0) {
             return;
         } else if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this, "Permission has not been granted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.permission_has_not_been_granted, Toast.LENGTH_SHORT).show();
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
@@ -160,13 +164,6 @@ public class MenuActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        /*if (id == R.id.nav_camera) {
-
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else*/
         if (id == R.id.nav_pin) {
             Intent intent = new Intent(MenuActivity.this, LockerActivity.class);
             intent.putExtra(TYPE_LOCKED_SCREEN, SETUP_PIN);
@@ -215,7 +212,6 @@ public class MenuActivity extends AppCompatActivity
     }
 
     private class ParseLocation extends AsyncTask<Void, Void, String> {
-
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         String resultJson = "";
@@ -255,18 +251,17 @@ public class MenuActivity extends AppCompatActivity
             try {
                 dataJsonObj = new JSONObject(strJson);
 
-                pCountry = dataJsonObj.getString("country");
-                pCountryCode = dataJsonObj.getString("countryCode");
-                pIsp = dataJsonObj.getString("isp");
-                pQuery = dataJsonObj.getString("query");
-                pTimezone = dataJsonObj.getString("timezone");
+                pCountry = dataJsonObj.getString(COUNTRY_ID);
+                pCountryCode = dataJsonObj.getString(COUNTRY_CODE_ID);
+                pIsp = dataJsonObj.getString(ISP_ID);
+                pQuery = dataJsonObj.getString(QUERY_ID);
+                pTimezone = dataJsonObj.getString(TIMEZONE_ID);
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
-
 
     public void onMenuClicked(View view) {
         drawer.openDrawer(GravityCompat.START);

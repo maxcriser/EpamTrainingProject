@@ -6,9 +6,12 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.maxcriser.cards.R;
+
 import java.io.IOException;
 
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
+    public static final String DBG = "DBG";
     private SurfaceHolder mHolder;
     private Camera mCamera;
     private Camera.PreviewCallback previewCallback;
@@ -39,25 +42,20 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         if (mHolder.getSurface() == null) {
-            // preview surface does not exist
             return;
         }
-        // stop preview before making changes
         try {
             mCamera.stopPreview();
         } catch (Exception e) {
-            // ignore: tried to stop a non-existent preview
         }
-
         try {
-            // Hard code camera surface rotation 90 degs to match Activity view in portrait
             mCamera.setDisplayOrientation(90);
             mCamera.setPreviewDisplay(mHolder);
             mCamera.setPreviewCallback(previewCallback);
             mCamera.startPreview();
             mCamera.autoFocus(autoFocusCallback);
         } catch (Exception e) {
-            Log.d("DBG", "Error starting camera preview: " + e.getMessage());
+            Log.d(DBG, getContext().getString(R.string.error_starting_camera_preview) + e.getMessage());
         }
     }
 

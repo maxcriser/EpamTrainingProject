@@ -27,7 +27,6 @@ public class BarcodeBuilder {
 
         int even = 0, odd = 0;
         String codeToParse = codeStringValue;
-
         for (int index = 0; index < 6; index++) {
             even += Integer.valueOf(codeToParse.substring(index * 2 + 1, index * 2 + 2));
             odd += Integer.valueOf(codeToParse.substring(index * 2, index * 2 + 1));
@@ -35,27 +34,20 @@ public class BarcodeBuilder {
         even *= 3;
         int controlNumber = 10 - (even + odd) % 10;
         if (controlNumber == 10) controlNumber = 0;
-
         codeToParse += String.valueOf(controlNumber);
-
         return codeToParse;
-
     }
 
     private String DigitToUpperCase(String digit) {
         String letters = "ABCDEFGHIJ";
         int position = Integer.valueOf(digit);
-
         return letters.substring(position, position + 1);
-
     }
 
     private String DigitToLowerCase(String digit) {
         String letters = "abcdefghij";
         int position = Integer.valueOf(digit);
-
         return letters.substring(position, position + 1);
-
     }
 
     private String createEAN13Code(String rawCode) {
@@ -153,8 +145,6 @@ public class BarcodeBuilder {
                     + DigitToUpperCase(leftString.substring(4, 5))
                     + leftString.substring(5);
         }
-
-
         return leftCode + "-" + rightCode + "!";
     }
 

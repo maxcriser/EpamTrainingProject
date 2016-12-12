@@ -25,7 +25,7 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.reader.Colors;
 import com.maxcriser.cards.ui.PhotoEditor;
-import com.maxcriser.cards.ui.adapter.MyFragmentPagerAdapterTemplate;
+import com.maxcriser.cards.ui.adapter.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.util.UniqueStringGenerator;
 import com.maxcriser.cards.view.TextViews.RobotoRegular;
 
@@ -91,7 +91,7 @@ public class NFC extends AppCompatActivity {
         PAGE_COUNT = previewColors.size();
 
         pager.setPageMargin(pagerMargin);
-        pagerAdapter = new MyFragmentPagerAdapterTemplate(getSupportFragmentManager(),
+        pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 ID_TICKET_ITEM,
                 PAGE_COUNT);
 

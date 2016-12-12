@@ -2,8 +2,6 @@ package com.maxcriser.cards.ui;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,14 +12,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.isseiaoki.simplecropview.CropImageView;
-import com.isseiaoki.simplecropview.callback.CropCallback;
 import com.isseiaoki.simplecropview.callback.LoadCallback;
-import com.isseiaoki.simplecropview.callback.SaveCallback;
 import com.maxcriser.cards.R;
 
 import java.io.File;
 
-public class TestCamera extends Activity {
+public class CameraActivity extends Activity {
 
     CropImageView mCropView;
     private ImageView mImageView;
@@ -60,10 +56,12 @@ public class TestCamera extends Activity {
 
                         new LoadCallback() {
                             @Override
-                            public void onSuccess() {}
+                            public void onSuccess() {
+                            }
 
                             @Override
-                            public void onError() {}
+                            public void onError() {
+                            }
                         });
 
 //                mCropView.startCrop(

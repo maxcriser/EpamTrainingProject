@@ -26,20 +26,17 @@ import static android.view.View.GONE;
 
 public class BarcodeScanner extends AppCompatActivity {
 
+    public static final String Y_800 = "Y800";
     private RobotoThin mCancel;
     private RobotoThin mOk;
     private RobotoThin mSolution;
     private RobotoThin mBottomText;
     private FrameLayout mFrameSolution;
-
     private Camera mCamera;
     private Handler autoFocusHandler;
-
     private ImageScanner scanner;
-
     private boolean barcodeScanned = false;
     private boolean previewing = true;
-
     public static final String TAG_BARCODE = "barcode";
     private String scanResult;
     FrameLayout preview;
@@ -121,7 +118,7 @@ public class BarcodeScanner extends AppCompatActivity {
             Camera.Parameters parameters = camera.getParameters();
             Camera.Size size = parameters.getPreviewSize();
 
-            Image barcode = new Image(size.width, size.height, "Y800");
+            Image barcode = new Image(size.width, size.height, Y_800);
             barcode.setData(data);
 
             int result = scanner.scanImage(barcode);

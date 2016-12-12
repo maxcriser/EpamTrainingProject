@@ -14,5 +14,4 @@ final class ModelList {
                     ModelNFCItems.class,
                     ModelTickets.class,
             };
-
 }

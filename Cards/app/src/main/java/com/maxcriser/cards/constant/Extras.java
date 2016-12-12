@@ -1,7 +1,5 @@
 package com.maxcriser.cards.constant;
 
-import com.maxcriser.cards.database.models.ModelTickets;
-
 public class Extras {
     public static final String EXTRA_DISCOUNT_ID = "discount_id_extra";
     public static final String EXTRA_DISCOUNT_TITLE = "discount_title_extra";

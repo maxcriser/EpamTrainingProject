@@ -14,6 +14,12 @@ import static com.maxcriser.cards.constant.constants.WESTERN_UNION;
 
 public class PreviewReader {
 
+    private static final String TEAL = "TEAL";
+    private static final String COLOR_TEAL = "#009688";
+    private static final String CYAN = "CYAN";
+    private static final String COLOR_CYAN = "#00BCD4";
+    private static final String BLUE_GRAY = "BLUE GRAY";
+    private static final String COLOR_BLUE_GRAY = "#607D8B";
     private List<Colors> previewColors;
     private List<String> typeCard;
 
@@ -39,14 +45,13 @@ public class PreviewReader {
         Colors listTableItems = new Colors();
         listTableItems.setNameColorCards(name);
         listTableItems.setCodeColorCards(color);
-
         previewColors.add(listTableItems);
     }
 
     public void setPreviewColors() {
-        addPreviewColors("TEAL", "#009688");
-        addPreviewColors("CYAN", "#00BCD4");
-        addPreviewColors("BLUE GRAY", "#607D8B");
+        addPreviewColors(TEAL, COLOR_TEAL);
+        addPreviewColors(CYAN, COLOR_CYAN);
+        addPreviewColors(BLUE_GRAY, COLOR_BLUE_GRAY);
     }
 
     public List<Colors> getPreviewColors() {
@@ -63,5 +68,4 @@ public class PreviewReader {
         }
         return sPreviewReader;
     }
-
 }

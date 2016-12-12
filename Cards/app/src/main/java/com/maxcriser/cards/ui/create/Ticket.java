@@ -29,7 +29,7 @@ import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.reader.Colors;
 import com.maxcriser.cards.ui.PhotoEditor;
-import com.maxcriser.cards.ui.adapter.MyFragmentPagerAdapterTemplate;
+import com.maxcriser.cards.ui.adapter.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.util.UniqueStringGenerator;
 import com.maxcriser.cards.view.TextViews.RobotoRegular;
 
@@ -46,7 +46,10 @@ import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 public class Ticket extends AppCompatActivity {
 
     public static final String TICKET = "Ticket";
+    public static final String URI = "uri";
+    public static final String TICKET_ID = "TICKET";
     public final String APP_TAG = "thecrisertakephoto";
+    public static final String BEG_FILE_NAME = "ticket-";
     public String photoFileNameFront;
     public String photoFileNameBack;
     public final static int CAPTURE_IMAGE_FRONT = 1001;
@@ -87,8 +90,8 @@ public class Ticket extends AppCompatActivity {
         initViews();
         dateFormat = new SimpleDateFormat("d MMM yyyy", Locale.US);
         timeFormat = new SimpleDateFormat("h:mm a", Locale.US);
-        photoFileNameFront = "ticket-" + UniqueStringGenerator.getUniqueString() + "front_photo.jpg";
-        photoFileNameBack = "ticket-" + UniqueStringGenerator.getUniqueString() + "back_photo.jpg";
+        photoFileNameFront = BEG_FILE_NAME + UniqueStringGenerator.getUniqueString() + "front_photo.jpg";
+        photoFileNameBack = BEG_FILE_NAME + UniqueStringGenerator.getUniqueString() + "back_photo.jpg";
         setDateOnView();
         setTimeOnView();
 
@@ -102,7 +105,7 @@ public class Ticket extends AppCompatActivity {
         PAGE_COUNT = previewColors.size();
 
         pager.setPageMargin(pagerMargin);
-        pagerAdapter = new MyFragmentPagerAdapterTemplate(getSupportFragmentManager(),
+        pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 ID_TICKET_ITEM,
                 PAGE_COUNT);
 
@@ -137,7 +140,7 @@ public class Ticket extends AppCompatActivity {
                 if (requestCode == CAPTURE_IMAGE_FRONT) {
                     Uri takenPhotoUri = getPhotoFileUri(photoFileNameFront);
                     Intent intent = new Intent(this, PhotoEditor.class);
-                    intent.putExtra("uri", takenPhotoUri.toString());
+                    intent.putExtra(URI, takenPhotoUri.toString());
                     startActivityForResult(intent, EDIT_IMAGE_FRONT);
                     removeFront.setVisibility(View.VISIBLE);
                     frontPhoto.setClickable(false);
@@ -145,21 +148,21 @@ public class Ticket extends AppCompatActivity {
                 } else {
                     Uri takenPhotoUri = getPhotoFileUri(photoFileNameBack);
                     Intent intent = new Intent(this, PhotoEditor.class);
-                    intent.putExtra("uri", takenPhotoUri.toString());
+                    intent.putExtra(URI, takenPhotoUri.toString());
                     startActivityForResult(intent, EDIT_IMAGE_BACK);
                     removeBack.setVisibility(View.VISIBLE);
                     backPhoto.setClickable(false);
 //                    backPhoto.setImageURI(takenPhotoUri);
                 }
             } else {
-                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.picture_wasnt_taken, Toast.LENGTH_SHORT).show();
             }
         }
         if (requestCode == EDIT_IMAGE_FRONT) {
-            Uri editFrontUri = Uri.parse(data.getStringExtra("uri"));
+            Uri editFrontUri = Uri.parse(data.getStringExtra(URI));
             frontPhoto.setImageURI(editFrontUri);
         } else if (requestCode == EDIT_IMAGE_BACK) {
-            Uri editBackUri = Uri.parse(data.getStringExtra("uri"));
+            Uri editBackUri = Uri.parse(data.getStringExtra(URI));
             backPhoto.setImageURI(editBackUri);
         }
     }
@@ -185,7 +188,7 @@ public class Ticket extends AppCompatActivity {
             File mediaStorageDir = new File(
                     getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
             if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
-                Log.d(APP_TAG, "failed to create directory");
+                Log.d(APP_TAG, getResources().getString(R.string.filed_to_create_directory));
             }
             return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
         }
@@ -302,7 +305,7 @@ public class Ticket extends AppCompatActivity {
             db.insert(ModelTickets.class, cvNewTicket, new OnResultCallback<Long, Void>() {
                 @Override
                 public void onSuccess(Long pLong) {
-                    Log.d("TICKET" + " ID", pLong.toString());
+                    Log.d(TICKET_ID + " ID", pLong.toString());
                 }
 
                 @Override
@@ -315,10 +318,9 @@ public class Ticket extends AppCompatActivity {
             });
             onBackClicked(null);
 
-
         } else {
             mScrollView.fullScroll(ScrollView.FOCUS_UP);
-            Toast.makeText(this, "Please fill all fields and try again", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getResources().getString(R.string.fill_all_fields), Toast.LENGTH_LONG).show();
         }
     }
 

@@ -18,7 +18,6 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.StyleSpan;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -36,12 +35,10 @@ import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.database.models.ModelNFCItems;
 import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.handler.RecyclerItemClickListener;
-import com.maxcriser.cards.ui.adapter.BankCursorLoader;
 import com.maxcriser.cards.ui.adapter.CursorBankAdapter;
 import com.maxcriser.cards.ui.adapter.CursorDiscountAdapter;
 import com.maxcriser.cards.ui.adapter.CursorTicketAdapter;
-import com.maxcriser.cards.ui.adapter.DiscountCursorLoader;
-import com.maxcriser.cards.ui.adapter.TicketCursorLoader;
+import com.maxcriser.cards.ui.adapter.GenericCursorLoader;
 import com.maxcriser.cards.ui.create.Bank;
 import com.maxcriser.cards.ui.create.Ticket;
 import com.maxcriser.cards.ui.show.ShowBankCard;
@@ -160,66 +157,20 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
                     public void onSuccess(Cursor pCursor) {
                         if (pCursor.moveToFirst()) {
                             if (typeItems.equals(BANK_TITLE)) {
-                                String id = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.ID));
-                                String bank = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.TITLE));
-                                String cardholder = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.CARDHOLDER));
-                                String number = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.NUMBER));
-                                String pin = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.PIN));
-                                String valid = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.VALID));
-                                String type = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.TYPE));
-                                String color = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.BACKGROUND_COLOR));
-
-                                Intent intent = new Intent(ItemsActivity.this, ShowBankCard.class);
-                                intent.putExtra(EXTRA_BANK_ID, id);
-                                intent.putExtra(EXTRA_BANK_BANK, bank);
-                                intent.putExtra(EXTRA_BANK_CARDHOLDER, cardholder);
-                                intent.putExtra(EXTRA_BANK_NUMBER, number);
-                                intent.putExtra(EXTRA_BANK_PIN, pin);
-                                intent.putExtra(EXTRA_BANK_VALID, valid);
-                                intent.putExtra(EXTRA_BANK_TYPE, type);
-                                intent.putExtra(EXTRA_BANK_COLOR, color);
-                                startActivity(intent);
-
+                                showBank(pCursor);
                             } else if (typeItems.equals(DISCOUNT_TITLE)) {
-                                String cardID = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.ID));
-                                String cardTitle = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.TITLE));
-                                String cardBarcode = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.BARCODE));
-                                String cardColor = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.BACKGROUND_COLOR));
-
-                                Intent intent = new Intent(ItemsActivity.this, ShowDiscountCard.class);
-                                intent.putExtra(EXTRA_DISCOUNT_ID, cardID);
-                                intent.putExtra(EXTRA_DISCOUNT_TITLE, cardTitle);
-                                intent.putExtra(EXTRA_DISCOUNT_BARCODE, cardBarcode);
-                                intent.putExtra(EXTRA_DISCOUNT_COLOR, cardColor);
-                                Log.d("TAG", cardBarcode);
-                                startActivity(intent);
-
+                                showDiscount(pCursor);
                             } else if (typeItems.equals(TICKETS_TITLE)) {
-                                String id = pCursor.getString(pCursor.getColumnIndex(ModelTickets.ID));
-                                String nameTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.TITLE));
-                                String cardholderTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.CARDHOLDER));
-                                String dateTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.DATE));
-                                String timeTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.TIME));
-                                String color = pCursor.getString(pCursor.getColumnIndex(ModelTickets.BACKGROUND_COLOR));
-
-                                // TODO: 12.12.2016 ShowTicket.class
-                                Intent intent = new Intent(ItemsActivity.this, ShowTicket.class);
-                                intent.putExtra(EXTRA_TICKET_ID, id);
-                                intent.putExtra(EXTRA_TICKET_TITLE, nameTicket);
-                                intent.putExtra(EXTRA_TICKET_CARDHOLDER, cardholderTicket);
-                                intent.putExtra(EXTRA_TICKET_DATE, dateTicket);
-                                intent.putExtra(EXTRA_TICKET_TIME, timeTicket);
-                                intent.putExtra(EXTRA_TICKET_COLOR, color);
-                                startActivity(intent);
+                                showTicket(pCursor);
                             } else {
-
+                                // TODO: 12.12.2016 showNFC(pCursor)
                             }
                         }
                     }
 
                     @Override
                     public void onError(Exception pE) {
-                        Toast.makeText(ItemsActivity.this, "Cannot find card", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ItemsActivity.this, R.string.connot_find_card, Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -234,6 +185,60 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
 
             }
         }));
+    }
+
+    private void showTicket(Cursor pCursor) {
+        String id = pCursor.getString(pCursor.getColumnIndex(ModelTickets.ID));
+        String nameTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.TITLE));
+        String cardholderTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.CARDHOLDER));
+        String dateTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.DATE));
+        String timeTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.TIME));
+        String color = pCursor.getString(pCursor.getColumnIndex(ModelTickets.BACKGROUND_COLOR));
+
+        Intent intent = new Intent(ItemsActivity.this, ShowTicket.class);
+        intent.putExtra(EXTRA_TICKET_ID, id);
+        intent.putExtra(EXTRA_TICKET_TITLE, nameTicket);
+        intent.putExtra(EXTRA_TICKET_CARDHOLDER, cardholderTicket);
+        intent.putExtra(EXTRA_TICKET_DATE, dateTicket);
+        intent.putExtra(EXTRA_TICKET_TIME, timeTicket);
+        intent.putExtra(EXTRA_TICKET_COLOR, color);
+        startActivity(intent);
+    }
+
+    private void showDiscount(Cursor pCursor) {
+        String cardID = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.ID));
+        String cardTitle = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.TITLE));
+        String cardBarcode = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.BARCODE));
+        String cardColor = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.BACKGROUND_COLOR));
+
+        Intent intent = new Intent(ItemsActivity.this, ShowDiscountCard.class);
+        intent.putExtra(EXTRA_DISCOUNT_ID, cardID);
+        intent.putExtra(EXTRA_DISCOUNT_TITLE, cardTitle);
+        intent.putExtra(EXTRA_DISCOUNT_BARCODE, cardBarcode);
+        intent.putExtra(EXTRA_DISCOUNT_COLOR, cardColor);
+        startActivity(intent);
+    }
+
+    private void showBank(Cursor pCursor) {
+        String id = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.ID));
+        String bank = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.TITLE));
+        String cardholder = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.CARDHOLDER));
+        String number = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.NUMBER));
+        String pin = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.PIN));
+        String valid = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.VALID));
+        String type = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.TYPE));
+        String color = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.BACKGROUND_COLOR));
+
+        Intent intent = new Intent(ItemsActivity.this, ShowBankCard.class);
+        intent.putExtra(EXTRA_BANK_ID, id);
+        intent.putExtra(EXTRA_BANK_BANK, bank);
+        intent.putExtra(EXTRA_BANK_CARDHOLDER, cardholder);
+        intent.putExtra(EXTRA_BANK_NUMBER, number);
+        intent.putExtra(EXTRA_BANK_PIN, pin);
+        intent.putExtra(EXTRA_BANK_VALID, valid);
+        intent.putExtra(EXTRA_BANK_TYPE, type);
+        intent.putExtra(EXTRA_BANK_COLOR, color);
+        startActivity(intent);
     }
 
     private void initViews() {
@@ -303,14 +308,14 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         if (typeItems.equals(BANK_TITLE)) {
-            return new BankCursorLoader(this, searchText);
+            return new GenericCursorLoader(this, searchText, ModelBankCards.class);
         } else if (typeItems.equals(DISCOUNT_TITLE)) {
-            return new DiscountCursorLoader(this, searchText);
+            return new GenericCursorLoader(this, searchText, ModelDiscountCards.class);
         } else if (typeItems.equals(TICKETS_TITLE)) {
-            return new TicketCursorLoader(this, searchText);
+            return new GenericCursorLoader(this, searchText, ModelTickets.class);
         } else {
-            // TODO: 12.12.2016 NFCCursorLoader
-            return new BankCursorLoader(this, searchText);
+            // TODO: 12.12.2016 NFC
+            return new GenericCursorLoader(this, searchText, ModelBankCards.class);
         }
     }
 

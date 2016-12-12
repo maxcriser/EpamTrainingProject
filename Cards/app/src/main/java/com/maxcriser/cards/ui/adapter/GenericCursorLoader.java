@@ -6,17 +6,19 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.content.CursorLoader;
 
 import com.maxcriser.cards.database.DatabaseHelper;
-import com.maxcriser.cards.database.models.ModelTickets;
+import com.maxcriser.cards.database.models.ModelBankCards;
 
-public class TicketCursorLoader extends CursorLoader {
+public class GenericCursorLoader extends CursorLoader {
 
-    private static String SQL_WITH_QUERY = "SELECT * FROM " + DatabaseHelper.getTableName(ModelTickets.class) + " WHERE " + ModelTickets.TITLE + " LIKE ? ";
-    private static String SQL_ALL_ITEMS = "SELECT * FROM " + DatabaseHelper.getTableName(ModelTickets.class);
+    private static String SQL_WITH_QUERY;// = "SELECT * FROM " + DatabaseHelper.getTableName(ModelBankCards.class) + " WHERE " + ModelBankCards.TITLE + " LIKE ? ";
+    private static String SQL_ALL_ITEMS;// = "SELECT * FROM " + DatabaseHelper.getTableName(ModelBankCards.class);
     private DatabaseHelper db;
     private String mQuery;
 
-    public TicketCursorLoader(Context context, String pQuery) {
+    public GenericCursorLoader(Context context, String pQuery, Class modelClass) {
         super(context);
+        SQL_WITH_QUERY = "SELECT * FROM " + DatabaseHelper.getTableName(modelClass) + " WHERE " + ModelBankCards.TITLE + " LIKE ? ";
+        SQL_ALL_ITEMS = "SELECT * FROM " + DatabaseHelper.getTableName(modelClass);
         this.db = DatabaseHelper.getInstance(context, 1);
         mQuery = pQuery;
     }

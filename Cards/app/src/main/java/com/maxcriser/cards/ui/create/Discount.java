@@ -20,7 +20,7 @@ import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.reader.Colors;
 import com.maxcriser.cards.ui.BarcodeScanner;
-import com.maxcriser.cards.ui.adapter.MyFragmentPagerAdapterTemplate;
+import com.maxcriser.cards.ui.adapter.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.view.TextViews.EANP72TextView;
 import com.maxcriser.cards.view.TextViews.RobotoRegular;
 
@@ -31,7 +31,7 @@ import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
 public class Discount extends AppCompatActivity {
 
-    public static final String DISCOUNT = "Discount";
+    public static final String DISCOUNT_ID = "Discount";
     ContentValues cvNewDiscount;
     DatabaseHelper db;
     ScrollView mScrollView;
@@ -83,24 +83,23 @@ public class Discount extends AppCompatActivity {
         listColors = previewColors.get(0);
         myColorName = listColors.getNameColorCards();
         myColorCode = listColors.getCodeColorCards();
-        Log.d(DISCOUNT, myColorName + " " + myColorCode);
+        Log.d(DISCOUNT_ID, myColorName + " " + myColorCode);
 
         PAGE_COUNT = previewColors.size();
 
         pager.setPageMargin(pagerMargin);
-        pagerAdapter = new MyFragmentPagerAdapterTemplate(getSupportFragmentManager(),
+        pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 ID_DISCOUNT_ITEM,
                 PAGE_COUNT);
 
         pager.setAdapter(pagerAdapter);
-        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 listColors = previewColors.get(position);
                 myColorName = listColors.getNameColorCards();
                 myColorCode = listColors.getCodeColorCards();
-                Log.d(DISCOUNT, myColorName + " " + myColorCode);
+                Log.d(DISCOUNT_ID, myColorName + " " + myColorCode);
 
             }
 
@@ -112,7 +111,6 @@ public class Discount extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int state) {
             }
-
         });
     }
 
@@ -145,7 +143,7 @@ public class Discount extends AppCompatActivity {
             db.insert(ModelDiscountCards.class, cvNewDiscount, new OnResultCallback<Long, Void>() {
                 @Override
                 public void onSuccess(Long pLong) {
-                    Log.d(DISCOUNT + " ID", pLong.toString());
+                    Log.d(DISCOUNT_ID + " ID", pLong.toString());
                 }
 
                 @Override
@@ -159,7 +157,7 @@ public class Discount extends AppCompatActivity {
             onBackClicked(null);
         } else {
             mScrollView.fullScroll(ScrollView.FOCUS_UP);
-            Toast.makeText(this, "Please fill all fields and try again", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.fill_all_fields, Toast.LENGTH_LONG).show();
         }
     }
 

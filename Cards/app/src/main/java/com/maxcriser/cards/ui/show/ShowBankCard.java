@@ -42,7 +42,6 @@ public class ShowBankCard extends Activity {
     FloatingActionButton floatingActionButtonDelete, floatingActionButtonEdit;
     LinearLayout editLinear;
     ScrollView mScrollView;
-
     Boolean showPin = false;
     TextView editBank;
     EditText editName;
@@ -91,7 +90,6 @@ public class ShowBankCard extends Activity {
         registerForContextMenu(materialDesignFAM);
 
         dbHelper = DatabaseHelper.getInstance(this, 1);
-
 
         floatingActionButtonDelete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

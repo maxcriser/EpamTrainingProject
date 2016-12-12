@@ -98,7 +98,6 @@ public class ShowDiscountCard extends Activity {
         id = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_ID);
         title = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_TITLE);
         barcode = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_BARCODE);
-        Log.d("TAG2", barcode);
         color = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_COLOR);
 
         titleView.setText(title);

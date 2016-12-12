@@ -23,6 +23,7 @@ import java.io.File;
 
 public class PhotoEditor extends AppCompatActivity {
 
+    public static final String URI = "uri";
     public final String APP_TAG = "thecrisertakephoto";
     public String photoFileName = "photo.jpg";
     public final static int CAPTURE_IMAGE_FRONT = 1001;
@@ -48,7 +49,7 @@ public class PhotoEditor extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            String uri_Str = bundle.getString("uri");
+            String uri_Str = bundle.getString(URI);
             photoUri = Uri.parse(uri_Str);
             startCrop(photoUri);
         } else {
@@ -65,13 +66,12 @@ public class PhotoEditor extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_FRONT || requestCode == CAPTURE_IMAGE_BACK) {
             if (resultCode == RESULT_OK) {
-                Uri takenPhotoUri = getPhotoFileUri(photoFileName);
-                photoUri = takenPhotoUri;
+                photoUri = getPhotoFileUri(photoFileName);
 //                Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
                 startCrop(photoUri);
 
             } else {
-                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.picture_wasnt_taken, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -88,7 +88,7 @@ public class PhotoEditor extends AppCompatActivity {
 
                     @Override
                     public void onError() {
-                        Toast.makeText(PhotoEditor.this, "Can not load image, please try again", Toast.LENGTH_LONG).show();
+                        Toast.makeText(PhotoEditor.this, R.string.cannot_load_image, Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -112,7 +112,7 @@ public class PhotoEditor extends AppCompatActivity {
             File mediaStorageDir = new File(
                     getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
             if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
-                Log.d(APP_TAG, "failed to create directory");
+                Log.d(APP_TAG, getResources().getString(R.string.filed_to_create_directory));
             }
             return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
         }
@@ -162,7 +162,7 @@ public class PhotoEditor extends AppCompatActivity {
                     @Override
                     public void onError() {
                         mProgressBar.setVisibility(View.GONE);
-                        Toast.makeText(PhotoEditor.this, "Can not load image to crop, please try again", Toast.LENGTH_LONG).show();
+                        Toast.makeText(PhotoEditor.this, R.string.cannot_load_image_to_crop, Toast.LENGTH_LONG).show();
                     }
                 }
         );

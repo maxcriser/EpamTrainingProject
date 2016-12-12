@@ -14,7 +14,6 @@
     <uses-permission android:name="android.permission.READ_CALENDAR"/>
     <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
 
-
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true"/>
@@ -37,7 +36,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
         </activity>
 
         <activity
@@ -70,47 +68,21 @@
                 <category android:name="android.intent.category.DEFAULT"/>
                 <data android:mimeType="text/plain"/>
             </intent-filter>
-
         </activity>
 
         <activity
-            android:name=".ui.TestCamera"
+            android:name=".ui.CameraActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".ui.create.Bank"
             android:configChanges="orientation"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name=".ui.cards.BankCardsActivity"
-            android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing"/>
-
-        <activity
-            android:name=".ui.cards.DiscountCardsActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:windowSoftInputMode="stateHidden"/>
 
         <activity
             android:name=".ui.ItemsActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing"/>
-
-        <activity
-            android:name=".ui.cards.NFCCardsActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing"/>
-
-        <activity
-            android:name=".ui.cards.TicketsActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing"/>
@@ -140,15 +112,15 @@
 
         <activity
             android:name=".ui.create.Discount"
-            android:windowSoftInputMode="stateHidden"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
 
         <activity
             android:name=".ui.create.Ticket"
-            android:windowSoftInputMode="stateHidden"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
 
         <activity
             android:name=".ui.SetupPIN"
@@ -161,8 +133,6 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
-
-        <activity android:name=".ui.TakePhotoActivity"/>
 
     </application>
 

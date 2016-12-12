@@ -42,7 +42,7 @@ public class SetupPIN extends AppCompatActivity {
         page = Page.FIRST;
     }
 
-    private void initViews(){
+    private void initViews() {
         title = (TextView) findViewById(R.id.title_setup_pin);
         btnContinue = (Button) findViewById(R.id.btn_continue_setup);
         btnCancel = (Button) findViewById(R.id.btn_cancel_setup);

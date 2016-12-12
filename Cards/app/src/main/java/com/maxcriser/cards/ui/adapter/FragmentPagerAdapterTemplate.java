@@ -8,12 +8,12 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.ui.pager.ViewPagerPreviewCard;
 import com.maxcriser.cards.ui.pager.ViewPagerPreviewType;
 
-public class MyFragmentPagerAdapterTemplate extends FragmentPagerAdapter {
+public class FragmentPagerAdapterTemplate extends FragmentPagerAdapter {
 
     private int adapter;
     private int page;
 
-    public MyFragmentPagerAdapterTemplate(FragmentManager fm, int adapter, int page) {
+    public FragmentPagerAdapterTemplate(FragmentManager fm, int adapter, int page) {
         super(fm);
         this.adapter = adapter;
         this.page = page;

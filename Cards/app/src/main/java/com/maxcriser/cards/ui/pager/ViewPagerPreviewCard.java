@@ -20,11 +20,8 @@ public class ViewPagerPreviewCard extends Fragment {
 
     public static final String EXCEPTION_VP = "ExceptionVP";
     public static Object previewView;
-
     public static Object icon = R.drawable.type_visa;
-
     static final String ARGUMENT_PAGE_NUMBER_DISCOUNT = "arg_page_number";
-
     int pageNumberDiscount;
 
     public static ViewPagerPreviewCard newInstance(int pageDiscount, Object pView) {
@@ -47,7 +44,6 @@ public class ViewPagerPreviewCard extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate((Integer) previewView, null);
-
         TextView tvPage = (TextView) view.findViewById(R.id.title_main_cards);
         FrameLayout mLinearCard = (FrameLayout) view.findViewById(R.id.linear_card);
         ImageView imageView = (ImageView) view.findViewById(R.id.icon_bank_cards);
@@ -56,7 +52,6 @@ public class ViewPagerPreviewCard extends Fragment {
         } catch (Exception e) {
             Log.d(EXCEPTION_VP, e.toString());
         }
-
         Colors color = previewColors.get(pageNumberDiscount);
         mLinearCard.setBackgroundColor(Color.parseColor(color.getCodeColorCards()));
         tvPage.setText(color.getNameColorCards());

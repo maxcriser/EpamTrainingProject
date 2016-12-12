@@ -38,7 +38,6 @@ public class ShowTicket extends Activity {
     LinearLayout editLinear;
     ScrollView mScrollView;
 
-    Boolean showPin = false;
     TextView editTitle;
     EditText editName;
     String editTitleStr;

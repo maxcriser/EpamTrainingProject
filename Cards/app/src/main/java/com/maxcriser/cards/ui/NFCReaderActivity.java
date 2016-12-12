@@ -119,6 +119,9 @@ public class NFCReaderActivity extends AppCompatActivity {
 
     private class NdefReaderTask extends AsyncTask<Tag, Void, String> {
 
+        static final String READ_CONTENT = "Read content: ";
+        static final String UNSUPPORTED_ENCODING = "Unsupported Encoding";
+
         @Override
         protected String doInBackground(Tag... params) {
             Tag tag = params[0];
@@ -134,7 +137,7 @@ public class NFCReaderActivity extends AppCompatActivity {
                     try {
                         return readText(ndefRecord);
                     } catch (UnsupportedEncodingException e) {
-                        Log.e(TAG, "Unsupported Encoding", e);
+                        Log.e(TAG, UNSUPPORTED_ENCODING, e);
                     }
                 }
             }
@@ -151,7 +154,7 @@ public class NFCReaderActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             if (result != null) {
-                mTextView.setText("Read content: " + result);
+                mTextView.setText(READ_CONTENT + result);
             }
         }
     }

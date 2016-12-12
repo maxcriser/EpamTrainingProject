@@ -26,7 +26,6 @@ public class FalseAsyncTask {
 
             @Override
             public void run() {
-
                 try {
                     final Result result = task.doInBackground(param, new ProgressCallback<Progress>() {
                         @Override
@@ -51,5 +50,4 @@ public class FalseAsyncTask {
             }
         });
     }
-
 }

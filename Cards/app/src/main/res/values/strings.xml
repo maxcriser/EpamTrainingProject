@@ -98,6 +98,15 @@
     <string name="number_">Number:</string>
     <string name="pin_">PIN:</string>
     <string name="empty_card_name">Card name can not be empty</string>
+    <string name="error_starting_camera_preview">"Error starting camera preview: "</string>
+    <string name="picture_wasnt_taken">Picture wasn\'t taken!</string>
+    <string name="filed_to_create_directory">Failed to create directory</string>
+    <string name="fill_all_fields">Please fill all fields and try again</string>
+    <string name="connot_find_card">Cannot find card</string>
+    <string name="application_need_access">Application need access to saved information</string>
+    <string name="permission_has_not_been_granted">Permission has not been granted</string>
+    <string name="cannot_load_image">Can not load image, please try again</string>
+    <string name="cannot_load_image_to_crop">Can not load image to crop, please try again</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>

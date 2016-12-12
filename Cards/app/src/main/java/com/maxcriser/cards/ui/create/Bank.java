@@ -27,7 +27,7 @@ import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.reader.Colors;
 import com.maxcriser.cards.ui.PhotoEditor;
-import com.maxcriser.cards.ui.adapter.MyFragmentPagerAdapterTemplate;
+import com.maxcriser.cards.ui.adapter.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.ui.pager.ViewPagerPreviewCard;
 import com.maxcriser.cards.view.TextViews.RobotoRegular;
 
@@ -53,13 +53,16 @@ import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
 
 public class Bank extends AppCompatActivity {
 
+    public static final String URI = "uri";
+    public static final String BANK_ID = "BANK ";
     public final String APP_TAG = "thecrisertakephoto";
-    public String photoFileNameFront;
-    public String photoFileNameBack;
     public final static int CAPTURE_IMAGE_FRONT = 1001;
     public final static int CAPTURE_IMAGE_BACK = 1010;
     public final static int EDIT_IMAGE_FRONT = 1011;
     public final static int EDIT_IMAGE_BACK = 1100;
+    public static final String BANK = "Bank";
+    public String photoFileNameFront;
+    public String photoFileNameBack;
     ImageView frontPhoto;
     ImageView backPhoto;
     FrameLayout removeFront;
@@ -67,8 +70,6 @@ public class Bank extends AppCompatActivity {
     ContentValues cvNewCredit;
     DatabaseHelper db;
     ScrollView mScrollView;
-
-    public static final String BANK = "Bank";
     int currentPositionColors;
     static int PAGE_COUNT;
     static int PAGE_COUNT_TEMPLATE;
@@ -80,7 +81,6 @@ public class Bank extends AppCompatActivity {
     Colors listColors;
     RobotoRegular title;
     Calendar calendar = Calendar.getInstance();
-
     EditText bank;
     EditText cardholder;
     MaskedEditText number;
@@ -111,11 +111,11 @@ public class Bank extends AppCompatActivity {
 
         pagerTemplate.setPageMargin(pagerMargin);
         pagerTemplate.setMinimumHeight(156);
-        pagerAdapterTemplate = new MyFragmentPagerAdapterTemplate(getSupportFragmentManager(),
+        pagerAdapterTemplate = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 ID_BANK_CARD_ITEM,
                 PAGE_COUNT_TEMPLATE);
         pagerTemplate.setAdapter(pagerAdapterTemplate);
-        pagerTemplate.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        pagerTemplate.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
             public void onPageSelected(int position) {
@@ -139,12 +139,12 @@ public class Bank extends AppCompatActivity {
         myTypeCard = previewTypes.get(0);
         Log.d(BANK, myTypeCard);
         PAGE_COUNT = previewTypes.size();
-        pagerAdapterTypes = new MyFragmentPagerAdapterTemplate(getSupportFragmentManager(),
+        pagerAdapterTypes = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 ID_BANK_CARD_ITEM_TYPE,
                 PAGE_COUNT);
         pagerTypes.setAdapter(pagerAdapterTypes);
         ViewPagerPreviewCard.icon = R.drawable.type_visa;
-        pagerTypes.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        pagerTypes.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 myTypeCard = previewTypes.get(position);
@@ -216,7 +216,7 @@ public class Bank extends AppCompatActivity {
                 if (requestCode == CAPTURE_IMAGE_FRONT) {
                     Uri takenPhotoUri = getPhotoFileUri(photoFileNameFront);
                     Intent intent = new Intent(this, PhotoEditor.class);
-                    intent.putExtra("uri", takenPhotoUri.toString());
+                    intent.putExtra(URI, takenPhotoUri.toString());
                     startActivityForResult(intent, EDIT_IMAGE_FRONT);
                     removeFront.setVisibility(View.VISIBLE);
                     frontPhoto.setClickable(false);
@@ -224,21 +224,21 @@ public class Bank extends AppCompatActivity {
                 } else {
                     Uri takenPhotoUri = getPhotoFileUri(photoFileNameBack);
                     Intent intent = new Intent(this, PhotoEditor.class);
-                    intent.putExtra("uri", takenPhotoUri.toString());
+                    intent.putExtra(URI, takenPhotoUri.toString());
                     startActivityForResult(intent, EDIT_IMAGE_BACK);
                     removeBack.setVisibility(View.VISIBLE);
                     backPhoto.setClickable(false);
 //                    backPhoto.setImageURI(takenPhotoUri);
                 }
             } else {
-                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.picture_wasnt_taken, Toast.LENGTH_SHORT).show();
             }
         }
         if (requestCode == EDIT_IMAGE_FRONT) {
-            Uri editFrontUri = Uri.parse(data.getStringExtra("uri"));
+            Uri editFrontUri = Uri.parse(data.getStringExtra(URI));
             frontPhoto.setImageURI(editFrontUri);
         } else if (requestCode == EDIT_IMAGE_BACK) {
-            Uri editBackUri = Uri.parse(data.getStringExtra("uri"));
+            Uri editBackUri = Uri.parse(data.getStringExtra(URI));
             backPhoto.setImageURI(editBackUri);
         }
     }
@@ -253,18 +253,16 @@ public class Bank extends AppCompatActivity {
             File mediaStorageDir = new File(
                     getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
             if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
-                Log.d(APP_TAG, "failed to create directory");
+                Log.d(APP_TAG, getString(R.string.filed_to_create_directory));
             }
             return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
         }
         return null;
     }
 
-
     public void onFrontPhotoClicked(View view) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileNameFront)); // set the image file name
-
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, CAPTURE_IMAGE_FRONT);
         }
@@ -273,7 +271,6 @@ public class Bank extends AppCompatActivity {
     public void onBackPhotoClicked(View view) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileNameBack)); // set the image file name
-
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, CAPTURE_IMAGE_BACK);
         }
@@ -309,9 +306,8 @@ public class Bank extends AppCompatActivity {
         String validThru = validDate.getText().toString();
         String type = myTypeCard;
         String color = myColorCode;
-        Log.d("fill", bankStr + "\n" + cardholderStr + "\n" + numberStr + "\n" + pinStr + "\n" + validThru + "\n" + type + "\n" + color);
         if (bankStr.equals("") || cardholderStr.equals("") || numberStr.equals("") || validThru.equals("") || type.equals("") || color.equals("")) {
-            Toast.makeText(this, "Please fill all fields and try again", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.fill_all_fields, Toast.LENGTH_LONG).show();
             mScrollView.fullScroll(ScrollView.FOCUS_UP);
         } else {
             cvNewCredit = new ContentValues();
@@ -327,7 +323,7 @@ public class Bank extends AppCompatActivity {
             db.insert(ModelBankCards.class, cvNewCredit, new OnResultCallback<Long, Void>() {
                 @Override
                 public void onSuccess(Long pLong) {
-                    Log.d("BANK " + " ID", pLong.toString());
+                    Log.d(BANK_ID + " ID", pLong.toString());
                 }
 
                 @Override
