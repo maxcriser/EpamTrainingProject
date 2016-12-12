@@ -16,6 +16,7 @@ import com.maxcriser.cards.reader.Colors;
 
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
+//TODO rename class
 public class ViewPagerPreviewCard extends Fragment {
 
     public static final String EXCEPTION_VP = "ExceptionVP";
@@ -47,6 +48,10 @@ public class ViewPagerPreviewCard extends Fragment {
         TextView tvPage = (TextView) view.findViewById(R.id.title_main_cards);
         FrameLayout mLinearCard = (FrameLayout) view.findViewById(R.id.linear_card);
         ImageView imageView = (ImageView) view.findViewById(R.id.icon_bank_cards);
+        if(imageView!=null) {
+
+        }
+        //TODO it's bad solution, handle exceptions
         try {
             imageView.setImageResource((Integer) icon);
         } catch (Exception e) {

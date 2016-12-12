@@ -17,6 +17,7 @@ public class GenericCursorLoader extends CursorLoader {
 
     public GenericCursorLoader(Context context, String pQuery, Class modelClass) {
         super(context);
+        //TODO move to some sql utils
         SQL_WITH_QUERY = "SELECT * FROM " + DatabaseHelper.getTableName(modelClass) + " WHERE " + ModelBankCards.TITLE + " LIKE ? ";
         SQL_ALL_ITEMS = "SELECT * FROM " + DatabaseHelper.getTableName(modelClass);
         this.db = DatabaseHelper.getInstance(context, 1);

@@ -41,7 +41,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //        ContextHolder.getInstance().getContext().deleteDatabase(mDatabaseName);
         getWritableDatabase();
     }
-
+   //TODO move to Application
+    // TODO ue interfaces (see how Vova implement that)
     public static synchronized DatabaseHelper getInstance(Context pContext, int pVersion) {
         if (mHelper == null) {
             mHelper = new DatabaseHelper(pContext, pVersion);
@@ -231,9 +232,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException pE) {
+                    pE.printStackTrace();
+                }
+
                 final SQLiteDatabase database = getReadableDatabase();
                 String sql = "UPDATE " + getTableName(pModel) + " SET " + column + " = '" + newValue + "' WHERE " + searchColumn + " = " + valueOfSearchColumn;
                 database.execSQL(sql);
+
                 return null;
             }
 

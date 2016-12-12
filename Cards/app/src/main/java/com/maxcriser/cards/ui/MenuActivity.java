@@ -95,6 +95,7 @@ public class MenuActivity extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
+        // TODO: 12.12.2016 before use
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
             for (Map.Entry<Byte, String> entry : LaunchScreenActivity.REQUESTS.entrySet()
                     ) {

@@ -71,11 +71,6 @@
         </activity>
 
         <activity
-            android:name=".ui.CameraActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-
-        <activity
             android:name=".ui.create.Bank"
             android:configChanges="orientation"
             android:screenOrientation="portrait"

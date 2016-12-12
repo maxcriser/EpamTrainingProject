@@ -32,6 +32,7 @@ public class BarcodeScanner extends AppCompatActivity {
     private RobotoThin mSolution;
     private RobotoThin mBottomText;
     private FrameLayout mFrameSolution;
+//    @SuppressWarnings("Deprecated")
     private Camera mCamera;
     private Handler autoFocusHandler;
     private ImageScanner scanner;

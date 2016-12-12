@@ -51,6 +51,7 @@ import static com.maxcriser.cards.constant.constants.WESTERN_UNION;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
 
+//TODO BsnkActivity
 public class Bank extends AppCompatActivity {
 
     public static final String URI = "uri";
@@ -63,6 +64,7 @@ public class Bank extends AppCompatActivity {
     public static final String BANK = "Bank";
     public String photoFileNameFront;
     public String photoFileNameBack;
+    //TODO private
     ImageView frontPhoto;
     ImageView backPhoto;
     FrameLayout removeFront;
@@ -97,7 +99,7 @@ public class Bank extends AppCompatActivity {
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
         initViews();
         db = DatabaseHelper.getInstance(this, 1);
-
+//todo refactor that method. move to initView for example
         setDateOnView();
         currentPositionColors = 0;
         title.setText(NEW_BANK_TITLE);
@@ -289,10 +291,7 @@ public class Bank extends AppCompatActivity {
         removeFront.setVisibility(GONE);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
+
 
     public void onBackClicked(View view) {
         super.onBackPressed();

@@ -41,7 +41,7 @@ public class Discount extends AppCompatActivity {
     ViewPager pager;
     PagerAdapter pagerAdapter;
     EditText mEditText;
-
+    //TODO private
     EANP72TextView mEANP72TextView;
     String mBarcode;
 
@@ -86,7 +86,7 @@ public class Discount extends AppCompatActivity {
         Log.d(DISCOUNT_ID, myColorName + " " + myColorCode);
 
         PAGE_COUNT = previewColors.size();
-
+        //TODO move to common class
         pager.setPageMargin(pagerMargin);
         pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 ID_DISCOUNT_ITEM,

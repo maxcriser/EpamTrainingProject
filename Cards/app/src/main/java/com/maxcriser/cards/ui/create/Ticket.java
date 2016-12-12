@@ -94,7 +94,7 @@ public class Ticket extends AppCompatActivity {
         photoFileNameBack = BEG_FILE_NAME + UniqueStringGenerator.getUniqueString() + "back_photo.jpg";
         setDateOnView();
         setTimeOnView();
-
+// TODO: 12.12.2016 version
         db = DatabaseHelper.getInstance(this, 1);
         title.setText(NEW_TICKET_TITLE);
 

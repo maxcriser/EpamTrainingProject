@@ -1,14 +1,17 @@
 package com.maxcriser.cards.constant;
 
 public class constants {
-    public static final String VISA = "visa";
-    public static final String MASTERCARD = "mastercard";
-    public static final String AMEX = "amex";
-    public static final String MAESTRO = "maestro";
-    public static final String WESTERN_UNION = "western_union";
-    public static final String JCB = "jcb";
-    public static final String DINERS_CLUB = "diners_club";
-    public static final String BELCARD = "belcard";
+
+    public interface CARDS {
+        public static final String VISA = "visa";
+        public static final String MASTERCARD = "mastercard";
+        public static final String AMEX = "amex";
+        public static final String MAESTRO = "maestro";
+        public static final String WESTERN_UNION = "western_union";
+        public static final String JCB = "jcb";
+        public static final String DINERS_CLUB = "diners_club";
+        public static final String BELCARD = "belcard";
+    }
 
     public static final String BUTTON_ZERO = "0";
     public static final String BUTTON_ONE = "1";
