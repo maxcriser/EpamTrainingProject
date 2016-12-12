@@ -1,5 +1,7 @@
 package com.maxcriser.cards.constant;
 
+import com.maxcriser.cards.database.models.ModelTickets;
+
 public class Extras {
     public static final String EXTRA_DISCOUNT_ID = "discount_id_extra";
     public static final String EXTRA_DISCOUNT_TITLE = "discount_title_extra";
@@ -15,4 +17,10 @@ public class Extras {
     public static final String EXTRA_BANK_TYPE = "extra_bank_type";
     public static final String EXTRA_BANK_COLOR = "extra_bank_color";
 
+    public static final String EXTRA_TICKET_ID = "extra_ticket_id";
+    public static final String EXTRA_TICKET_TITLE = "extra_ticket_title";
+    public static final String EXTRA_TICKET_CARDHOLDER = "extra_ticket_cardholder";
+    public static final String EXTRA_TICKET_DATE = "extra_ticket_date";
+    public static final String EXTRA_TICKET_TIME = "extra_ticket_time";
+    public static final String EXTRA_TICKET_COLOR = "extra_ticket_color";
 }

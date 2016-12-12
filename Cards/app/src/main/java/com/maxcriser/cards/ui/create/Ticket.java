@@ -2,6 +2,7 @@ package com.maxcriser.cards.ui.create;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,12 +18,15 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.maxcriser.cards.R;
+import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.database.DatabaseHelper;
+import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.reader.Colors;
 import com.maxcriser.cards.ui.PhotoEditor;
 import com.maxcriser.cards.ui.adapter.MyFragmentPagerAdapterTemplate;
@@ -54,18 +58,23 @@ public class Ticket extends AppCompatActivity {
     TextView time;
     ImageView frontPhoto;
     ImageView backPhoto;
-    Calendar calendar = Calendar.getInstance();
+    SimpleDateFormat dateFormat;
+    SimpleDateFormat timeFormat;
 
+    Calendar calendar = Calendar.getInstance();
     static int PAGE_COUNT;
     static final int pagerMargin = 16;
     ViewPager pager;
     PagerAdapter pagerAdapter;
+    ContentValues cvNewTicket;
+    ScrollView mScrollView;
 
     Colors listColors;
     CheckBox checkBox;
     String myColorName;
     String myColorCode;
     EditText ticketTitle;
+    EditText ticketCardholder;
     RobotoRegular title;
     FrameLayout removeFront;
     FrameLayout removeBack;
@@ -76,6 +85,8 @@ public class Ticket extends AppCompatActivity {
         setContentView(R.layout.activity_add_ticket);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
         initViews();
+        dateFormat = new SimpleDateFormat("d MMM yyyy", Locale.US);
+        timeFormat = new SimpleDateFormat("h:mm a", Locale.US);
         photoFileNameFront = "ticket-" + UniqueStringGenerator.getUniqueString() + "front_photo.jpg";
         photoFileNameBack = "ticket-" + UniqueStringGenerator.getUniqueString() + "back_photo.jpg";
         setDateOnView();
@@ -182,6 +193,8 @@ public class Ticket extends AppCompatActivity {
     }
 
     private void initViews() {
+        mScrollView = (ScrollView) findViewById(R.id.scrollView);
+        ticketCardholder = (EditText) findViewById(R.id.cardholder);
         frontPhoto = (ImageView) findViewById(R.id.front_photo);
         backPhoto = (ImageView) findViewById(R.id.back_photo);
         checkBox = (CheckBox) findViewById(R.id.add_to_calendar);
@@ -195,13 +208,11 @@ public class Ticket extends AppCompatActivity {
     }
 
     void setDateOnView() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM yyyy", Locale.US);
         date.setText(dateFormat.format(calendar.getTime()));
     }
 
     void setTimeOnView() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("h:mm a", Locale.US);
-        time.setText(dateFormat.format(calendar.getTime()));
+        time.setText(timeFormat.format(calendar.getTime()));
     }
 
     public void onBackClicked(View view) {
@@ -264,17 +275,50 @@ public class Ticket extends AppCompatActivity {
     }
 
     public void onCreateCardClicked(View view) {
-        if (!ticketTitle.getText().toString().equals("")) {
+        String cardholderStr = ticketCardholder.getText().toString();
+        String titleStr = ticketTitle.getText().toString();
+        String timeStr = timeFormat.format(calendar.getTime());
+        String dateStr = dateFormat.format(calendar.getTime());
+        if (!titleStr.equals("") && !cardholderStr.equals("") && !timeStr.equals("") && !dateStr.equals("")) {
             if (checkBox.isChecked()) {
-                Intent intent = new Intent(Intent.ACTION_EDIT);
-                intent.setType("vnd.android.cursor.item/event");
-                intent.putExtra("beginTime", calendar.getTimeInMillis());
-                intent.putExtra("allDay", false);
-                intent.putExtra("rrule", "FREQ=YEARLY");
-                intent.putExtra("endTime", calendar.getTimeInMillis() + 60 * 60 * 1000);
-                intent.putExtra("title", ticketTitle.getText().toString());
-                startActivity(intent);
+//                Intent intent = new Intent(Intent.ACTION_EDIT);
+//                intent.setType("vnd.android.cursor.item/event");
+//                intent.putExtra("beginTime", calendar.getTimeInMillis());
+//                intent.putExtra("allDay", false);
+//                intent.putExtra("rrule", "FREQ=YEARLY");
+//                intent.putExtra("endTime", calendar.getTimeInMillis() + 60 * 60 * 1000);
+//                intent.putExtra("title", ticketTitle.getText().toString());
+//                startActivity(intent);
             }
+
+            cvNewTicket = new ContentValues();
+            cvNewTicket.put(ModelTickets.TITLE, titleStr);
+            cvNewTicket.put(ModelTickets.CARDHOLDER, cardholderStr);
+            cvNewTicket.put(ModelTickets.DATE, dateStr);
+            cvNewTicket.put(ModelTickets.TIME, timeStr);
+            cvNewTicket.put(ModelTickets.BACKGROUND_COLOR, myColorCode);
+            cvNewTicket.put(ModelTickets.ID, (Integer) null);
+
+            db.insert(ModelTickets.class, cvNewTicket, new OnResultCallback<Long, Void>() {
+                @Override
+                public void onSuccess(Long pLong) {
+                    Log.d("TICKET" + " ID", pLong.toString());
+                }
+
+                @Override
+                public void onError(Exception pE) {
+                }
+
+                @Override
+                public void onProgressChanged(Void pVoid) {
+                }
+            });
+            onBackClicked(null);
+
+
+        } else {
+            mScrollView.fullScroll(ScrollView.FOCUS_UP);
+            Toast.makeText(this, "Please fill all fields and try again", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -288,5 +332,9 @@ public class Ticket extends AppCompatActivity {
         frontPhoto.setImageURI(null);
         frontPhoto.setClickable(true);
         removeFront.setVisibility(GONE);
+    }
+
+    public void onCancelClicked(View view) {
+        super.onBackPressed();
     }
 }

@@ -49,6 +49,7 @@
                     tools:text="Name"/>
 
                 <TextView
+                    android:id="@+id/subhead_main_cards"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
@@ -70,6 +71,7 @@
                 android:orientation="vertical">
 
                 <com.maxcriser.cards.view.TextViews.RobotoThin
+                    android:id="@+id/date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="6dp"
@@ -80,6 +82,7 @@
                     android:textSize="12sp"/>
 
                 <TextView
+                    android:id="@+id/time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="6dp"

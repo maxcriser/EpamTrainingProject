@@ -38,11 +38,14 @@ import com.maxcriser.cards.handler.RecyclerItemClickListener;
 import com.maxcriser.cards.ui.adapter.BankCursorLoader;
 import com.maxcriser.cards.ui.adapter.CursorBankAdapter;
 import com.maxcriser.cards.ui.adapter.CursorDiscountAdapter;
+import com.maxcriser.cards.ui.adapter.CursorTicketAdapter;
 import com.maxcriser.cards.ui.adapter.DiscountCursorLoader;
+import com.maxcriser.cards.ui.adapter.TicketCursorLoader;
 import com.maxcriser.cards.ui.create.Bank;
 import com.maxcriser.cards.ui.create.Ticket;
 import com.maxcriser.cards.ui.show.ShowBankCard;
 import com.maxcriser.cards.ui.show.ShowDiscountCard;
+import com.maxcriser.cards.ui.show.ShowTicket;
 import com.maxcriser.cards.view.TextViews.RobotoRegular;
 
 import static android.view.View.GONE;
@@ -58,6 +61,12 @@ import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_BARCODE;
 import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_COLOR;
 import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_ID;
 import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_TITLE;
+import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_CARDHOLDER;
+import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_COLOR;
+import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_DATE;
+import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_ID;
+import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_TIME;
+import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_TITLE;
 import static com.maxcriser.cards.constant.constants.BANK_TITLE;
 import static com.maxcriser.cards.constant.constants.DISCOUNT_TITLE;
 import static com.maxcriser.cards.constant.constants.TICKETS_TITLE;
@@ -71,7 +80,8 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     RecyclerView recyclerItems;
     CursorBankAdapter bankAdapter;
     CursorDiscountAdapter discountAdapter;
-    // TODO: 12.12.2016  Ticket and NFC adapters
+    CursorTicketAdapter ticketAdapter;
+    // TODO: 12.12.2016  NFC adapter
     CardView toolbarBack;
     CardView toolbarSearch;
     LinearLayout linearEmpty;
@@ -183,7 +193,22 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
                                 startActivity(intent);
 
                             } else if (typeItems.equals(TICKETS_TITLE)) {
+                                String id = pCursor.getString(pCursor.getColumnIndex(ModelTickets.ID));
+                                String nameTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.TITLE));
+                                String cardholderTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.CARDHOLDER));
+                                String dateTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.DATE));
+                                String timeTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.TIME));
+                                String color = pCursor.getString(pCursor.getColumnIndex(ModelTickets.BACKGROUND_COLOR));
 
+                                // TODO: 12.12.2016 ShowTicket.class
+                                Intent intent = new Intent(ItemsActivity.this, ShowTicket.class);
+                                intent.putExtra(EXTRA_TICKET_ID, id);
+                                intent.putExtra(EXTRA_TICKET_TITLE, nameTicket);
+                                intent.putExtra(EXTRA_TICKET_CARDHOLDER, cardholderTicket);
+                                intent.putExtra(EXTRA_TICKET_DATE, dateTicket);
+                                intent.putExtra(EXTRA_TICKET_TIME, timeTicket);
+                                intent.putExtra(EXTRA_TICKET_COLOR, color);
+//                                startActivity(intent);
                             } else {
 
                             }
@@ -280,8 +305,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         } else if (typeItems.equals(DISCOUNT_TITLE)) {
             return new DiscountCursorLoader(this, searchText);
         } else if (typeItems.equals(TICKETS_TITLE)) {
-            // TODO: 12.12.2016 TicketCursorLoader
-            return new BankCursorLoader(this, searchText);
+            return new TicketCursorLoader(this, searchText);
         } else {
             // TODO: 12.12.2016 NFCCursorLoader
             return new BankCursorLoader(this, searchText);
@@ -314,7 +338,8 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
             discountAdapter = new CursorDiscountAdapter(data, ItemsActivity.this, R.layout.item_discount);
             recyclerItems.setAdapter(discountAdapter);
         } else if (typeItems.equals(TICKETS_TITLE)) {
-            // TODO: 12.12.2016 CTicketAdapter
+            ticketAdapter = new CursorTicketAdapter(data, ItemsActivity.this, R.layout.item_ticket);
+            recyclerItems.setAdapter(ticketAdapter);
         } else {
             // TODO: 12.12.2016 CNFCAdapter
         }
@@ -326,15 +351,18 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
     public void onToolbarBackClicked(View view) {
+        Integer count;
         if (typeItems.equals(BANK_TITLE)) {
-            recyclerItems.smoothScrollToPosition(bankAdapter.getItemCount() - 1);
+            count = bankAdapter.getItemCount() - 1;
         } else if (typeItems.equals(DISCOUNT_TITLE)) {
-            recyclerItems.smoothScrollToPosition(discountAdapter.getItemCount() - 1);
+            count = discountAdapter.getItemCount() - 1;
         } else if (typeItems.equals(TICKETS_TITLE)) {
-            // TODO: 12.12.2016 CTicketAdapter
+            count = ticketAdapter.getItemCount() - 1;
         } else {
             // TODO: 12.12.2016 CNFCAdapter
+            count = bankAdapter.getItemCount() - 1;
         }
+        recyclerItems.smoothScrollToPosition(count);
     }
 
     public void onSearchClicked(View view) {

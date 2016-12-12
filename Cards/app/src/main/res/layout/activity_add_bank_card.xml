@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-       xmlns:app="http://schemas.android.com/apk/res-auto"
-       xmlns:card_view="http://schemas.android.com/tools"
+       xmlns:app="http://schemas.android.com/tools"
+       xmlns:card_view="http://schemas.android.com/apk/res-auto"
        android:layout_width="match_parent"
        android:layout_height="match_parent">
 
@@ -17,17 +17,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp">
+                android:orientation="vertical">
 
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    card_view:cardCornerRadius="2dp"
-                    card_view:cardElevation="2dp">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -192,7 +190,7 @@
                                 android:layout_marginStart="8dp"
                                 android:layout_marginTop="4dp"
                                 android:layout_weight="1"
-                                app:cardBackgroundColor="@color/card_view"
+                                card_view:cardBackgroundColor="@color/card_view"
                                 card_view:cardCornerRadius="2dp"
                                 card_view:cardElevation="2dp">
 
@@ -326,7 +324,7 @@
                         <include layout="@layout/fragment_cancel_save"/>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
-            </FrameLayout>
+            </LinearLayout>
         </ScrollView>
     </LinearLayout>
 </merge>

@@ -368,6 +368,6 @@ public class Bank extends AppCompatActivity {
     }
 
     public void onCancelClicked(View view) {
-
+        onBackClicked(null);
     }
 }
