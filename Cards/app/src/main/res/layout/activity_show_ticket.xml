@@ -109,7 +109,6 @@
                                         android:layout_gravity="start"
                                         android:layout_marginStart="16dp"
                                         android:gravity="center"
-                                        android:onClick="onDateClicked"
                                         android:textColor="@color/text_toolbar"
                                         android:textSize="16sp"
                                         tools:text="16 SEPT 2016"/>
@@ -121,7 +120,6 @@
                                         android:layout_gravity="end"
                                         android:layout_marginEnd="16dp"
                                         android:gravity="center|end"
-                                        android:onClick="onTimeClicked"
                                         android:textAllCaps="true"
                                         android:textColor="@color/text_toolbar"
                                         android:textSize="16sp"

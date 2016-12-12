@@ -208,7 +208,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
                                 intent.putExtra(EXTRA_TICKET_DATE, dateTicket);
                                 intent.putExtra(EXTRA_TICKET_TIME, timeTicket);
                                 intent.putExtra(EXTRA_TICKET_COLOR, color);
-//                                startActivity(intent);
+                                startActivity(intent);
                             } else {
 
                             }
