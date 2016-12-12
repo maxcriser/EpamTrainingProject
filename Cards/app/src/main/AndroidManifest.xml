@@ -120,6 +120,11 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:name=".ui.show.ShowBankCard"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".ui.BarcodeScanner"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>

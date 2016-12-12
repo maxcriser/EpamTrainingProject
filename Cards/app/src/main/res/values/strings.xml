@@ -94,6 +94,9 @@
     <string name="_02_16">02/16</string>
     <string name="john_johnson">JOHN JOHNSON</string>
     <string name="pin">PIN</string>
+    <string name="cardholder_">Cardholder:</string>
+    <string name="number_">Number:</string>
+    <string name="pin_">PIN:</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>

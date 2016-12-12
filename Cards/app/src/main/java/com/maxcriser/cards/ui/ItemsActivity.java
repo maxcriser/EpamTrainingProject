@@ -41,17 +41,26 @@ import com.maxcriser.cards.ui.adapter.CursorDiscountAdapter;
 import com.maxcriser.cards.ui.adapter.DiscountCursorLoader;
 import com.maxcriser.cards.ui.create.Bank;
 import com.maxcriser.cards.ui.create.Ticket;
+import com.maxcriser.cards.ui.show.ShowBankCard;
 import com.maxcriser.cards.ui.show.ShowDiscountCard;
 import com.maxcriser.cards.view.TextViews.RobotoRegular;
 
 import static android.view.View.GONE;
+import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_BANK;
+import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_CARDHOLDER;
+import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_COLOR;
+import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_ID;
+import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_NUMBER;
+import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_PIN;
+import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_TYPE;
+import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_VALID;
+import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_BARCODE;
+import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_COLOR;
+import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_ID;
+import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_TITLE;
 import static com.maxcriser.cards.constant.constants.BANK_TITLE;
 import static com.maxcriser.cards.constant.constants.DISCOUNT_TITLE;
 import static com.maxcriser.cards.constant.constants.TICKETS_TITLE;
-import static com.maxcriser.cards.ui.cards.DiscountCardsActivity.EXTRA_DISCOUNT_BARCODE;
-import static com.maxcriser.cards.ui.cards.DiscountCardsActivity.EXTRA_DISCOUNT_COLOR;
-import static com.maxcriser.cards.ui.cards.DiscountCardsActivity.EXTRA_DISCOUNT_ID;
-import static com.maxcriser.cards.ui.cards.DiscountCardsActivity.EXTRA_DISCOUNT_TITLE;
 
 public class ItemsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -140,6 +149,25 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
                     public void onSuccess(Cursor pCursor) {
                         if (pCursor.moveToFirst()) {
                             if (typeItems.equals(BANK_TITLE)) {
+                                String id = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.ID));
+                                String bank = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.TITLE));
+                                String cardholder = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.CARDHOLDER));
+                                String number = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.NUMBER));
+                                String pin = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.PIN));
+                                String valid = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.VALID));
+                                String type = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.TYPE));
+                                String color = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.BACKGROUND_COLOR));
+
+                                Intent intent = new Intent(ItemsActivity.this, ShowBankCard.class);
+                                intent.putExtra(EXTRA_BANK_ID, id);
+                                intent.putExtra(EXTRA_BANK_BANK, bank);
+                                intent.putExtra(EXTRA_BANK_CARDHOLDER, cardholder);
+                                intent.putExtra(EXTRA_BANK_NUMBER, number);
+                                intent.putExtra(EXTRA_BANK_PIN, pin);
+                                intent.putExtra(EXTRA_BANK_VALID, valid);
+                                intent.putExtra(EXTRA_BANK_TYPE, type);
+                                intent.putExtra(EXTRA_BANK_COLOR, color);
+                                startActivity(intent);
 
                             } else if (typeItems.equals(DISCOUNT_TITLE)) {
                                 String cardID = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.ID));

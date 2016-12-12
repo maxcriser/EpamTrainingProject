@@ -24,6 +24,10 @@ import com.maxcriser.cards.view.TextViews.EANP72TextView;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_BARCODE;
+import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_COLOR;
+import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_ID;
+import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_TITLE;
 
 public class ShowDiscountCard extends Activity {
 
@@ -90,10 +94,10 @@ public class ShowDiscountCard extends Activity {
         });
 
         Intent barcodeIntent = getIntent();
-        id = barcodeIntent.getStringExtra(DiscountCardsActivity.EXTRA_DISCOUNT_ID);
-        title = barcodeIntent.getStringExtra(DiscountCardsActivity.EXTRA_DISCOUNT_TITLE);
-        barcode = barcodeIntent.getStringExtra(DiscountCardsActivity.EXTRA_DISCOUNT_BARCODE);
-        color = barcodeIntent.getStringExtra(DiscountCardsActivity.EXTRA_DISCOUNT_COLOR);
+        id = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_ID);
+        title = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_TITLE);
+        barcode = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_BARCODE);
+        color = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_COLOR);
 
         titleView.setText(title);
 

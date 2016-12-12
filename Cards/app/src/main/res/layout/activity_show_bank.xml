@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:card_view="http://schemas.android.com/apk/res-auto"
+       xmlns:tools="http://schemas.android.com/tools"
        android:layout_width="match_parent"
        android:layout_height="match_parent">
-
-    <include layout="@layout/floating_menu_show"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,102 +16,277 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.CardView
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp">
+                android:padding="8dp">
 
-                <LinearLayout
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_margin="8dp"
+                    card_view:cardCornerRadius="2dp"
+                    card_view:cardElevation="2dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <FrameLayout
-                            android:background="@color/gray_bottom_create_card"
-                            android:id="@+id/linear_frame_title_discount"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
-                            <LinearLayout
-                                android:id="@+id/linear_edit_frame_title_discount"
+                            <FrameLayout
+                                android:id="@+id/linear_frame_title_discount"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:visibility="gone">
+                                android:background="@color/gray_bottom_create_card">
+
+                                <LinearLayout
+                                    android:id="@+id/linear_edit_frame_title_discount"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    android:visibility="gone">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="48dp"
+                                        android:gravity="center|start"
+                                        android:paddingLeft="16dp"
+                                        android:text="@string/name"
+                                        android:textColor="@color/text_toolbar"
+                                        android:textSize="18sp"/>
+
+                                    <EditText
+                                        android:id="@+id/rename_discount_title"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="48dp"
+                                        android:inputType="text"
+                                        android:maxLines="1"
+                                        android:paddingLeft="16dp"
+                                        android:textColor="@color/text_toolbar"
+                                        android:textSize="16sp"/>
+
+                                </LinearLayout>
 
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:id="@+id/title_show_discount"
+                                    android:layout_width="match_parent"
                                     android:layout_height="48dp"
-                                    android:gravity="center|start"
-                                    android:paddingLeft="16dp"
+                                    android:gravity="center|center"
                                     android:text="@string/name"
                                     android:textColor="@color/text_toolbar"
                                     android:textSize="18sp"/>
+                            </FrameLayout>
 
-                                <EditText
-                                    android:id="@+id/rename_discount_title"
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0.5dp"
+                                android:background="@color/text_toolbar"/>
+
+
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:background="@color/text_toolbar">
+
+                                <ImageView
+                                    android:id="@+id/type_card"
                                     android:layout_width="match_parent"
-                                    android:layout_height="48dp"
-                                    android:inputType="text"
-                                    android:maxLines="1"
-                                    android:paddingLeft="16dp"
-                                    android:textColor="@color/text_toolbar"
-                                    android:textSize="16sp"/>
+                                    android:layout_height="56dp"
+                                    android:background="@android:color/white"/>
+
+                            </FrameLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <LinearLayout
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:padding="8dp">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="36dp"
+                                        android:gravity="center|end"
+                                        android:text="@string/cardholder_"
+                                        android:textColor="@color/text_toolbar"
+                                        android:textSize="16sp"/>
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="36dp"
+                                        android:gravity="center|end"
+                                        android:text="@string/number_"
+                                        android:textColor="@color/text_toolbar"
+                                        android:textSize="16sp"/>
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="36dp"
+                                        android:gravity="center|end"
+                                        android:text="@string/pin_"
+                                        android:textColor="@color/text_toolbar"
+                                        android:textSize="16sp"/>
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="36dp"
+                                        android:gravity="center|end"
+                                        android:text="@string/valid_thru"
+                                        android:textColor="@color/text_toolbar"
+                                        android:textSize="12sp"/>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:padding="8dp">
+
+                                    <EditText
+                                        android:id="@+id/cardholder"
+                                        android:layout_width="205dp"
+                                        android:layout_height="36dp"
+                                        android:gravity="center|start"
+                                        android:maxLines="1"
+                                        android:textColor="@color/text_toolbar"
+                                        android:textSize="16sp"
+                                        tools:text="John Johnson"/>
+
+                                    <EditText
+                                        android:id="@+id/number"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="36dp"
+                                        android:gravity="center|start"
+                                        android:textColor="@color/text_toolbar"
+                                        android:textSize="16sp"
+                                        tools:text="4444 0000 4444 0000"/>
+
+
+                                    <EditText
+                                        android:id="@+id/pin"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="36dp"
+                                        android:gravity="center|start"
+                                        android:textColor="@color/text_toolbar"
+                                        android:textSize="16sp"
+                                        tools:text="2552"/>
+
+                                    <EditText
+                                        android:id="@+id/valid"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="36dp"
+                                        android:gravity="center|start"
+                                        android:textColor="@color/text_toolbar"
+                                        android:textSize="16sp"
+                                        tools:text="02/16"/>
+
+                                </LinearLayout>
 
                             </LinearLayout>
 
-                            <TextView
-                                android:id="@+id/title_show_discount"
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="48dp"
-                                android:gravity="center|center"
-                                android:text="@string/name"
-                                android:textColor="@color/text_toolbar"
-                                android:textSize="18sp"/>
-                        </FrameLayout>
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0.5dp"
-                            android:background="@color/text_toolbar"/>
+                                <android.support.v7.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="156dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="16dp"
+                                    card_view:cardCornerRadius="2dp"
+                                    card_view:cardElevation="2dp">
 
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="16dp">
-                            
-                            <TextView
-                                android:layout_width=""
-                                android:layout_height=""/>
-                            
-                        </LinearLayout>
+                                    <ImageView
+                                        android:layout_width="36dp"
+                                        android:layout_height="36dp"
+                                        android:layout_gravity="center"
+                                        android:background="@drawable/ic_camera"/>
 
-                        <LinearLayout
-                            android:id="@+id/linear_frame_actions_discount"
-                            android:layout_width="match_parent"
-                            android:layout_height="56dp"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
+                                    <com.maxcriser.cards.view.TextViews.RobotoThin
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="bottom"
+                                        android:layout_marginBottom="4dp"
+                                        android:gravity="center"
+                                        android:text="@string/front"
+                                        android:textColor="@color/text_toolbar"/>
 
-                            <include layout="@layout/fragment_cancel_save"/>
+                                    <ImageView
+                                        android:id="@+id/front_photo"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"/>
+
+                                </android.support.v7.widget.CardView>
+
+                                <android.support.v7.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="156dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="16dp"
+                                    card_view:cardCornerRadius="2dp"
+                                    card_view:cardElevation="2dp">
+
+                                    <ImageView
+                                        android:layout_width="36dp"
+                                        android:layout_height="36dp"
+                                        android:layout_gravity="center"
+                                        android:background="@drawable/ic_camera"/>
+
+                                    <com.maxcriser.cards.view.TextViews.RobotoThin
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="bottom"
+                                        android:layout_marginBottom="4dp"
+                                        android:gravity="center"
+                                        android:text="@string/back"
+                                        android:textColor="@color/text_toolbar"/>
+
+                                    <ImageView
+                                        android:id="@+id/back_photo"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"/>
+
+                                </android.support.v7.widget.CardView>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/linear_frame_actions_discount"
+                                android:layout_width="match_parent"
+                                android:layout_height="56dp"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <include layout="@layout/fragment_cancel_save"/>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
                     </LinearLayout>
 
-                </LinearLayout>
+                </android.support.v7.widget.CardView>
 
-            </android.support.v7.widget.CardView>
+            </FrameLayout>
 
         </ScrollView>
 
     </LinearLayout>
 
+    <include layout="@layout/floating_menu_show"/>
 
 </merge>

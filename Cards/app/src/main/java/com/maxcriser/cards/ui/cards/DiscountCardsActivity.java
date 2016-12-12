@@ -38,6 +38,10 @@ import com.maxcriser.cards.ui.show.ShowDiscountCard;
 import com.maxcriser.cards.view.TextViews.RobotoRegular;
 
 import static android.view.View.GONE;
+import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_BARCODE;
+import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_COLOR;
+import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_ID;
+import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_TITLE;
 import static com.maxcriser.cards.constant.constants.DISCOUNT_TITLE;
 
 public class DiscountCardsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -55,11 +59,7 @@ public class DiscountCardsActivity extends AppCompatActivity implements LoaderMa
     ImageView clearSearch;
     RobotoRegular title;
     private String searchText = "";
-    public static final String EXTRA_DISCOUNT_ID = "discount_id_extra";
     public static final int LOADER_DISCOUNT_ID = 1;
-    public static final String EXTRA_DISCOUNT_TITLE = "discount_title_extra";
-    public static final String EXTRA_DISCOUNT_BARCODE = "discount_barcode_extra";
-    public static final String EXTRA_DISCOUNT_COLOR = "discount_color_extra";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
