@@ -1,43 +1,63 @@
 package com.maxcriser.cards.constant;
 
-public class constants {
+public class Constants {
 
-    public interface CARDS {
-        public static final String VISA = "visa";
-        public static final String MASTERCARD = "mastercard";
-        public static final String AMEX = "amex";
-        public static final String MAESTRO = "maestro";
-        public static final String WESTERN_UNION = "western_union";
-        public static final String JCB = "jcb";
-        public static final String DINERS_CLUB = "diners_club";
-        public static final String BELCARD = "belcard";
+    public interface REQUESTS {
+        byte REQUEST_CAMERA = 0;
+        byte REQUEST_FRONT_CAMERA = 1;
+        byte REQUEST_BACK_CAMERA = 2;
+        byte REQUEST_WRITE_STORAGE = 3;
+        int CAPTURE_IMAGE_FRONT = 1001;
+        int CAPTURE_IMAGE_BACK = 1010;
+        int EDIT_IMAGE_FRONT = 1011;
+        int EDIT_IMAGE_BACK = 1100;
     }
 
-    public static final String BUTTON_ZERO = "0";
-    public static final String BUTTON_ONE = "1";
-    public static final String BUTTON_TWO = "2";
-    public static final String BUTTON_THREE = "3";
-    public static final String BUTTON_FOUR = "4";
-    public static final String BUTTON_FIVE = "5";
-    public static final String BUTTON_SIX = "6";
-    public static final String BUTTON_SEVEN = "7";
-    public static final String BUTTON_EIGHT = "8";
-    public static final String BUTTON_NINE = "9";
+    public interface CARDS {
+        String VISA = "visa";
+        String MASTERCARD = "mastercard";
+        String AMEX = "amex";
+        String MAESTRO = "maestro";
+        String WESTERN_UNION = "western_union";
+        String JCB = "jcb";
+        String DINERS_CLUB = "diners_club";
+        String BELCARD = "belcard";
+    }
 
-    public static final String NFC_TITLE = "NFC cards";
-    public static final String BANK_TITLE = "Credit cards";
-    public static final String DISCOUNT_TITLE = "Discount cards";
-    public static final String TICKETS_TITLE = "Tickets";
+    public interface KEYBOARD {
+        String BUTTON_ZERO = "0";
+        String BUTTON_ONE = "1";
+        String BUTTON_TWO = "2";
+        String BUTTON_THREE = "3";
+        String BUTTON_FOUR = "4";
+        String BUTTON_FIVE = "5";
+        String BUTTON_SIX = "6";
+        String BUTTON_SEVEN = "7";
+        String BUTTON_EIGHT = "8";
+        String BUTTON_NINE = "9";
+    }
 
-    public static final String NEW_DISCOUNT_TITLE = "New discount card";
-    public static final String NEW_BANK_TITLE = "New credit card";
-    public static final String NEW_TICKET_TITLE = "New discount card";
-    public static final String NEW_NFC_TITLE = "New discount card";
+    public interface TITLES {
+        String BANK_TITLE = "Credit cards";
+        String DISCOUNT_TITLE = "Discount cards";
+        String TICKETS_TITLE = "Tickets";
+        String NFC_TITLE = "NFC items";
+    }
 
-    public static final int ID_BANK_CARD_ITEM = 0;
-    public static final int ID_BANK_CARD_ITEM_TYPE = 1;
-    public static final int ID_DISCOUNT_ITEM = 2;
-    public static final int ID_TICKET_ITEM = 3;
+    public interface NEW_TITLES {
+        String NEW_DISCOUNT_TITLE = "New discount card";
+        String NEW_BANK_TITLE = "New credit card";
+        String NEW_TICKET_TITLE = "New ticket";
+        String NEW_NFC_TITLE = "New NFC item";
+    }
+
+    public interface ID_PAGERS {
+        int ID_BANK_CARD_ITEM = 0;
+        int ID_BANK_CARD_ITEM_TYPE = 1; // visa, mastercard and etc.
+        int ID_DISCOUNT_ITEM = 2;
+        int ID_TICKET_ITEM = 3;
+    }
 
     public static final String URL_JSON_LOCATION = "http://ip-api.com/json";
+    public static final String EMPTY_STRING = "";
 }

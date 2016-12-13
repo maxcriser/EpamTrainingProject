@@ -23,7 +23,7 @@
                 android:onClick="onBackClicked"
                 android:src="@drawable/ic_arrow_back_black_24dp"/>
 
-            <com.maxcriser.cards.view.TextViews.RobotoRegular
+            <com.maxcriser.cards.view.text_view.RobotoRegular
                 android:id="@+id/title_toolbar"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/height_toolbar"

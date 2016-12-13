@@ -21,4 +21,6 @@ public class Extras {
     public static final String EXTRA_TICKET_DATE = "extra_ticket_date";
     public static final String EXTRA_TICKET_TIME = "extra_ticket_time";
     public static final String EXTRA_TICKET_COLOR = "extra_ticket_color";
+
+    public static final String EXTRA_URI = "uri";
 }

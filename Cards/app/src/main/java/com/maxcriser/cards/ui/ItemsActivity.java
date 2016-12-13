@@ -1,12 +1,21 @@
 package com.maxcriser.cards.ui;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +30,7 @@ import android.text.style.StyleSpan;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,23 +38,21 @@ import android.widget.Toast;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
-import com.maxcriser.cards.constant.constants;
-import com.maxcriser.cards.database.DatabaseHelper;
+import com.maxcriser.cards.constant.Constants;
+import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.database.models.ModelNFCItems;
 import com.maxcriser.cards.database.models.ModelTickets;
-import com.maxcriser.cards.handler.RecyclerItemClickListener;
-import com.maxcriser.cards.ui.adapter.CursorBankAdapter;
-import com.maxcriser.cards.ui.adapter.CursorDiscountAdapter;
-import com.maxcriser.cards.ui.adapter.CursorTicketAdapter;
-import com.maxcriser.cards.ui.adapter.GenericCursorLoader;
-import com.maxcriser.cards.ui.create.Bank;
-import com.maxcriser.cards.ui.create.Ticket;
-import com.maxcriser.cards.ui.show.ShowBankCard;
-import com.maxcriser.cards.ui.show.ShowDiscountCard;
-import com.maxcriser.cards.ui.show.ShowTicket;
-import com.maxcriser.cards.view.TextViews.RobotoRegular;
+import com.maxcriser.cards.loader.CardsCursorLoader;
+import com.maxcriser.cards.ui.adapter.CursorAdapter;
+import com.maxcriser.cards.ui.addition.BankActivity;
+import com.maxcriser.cards.ui.addition.TicketActivity;
+import com.maxcriser.cards.ui.show.ShowBankCardActivity;
+import com.maxcriser.cards.ui.show.ShowDiscountCardActivity;
+import com.maxcriser.cards.ui.show.ShowTicketActivity;
+import com.maxcriser.cards.util.RecyclerItemClickListener;
+import com.maxcriser.cards.view.text_view.RobotoRegular;
 
 import static android.view.View.GONE;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_BANK;
@@ -65,28 +73,26 @@ import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_DATE;
 import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_ID;
 import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_TIME;
 import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_TITLE;
-import static com.maxcriser.cards.constant.constants.BANK_TITLE;
-import static com.maxcriser.cards.constant.constants.DISCOUNT_TITLE;
-import static com.maxcriser.cards.constant.constants.TICKETS_TITLE;
 
 public class ItemsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     String typeItems;
+    FrameLayout progressBar;
+    FloatingActionButton newCard;
     TextView noResultFor;
-    DatabaseHelper dbHelper;
+    DatabaseHelperImpl dbHelper;
     LinearLayoutManager mLayoutManager;
     RecyclerView recyclerItems;
-    CursorBankAdapter bankAdapter;
-    CursorDiscountAdapter discountAdapter;
-    CursorTicketAdapter ticketAdapter;
-    // TODO: 12.12.2016  NFC adapter
+    CursorAdapter adapter;
+    // TODO: 12.12.2016  NfcActivity adapter
     CardView toolbarBack;
     CardView toolbarSearch;
     LinearLayout linearEmpty;
     ImageView clearSearch;
     EditText searchEdit;
     RobotoRegular title;
-    private String searchText = "";
+    private String searchText = Constants.EMPTY_STRING;
+    public static Boolean flagToRemove = false;
     public static final int LOADER_ID = 1;
     Class ModelClass;
 
@@ -108,7 +114,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
 
             @Override
             public void afterTextChanged(Editable pEditable) {
-                if (!pEditable.toString().equals("")) {
+                if (!pEditable.toString().equals(Constants.EMPTY_STRING)) {
                     clearSearch.setVisibility(View.VISIBLE);
                 } else {
                     clearSearch.setVisibility(View.GONE);
@@ -119,7 +125,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         });
         title.setText(typeItems);
 
-        dbHelper = DatabaseHelper.getInstance(this, 1);
+        dbHelper = DatabaseHelperImpl.getInstance(this);
 
         recyclerItems.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
@@ -136,11 +142,29 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
             }
 
             @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                TextView cardTitle = (TextView) viewHolder.itemView.findViewById(R.id.title_main_cards);
-                Integer id = (Integer) cardTitle.getTag();
-                dbHelper.delete(ModelClass, null, ModelBankCards.ID + " = ?", String.valueOf(id));
-                getSupportLoaderManager().restartLoader(LOADER_ID, null, ItemsActivity.this);
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ItemsActivity.this);
+                alertDialogBuilder.setTitle(R.string.remove);
+                alertDialogBuilder
+                        .setMessage(R.string.are_you_sure_to_delete)
+                        .setCancelable(false)
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                getSupportLoaderManager().restartLoader(LOADER_ID, null, ItemsActivity.this);
+                                dialog.cancel();
+                            }
+                        })
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                TextView cardTitle = (TextView) viewHolder.itemView.findViewById(R.id.title_main_cards);
+                                Integer idDelete = (Integer) cardTitle.getTag();
+                                dbHelper.delete(ModelClass, null, ModelBankCards.ID + " = ?", String.valueOf(idDelete));
+                                getSupportLoaderManager().restartLoader(LOADER_ID, null, ItemsActivity.this);
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
         };
 
@@ -156,11 +180,11 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
                     @Override
                     public void onSuccess(Cursor pCursor) {
                         if (pCursor.moveToFirst()) {
-                            if (typeItems.equals(BANK_TITLE)) {
+                            if (typeItems.equals(Constants.TITLES.BANK_TITLE)) {
                                 showBank(pCursor);
-                            } else if (typeItems.equals(DISCOUNT_TITLE)) {
+                            } else if (typeItems.equals(Constants.TITLES.DISCOUNT_TITLE)) {
                                 showDiscount(pCursor);
-                            } else if (typeItems.equals(TICKETS_TITLE)) {
+                            } else if (typeItems.equals(Constants.TITLES.TICKETS_TITLE)) {
                                 showTicket(pCursor);
                             } else {
                                 // TODO: 12.12.2016 showNFC(pCursor)
@@ -195,7 +219,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         String timeTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.TIME));
         String color = pCursor.getString(pCursor.getColumnIndex(ModelTickets.BACKGROUND_COLOR));
 
-        Intent intent = new Intent(ItemsActivity.this, ShowTicket.class);
+        Intent intent = new Intent(ItemsActivity.this, ShowTicketActivity.class);
         intent.putExtra(EXTRA_TICKET_ID, id);
         intent.putExtra(EXTRA_TICKET_TITLE, nameTicket);
         intent.putExtra(EXTRA_TICKET_CARDHOLDER, cardholderTicket);
@@ -211,7 +235,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         String cardBarcode = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.BARCODE));
         String cardColor = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.BACKGROUND_COLOR));
 
-        Intent intent = new Intent(ItemsActivity.this, ShowDiscountCard.class);
+        Intent intent = new Intent(ItemsActivity.this, ShowDiscountCardActivity.class);
         intent.putExtra(EXTRA_DISCOUNT_ID, cardID);
         intent.putExtra(EXTRA_DISCOUNT_TITLE, cardTitle);
         intent.putExtra(EXTRA_DISCOUNT_BARCODE, cardBarcode);
@@ -229,7 +253,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         String type = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.TYPE));
         String color = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.BACKGROUND_COLOR));
 
-        Intent intent = new Intent(ItemsActivity.this, ShowBankCard.class);
+        Intent intent = new Intent(ItemsActivity.this, ShowBankCardActivity.class);
         intent.putExtra(EXTRA_BANK_ID, id);
         intent.putExtra(EXTRA_BANK_BANK, bank);
         intent.putExtra(EXTRA_BANK_CARDHOLDER, cardholder);
@@ -242,6 +266,8 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
     private void initViews() {
+        progressBar = (FrameLayout) findViewById(R.id.frame_progressbar);
+        newCard = (FloatingActionButton) findViewById(R.id.new_card);
         linearEmpty = (LinearLayout) findViewById(R.id.empty_page_id_fragment);
         noResultFor = (TextView) findViewById(R.id.frame_no_results_for);
         clearSearch = (ImageView) findViewById(R.id.clearSearch);
@@ -250,11 +276,11 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
         title = (RobotoRegular) findViewById(R.id.title_toolbar);
         recyclerItems = (RecyclerView) findViewById(R.id.recycler_view_items);
-        if (typeItems.equals(constants.BANK_TITLE)) {
+        if (typeItems.equals(Constants.TITLES.BANK_TITLE)) {
             ModelClass = ModelBankCards.class;
-        } else if (typeItems.equals(constants.DISCOUNT_TITLE)) {
+        } else if (typeItems.equals(Constants.TITLES.DISCOUNT_TITLE)) {
             ModelClass = ModelDiscountCards.class;
-        } else if (typeItems.equals(constants.TICKETS_TITLE)) {
+        } else if (typeItems.equals(Constants.TITLES.TICKETS_TITLE)) {
             ModelClass = ModelTickets.class;
         } else {
             ModelClass = ModelNFCItems.class;
@@ -277,55 +303,89 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         if (supportLoaderManager.getLoader(LOADER_ID) != null) {
             supportLoaderManager.getLoader(LOADER_ID).forceLoad();
         }
+        if (searchEdit != null) {
+            if (toolbarSearch.getVisibility() == View.VISIBLE) {
+                onBackSearchClicked(null);
+            }
+        }
     }
 
     public void onBackClicked(View view) {
         super.onBackPressed();
     }
 
-    public void onAddNewClicked(View view) {
-        if (typeItems.equals(BANK_TITLE)) {
-            startActivity(new Intent(ItemsActivity.this, Bank.class));
-        } else if (typeItems.equals(DISCOUNT_TITLE)) {
-            Intent intent = new Intent(this, BarcodeScanner.class)
-                    .addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            startActivity(intent);
-        } else if (typeItems.equals(TICKETS_TITLE)) {
-            startActivity(new Intent(ItemsActivity.this, Ticket.class));
+    @TargetApi(23)
+    private void getPermission(final byte CODE, final String PERMISSION, int INTENT) {
+        if (ContextCompat.checkSelfPermission(this, PERMISSION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{PERMISSION}, CODE);
         } else {
-            startActivity(new Intent(ItemsActivity.this, NFCReaderActivity.class));
+            if (INTENT == Constants.REQUESTS.REQUEST_CAMERA) {
+                startBarcodeReader();
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (grantResults.length == 0) {
+            return;
+        } else if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, R.string.permission_has_not_been_granted, Toast.LENGTH_SHORT).show();
+        } else if (requestCode == Constants.REQUESTS.REQUEST_CAMERA) {
+            startBarcodeReader();
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    private void startBarcodeReader() {
+        Intent intent = new Intent(this, BarcodeScannerActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
+    }
+
+    public void onAddNewClicked(View view) {
+        if (typeItems.equals(Constants.TITLES.BANK_TITLE)) {
+            startActivity(new Intent(ItemsActivity.this, BankActivity.class));
+        } else if (typeItems.equals(Constants.TITLES.DISCOUNT_TITLE)) {
+            getPermission(Constants.REQUESTS.REQUEST_CAMERA, Manifest.permission.CAMERA, Constants.REQUESTS.REQUEST_CAMERA);
+        } else if (typeItems.equals(Constants.TITLES.TICKETS_TITLE)) {
+            startActivity(new Intent(ItemsActivity.this, TicketActivity.class));
+        } else {
+            startActivity(new Intent(ItemsActivity.this, NfcReaderActivity.class));
         }
     }
 
     public void onBackSearchClicked(View view) {
         toolbarBack.setVisibility(View.VISIBLE);
         toolbarSearch.setVisibility(GONE);
-        searchEdit.setText("");
+        searchEdit.setText(Constants.EMPTY_STRING);
         searchText = searchEdit.getText().toString();
         getSupportLoaderManager().restartLoader(LOADER_ID, null, ItemsActivity.this);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(newCard.getWindowToken(), 0);
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        if (typeItems.equals(BANK_TITLE)) {
-            return new GenericCursorLoader(this, searchText, ModelBankCards.class);
-        } else if (typeItems.equals(DISCOUNT_TITLE)) {
-            return new GenericCursorLoader(this, searchText, ModelDiscountCards.class);
-        } else if (typeItems.equals(TICKETS_TITLE)) {
-            return new GenericCursorLoader(this, searchText, ModelTickets.class);
+        if (typeItems.equals(Constants.TITLES.BANK_TITLE)) {
+            return new CardsCursorLoader(this, searchText, ModelBankCards.class);
+        } else if (typeItems.equals(Constants.TITLES.DISCOUNT_TITLE)) {
+            return new CardsCursorLoader(this, searchText, ModelDiscountCards.class);
+        } else if (typeItems.equals(Constants.TITLES.TICKETS_TITLE)) {
+            return new CardsCursorLoader(this, searchText, ModelTickets.class);
         } else {
-            // TODO: 12.12.2016 NFC
-            return new GenericCursorLoader(this, searchText, ModelBankCards.class);
+            // TODO: 12.12.2016 NfcActivity
+            return new CardsCursorLoader(this, searchText, ModelBankCards.class);
         }
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        progressBar.setVisibility(GONE);
         if (data.getCount() == 0) {
-            if (!searchText.equals("")) {
-                // TODO: 06.12.2016 CHECK IF(LANG_ENG) LANG_RUS for spannable
+            if (!searchText.equals(Constants.EMPTY_STRING)) {
                 Spannable text = new SpannableString(getString(R.string.no_result_for) + " '" + searchText + "'");
-                text.setSpan(new StyleSpan(Typeface.BOLD), 26, text.length() - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                text.setSpan(new StyleSpan(Typeface.BOLD), text.length() - searchText.length() - 1, text.length() - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 noResultFor.setText(text);
                 noResultFor.setVisibility(View.VISIBLE);
             } else {
@@ -338,18 +398,16 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
             recyclerItems.setVisibility(View.VISIBLE);
         }
 
-        if (typeItems.equals(BANK_TITLE)) {
-            bankAdapter = new CursorBankAdapter(data, ItemsActivity.this, R.layout.item_list_bank);
-            recyclerItems.setAdapter(bankAdapter);
-        } else if (typeItems.equals(DISCOUNT_TITLE)) {
-            discountAdapter = new CursorDiscountAdapter(data, ItemsActivity.this, R.layout.item_discount);
-            recyclerItems.setAdapter(discountAdapter);
-        } else if (typeItems.equals(TICKETS_TITLE)) {
-            ticketAdapter = new CursorTicketAdapter(data, ItemsActivity.this, R.layout.item_ticket);
-            recyclerItems.setAdapter(ticketAdapter);
+        if (typeItems.equals(Constants.TITLES.BANK_TITLE)) {
+            adapter = new CursorAdapter(data, ItemsActivity.this, R.layout.item_list_bank);
+        } else if (typeItems.equals(Constants.TITLES.DISCOUNT_TITLE)) {
+            adapter = new CursorAdapter(data, ItemsActivity.this, R.layout.item_discount);
+        } else if (typeItems.equals(Constants.TITLES.TICKETS_TITLE)) {
+            adapter = new CursorAdapter(data, ItemsActivity.this, R.layout.item_ticket);
         } else {
             // TODO: 12.12.2016 CNFCAdapter
         }
+        recyclerItems.setAdapter(adapter);
     }
 
     @Override
@@ -358,24 +416,13 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
     public void onToolbarBackClicked(View view) {
-        Integer count;
-        if (typeItems.equals(BANK_TITLE)) {
-            count = bankAdapter.getItemCount() - 1;
-        } else if (typeItems.equals(DISCOUNT_TITLE)) {
-            count = discountAdapter.getItemCount() - 1;
-        } else if (typeItems.equals(TICKETS_TITLE)) {
-            count = ticketAdapter.getItemCount() - 1;
-        } else {
-            // TODO: 12.12.2016 CNFCAdapter
-            count = bankAdapter.getItemCount() - 1;
-        }
-        recyclerItems.smoothScrollToPosition(count);
+        recyclerItems.smoothScrollToPosition(adapter.getItemCount() - 1);
     }
 
     public void onSearchClicked(View view) {
         toolbarSearch.setVisibility(View.VISIBLE);
         toolbarBack.setVisibility(GONE);
-        searchEdit.setText("");
+        searchEdit.setText(Constants.EMPTY_STRING);
         searchEdit.clearFocus();
         searchEdit.requestFocus();
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -383,6 +430,6 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
     public void onClearSearchClicked(View view) {
-        searchEdit.setText("");
+        searchEdit.setText(Constants.EMPTY_STRING);
     }
 }

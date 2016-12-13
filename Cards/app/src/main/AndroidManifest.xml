@@ -19,6 +19,7 @@
         android:required="true"/>
 
     <application
+        android:name=".CoreApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -44,12 +45,12 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".ui.PhotoEditor"
+            android:name=".ui.PhotoEditorActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".ui.NFCReaderActivity"
+            android:name=".ui.NfcReaderActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
 
@@ -71,7 +72,7 @@
         </activity>
 
         <activity
-            android:name=".ui.create.Bank"
+            android:name=".ui.addition.BankActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
@@ -83,42 +84,42 @@
             android:windowSoftInputMode="adjustNothing"/>
 
         <activity
-            android:name=".ui.show.ShowDiscountCard"
+            android:name=".ui.show.ShowDiscountCardActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
 
         <activity
-            android:name=".ui.show.ShowBankCard"
+            android:name=".ui.show.ShowBankCardActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
 
         <activity
-            android:name=".ui.show.ShowTicket"
+            android:name=".ui.show.ShowTicketActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
 
         <activity
-            android:name=".ui.BarcodeScanner"
+            android:name=".ui.BarcodeScannerActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".ui.create.Discount"
+            android:name=".ui.addition.DiscountActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
 
         <activity
-            android:name=".ui.create.Ticket"
+            android:name=".ui.addition.TicketActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
 
         <activity
-            android:name=".ui.SetupPIN"
+            android:name=".ui.SetupPinActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"/>

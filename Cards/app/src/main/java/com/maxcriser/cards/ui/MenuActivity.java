@@ -1,21 +1,15 @@
 package com.maxcriser.cards.ui;
 
-import android.Manifest;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.nfc.NfcAdapter;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,10 +18,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.constant.constants;
+import com.maxcriser.cards.constant.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,10 +30,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Map;
 
 import static android.view.View.GONE;
-import static com.maxcriser.cards.constant.constants.URL_JSON_LOCATION;
+import static com.maxcriser.cards.constant.Constants.URL_JSON_LOCATION;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -94,14 +86,6 @@ public class MenuActivity extends AppCompatActivity
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
-
-        // TODO: 12.12.2016 before use
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-            for (Map.Entry<Byte, String> entry : LaunchScreenActivity.REQUESTS.entrySet()
-                    ) {
-                getPermission(entry.getKey(), entry.getValue());
-            }
-        }
     }
 
     public void initViews() {
@@ -114,27 +98,27 @@ public class MenuActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
     }
 
-    @TargetApi(23)
-    private void getPermission(final byte CODE, final String PERMISSION) {
-        if (ContextCompat.checkSelfPermission(this, PERMISSION) != PackageManager.PERMISSION_GRANTED) {
-            if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                Toast.makeText(this, R.string.application_need_access, Toast.LENGTH_SHORT).show();
-            } else if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                Toast.makeText(this, R.string.application_need_access, Toast.LENGTH_SHORT).show();
-            }
-            ActivityCompat.requestPermissions(this, new String[]{PERMISSION}, CODE);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (grantResults.length == 0) {
-            return;
-        } else if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this, R.string.permission_has_not_been_granted, Toast.LENGTH_SHORT).show();
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
+//    @TargetApi(23)
+//    private void getPermission(final byte CODE, final String PERMISSION) {
+//        if (ContextCompat.checkSelfPermission(this, PERMISSION) != PackageManager.PERMISSION_GRANTED) {
+//            if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+//                Toast.makeText(this, R.string.application_need_access, Toast.LENGTH_SHORT).show();
+//            } else if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+//                Toast.makeText(this, R.string.application_need_access, Toast.LENGTH_SHORT).show();
+//            }
+//            ActivityCompat.requestPermissions(this, new String[]{PERMISSION}, CODE);
+//        }
+//    }
+//
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        if (grantResults.length == 0) {
+//            return;
+//        } else if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+//            Toast.makeText(this, R.string.permission_has_not_been_granted, Toast.LENGTH_SHORT).show();
+//        }
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//    }
 
     private NetworkInfo getNetworkInfo(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -215,7 +199,7 @@ public class MenuActivity extends AppCompatActivity
     private class ParseLocation extends AsyncTask<Void, Void, String> {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
-        String resultJson = "";
+        String resultJson = Constants.EMPTY_STRING;
 
         @Override
         protected String doInBackground(Void... params) {
@@ -284,17 +268,17 @@ public class MenuActivity extends AppCompatActivity
                     break;
                 case R.id.main_discount_card:
                     intent = new Intent(MenuActivity.this, ItemsActivity.class);
-                    selectItem = constants.DISCOUNT_TITLE;
+                    selectItem = Constants.TITLES.DISCOUNT_TITLE;
                     startActivity(intent);
                     break;
                 case R.id.main_nfc_card:
                     intent = new Intent(MenuActivity.this, ItemsActivity.class);
-                    selectItem = constants.NFC_TITLE;
+                    selectItem = Constants.TITLES.NFC_TITLE;
                     startActivity(intent);
                     break;
                 case R.id.main_tickets_card:
                     intent = new Intent(MenuActivity.this, ItemsActivity.class);
-                    selectItem = constants.TICKETS_TITLE;
+                    selectItem = Constants.TITLES.TICKETS_TITLE;
                     startActivity(intent);
                     break;
             }

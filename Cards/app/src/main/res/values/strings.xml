@@ -104,9 +104,14 @@
     <string name="fill_all_fields">Please fill all fields and try again</string>
     <string name="connot_find_card">Cannot find card</string>
     <string name="application_need_access">Application need access to saved information</string>
-    <string name="permission_has_not_been_granted">Permission has not been granted</string>
+    <string name="permission_has_not_been_granted">This permission is required for creating cards</string>
     <string name="cannot_load_image">Can not load image, please try again</string>
     <string name="cannot_load_image_to_crop">Can not load image to crop, please try again</string>
+    <string name="picture_wasnt_edited">Picture wasn\'t edited</string>
+    <string name="remove">Remove</string>
+    <string name="are_you_sure_to_delete">Are you sure you want to delete?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>

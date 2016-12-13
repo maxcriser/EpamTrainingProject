@@ -40,7 +40,7 @@
                             card_view:cardCornerRadius="0dp"
                             card_view:cardElevation="4dp">
 
-                            <com.maxcriser.cards.view.TextViews.RobotoRegular
+                            <com.maxcriser.cards.view.text_view.RobotoRegular
                                 android:layout_width="match_parent"
                                 android:layout_height="48dp"
                                 android:gravity="center|start"
@@ -71,7 +71,7 @@
                             android:maxLines="1"
                             android:textSize="18sp"/>
 
-                        <com.maxcriser.cards.view.TextViews.EANP72TextView
+                        <com.maxcriser.cards.view.text_view.BarcodeEan
                             android:id="@+id/generate_barcode"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/barcode_height"

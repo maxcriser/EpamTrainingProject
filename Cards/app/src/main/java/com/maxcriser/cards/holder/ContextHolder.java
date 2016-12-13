@@ -2,7 +2,7 @@ package com.maxcriser.cards.holder;
 
 import android.content.Context;
 
-//TODO move to another package
+//TODO move to another package ***view_holder Cursor_B_D_T_Holder's
 public class ContextHolder {
 
     private static ContextHolder sContextHolder;

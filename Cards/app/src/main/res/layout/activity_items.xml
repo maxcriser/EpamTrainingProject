@@ -35,4 +35,17 @@
         </LinearLayout>
     </FrameLayout>
 
+    <FrameLayout
+        android:id="@+id/frame_progressbar"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:layout_gravity="center"
+            android:layout_width="56dp"
+            android:layout_height="56dp"/>
+
+    </FrameLayout>
+
 </merge>

@@ -5,7 +5,7 @@
        android:layout_height="match_parent">
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/new_discount_card"
+        android:id="@+id/new_card"
         android:onClick="onAddNewClicked"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:layout_width="wrap_content"

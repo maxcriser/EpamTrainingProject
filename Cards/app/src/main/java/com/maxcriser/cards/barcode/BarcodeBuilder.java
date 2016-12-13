@@ -10,6 +10,8 @@
 package com.maxcriser.cards.barcode;
 
 
+import com.maxcriser.cards.constant.Constants;
+
 public class BarcodeBuilder {
     private String codeStringValue;
     private String generatedCode;
@@ -58,8 +60,8 @@ public class BarcodeBuilder {
         String leftString = rawCode.substring(1, 7);
         String rightString = rawCode.substring(7);
 
-        String rightCode = "";
-        String leftCode = "";
+        String rightCode = Constants.EMPTY_STRING;
+        String leftCode = Constants.EMPTY_STRING;
 
         for (int i = 0; i < 6; i++) {
             rightCode += DigitToLowerCase(rightString.substring(i, i + 1));

@@ -11,7 +11,7 @@
         card_view:cardElevation="2dp"
         card_view:cardBackgroundColor="@color/white_shadow">
 
-        <com.maxcriser.cards.view.TextViews.RobotoRegular
+        <com.maxcriser.cards.view.text_view.RobotoRegular
             android:textStyle="bold"
             android:layout_gravity="bottom"
             android:textColor="@color/text_toolbar"

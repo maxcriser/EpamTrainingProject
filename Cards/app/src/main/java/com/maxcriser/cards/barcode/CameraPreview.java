@@ -13,10 +13,14 @@ import java.io.IOException;
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
     public static final String DBG = "DBG";
     private SurfaceHolder mHolder;
+    @SuppressWarnings("deprecation")
     private Camera mCamera;
+    @SuppressWarnings("deprecation")
     private Camera.PreviewCallback previewCallback;
+    @SuppressWarnings("deprecation")
     private Camera.AutoFocusCallback autoFocusCallback;
 
+    @SuppressWarnings("deprecation")
     public CameraPreview(Context context, Camera camera,
                          Camera.PreviewCallback pPreviewCallback,
                          Camera.AutoFocusCallback pAutoFocusCallback) {
@@ -47,6 +51,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         try {
             mCamera.stopPreview();
         } catch (Exception e) {
+            Log.d("DBG", e.toString());
         }
         try {
             mCamera.setDisplayOrientation(90);

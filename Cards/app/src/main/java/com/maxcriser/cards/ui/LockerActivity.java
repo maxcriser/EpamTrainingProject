@@ -22,8 +22,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.constant.constants;
-import com.maxcriser.cards.handler.FingerprintHandler;
+import com.maxcriser.cards.constant.Constants;
+import com.maxcriser.cards.fingerprint.FingerprintHandler;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
@@ -40,16 +40,6 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
-import static com.maxcriser.cards.constant.constants.BUTTON_EIGHT;
-import static com.maxcriser.cards.constant.constants.BUTTON_FIVE;
-import static com.maxcriser.cards.constant.constants.BUTTON_FOUR;
-import static com.maxcriser.cards.constant.constants.BUTTON_NINE;
-import static com.maxcriser.cards.constant.constants.BUTTON_ONE;
-import static com.maxcriser.cards.constant.constants.BUTTON_SEVEN;
-import static com.maxcriser.cards.constant.constants.BUTTON_SIX;
-import static com.maxcriser.cards.constant.constants.BUTTON_THREE;
-import static com.maxcriser.cards.constant.constants.BUTTON_TWO;
-import static com.maxcriser.cards.constant.constants.BUTTON_ZERO;
 import static com.maxcriser.cards.ui.MenuActivity.TYPE_LOCKED_SCREEN;
 
 public class LockerActivity extends AppCompatActivity {
@@ -88,7 +78,7 @@ public class LockerActivity extends AppCompatActivity {
 
         Toast.makeText(this, LaunchScreenActivity.loadPassword, Toast.LENGTH_SHORT).show();
         mHandler = new Handler(hc);
-        builderPassword = "";
+        builderPassword = Constants.EMPTY_STRING;
 
         initViews();
 
@@ -239,52 +229,52 @@ public class LockerActivity extends AppCompatActivity {
     }
 
     public void zeroInput(View view) {
-        inputPassword(BUTTON_ZERO);
+        inputPassword(Constants.KEYBOARD.BUTTON_ZERO);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void oneInput(View view) {
-        inputPassword(BUTTON_ONE);
+        inputPassword(Constants.KEYBOARD.BUTTON_ONE);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void twoInput(View view) {
-        inputPassword(BUTTON_TWO);
+        inputPassword(Constants.KEYBOARD.BUTTON_TWO);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void threeInput(View view) {
-        inputPassword(BUTTON_THREE);
+        inputPassword(Constants.KEYBOARD.BUTTON_THREE);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void fourInput(View view) {
-        inputPassword(BUTTON_FOUR);
+        inputPassword(Constants.KEYBOARD.BUTTON_FOUR);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void fiveInput(View view) {
-        inputPassword(BUTTON_FIVE);
+        inputPassword(Constants.KEYBOARD.BUTTON_FIVE);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void sixInput(View view) {
-        inputPassword(BUTTON_SIX);
+        inputPassword(Constants.KEYBOARD.BUTTON_SIX);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void sevenInput(View view) {
-        inputPassword(BUTTON_SEVEN);
+        inputPassword(Constants.KEYBOARD.BUTTON_SEVEN);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void eightInput(View view) {
-        inputPassword(BUTTON_EIGHT);
+        inputPassword(Constants.KEYBOARD.BUTTON_EIGHT);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void nineInput(View view) {
-        inputPassword(BUTTON_NINE);
+        inputPassword(Constants.KEYBOARD.BUTTON_NINE);
         mVibrator.vibrate(durationVibrateInput);
     }
 
@@ -300,7 +290,7 @@ public class LockerActivity extends AppCompatActivity {
 
     public void onDeleteClicked(View view) {
         if (builderPassword.length() != 0) {
-            builderPassword = "";
+            builderPassword = Constants.EMPTY_STRING;
             setBackgroundCircles(true, firstCircle, secondCircle, thirdCircle, fourthCircle);
         }
     }
@@ -312,10 +302,10 @@ public class LockerActivity extends AppCompatActivity {
     public void start() {
         if (intentLockedPage.equals(MenuActivity.CREDIT_CARD)) {
             intent = new Intent(LockerActivity.this, ItemsActivity.class);
-            MenuActivity.selectItem = constants.BANK_TITLE;
+            MenuActivity.selectItem = Constants.TITLES.BANK_TITLE;
             startActivity(intent);
         } else {
-            Intent intent = new Intent(LockerActivity.this, SetupPIN.class);
+            Intent intent = new Intent(LockerActivity.this, SetupPinActivity.class);
             startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY));
         }
     }

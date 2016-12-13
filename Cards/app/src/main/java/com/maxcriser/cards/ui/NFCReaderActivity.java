@@ -21,7 +21,7 @@ import com.maxcriser.cards.R;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
-public class NFCReaderActivity extends AppCompatActivity {
+public class NfcReaderActivity extends AppCompatActivity {
 
     public static final String MIME_TEXT_PLAIN = "text/plain";
     public static final String TAG = "NfcDemo";
@@ -38,9 +38,9 @@ public class NFCReaderActivity extends AppCompatActivity {
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (!mNfcAdapter.isEnabled()) {
-            Toast.makeText(this, "NFC is disabled.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "NfcActivity is disabled.", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "NFC is activated.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "NfcActivity is activated.", Toast.LENGTH_SHORT).show();
         }
         handleIntent(getIntent());
     }
