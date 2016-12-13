@@ -37,30 +37,30 @@ import static com.maxcriser.cards.constant.Constants.URL_JSON_LOCATION;
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static String selectItem;
     public static final String TYPE_LOCKED_SCREEN = "type_locked_screen";
     public static final String CREDIT_CARD = "credit_card";
-    public static final String SETUP_PIN = "setup_pin";
-    public static final String TEXT_PLAIN = "text/plain";
-    public static final String SHARE_BODY = "Donwloads my application on playmarket: cards_application.com";
-    public static final String SHARE_TITLE = "Cards application";
-    public static final String SHARE_USING = "Share using";
-    static final String COUNTRY_ID = "country";
-    static final String COUNTRY_CODE_ID = "countryCode";
-    static final String ISP_ID = "isp";
-    static final String QUERY_ID = "query";
-    static final String TIMEZONE_ID = "timezone";
-    public static String selectItem;
-    CardView credit;
-    CardView discount;
-    CardView tickets;
-    CardView nfc;
-    String pCountry = "#country";
-    String pCountryCode = "#country code";
-    String pIsp = "#isp";
-    String pQuery = "#query";
-    String pTimezone = "#timezone";
-    DrawerLayout drawer;
-    NavigationView navigationView;
+    private static final String SETUP_PIN = "setup_pin";
+    private static final String TEXT_PLAIN = "text/plain";
+    private static final String SHARE_BODY = "Donwloads my application on playmarket: cards_application.com";
+    private static final String SHARE_TITLE = "Cards application";
+    private static final String SHARE_USING = "Share using";
+    private static final String COUNTRY_ID = "country";
+    private static final String COUNTRY_CODE_ID = "countryCode";
+    private static final String ISP_ID = "isp";
+    private static final String QUERY_ID = "query";
+    private static final String TIMEZONE_ID = "timezone";
+    private CardView credit;
+    private CardView discount;
+    private CardView tickets;
+    private CardView nfc;
+    private String pCountry = "#country";
+    private String pCountryCode = "#country code";
+    private String pIsp = "#isp";
+    private String pQuery = "#query";
+    private String pTimezone = "#timezone";
+    private DrawerLayout drawer;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

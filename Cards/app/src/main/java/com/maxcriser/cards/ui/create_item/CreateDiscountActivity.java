@@ -13,43 +13,34 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.OnResultCallback;
+import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.BarcodeConverter;
 import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
+import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.setter.PreviewColorsSetter;
 import com.maxcriser.cards.ui.BarcodeScannerActivity;
-import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.view.text_view.BarcodeEan;
 import com.maxcriser.cards.view.text_view.RobotoRegular;
 
 import static android.view.View.GONE;
-import static com.maxcriser.cards.ui.LaunchScreenActivity.sPreviewColorSetters;
+import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
 public class CreateDiscountActivity extends AppCompatActivity {
 
     public static final String DISCOUNT_ID = "CreateDiscountActivity";
-    ContentValues cvNewDiscount;
-    DatabaseHelperImpl db;
-    ScrollView mScrollView;
-
-    static int PAGE_COUNT;
-    static final int pagerMargin = 16;
-    ViewPager pager;
-    PagerAdapter pagerAdapter;
-    EditText mEditText;
-    //TODO private
-    BarcodeEan mBarcodeEan;
-    String mBarcode;
-
-    PreviewColorsSetter mListPreviewColorsSetter;
-    String myColorName;
-    String myColorCode;
-    String titleStr; // database
-    String generateBarcode; // database
-    RobotoRegular title;
+    private PreviewColorsSetter mListPreviewColorsSetter;
+    private DatabaseHelperImpl db;
+    private ScrollView mScrollView;
+    private ViewPager pager;
+    private EditText mEditText;
+    private BarcodeEan mBarcodeEan;
+    private String myColorName;
+    private String myColorCode;
+    private String generateBarcode; // database
+    private RobotoRegular title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +52,9 @@ public class CreateDiscountActivity extends AppCompatActivity {
         db = DatabaseHelperImpl.getInstance(this);
         title.setText(Constants.NEW_TITLES.NEW_DISCOUNT_TITLE);
         Intent barcodeIntent = getIntent();
-        mBarcode = barcodeIntent.getStringExtra(BarcodeScannerActivity.TAG_BARCODE);
+        String barcode = barcodeIntent.getStringExtra(BarcodeScannerActivity.TAG_BARCODE);
         OwnAsyncTask barcodeGenerator = new OwnAsyncTask();
-        barcodeGenerator.execute(new BarcodeConverter(), mBarcode, new OnResultCallback<String, String>() {
+        barcodeGenerator.execute(new BarcodeConverter(), barcode, new OnResultCallback<String, String>() {
             @Override
             public void onSuccess(String pS) {
                 generateBarcode = pS;
@@ -79,15 +70,15 @@ public class CreateDiscountActivity extends AppCompatActivity {
             }
         });
 
-        mListPreviewColorsSetter = sPreviewColorSetters.get(0);
+        mListPreviewColorsSetter = previewColors.get(0);
         myColorName = mListPreviewColorsSetter.getNameColorCards();
         myColorCode = mListPreviewColorsSetter.getCodeColorCards();
         Log.d(DISCOUNT_ID, myColorName + " " + myColorCode);
 
-        PAGE_COUNT = sPreviewColorSetters.size();
+        int PAGE_COUNT = previewColors.size();
         //TODO move to common class
-        pager.setPageMargin(pagerMargin);
-        pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
+        pager.setPageMargin(Constants.PAGER_MARGIN_PREVIEW);
+        PagerAdapter pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 Constants.ID_PAGERS.ID_DISCOUNT_ITEM,
                 PAGE_COUNT);
 
@@ -95,7 +86,7 @@ public class CreateDiscountActivity extends AppCompatActivity {
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                mListPreviewColorsSetter = sPreviewColorSetters.get(position);
+                mListPreviewColorsSetter = previewColors.get(position);
                 myColorName = mListPreviewColorsSetter.getNameColorCards();
                 myColorCode = mListPreviewColorsSetter.getCodeColorCards();
                 Log.d(DISCOUNT_ID, myColorName + " " + myColorCode);
@@ -131,9 +122,9 @@ public class CreateDiscountActivity extends AppCompatActivity {
     }
 
     public void onCreateCardClicked(View view) {
-        titleStr = mEditText.getText().toString();
+        String titleStr = mEditText.getText().toString();
         if (!titleStr.equals(Constants.EMPTY_STRING)) {
-            cvNewDiscount = new ContentValues();
+            ContentValues cvNewDiscount = new ContentValues();
             cvNewDiscount.put(ModelDiscountCards.TITLE, titleStr);
             cvNewDiscount.put(ModelDiscountCards.BARCODE, generateBarcode);
             cvNewDiscount.put(ModelDiscountCards.BACKGROUND_COLOR, myColorCode);
@@ -142,7 +133,6 @@ public class CreateDiscountActivity extends AppCompatActivity {
             db.insert(ModelDiscountCards.class, cvNewDiscount, new OnResultCallback<Long, Void>() {
                 @Override
                 public void onSuccess(Long pLong) {
-                    Log.d(DISCOUNT_ID + " ID", pLong.toString());
                 }
 
                 @Override

@@ -19,19 +19,18 @@ import com.isseiaoki.simplecropview.callback.CropCallback;
 import com.isseiaoki.simplecropview.callback.LoadCallback;
 import com.isseiaoki.simplecropview.callback.SaveCallback;
 import com.maxcriser.cards.R;
+import com.maxcriser.cards.constant.Constants;
+import com.maxcriser.cards.constant.Extras;
 
 import java.io.File;
 
 public class PhotoEditorActivity extends AppCompatActivity {
 
-    public static final String URI = "uri";
-    public final String APP_TAG = "thecrisertakephoto";
-    public String photoFileName = "photo.jpg";
-    public final static int CAPTURE_IMAGE_FRONT = 1001;
-    public final static int CAPTURE_IMAGE_BACK = 1010;
-    CropImageView image;
-    FrameLayout mProgressBar;
-    Uri photoUri;
+    private final String APP_TAG = "thecrisertakephoto";
+    private String photoFileName = "photo.jpg";
+    private CropImageView image;
+    private FrameLayout mProgressBar;
+    private Uri photoUri;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +52,7 @@ public class PhotoEditorActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            String uri_Str = bundle.getString(URI);
+            String uri_Str = bundle.getString(Extras.EXTRA_URI);
             photoUri = Uri.parse(uri_Str);
             startCrop(photoUri);
         } else {
@@ -68,7 +67,7 @@ public class PhotoEditorActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAPTURE_IMAGE_FRONT || requestCode == CAPTURE_IMAGE_BACK) {
+        if (requestCode == Constants.REQUESTS.CAPTURE_IMAGE_FRONT || requestCode == Constants.REQUESTS.CAPTURE_IMAGE_BACK) {
             if (resultCode == RESULT_OK) {
                 photoUri = getPhotoFileUri(photoFileName);
 //                Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
@@ -102,7 +101,7 @@ public class PhotoEditorActivity extends AppCompatActivity {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileName)); // set the image file name
 
         if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(intent, CAPTURE_IMAGE_FRONT);
+            startActivityForResult(intent, Constants.REQUESTS.CAPTURE_IMAGE_FRONT);
         }
     }
 

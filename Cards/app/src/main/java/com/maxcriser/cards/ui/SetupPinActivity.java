@@ -17,17 +17,17 @@ import com.maxcriser.cards.constant.Constants;
 
 public class SetupPinActivity extends AppCompatActivity {
 
-    enum Page {
+    private TextView title;
+    private EditText inputText;
+    private Button btnContinue;
+    private Button btnCancel;
+    private String password;
+    private Page page;
+
+    private enum Page {
         FIRST,
         SECOND
     }
-
-    TextView title;
-    EditText inputText;
-    Button btnContinue;
-    Button btnCancel;
-    String password;
-    Page page;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

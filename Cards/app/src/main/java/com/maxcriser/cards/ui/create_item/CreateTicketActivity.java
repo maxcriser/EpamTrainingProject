@@ -47,49 +47,34 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import static android.view.View.GONE;
-import static com.maxcriser.cards.ui.LaunchScreenActivity.sPreviewColorSetters;
+import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
 public class CreateTicketActivity extends AppCompatActivity {
 
     public static final String TICKET = "CreateTicketActivity";
-    public static final byte FRONT_REQUEST_CAMERA = 0;
-    public static final byte BACK_REQUEST_CAMERA = 1;
-    public static final byte REQUEST_WRITE_STORAGE = 2;
-    public static final byte REQUEST_CALENDAR = 3;
     public static final String TICKET_ID = "TICKET";
     public final String APP_TAG = "thecrisertakephoto";
-    public static final String BEG_FILE_NAME = "ticket-";
     public String photoFileNameFront;
     public String photoFileNameBack;
-    public final static int CAPTURE_IMAGE_FRONT = 1001;
-    public final static int CAPTURE_IMAGE_BACK = 1010;
-    public final static int EDIT_IMAGE_FRONT = 1011;
-    public final static int EDIT_IMAGE_BACK = 1100;
-    DatabaseHelperImpl db;
-    TextView date;
-    TextView time;
-    ImageView frontPhoto;
-    ImageView backPhoto;
-    SimpleDateFormat dateFormat;
-    SimpleDateFormat timeFormat;
-
-    Calendar calendar = Calendar.getInstance();
-    static int PAGE_COUNT;
-    static final int pagerMargin = 16;
-    ViewPager pager;
-    PagerAdapter pagerAdapter;
-    ContentValues cvNewTicket;
-    ScrollView mScrollView;
-
-    PreviewColorsSetter mListPreviewColorsSetter;
-    CheckBox checkBox;
-    String myColorName;
-    String myColorCode;
-    EditText ticketTitle;
-    EditText ticketCardholder;
-    RobotoRegular title;
-    FrameLayout removeFront;
-    FrameLayout removeBack;
+    private DatabaseHelperImpl db;
+    private TextView date;
+    private TextView time;
+    private ImageView frontPhoto;
+    private ImageView backPhoto;
+    private SimpleDateFormat dateFormat;
+    private SimpleDateFormat timeFormat;
+    private Calendar calendar = Calendar.getInstance();
+    private ViewPager pager;
+    private ScrollView mScrollView;
+    private PreviewColorsSetter mListPreviewColorsSetter;
+    private CheckBox checkBox;
+    private String myColorName;
+    private String myColorCode;
+    private EditText ticketTitle;
+    private EditText ticketCardholder;
+    private RobotoRegular title;
+    private FrameLayout removeFront;
+    private FrameLayout removeBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,21 +84,21 @@ public class CreateTicketActivity extends AppCompatActivity {
         initViews();
         dateFormat = new SimpleDateFormat("d MMM yyyy", Locale.US);
         timeFormat = new SimpleDateFormat("h:mm a", Locale.US);
-        photoFileNameFront = BEG_FILE_NAME + UniqueStringGenerator.getUniqueString() + "front_photo.jpg";
-        photoFileNameBack = BEG_FILE_NAME + UniqueStringGenerator.getUniqueString() + "back_photo.jpg";
+        photoFileNameFront = Constants.BEG_FILE_NAME + UniqueStringGenerator.getUniqueString() + "front_photo.jpg";
+        photoFileNameBack = Constants.BEG_FILE_NAME + UniqueStringGenerator.getUniqueString() + "back_photo.jpg";
         setDateOnView();
         setTimeOnView();
         db = DatabaseHelperImpl.getInstance(this);
         title.setText(Constants.NEW_TITLES.NEW_TICKET_TITLE);
 
-        mListPreviewColorsSetter = sPreviewColorSetters.get(0);
+        mListPreviewColorsSetter = previewColors.get(0);
         myColorName = mListPreviewColorsSetter.getNameColorCards();
         myColorCode = mListPreviewColorsSetter.getCodeColorCards();
         Log.d(TICKET, myColorName + " " + myColorCode);
-        PAGE_COUNT = sPreviewColorSetters.size();
+        int PAGE_COUNT = previewColors.size();
 
-        pager.setPageMargin(pagerMargin);
-        pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
+        pager.setPageMargin(Constants.PAGER_MARGIN_PREVIEW);
+        PagerAdapter pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 Constants.ID_PAGERS.ID_TICKET_ITEM,
                 PAGE_COUNT);
 
@@ -126,7 +111,7 @@ public class CreateTicketActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                mListPreviewColorsSetter = sPreviewColorSetters.get(position);
+                mListPreviewColorsSetter = previewColors.get(position);
                 myColorName = mListPreviewColorsSetter.getNameColorCards();
                 myColorCode = mListPreviewColorsSetter.getCodeColorCards();
                 Log.d(TICKET, myColorName + " " + myColorCode);
@@ -141,21 +126,21 @@ public class CreateTicketActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAPTURE_IMAGE_FRONT ||
-                requestCode == CAPTURE_IMAGE_BACK) {
+        if (requestCode == Constants.REQUESTS.CAPTURE_IMAGE_FRONT ||
+                requestCode == Constants.REQUESTS.CAPTURE_IMAGE_BACK) {
             if (resultCode == RESULT_OK) {
 //                Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
-                if (requestCode == CAPTURE_IMAGE_FRONT) {
+                if (requestCode == Constants.REQUESTS.CAPTURE_IMAGE_FRONT) {
                     Uri takenPhotoUri = getPhotoFileUri(photoFileNameFront);
                     Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
-                    startActivityForResult(intent, EDIT_IMAGE_FRONT);
+                    startActivityForResult(intent, Constants.REQUESTS.EDIT_IMAGE_FRONT);
 //                    frontPhoto.setImageURI(takenPhotoUri);
                 } else {
                     Uri takenPhotoUri = getPhotoFileUri(photoFileNameBack);
                     Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
-                    startActivityForResult(intent, EDIT_IMAGE_BACK);
+                    startActivityForResult(intent, Constants.REQUESTS.EDIT_IMAGE_BACK);
 //                    backPhoto.setImageURI(takenPhotoUri);
                 }
             } else {
@@ -163,12 +148,12 @@ public class CreateTicketActivity extends AppCompatActivity {
             }
         }
         if (resultCode == RESULT_OK) {
-            if (requestCode == EDIT_IMAGE_FRONT) {
+            if (requestCode == Constants.REQUESTS.EDIT_IMAGE_FRONT) {
                 Uri editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
                 frontPhoto.setImageURI(editFrontUri);
                 removeFront.setVisibility(View.VISIBLE);
                 frontPhoto.setClickable(false);
-            } else if (requestCode == EDIT_IMAGE_BACK) {
+            } else if (requestCode == Constants.REQUESTS.EDIT_IMAGE_BACK) {
                 Uri editBackUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
                 backPhoto.setImageURI(editBackUri);
                 removeBack.setVisibility(View.VISIBLE);
@@ -216,7 +201,7 @@ public class CreateTicketActivity extends AppCompatActivity {
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View pView) {
-                getPermission(REQUEST_CALENDAR, Manifest.permission.WRITE_CALENDAR, REQUEST_CALENDAR);
+                getPermission(Constants.REQUESTS.REQUEST_CALENDAR, Manifest.permission.WRITE_CALENDAR, Constants.REQUESTS.REQUEST_CALENDAR);
             }
         });
         ticketTitle = (EditText) findViewById(R.id.title_name_ticket);
@@ -282,15 +267,15 @@ public class CreateTicketActivity extends AppCompatActivity {
         if (grantResults.length == 0) {
             return;
         } else if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-            if (requestCode == REQUEST_CALENDAR) {
+            if (requestCode == Constants.REQUESTS.REQUEST_CALENDAR) {
                 checkBox.setChecked(false);
             }
             Toast.makeText(this, R.string.permission_has_not_been_granted, Toast.LENGTH_SHORT).show();
-        } else if (requestCode == FRONT_REQUEST_CAMERA) {
-            startCameraForPhoto(CAPTURE_IMAGE_FRONT, photoFileNameFront);
-        } else if (requestCode == BACK_REQUEST_CAMERA) {
-            startCameraForPhoto(CAPTURE_IMAGE_BACK, photoFileNameBack);
-        } else if (requestCode == REQUEST_WRITE_STORAGE) {
+        } else if (requestCode == Constants.REQUESTS.REQUEST_FRONT_CAMERA) {
+            startCameraForPhoto(Constants.REQUESTS.CAPTURE_IMAGE_FRONT, photoFileNameFront);
+        } else if (requestCode == Constants.REQUESTS.REQUEST_BACK_CAMERA) {
+            startCameraForPhoto(Constants.REQUESTS.CAPTURE_IMAGE_BACK, photoFileNameBack);
+        } else if (requestCode == Constants.REQUESTS.REQUEST_WRITE_STORAGE) {
             createCard();
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -301,11 +286,11 @@ public class CreateTicketActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, PERMISSION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{PERMISSION}, CODE);
         } else {
-            if (INTENT == CAPTURE_IMAGE_FRONT) {
-                startCameraForPhoto(CAPTURE_IMAGE_FRONT, photoFileNameFront);
-            } else if (INTENT == CAPTURE_IMAGE_BACK) {
-                startCameraForPhoto(CAPTURE_IMAGE_BACK, photoFileNameBack);
-            } else if (INTENT == REQUEST_WRITE_STORAGE) {
+            if (INTENT == Constants.REQUESTS.CAPTURE_IMAGE_FRONT) {
+                startCameraForPhoto(Constants.REQUESTS.CAPTURE_IMAGE_FRONT, photoFileNameFront);
+            } else if (INTENT == Constants.REQUESTS.CAPTURE_IMAGE_BACK) {
+                startCameraForPhoto(Constants.REQUESTS.CAPTURE_IMAGE_BACK, photoFileNameBack);
+            } else if (INTENT == Constants.REQUESTS.REQUEST_WRITE_STORAGE) {
                 createCard();
             }
         }
@@ -320,11 +305,11 @@ public class CreateTicketActivity extends AppCompatActivity {
     }
 
     public void onFrontPhotoClicked(View view) {
-        getPermission(FRONT_REQUEST_CAMERA, Manifest.permission.CAMERA, CAPTURE_IMAGE_FRONT);
+        getPermission(Constants.REQUESTS.REQUEST_FRONT_CAMERA, Manifest.permission.CAMERA, Constants.REQUESTS.CAPTURE_IMAGE_FRONT);
     }
 
     public void onBackPhotoClicked(View view) {
-        getPermission(BACK_REQUEST_CAMERA, Manifest.permission.CAMERA, CAPTURE_IMAGE_BACK);
+        getPermission(Constants.REQUESTS.REQUEST_BACK_CAMERA, Manifest.permission.CAMERA, Constants.REQUESTS.CAPTURE_IMAGE_BACK);
     }
 
     private void createCard() {
@@ -347,7 +332,7 @@ public class CreateTicketActivity extends AppCompatActivity {
 //                startActivity(intent);
             }
 
-            cvNewTicket = new ContentValues();
+            ContentValues cvNewTicket = new ContentValues();
             cvNewTicket.put(ModelTickets.TITLE, titleStr);
             cvNewTicket.put(ModelTickets.CARDHOLDER, cardholderStr);
             cvNewTicket.put(ModelTickets.DATE, dateStr);
@@ -379,7 +364,7 @@ public class CreateTicketActivity extends AppCompatActivity {
 
     public void onCreateCardClicked(View view) {
         // // TODO: 12.12.2016 filesDir
-        getPermission(REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, REQUEST_WRITE_STORAGE);
+        getPermission(Constants.REQUESTS.REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Constants.REQUESTS.REQUEST_WRITE_STORAGE);
     }
 
     public void onRemoveBackClicked(View view) {

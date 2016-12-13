@@ -76,25 +76,23 @@ import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_TITLE;
 
 public class ItemsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    String typeItems;
-    FrameLayout progressBar;
-    FloatingActionButton newCard;
-    TextView noResultFor;
-    DatabaseHelperImpl dbHelper;
-    LinearLayoutManager mLayoutManager;
-    RecyclerView recyclerItems;
-    CursorAdapter adapter;
+    private static final int LOADER_ID = 1;
+    private String typeItems;
+    private FrameLayout progressBar;
+    private FloatingActionButton newCard;
+    private TextView noResultFor;
+    private DatabaseHelperImpl dbHelper;
+    private CursorAdapter adapter;
+    private RecyclerView recyclerItems;
     // TODO: 12.12.2016  CreateNfcActivity adapter
-    CardView toolbarBack;
-    CardView toolbarSearch;
-    LinearLayout linearEmpty;
-    ImageView clearSearch;
-    EditText searchEdit;
-    RobotoRegular title;
+    private CardView toolbarBack;
+    private CardView toolbarSearch;
+    private LinearLayout linearEmpty;
+    private ImageView clearSearch;
+    private EditText searchEdit;
+    private RobotoRegular title;
     private String searchText = Constants.EMPTY_STRING;
-    public static Boolean flagToRemove = false;
-    public static final int LOADER_ID = 1;
-    Class ModelClass;
+    private Class ModelClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,10 +126,10 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         dbHelper = DatabaseHelperImpl.getInstance(this);
 
         recyclerItems.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mLayoutManager.setReverseLayout(true);
-        mLayoutManager.setStackFromEnd(true);
-        recyclerItems.setLayoutManager(mLayoutManager);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        recyclerItems.setLayoutManager(layoutManager);
 
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {

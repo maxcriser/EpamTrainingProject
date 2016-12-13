@@ -16,7 +16,7 @@ import java.util.List;
 
 public class LaunchScreenActivity extends AppCompatActivity {
 
-    public static List<PreviewColorsSetter> sPreviewColorSetters;
+    public static List<PreviewColorsSetter> previewColors;
     public static List<String> previewTypes;
     public static String loadPassword;
     public static final String UNDEFENDED = "undefended";
@@ -35,8 +35,7 @@ public class LaunchScreenActivity extends AppCompatActivity {
 
         final PreviewListColorsSetter tcReader = PreviewListColorsSetter.getInstance();
         tcReader.setPreviewColors();
-
-        sPreviewColorSetters = tcReader.getPreviewColorSetters();
+        previewColors = tcReader.getPreviewColorSetters();
         tcReader.setTypeCard();
         previewTypes = tcReader.getTypeCard();
 

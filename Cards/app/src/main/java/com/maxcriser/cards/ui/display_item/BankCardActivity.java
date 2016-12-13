@@ -38,34 +38,26 @@ import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_VALID;
 
 public class BankCardActivity extends Activity {
 
-    FloatingActionMenu materialDesignFAM;
-    FloatingActionButton floatingActionButtonDelete, floatingActionButtonEdit;
-    LinearLayout editLinear;
-    ScrollView mScrollView;
-    Boolean showPin = false;
-    TextView editBank;
-    EditText editName;
-    String editString;
-    LinearLayout linearFrameAction;
-    String id;
-    String bank;
-    String cardholder;
-    String number;
-    String pin;
-    String valid;
-    String type;
-    String color;
-    EditText editCardholder;
-    EditText editNumber;
-    EditText editPin;
-    EditText editValid;
-    ImageView editType;
-    ImageView eye;
-
-    DatabaseHelperImpl dbHelper;
-    Handler mHandler;
-    Animation animScaleDown;
-    Animation animScaleUp;
+    private FloatingActionMenu materialDesignFAM;
+    private FloatingActionButton floatingActionButtonDelete, floatingActionButtonEdit;
+    private LinearLayout editLinear;
+    private ScrollView mScrollView;
+    private Boolean showPin = false;
+    private TextView editBank;
+    private EditText editName;
+    private String editString;
+    private LinearLayout linearFrameAction;
+    private String id;
+    private EditText editCardholder;
+    private EditText editNumber;
+    private EditText editPin;
+    private EditText editValid;
+    private ImageView editType;
+    private ImageView eye;
+    private DatabaseHelperImpl dbHelper;
+    private Handler mHandler;
+    private Animation animScaleDown;
+    private Animation animScaleUp;
 
     Handler.Callback hc = new Handler.Callback() {
         @Override
@@ -113,13 +105,13 @@ public class BankCardActivity extends Activity {
 
         Intent creditIntent = getIntent();
         id = creditIntent.getStringExtra(EXTRA_BANK_ID);
-        bank = creditIntent.getStringExtra(EXTRA_BANK_BANK);
-        cardholder = creditIntent.getStringExtra(EXTRA_BANK_CARDHOLDER);
-        number = creditIntent.getStringExtra(EXTRA_BANK_NUMBER);
-        pin = creditIntent.getStringExtra(EXTRA_BANK_PIN);
-        valid = creditIntent.getStringExtra(EXTRA_BANK_VALID);
-        type = creditIntent.getStringExtra(EXTRA_BANK_TYPE);
-        color = creditIntent.getStringExtra(EXTRA_BANK_COLOR);
+        String bank = creditIntent.getStringExtra(EXTRA_BANK_BANK);
+        String cardholder = creditIntent.getStringExtra(EXTRA_BANK_CARDHOLDER);
+        String number = creditIntent.getStringExtra(EXTRA_BANK_NUMBER);
+        String pin = creditIntent.getStringExtra(EXTRA_BANK_PIN);
+        String valid = creditIntent.getStringExtra(EXTRA_BANK_VALID);
+        String type = creditIntent.getStringExtra(EXTRA_BANK_TYPE);
+        String color = creditIntent.getStringExtra(EXTRA_BANK_COLOR);
 
         editBank.setText(bank);
         editCardholder.setText(cardholder);

@@ -11,6 +11,7 @@ public class Constants {
         int CAPTURE_IMAGE_BACK = 1010;
         int EDIT_IMAGE_FRONT = 1011;
         int EDIT_IMAGE_BACK = 1100;
+        byte REQUEST_CALENDAR = 3;
     }
 
     public interface CARDS {
@@ -60,4 +61,6 @@ public class Constants {
 
     public static final String URL_JSON_LOCATION = "http://ip-api.com/json";
     public static final String EMPTY_STRING = "";
+    public static final String BEG_FILE_NAME = "ticket-";
+    public static final int PAGER_MARGIN_PREVIEW = 16;
 }

@@ -24,7 +24,6 @@ import android.widget.Toast;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.constant.Extras;
-import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.setter.PreviewColorsSetter;
 import com.maxcriser.cards.ui.PhotoEditorActivity;
@@ -37,7 +36,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import static android.view.View.GONE;
-import static com.maxcriser.cards.ui.LaunchScreenActivity.sPreviewColorSetters;
+import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
 public class CreateNfcActivity extends AppCompatActivity {
 
@@ -45,26 +44,20 @@ public class CreateNfcActivity extends AppCompatActivity {
     public final String APP_TAG = "thecrisertakephoto";
     public String photoFileNameFront;
     public String photoFileNameBack;
-    DatabaseHelperImpl db;
-    TextView date;
-    TextView time;
-    ImageView frontPhoto;
-    ImageView backPhoto;
-    Calendar calendar = Calendar.getInstance();
-
-    static int PAGE_COUNT;
-    static final int pagerMargin = 16;
-    ViewPager pager;
-    PagerAdapter pagerAdapter;
-
-    PreviewColorsSetter mListPreviewColorsSetter;
-    CheckBox checkBox;
-    String myColorName;
-    String myColorCode;
-    EditText ticketTitle;
-    RobotoRegular title;
-    FrameLayout removeFront;
-    FrameLayout removeBack;
+    private TextView date;
+    private TextView time;
+    private ImageView frontPhoto;
+    private ImageView backPhoto;
+    private Calendar calendar = Calendar.getInstance();
+    private ViewPager pager;
+    private PreviewColorsSetter mListPreviewColorsSetter;
+    private CheckBox checkBox;
+    private String myColorName;
+    private String myColorCode;
+    private EditText ticketTitle;
+    private RobotoRegular title;
+    private FrameLayout removeFront;
+    private FrameLayout removeBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,17 +70,16 @@ public class CreateNfcActivity extends AppCompatActivity {
         setDateOnView();
         setTimeOnView();
 
-        db = DatabaseHelperImpl.getInstance(this);
         title.setText(Constants.NEW_TITLES.NEW_TICKET_TITLE);
 
-        mListPreviewColorsSetter = sPreviewColorSetters.get(0);
+        mListPreviewColorsSetter = previewColors.get(0);
         myColorName = mListPreviewColorsSetter.getNameColorCards();
         myColorCode = mListPreviewColorsSetter.getCodeColorCards();
         Log.d(TICKET, myColorName + " " + myColorCode);
-        PAGE_COUNT = sPreviewColorSetters.size();
+        int PAGE_COUNT = previewColors.size();
 
-        pager.setPageMargin(pagerMargin);
-        pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
+        pager.setPageMargin(Constants.PAGER_MARGIN_PREVIEW);
+        PagerAdapter pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 Constants.ID_PAGERS.ID_TICKET_ITEM,
                 PAGE_COUNT);
 
@@ -100,7 +92,7 @@ public class CreateNfcActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                mListPreviewColorsSetter = sPreviewColorSetters.get(position);
+                mListPreviewColorsSetter = previewColors.get(position);
                 myColorName = mListPreviewColorsSetter.getNameColorCards();
                 myColorCode = mListPreviewColorsSetter.getCodeColorCards();
                 Log.d(TICKET, myColorName + " " + myColorCode);

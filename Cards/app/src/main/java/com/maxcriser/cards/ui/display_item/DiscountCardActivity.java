@@ -33,24 +33,20 @@ import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_TITLE;
 
 public class DiscountCardActivity extends Activity {
 
-    FloatingActionMenu materialDesignFAM;
-    FloatingActionButton floatingActionButtonDelete, floatingActionButtonEdit;
-    LinearLayout editLinear;
-    ScrollView mScrollView;
-
-    TextView titleView;
-    EditText editName;
-    String editString;
-    BarcodeEan barcodeView;
-    LinearLayout linearFrameAction;
-    String id;
-    String title;
-    String barcode;
-    String color;
-    DatabaseHelperImpl dbHelper;
-    Handler mHandler;
-    Animation animScaleDown;
-    Animation animScaleUp;
+    private FloatingActionMenu materialDesignFAM;
+    private FloatingActionButton floatingActionButtonDelete, floatingActionButtonEdit;
+    private LinearLayout editLinear;
+    private ScrollView mScrollView;
+    private TextView titleView;
+    private EditText editName;
+    private String editString;
+    private BarcodeEan barcodeView;
+    private LinearLayout linearFrameAction;
+    private String id;
+    private DatabaseHelperImpl dbHelper;
+    private Handler mHandler;
+    private Animation animScaleDown;
+    private Animation animScaleUp;
 
     Handler.Callback hc = new Handler.Callback() {
         @Override
@@ -96,9 +92,9 @@ public class DiscountCardActivity extends Activity {
 
         Intent barcodeIntent = getIntent();
         id = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_ID);
-        title = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_TITLE);
-        barcode = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_BARCODE);
-        color = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_COLOR);
+        String title = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_TITLE);
+        String barcode = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_BARCODE);
+        String color = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_COLOR);
 
         titleView.setText(title);
 
@@ -124,7 +120,7 @@ public class DiscountCardActivity extends Activity {
     public void onBackClicked(View view) {
         // TODO: 07.12.2016   handler close materialFloating
         super.onBackPressed();
-        }
+    }
 
     public void onCancelClicked(View view) {
         editLinear.setVisibility(GONE);

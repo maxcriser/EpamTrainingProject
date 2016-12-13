@@ -46,19 +46,15 @@ import java.util.Locale;
 
 import static android.view.View.GONE;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
-import static com.maxcriser.cards.ui.LaunchScreenActivity.sPreviewColorSetters;
+import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
 public class CreateBankActivity extends AppCompatActivity {
 
-    public static final String BANK_ID = "BANK ";
-    public static final String BANK = "CreateBankActivity";
-    private static final int pagerMargin = 16;
-    private static int PAGE_COUNT_TEMPLATE;
-    private static int PAGE_COUNT;
+    public static final String BANK = "CreateBankActivity"; // TODO delete
     public final String APP_TAG = "thecrisertakephoto";
-    private int currentPositionColors;
     public String photoFileNameFront;
     public String photoFileNameBack;
+    private int currentPositionColors;
     private ImageView frontPhoto;
     private ImageView backPhoto;
     private FrameLayout removeFront;
@@ -67,7 +63,6 @@ public class CreateBankActivity extends AppCompatActivity {
     private ScrollView mScrollView;
     private ViewPager pagerTypes;
     private ViewPager pagerTemplate;
-    private PagerAdapter pagerAdapterTypes;
     private PagerAdapter pagerAdapterTemplate;
     private PreviewColorsSetter mListPreviewColorsSetter;
     private RobotoRegular title;
@@ -93,14 +88,14 @@ public class CreateBankActivity extends AppCompatActivity {
         currentPositionColors = 0;
         title.setText(Constants.NEW_TITLES.NEW_BANK_TITLE);
 
-        mListPreviewColorsSetter = sPreviewColorSetters.get(0);
+        mListPreviewColorsSetter = previewColors.get(0);
         myColorName = mListPreviewColorsSetter.getNameColorCards();
         myColorCode = mListPreviewColorsSetter.getCodeColorCards();
         Log.d(BANK, myColorName + " " + myColorCode);
 
-        PAGE_COUNT_TEMPLATE = sPreviewColorSetters.size();
+        int PAGE_COUNT_TEMPLATE = previewColors.size();
 
-        pagerTemplate.setPageMargin(pagerMargin);
+        pagerTemplate.setPageMargin(Constants.PAGER_MARGIN_PREVIEW);
         pagerTemplate.setMinimumHeight(156);
         pagerAdapterTemplate = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 Constants.ID_PAGERS.ID_BANK_CARD_ITEM,
@@ -110,7 +105,7 @@ public class CreateBankActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                mListPreviewColorsSetter = sPreviewColorSetters.get(position);
+                mListPreviewColorsSetter = previewColors.get(position);
                 myColorName = mListPreviewColorsSetter.getNameColorCards();
                 myColorCode = mListPreviewColorsSetter.getCodeColorCards();
                 Log.d(BANK, myColorName + " " + myColorCode);
@@ -129,8 +124,8 @@ public class CreateBankActivity extends AppCompatActivity {
 
         myTypeCard = previewTypes.get(0);
         Log.d(BANK, myTypeCard);
-        PAGE_COUNT = previewTypes.size();
-        pagerAdapterTypes = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
+        int PAGE_COUNT = previewTypes.size();
+        PagerAdapter pagerAdapterTypes = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 Constants.ID_PAGERS.ID_BANK_CARD_ITEM_TYPE,
                 PAGE_COUNT);
         pagerTypes.setAdapter(pagerAdapterTypes);
@@ -349,7 +344,7 @@ public class CreateBankActivity extends AppCompatActivity {
             db.insert(ModelBankCards.class, cvNewCredit, new OnResultCallback<Long, Void>() {
                 @Override
                 public void onSuccess(Long pLong) {
-                    Log.d(BANK_ID + " ID", pLong.toString());
+                    Log.d("BANK ID", pLong.toString());
                 }
 
                 @Override

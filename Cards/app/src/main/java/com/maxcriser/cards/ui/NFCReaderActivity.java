@@ -23,9 +23,8 @@ import java.util.Arrays;
 
 public class NfcReaderActivity extends AppCompatActivity {
 
-    public static final String MIME_TEXT_PLAIN = "text/plain";
-    public static final String TAG = "NfcDemo";
-
+    private static final String MIME_TEXT_PLAIN = "text/plain";
+    private static final String TAG = "NfcDemo";
     private TextView mTextView;
     private NfcAdapter mNfcAdapter;
 

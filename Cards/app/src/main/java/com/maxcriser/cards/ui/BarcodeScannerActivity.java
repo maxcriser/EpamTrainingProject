@@ -26,7 +26,8 @@ import static android.view.View.GONE;
 
 public class BarcodeScannerActivity extends AppCompatActivity {
 
-    public static final String Y_800 = "Y800";
+    public static final String TAG_BARCODE = "barcode";
+    private static final String Y_800 = "Y800";
     private RobotoThin mCancel;
     private RobotoThin mOk;
     private RobotoThin mSolution;
@@ -38,9 +39,8 @@ public class BarcodeScannerActivity extends AppCompatActivity {
     private ImageScanner scanner;
     private boolean barcodeScanned = false;
     private boolean previewing = true;
-    public static final String TAG_BARCODE = "barcode";
     private String scanResult;
-    FrameLayout preview;
+    private FrameLayout preview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

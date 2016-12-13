@@ -34,29 +34,22 @@ import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_TITLE;
 
 public class TicketActivity extends Activity {
 
-    FloatingActionMenu materialDesignFAM;
-    FloatingActionButton floatingActionButtonDelete, floatingActionButtonEdit;
-    LinearLayout editLinear;
-    ScrollView mScrollView;
-
-    TextView editTitle;
-    EditText editName;
-    String editTitleStr;
-    LinearLayout linearFrameAction;
-    String id;
-    String titleStr;
-    String cardholderStr;
-    String dateStr;
-    String timeStr;
-    String colorStr;
-    RobotoThin date;
-    RobotoThin time;
-    EditText editCardholder;
-
-    DatabaseHelperImpl dbHelper;
-    Handler mHandler;
-    Animation animScaleDown;
-    Animation animScaleUp;
+    private FloatingActionMenu materialDesignFAM;
+    private FloatingActionButton floatingActionButtonDelete, floatingActionButtonEdit;
+    private LinearLayout editLinear;
+    private ScrollView mScrollView;
+    private TextView editTitle;
+    private EditText editName;
+    private String editTitleStr;
+    private LinearLayout linearFrameAction;
+    private String id;
+    private RobotoThin date;
+    private RobotoThin time;
+    private EditText editCardholder;
+    private DatabaseHelperImpl dbHelper;
+    private Handler mHandler;
+    private Animation animScaleDown;
+    private Animation animScaleUp;
 
     Handler.Callback hc = new Handler.Callback() {
         @Override
@@ -104,11 +97,11 @@ public class TicketActivity extends Activity {
 
         Intent creditIntent = getIntent();
         id = creditIntent.getStringExtra(EXTRA_TICKET_ID);
-        titleStr = creditIntent.getStringExtra(EXTRA_TICKET_TITLE);
-        cardholderStr = creditIntent.getStringExtra(EXTRA_TICKET_CARDHOLDER);
-        dateStr = creditIntent.getStringExtra(EXTRA_TICKET_DATE);
-        timeStr = creditIntent.getStringExtra(EXTRA_TICKET_TIME);
-        colorStr = creditIntent.getStringExtra(EXTRA_BANK_COLOR);
+        String titleStr = creditIntent.getStringExtra(EXTRA_TICKET_TITLE);
+        String cardholderStr = creditIntent.getStringExtra(EXTRA_TICKET_CARDHOLDER);
+        String dateStr = creditIntent.getStringExtra(EXTRA_TICKET_DATE);
+        String timeStr = creditIntent.getStringExtra(EXTRA_TICKET_TIME);
+        String colorStr = creditIntent.getStringExtra(EXTRA_BANK_COLOR);
 
         editTitle.setText(titleStr);
         editCardholder.setText(cardholderStr);

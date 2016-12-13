@@ -44,19 +44,18 @@ import static com.maxcriser.cards.ui.MenuActivity.TYPE_LOCKED_SCREEN;
 
 public class LockerActivity extends AppCompatActivity {
 
-    Handler mHandler;
-    ImageView firstCircle;
-    ImageView secondCircle;
-    ImageView thirdCircle;
-    ImageView fourthCircle;
-    Vibrator mVibrator;
-    Intent intent;
-    String intentLockedPage;
-    String builderPassword;
-    Integer durationVibrateError = 200;
-    Integer durationVibrateInput = 10;
-
     private static final String KEY_NAME = "finger_key";
+    private Handler mHandler;
+    private ImageView firstCircle;
+    private ImageView secondCircle;
+    private ImageView thirdCircle;
+    private ImageView fourthCircle;
+    private Vibrator mVibrator;
+    private Intent intent;
+    private String intentLockedPage;
+    private String builderPassword;
+    private Integer durationVibrateError = 200;
+    private Integer durationVibrateInput = 10;
     private KeyStore keyStore;
     private Cipher cipher;
 
