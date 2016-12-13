@@ -73,7 +73,6 @@ public class CreateBankActivity extends AppCompatActivity {
     private ViewPager pagerTypes;
     private ViewPager pagerTemplate;
     private PagerAdapter pagerAdapterTemplate;
-    private PreviewColorsSetter mListPreviewColorsSetter;
     private Calendar calendar = Calendar.getInstance();
     private EditText bank;
     private EditText cardholder;
@@ -111,9 +110,9 @@ public class CreateBankActivity extends AppCompatActivity {
         currentPositionColors = 0;
         title.setText(Constants.NEW_TITLES.NEW_BANK_TITLE);
 
-        mListPreviewColorsSetter = previewColors.get(0);
-        myColorName = mListPreviewColorsSetter.getNameColorCards();
-        myColorCode = mListPreviewColorsSetter.getCodeColorCards();
+        PreviewColorsSetter listPreviewColorsSetter = previewColors.get(0);
+        myColorName = listPreviewColorsSetter.getNameColorCards();
+        myColorCode = listPreviewColorsSetter.getCodeColorCards();
         Log.d(BANK, myColorName + " " + myColorCode);
 
         int PAGE_COUNT_TEMPLATE = previewColors.size();

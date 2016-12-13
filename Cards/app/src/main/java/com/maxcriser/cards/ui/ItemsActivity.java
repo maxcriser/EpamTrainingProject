@@ -405,7 +405,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         } else {
             // TODO: 12.12.2016 CNFCAdapter
         }
-        recyclerItems.setAdapter(adapter);
+        recyclerItems.swapAdapter(adapter, true);
     }
 
     @Override
