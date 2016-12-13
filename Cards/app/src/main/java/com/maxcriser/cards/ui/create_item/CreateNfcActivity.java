@@ -36,6 +36,10 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import static android.view.View.GONE;
+import static com.maxcriser.cards.constant.Constants.REQUESTS.CAPTURE_IMAGE_BACK;
+import static com.maxcriser.cards.constant.Constants.REQUESTS.CAPTURE_IMAGE_FRONT;
+import static com.maxcriser.cards.constant.Constants.REQUESTS.EDIT_IMAGE_BACK;
+import static com.maxcriser.cards.constant.Constants.REQUESTS.EDIT_IMAGE_FRONT;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
 public class CreateNfcActivity extends AppCompatActivity {
@@ -107,15 +111,15 @@ public class CreateNfcActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.REQUESTS.CAPTURE_IMAGE_FRONT ||
-                requestCode == Constants.REQUESTS.CAPTURE_IMAGE_BACK) {
+        if (requestCode == CAPTURE_IMAGE_FRONT ||
+                requestCode == CAPTURE_IMAGE_BACK) {
             if (resultCode == RESULT_OK) {
 //                Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
-                if (requestCode == Constants.REQUESTS.CAPTURE_IMAGE_FRONT) {
+                if (requestCode == CAPTURE_IMAGE_FRONT) {
                     Uri takenPhotoUri = getPhotoFileUri(photoFileNameFront);
                     Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
-                    startActivityForResult(intent, Constants.REQUESTS.EDIT_IMAGE_FRONT);
+                    startActivityForResult(intent, EDIT_IMAGE_FRONT);
                     removeFront.setVisibility(View.VISIBLE);
                     frontPhoto.setClickable(false);
 //                    frontPhoto.setImageURI(takenPhotoUri);
@@ -123,7 +127,7 @@ public class CreateNfcActivity extends AppCompatActivity {
                     Uri takenPhotoUri = getPhotoFileUri(photoFileNameBack);
                     Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
-                    startActivityForResult(intent, Constants.REQUESTS.EDIT_IMAGE_BACK);
+                    startActivityForResult(intent, EDIT_IMAGE_BACK);
                     removeBack.setVisibility(View.VISIBLE);
                     backPhoto.setClickable(false);
 //                    backPhoto.setImageURI(takenPhotoUri);
@@ -132,10 +136,10 @@ public class CreateNfcActivity extends AppCompatActivity {
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
-        if (requestCode == Constants.REQUESTS.EDIT_IMAGE_FRONT) {
+        if (requestCode == EDIT_IMAGE_FRONT) {
             Uri editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
             frontPhoto.setImageURI(editFrontUri);
-        } else if (requestCode == Constants.REQUESTS.EDIT_IMAGE_BACK) {
+        } else if (requestCode == EDIT_IMAGE_BACK) {
             Uri editBackUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
             backPhoto.setImageURI(editBackUri);
         }
@@ -238,7 +242,7 @@ public class CreateNfcActivity extends AppCompatActivity {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileNameFront)); // set the image file name
 
         if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(intent, Constants.REQUESTS.CAPTURE_IMAGE_FRONT);
+            startActivityForResult(intent, CAPTURE_IMAGE_FRONT);
         }
     }
 
@@ -247,7 +251,7 @@ public class CreateNfcActivity extends AppCompatActivity {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileNameBack)); // set the image file name
 
         if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(intent, Constants.REQUESTS.CAPTURE_IMAGE_BACK);
+            startActivityForResult(intent, CAPTURE_IMAGE_BACK);
         }
     }
 

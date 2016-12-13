@@ -37,6 +37,8 @@ import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.fragment.FragmentPreviewCards;
 import com.maxcriser.cards.setter.PreviewColorsSetter;
 import com.maxcriser.cards.ui.PhotoEditorActivity;
+import com.maxcriser.cards.util.OnTemplatePageChangeListener;
+import com.maxcriser.cards.util.OnTypePageChangeListener;
 import com.maxcriser.cards.view.text_view.RobotoRegular;
 
 import java.io.File;
@@ -45,8 +47,15 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import static android.view.View.GONE;
-import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
+import static com.maxcriser.cards.constant.Constants.REQUESTS.CAPTURE_IMAGE_BACK;
+import static com.maxcriser.cards.constant.Constants.REQUESTS.CAPTURE_IMAGE_FRONT;
+import static com.maxcriser.cards.constant.Constants.REQUESTS.EDIT_IMAGE_BACK;
+import static com.maxcriser.cards.constant.Constants.REQUESTS.EDIT_IMAGE_FRONT;
+import static com.maxcriser.cards.constant.Constants.REQUESTS.REQUEST_BACK_CAMERA;
+import static com.maxcriser.cards.constant.Constants.REQUESTS.REQUEST_FRONT_CAMERA;
+import static com.maxcriser.cards.constant.Constants.REQUESTS.REQUEST_WRITE_STORAGE;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
+import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
 
 public class CreateBankActivity extends AppCompatActivity {
 
@@ -65,7 +74,6 @@ public class CreateBankActivity extends AppCompatActivity {
     private ViewPager pagerTemplate;
     private PagerAdapter pagerAdapterTemplate;
     private PreviewColorsSetter mListPreviewColorsSetter;
-    private RobotoRegular title;
     private Calendar calendar = Calendar.getInstance();
     private EditText bank;
     private EditText cardholder;
@@ -82,7 +90,22 @@ public class CreateBankActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_bank_card);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
         initViews();
-        //todo refactor that method. move to initView for example
+    }
+
+    private void initViews() {
+        mScrollView = (ScrollView) findViewById(R.id.scrollView);
+        bank = (EditText) findViewById(R.id.bank);
+        cardholder = (EditText) findViewById(R.id.cardholder);
+        number = (MaskedEditText) findViewById(R.id.number);
+        pin = (EditText) findViewById(R.id.pin);
+        validDate = (TextView) findViewById(R.id.date);
+        RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
+        pagerTemplate = (ViewPager) findViewById(R.id.pager);
+        pagerTypes = (ViewPager) findViewById(R.id.type_card);
+        frontPhoto = (ImageView) findViewById(R.id.front_photo);
+        backPhoto = (ImageView) findViewById(R.id.back_photo);
+        removeBack = (FrameLayout) findViewById(R.id.remove_back);
+        removeFront = (FrameLayout) findViewById(R.id.remove_front);
         db = DatabaseHelperImpl.getInstance(this);
         setDateOnView();
         currentPositionColors = 0;
@@ -101,26 +124,16 @@ public class CreateBankActivity extends AppCompatActivity {
                 Constants.ID_PAGERS.ID_BANK_CARD_ITEM,
                 PAGE_COUNT_TEMPLATE);
         pagerTemplate.setAdapter(pagerAdapterTemplate);
-        pagerTemplate.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
+        pagerTemplate.addOnPageChangeListener(new OnTemplatePageChangeListener(new OnTemplatePageChangeListener.OnPageChangeListener() {
             @Override
-            public void onPageSelected(int position) {
-                mListPreviewColorsSetter = previewColors.get(position);
-                myColorName = mListPreviewColorsSetter.getNameColorCards();
-                myColorCode = mListPreviewColorsSetter.getCodeColorCards();
-                Log.d(BANK, myColorName + " " + myColorCode);
+            public void onResult(int position, String codeColor, String nameColor) {
                 currentPositionColors = position;
+                myColorCode = codeColor;
+                myColorName = nameColor;
+                Log.d("COLOR", position + myColorName + myColorCode);
             }
-
-            @Override
-            public void onPageScrolled(int position, float positionOffset,
-                                       int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
+        }));
 
         myTypeCard = previewTypes.get(0);
         Log.d(BANK, myTypeCard);
@@ -130,86 +143,34 @@ public class CreateBankActivity extends AppCompatActivity {
                 PAGE_COUNT);
         pagerTypes.setAdapter(pagerAdapterTypes);
         FragmentPreviewCards.icon = R.drawable.type_visa;
-        pagerTypes.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        pagerTypes.addOnPageChangeListener(new OnTypePageChangeListener(new OnTypePageChangeListener.OnPageChangeListener() {
             @Override
-            public void onPageSelected(int position) {
-                myTypeCard = previewTypes.get(position);
-                Log.d(BANK, myTypeCard);
-                switch (myTypeCard) {
-                    case Constants.CARDS.VISA:
-                        FragmentPreviewCards.icon = R.drawable.type_visa;
-                        break;
-                    case Constants.CARDS.MAESTRO:
-                        FragmentPreviewCards.icon = R.drawable.type_maestro;
-                        break;
-                    case Constants.CARDS.MASTERCARD:
-                        FragmentPreviewCards.icon = R.drawable.type_mastercard;
-                        break;
-                    case Constants.CARDS.AMEX:
-                        FragmentPreviewCards.icon = R.drawable.type_amex;
-                        break;
-                    case Constants.CARDS.WESTERN_UNION:
-                        FragmentPreviewCards.icon = R.drawable.type_western_union;
-                        break;
-                    case Constants.CARDS.JCB:
-                        FragmentPreviewCards.icon = R.drawable.type_jcb;
-                        break;
-                    case Constants.CARDS.DINERS_CLUB:
-                        FragmentPreviewCards.icon = R.drawable.type_diners_club;
-                        break;
-                    case Constants.CARDS.BELCARD:
-                        FragmentPreviewCards.icon = R.drawable.type_belcard;
-                        break;
-                }
+            public void onResult(int position, Integer icon, String type) {
+                myTypeCard = type;
+                FragmentPreviewCards.icon = icon;
                 pagerTemplate.setAdapter(pagerAdapterTemplate);
                 pagerTemplate.setCurrentItem(currentPositionColors);
             }
-
-            @Override
-            public void onPageScrolled(int position, float positionOffset,
-                                       int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-
-        });
-    }
-
-    private void initViews() {
-        mScrollView = (ScrollView) findViewById(R.id.scrollView);
-        bank = (EditText) findViewById(R.id.bank);
-        cardholder = (EditText) findViewById(R.id.cardholder);
-        number = (MaskedEditText) findViewById(R.id.number);
-        pin = (EditText) findViewById(R.id.pin);
-        validDate = (TextView) findViewById(R.id.date);
-        title = (RobotoRegular) findViewById(R.id.title_toolbar);
-        pagerTemplate = (ViewPager) findViewById(R.id.pager);
-        pagerTypes = (ViewPager) findViewById(R.id.type_card);
-        frontPhoto = (ImageView) findViewById(R.id.front_photo);
-        backPhoto = (ImageView) findViewById(R.id.back_photo);
-        removeBack = (FrameLayout) findViewById(R.id.remove_back);
-        removeFront = (FrameLayout) findViewById(R.id.remove_front);
+        }));
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.REQUESTS.CAPTURE_IMAGE_FRONT ||
-                requestCode == Constants.REQUESTS.CAPTURE_IMAGE_BACK) {
+        if (requestCode == CAPTURE_IMAGE_FRONT ||
+                requestCode == CAPTURE_IMAGE_BACK) {
             if (resultCode == RESULT_OK) {
 //                Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
-                if (requestCode == Constants.REQUESTS.CAPTURE_IMAGE_FRONT) {
+                if (requestCode == CAPTURE_IMAGE_FRONT) {
                     Uri takenPhotoUri = getPhotoFileUri(photoFileNameFront);
                     Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
-                    startActivityForResult(intent, Constants.REQUESTS.EDIT_IMAGE_FRONT);
+                    startActivityForResult(intent, EDIT_IMAGE_FRONT);
 //                    frontPhoto.setImageURI(takenPhotoUri);
                 } else {
                     Uri takenPhotoUri = getPhotoFileUri(photoFileNameBack);
                     Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
-                    startActivityForResult(intent, Constants.REQUESTS.EDIT_IMAGE_BACK);
+                    startActivityForResult(intent, EDIT_IMAGE_BACK);
 //                    backPhoto.setImageURI(takenPhotoUri);
                 }
             } else {
@@ -217,12 +178,12 @@ public class CreateBankActivity extends AppCompatActivity {
             }
         }
         if (resultCode == RESULT_OK) {
-            if (requestCode == Constants.REQUESTS.EDIT_IMAGE_FRONT) {
+            if (requestCode == EDIT_IMAGE_FRONT) {
                 Uri editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
                 frontPhoto.setImageURI(editFrontUri);
                 removeFront.setVisibility(View.VISIBLE);
                 frontPhoto.setClickable(false);
-            } else if (requestCode == Constants.REQUESTS.EDIT_IMAGE_BACK) {
+            } else if (requestCode == EDIT_IMAGE_BACK) {
                 Uri editBackUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
                 backPhoto.setImageURI(editBackUri);
                 removeBack.setVisibility(View.VISIBLE);
@@ -251,23 +212,23 @@ public class CreateBankActivity extends AppCompatActivity {
     }
 
     public void onBackPhotoClicked(View view) {
-        getPermission(Constants.REQUESTS.REQUEST_BACK_CAMERA, Manifest.permission.CAMERA, Constants.REQUESTS.CAPTURE_IMAGE_BACK);
+        getPermission(REQUEST_BACK_CAMERA, Manifest.permission.CAMERA);
     }
 
     public void onFrontPhotoClicked(View view) {
-        getPermission(Constants.REQUESTS.REQUEST_FRONT_CAMERA, Manifest.permission.CAMERA, Constants.REQUESTS.CAPTURE_IMAGE_FRONT);
+        getPermission(REQUEST_FRONT_CAMERA, Manifest.permission.CAMERA);
     }
 
     @TargetApi(23)
-    private void getPermission(final byte CODE, final String PERMISSION, int INTENT) {
+    private void getPermission(final byte CODE, final String PERMISSION) {
         if (ContextCompat.checkSelfPermission(this, PERMISSION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{PERMISSION}, CODE);
         } else {
-            if (INTENT == Constants.REQUESTS.CAPTURE_IMAGE_FRONT) {
-                startCameraForPhoto(Constants.REQUESTS.CAPTURE_IMAGE_FRONT, photoFileNameFront);
-            } else if (INTENT == Constants.REQUESTS.CAPTURE_IMAGE_BACK) {
-                startCameraForPhoto(Constants.REQUESTS.CAPTURE_IMAGE_BACK, photoFileNameBack);
-            } else if (INTENT == Constants.REQUESTS.REQUEST_WRITE_STORAGE) {
+            if (CODE == REQUEST_FRONT_CAMERA) {
+                startCameraForPhoto(CAPTURE_IMAGE_FRONT, photoFileNameFront);
+            } else if (CODE == REQUEST_BACK_CAMERA) {
+                startCameraForPhoto(CAPTURE_IMAGE_BACK, photoFileNameBack);
+            } else if (CODE == REQUEST_WRITE_STORAGE) {
                 createCard();
             }
         }
@@ -287,11 +248,11 @@ public class CreateBankActivity extends AppCompatActivity {
             return;
         } else if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, R.string.permission_has_not_been_granted, Toast.LENGTH_SHORT).show();
-        } else if (requestCode == Constants.REQUESTS.CAPTURE_IMAGE_FRONT) {
-            startCameraForPhoto(Constants.REQUESTS.CAPTURE_IMAGE_FRONT, photoFileNameFront);
-        } else if (requestCode == Constants.REQUESTS.CAPTURE_IMAGE_BACK) {
-            startCameraForPhoto(Constants.REQUESTS.CAPTURE_IMAGE_BACK, photoFileNameBack);
-        } else if (requestCode == Constants.REQUESTS.REQUEST_WRITE_STORAGE) {
+        } else if (requestCode == REQUEST_FRONT_CAMERA) {
+            startCameraForPhoto(CAPTURE_IMAGE_FRONT, photoFileNameFront);
+        } else if (requestCode == REQUEST_BACK_CAMERA) {
+            startCameraForPhoto(CAPTURE_IMAGE_BACK, photoFileNameBack);
+        } else if (requestCode == REQUEST_WRITE_STORAGE) {
             createCard();
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -361,7 +322,7 @@ public class CreateBankActivity extends AppCompatActivity {
 
     public void onCreateCardClicked(View view) {
         // // TODO: 12.12.2016 filesDir
-        getPermission(Constants.REQUESTS.REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Constants.REQUESTS.REQUEST_WRITE_STORAGE);
+        getPermission(REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     public void onToolbarBackClicked(View view) {

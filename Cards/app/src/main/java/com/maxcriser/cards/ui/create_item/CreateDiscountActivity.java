@@ -22,6 +22,7 @@ import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.setter.PreviewColorsSetter;
 import com.maxcriser.cards.ui.BarcodeScannerActivity;
+import com.maxcriser.cards.util.OnTemplatePageChangeListener;
 import com.maxcriser.cards.view.text_view.BarcodeEan;
 import com.maxcriser.cards.view.text_view.RobotoRegular;
 
@@ -83,25 +84,14 @@ public class CreateDiscountActivity extends AppCompatActivity {
                 PAGE_COUNT);
 
         pager.setAdapter(pagerAdapter);
-        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        pager.addOnPageChangeListener(new OnTemplatePageChangeListener(new OnTemplatePageChangeListener.OnPageChangeListener() {
             @Override
-            public void onPageSelected(int position) {
-                mListPreviewColorsSetter = previewColors.get(position);
-                myColorName = mListPreviewColorsSetter.getNameColorCards();
-                myColorCode = mListPreviewColorsSetter.getCodeColorCards();
-                Log.d(DISCOUNT_ID, myColorName + " " + myColorCode);
-
+            public void onResult(int position, String codeColor, String nameColor) {
+                myColorCode = codeColor;
+                myColorName = nameColor;
+                Log.d("COLOR", position + myColorName + myColorCode);
             }
-
-            @Override
-            public void onPageScrolled(int position, float positionOffset,
-                                       int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
+        }));
     }
 
     private void initViews() {

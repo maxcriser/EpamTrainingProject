@@ -38,6 +38,7 @@ import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.setter.PreviewColorsSetter;
 import com.maxcriser.cards.ui.PhotoEditorActivity;
+import com.maxcriser.cards.util.OnTemplatePageChangeListener;
 import com.maxcriser.cards.util.UniqueStringGenerator;
 import com.maxcriser.cards.view.text_view.RobotoRegular;
 
@@ -47,6 +48,14 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import static android.view.View.GONE;
+import static com.maxcriser.cards.constant.Constants.REQUESTS.CAPTURE_IMAGE_BACK;
+import static com.maxcriser.cards.constant.Constants.REQUESTS.CAPTURE_IMAGE_FRONT;
+import static com.maxcriser.cards.constant.Constants.REQUESTS.EDIT_IMAGE_BACK;
+import static com.maxcriser.cards.constant.Constants.REQUESTS.EDIT_IMAGE_FRONT;
+import static com.maxcriser.cards.constant.Constants.REQUESTS.REQUEST_BACK_CAMERA;
+import static com.maxcriser.cards.constant.Constants.REQUESTS.REQUEST_CALENDAR;
+import static com.maxcriser.cards.constant.Constants.REQUESTS.REQUEST_FRONT_CAMERA;
+import static com.maxcriser.cards.constant.Constants.REQUESTS.REQUEST_WRITE_STORAGE;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
 public class CreateTicketActivity extends AppCompatActivity {
@@ -103,44 +112,33 @@ public class CreateTicketActivity extends AppCompatActivity {
                 PAGE_COUNT);
 
         pager.setAdapter(pagerAdapter);
-        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        pager.addOnPageChangeListener(new OnTemplatePageChangeListener(new OnTemplatePageChangeListener.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+            public void onResult(int position, String codeColor, String nameColor) {
+                myColorCode = codeColor;
+                myColorName = nameColor;
+                Log.d("COLOR", position + myColorName + myColorCode);
             }
-
-            @Override
-            public void onPageSelected(int position) {
-                mListPreviewColorsSetter = previewColors.get(position);
-                myColorName = mListPreviewColorsSetter.getNameColorCards();
-                myColorCode = mListPreviewColorsSetter.getCodeColorCards();
-                Log.d(TICKET, myColorName + " " + myColorCode);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+        }));
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.REQUESTS.CAPTURE_IMAGE_FRONT ||
-                requestCode == Constants.REQUESTS.CAPTURE_IMAGE_BACK) {
+        if (requestCode == CAPTURE_IMAGE_FRONT ||
+                requestCode == CAPTURE_IMAGE_BACK) {
             if (resultCode == RESULT_OK) {
 //                Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
-                if (requestCode == Constants.REQUESTS.CAPTURE_IMAGE_FRONT) {
+                if (requestCode == CAPTURE_IMAGE_FRONT) {
                     Uri takenPhotoUri = getPhotoFileUri(photoFileNameFront);
                     Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
-                    startActivityForResult(intent, Constants.REQUESTS.EDIT_IMAGE_FRONT);
+                    startActivityForResult(intent, EDIT_IMAGE_FRONT);
 //                    frontPhoto.setImageURI(takenPhotoUri);
                 } else {
                     Uri takenPhotoUri = getPhotoFileUri(photoFileNameBack);
                     Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
-                    startActivityForResult(intent, Constants.REQUESTS.EDIT_IMAGE_BACK);
+                    startActivityForResult(intent, EDIT_IMAGE_BACK);
 //                    backPhoto.setImageURI(takenPhotoUri);
                 }
             } else {
@@ -148,12 +146,12 @@ public class CreateTicketActivity extends AppCompatActivity {
             }
         }
         if (resultCode == RESULT_OK) {
-            if (requestCode == Constants.REQUESTS.EDIT_IMAGE_FRONT) {
+            if (requestCode == EDIT_IMAGE_FRONT) {
                 Uri editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
                 frontPhoto.setImageURI(editFrontUri);
                 removeFront.setVisibility(View.VISIBLE);
                 frontPhoto.setClickable(false);
-            } else if (requestCode == Constants.REQUESTS.EDIT_IMAGE_BACK) {
+            } else if (requestCode == EDIT_IMAGE_BACK) {
                 Uri editBackUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
                 backPhoto.setImageURI(editBackUri);
                 removeBack.setVisibility(View.VISIBLE);
@@ -201,7 +199,7 @@ public class CreateTicketActivity extends AppCompatActivity {
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View pView) {
-                getPermission(Constants.REQUESTS.REQUEST_CALENDAR, Manifest.permission.WRITE_CALENDAR, Constants.REQUESTS.REQUEST_CALENDAR);
+                getPermission(REQUEST_CALENDAR, Manifest.permission.WRITE_CALENDAR, REQUEST_CALENDAR);
             }
         });
         ticketTitle = (EditText) findViewById(R.id.title_name_ticket);
@@ -267,15 +265,15 @@ public class CreateTicketActivity extends AppCompatActivity {
         if (grantResults.length == 0) {
             return;
         } else if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-            if (requestCode == Constants.REQUESTS.REQUEST_CALENDAR) {
+            if (requestCode == REQUEST_CALENDAR) {
                 checkBox.setChecked(false);
             }
             Toast.makeText(this, R.string.permission_has_not_been_granted, Toast.LENGTH_SHORT).show();
-        } else if (requestCode == Constants.REQUESTS.REQUEST_FRONT_CAMERA) {
-            startCameraForPhoto(Constants.REQUESTS.CAPTURE_IMAGE_FRONT, photoFileNameFront);
-        } else if (requestCode == Constants.REQUESTS.REQUEST_BACK_CAMERA) {
-            startCameraForPhoto(Constants.REQUESTS.CAPTURE_IMAGE_BACK, photoFileNameBack);
-        } else if (requestCode == Constants.REQUESTS.REQUEST_WRITE_STORAGE) {
+        } else if (requestCode == REQUEST_FRONT_CAMERA) {
+            startCameraForPhoto(CAPTURE_IMAGE_FRONT, photoFileNameFront);
+        } else if (requestCode == REQUEST_BACK_CAMERA) {
+            startCameraForPhoto(CAPTURE_IMAGE_BACK, photoFileNameBack);
+        } else if (requestCode == REQUEST_WRITE_STORAGE) {
             createCard();
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -286,11 +284,11 @@ public class CreateTicketActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, PERMISSION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{PERMISSION}, CODE);
         } else {
-            if (INTENT == Constants.REQUESTS.CAPTURE_IMAGE_FRONT) {
-                startCameraForPhoto(Constants.REQUESTS.CAPTURE_IMAGE_FRONT, photoFileNameFront);
-            } else if (INTENT == Constants.REQUESTS.CAPTURE_IMAGE_BACK) {
-                startCameraForPhoto(Constants.REQUESTS.CAPTURE_IMAGE_BACK, photoFileNameBack);
-            } else if (INTENT == Constants.REQUESTS.REQUEST_WRITE_STORAGE) {
+            if (INTENT == CAPTURE_IMAGE_FRONT) {
+                startCameraForPhoto(CAPTURE_IMAGE_FRONT, photoFileNameFront);
+            } else if (INTENT == CAPTURE_IMAGE_BACK) {
+                startCameraForPhoto(CAPTURE_IMAGE_BACK, photoFileNameBack);
+            } else if (INTENT == REQUEST_WRITE_STORAGE) {
                 createCard();
             }
         }
@@ -305,11 +303,11 @@ public class CreateTicketActivity extends AppCompatActivity {
     }
 
     public void onFrontPhotoClicked(View view) {
-        getPermission(Constants.REQUESTS.REQUEST_FRONT_CAMERA, Manifest.permission.CAMERA, Constants.REQUESTS.CAPTURE_IMAGE_FRONT);
+        getPermission(REQUEST_FRONT_CAMERA, Manifest.permission.CAMERA, CAPTURE_IMAGE_FRONT);
     }
 
     public void onBackPhotoClicked(View view) {
-        getPermission(Constants.REQUESTS.REQUEST_BACK_CAMERA, Manifest.permission.CAMERA, Constants.REQUESTS.CAPTURE_IMAGE_BACK);
+        getPermission(REQUEST_BACK_CAMERA, Manifest.permission.CAMERA, CAPTURE_IMAGE_BACK);
     }
 
     private void createCard() {
@@ -364,7 +362,7 @@ public class CreateTicketActivity extends AppCompatActivity {
 
     public void onCreateCardClicked(View view) {
         // // TODO: 12.12.2016 filesDir
-        getPermission(Constants.REQUESTS.REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Constants.REQUESTS.REQUEST_WRITE_STORAGE);
+        getPermission(REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, REQUEST_WRITE_STORAGE);
     }
 
     public void onRemoveBackClicked(View view) {

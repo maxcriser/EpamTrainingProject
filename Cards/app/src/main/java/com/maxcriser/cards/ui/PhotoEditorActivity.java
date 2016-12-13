@@ -19,10 +19,12 @@ import com.isseiaoki.simplecropview.callback.CropCallback;
 import com.isseiaoki.simplecropview.callback.LoadCallback;
 import com.isseiaoki.simplecropview.callback.SaveCallback;
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.constant.Extras;
 
 import java.io.File;
+
+import static com.maxcriser.cards.constant.Constants.REQUESTS.CAPTURE_IMAGE_BACK;
+import static com.maxcriser.cards.constant.Constants.REQUESTS.CAPTURE_IMAGE_FRONT;
 
 public class PhotoEditorActivity extends AppCompatActivity {
 
@@ -67,12 +69,11 @@ public class PhotoEditorActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.REQUESTS.CAPTURE_IMAGE_FRONT || requestCode == Constants.REQUESTS.CAPTURE_IMAGE_BACK) {
+        if (requestCode == CAPTURE_IMAGE_FRONT || requestCode == CAPTURE_IMAGE_BACK) {
             if (resultCode == RESULT_OK) {
                 photoUri = getPhotoFileUri(photoFileName);
 //                Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
                 startCrop(photoUri);
-
             } else {
                 Toast.makeText(this, R.string.picture_wasnt_taken, Toast.LENGTH_SHORT).show();
             }
@@ -101,7 +102,7 @@ public class PhotoEditorActivity extends AppCompatActivity {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(photoFileName)); // set the image file name
 
         if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(intent, Constants.REQUESTS.CAPTURE_IMAGE_FRONT);
+            startActivityForResult(intent, CAPTURE_IMAGE_FRONT);
         }
     }
 
@@ -156,7 +157,7 @@ public class PhotoEditorActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri outputUri) {
                         Intent intent = new Intent();
-                        intent.putExtra("uri", outputUri.toString());
+                        intent.putExtra(Extras.EXTRA_URI, outputUri.toString());
                         setResult(RESULT_OK, intent);
                         mProgressBar.setVisibility(View.GONE);
                         finish();

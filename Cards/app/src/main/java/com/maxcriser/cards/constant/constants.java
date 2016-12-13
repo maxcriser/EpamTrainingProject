@@ -7,11 +7,11 @@ public class Constants {
         byte REQUEST_FRONT_CAMERA = 1;
         byte REQUEST_BACK_CAMERA = 2;
         byte REQUEST_WRITE_STORAGE = 3;
+        byte REQUEST_CALENDAR = 4;
         int CAPTURE_IMAGE_FRONT = 1001;
         int CAPTURE_IMAGE_BACK = 1010;
         int EDIT_IMAGE_FRONT = 1011;
         int EDIT_IMAGE_BACK = 1100;
-        byte REQUEST_CALENDAR = 3;
     }
 
     public interface CARDS {
