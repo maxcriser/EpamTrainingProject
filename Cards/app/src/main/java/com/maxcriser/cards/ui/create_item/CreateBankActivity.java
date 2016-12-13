@@ -305,7 +305,7 @@ public class CreateBankActivity extends AppCompatActivity {
             db.insert(ModelBankCards.class, cvNewCredit, new OnResultCallback<Long, Void>() {
                 @Override
                 public void onSuccess(Long pLong) {
-                    Log.d("BANK ID", pLong.toString());
+                    onBackClicked(null);
                 }
 
                 @Override
@@ -316,7 +316,6 @@ public class CreateBankActivity extends AppCompatActivity {
                 public void onProgressChanged(Void pVoid) {
                 }
             });
-            onBackClicked(null);
         }
     }
 

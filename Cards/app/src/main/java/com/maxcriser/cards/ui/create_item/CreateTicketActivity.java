@@ -341,7 +341,7 @@ public class CreateTicketActivity extends AppCompatActivity {
             db.insert(ModelTickets.class, cvNewTicket, new OnResultCallback<Long, Void>() {
                 @Override
                 public void onSuccess(Long pLong) {
-                    Log.d(TICKET_ID + " ID", pLong.toString());
+                    onBackClicked(null);
                 }
 
                 @Override
@@ -352,8 +352,6 @@ public class CreateTicketActivity extends AppCompatActivity {
                 public void onProgressChanged(Void pVoid) {
                 }
             });
-            onBackClicked(null);
-
         } else {
             mScrollView.fullScroll(ScrollView.FOCUS_UP);
             Toast.makeText(this, getResources().getString(R.string.fill_all_fields), Toast.LENGTH_LONG).show();

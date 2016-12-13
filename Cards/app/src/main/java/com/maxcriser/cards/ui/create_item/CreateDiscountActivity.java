@@ -123,6 +123,7 @@ public class CreateDiscountActivity extends AppCompatActivity {
             db.insert(ModelDiscountCards.class, cvNewDiscount, new OnResultCallback<Long, Void>() {
                 @Override
                 public void onSuccess(Long pLong) {
+                    onBackClicked(null);
                 }
 
                 @Override
@@ -133,7 +134,6 @@ public class CreateDiscountActivity extends AppCompatActivity {
                 public void onProgressChanged(Void pVoid) {
                 }
             });
-            onBackClicked(null);
         } else {
             mScrollView.fullScroll(ScrollView.FOCUS_UP);
             Toast.makeText(this, R.string.fill_all_fields, Toast.LENGTH_LONG).show();
