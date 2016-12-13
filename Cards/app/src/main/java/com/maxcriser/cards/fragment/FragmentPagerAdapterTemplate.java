@@ -20,13 +20,13 @@ public class FragmentPagerAdapterTemplate extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (adapter == 1)
-            return ViewPagerPreviewType.newInstance(position);
+            return FragmentPreviewTypeCards.newInstance(position);
         else if (adapter == 2)
-            return ViewPagerPreviewCard.newInstance(position, R.layout.item_discount);
+            return FragmentPreviewCards.newInstance(position, R.layout.item_discount);
         else if (adapter == 3)
-            return ViewPagerPreviewCard.newInstance(position, R.layout.item_ticket);
+            return FragmentPreviewCards.newInstance(position, R.layout.item_ticket);
         else
-            return ViewPagerPreviewCard.newInstance(position, R.layout.item_list_bank);
+            return FragmentPreviewCards.newInstance(position, R.layout.item_list_bank);
     }
 
     @Override

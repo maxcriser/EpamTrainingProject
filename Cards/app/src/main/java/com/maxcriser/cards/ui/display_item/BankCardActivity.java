@@ -1,4 +1,4 @@
-package com.maxcriser.cards.ui.show;
+package com.maxcriser.cards.ui.display_item;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -36,7 +36,7 @@ import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_PIN;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_TYPE;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_VALID;
 
-public class ShowBankCardActivity extends Activity {
+public class BankCardActivity extends Activity {
 
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton floatingActionButtonDelete, floatingActionButtonEdit;

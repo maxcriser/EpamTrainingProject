@@ -59,15 +59,7 @@ public class SetupPinActivity extends AppCompatActivity {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if (inputText.getText().length() == 4) {
-                if (page.equals(Page.FIRST)) {
-                    btnContinue.setEnabled(true);
-                } else if (page.equals(Page.SECOND)) {
-                    if (password.equals(inputText.getText().toString())) {
-                        btnContinue.setEnabled(true);
-                    } else {
-                        btnContinue.setEnabled(false);
-                    }
-                }
+                btnContinue.setEnabled(true);
             } else {
                 btnContinue.setEnabled(false);
             }
@@ -88,11 +80,9 @@ public class SetupPinActivity extends AppCompatActivity {
                 inputText.setText(Constants.EMPTY_STRING);
                 page = Page.SECOND;
                 btnContinue.setText(R.string.ok);
-                btnContinue.setEnabled(false);
                 title.setText(R.string.confirm_your_pin);
             } else if (page.equals(Page.SECOND)) {
                 if (password.equals(inputText.getText().toString())) {
-                    btnContinue.setEnabled(true);
                     LaunchScreenActivity.loadPassword = password;
                     LaunchScreenActivity.mSharedPreferences =
                             getSharedPreferences(LaunchScreenActivity.PASSWORD_TAG, MODE_PRIVATE);
@@ -104,6 +94,8 @@ public class SetupPinActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(SetupPinActivity.this, MenuActivity.class);
                     startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                } else {
+                    Toast.makeText(SetupPinActivity.this, R.string.passwords_dont_match, Toast.LENGTH_LONG).show();
                 }
             }
         }

@@ -38,9 +38,9 @@ public class NfcReaderActivity extends AppCompatActivity {
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (!mNfcAdapter.isEnabled()) {
-            Toast.makeText(this, "NfcActivity is disabled.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "CreateNfcActivity is disabled.", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "NfcActivity is activated.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "CreateNfcActivity is activated.", Toast.LENGTH_SHORT).show();
         }
         handleIntent(getIntent());
     }

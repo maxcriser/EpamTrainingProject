@@ -1,4 +1,4 @@
-package com.maxcriser.cards.ui.addition;
+package com.maxcriser.cards.ui.create_item;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -28,9 +28,9 @@ import com.maxcriser.cards.view.text_view.RobotoRegular;
 import static android.view.View.GONE;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.sPreviewColorSetters;
 
-public class DiscountActivity extends AppCompatActivity {
+public class CreateDiscountActivity extends AppCompatActivity {
 
-    public static final String DISCOUNT_ID = "DiscountActivity";
+    public static final String DISCOUNT_ID = "CreateDiscountActivity";
     ContentValues cvNewDiscount;
     DatabaseHelperImpl db;
     ScrollView mScrollView;
@@ -165,5 +165,13 @@ public class DiscountActivity extends AppCompatActivity {
 
     public void onCancelClicked(View view) {
         onBackClicked(null);
+    }
+
+    public void onPrevColorPagerClicked(View view) {
+        pager.setCurrentItem(pager.getCurrentItem() - 1);
+    }
+
+    public void onNextColorPagerClicked(View view) {
+        pager.setCurrentItem(pager.getCurrentItem() + 1);
     }
 }

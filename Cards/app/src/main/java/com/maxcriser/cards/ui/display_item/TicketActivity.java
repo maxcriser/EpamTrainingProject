@@ -1,4 +1,4 @@
-package com.maxcriser.cards.ui.show;
+package com.maxcriser.cards.ui.display_item;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -32,7 +32,7 @@ import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_ID;
 import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_TIME;
 import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_TITLE;
 
-public class ShowTicketActivity extends Activity {
+public class TicketActivity extends Activity {
 
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton floatingActionButtonDelete, floatingActionButtonEdit;

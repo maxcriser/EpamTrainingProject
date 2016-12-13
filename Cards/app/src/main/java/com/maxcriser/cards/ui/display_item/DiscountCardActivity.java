@@ -1,4 +1,4 @@
-package com.maxcriser.cards.ui.show;
+package com.maxcriser.cards.ui.display_item;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -31,7 +31,7 @@ import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_COLOR;
 import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_ID;
 import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_TITLE;
 
-public class ShowDiscountCardActivity extends Activity {
+public class DiscountCardActivity extends Activity {
 
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton floatingActionButtonDelete, floatingActionButtonEdit;
@@ -69,8 +69,8 @@ public class ShowDiscountCardActivity extends Activity {
         initViews();
         mHandler = new Handler(hc);
 
-        animScaleDown = AnimationUtils.loadAnimation(ShowDiscountCardActivity.this, R.anim.scale_down);
-        animScaleUp = AnimationUtils.loadAnimation(ShowDiscountCardActivity.this, R.anim.scale_up);
+        animScaleDown = AnimationUtils.loadAnimation(DiscountCardActivity.this, R.anim.scale_down);
+        animScaleUp = AnimationUtils.loadAnimation(DiscountCardActivity.this, R.anim.scale_up);
         registerForContextMenu(materialDesignFAM);
         dbHelper = DatabaseHelperImpl.getInstance(this);
 

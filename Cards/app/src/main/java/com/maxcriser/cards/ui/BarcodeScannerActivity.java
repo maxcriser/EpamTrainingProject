@@ -13,7 +13,7 @@ import android.widget.FrameLayout;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.barcode.CameraPreview;
-import com.maxcriser.cards.ui.addition.DiscountActivity;
+import com.maxcriser.cards.ui.create_item.CreateDiscountActivity;
 import com.maxcriser.cards.view.text_view.RobotoThin;
 
 import net.sourceforge.zbar.Config;
@@ -181,7 +181,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             releaseCamera();
-            Intent intent = new Intent(BarcodeScannerActivity.this, DiscountActivity.class);
+            Intent intent = new Intent(BarcodeScannerActivity.this, CreateDiscountActivity.class);
             intent.putExtra(TAG_BARCODE, scanResult);
             startActivity(intent);
         }

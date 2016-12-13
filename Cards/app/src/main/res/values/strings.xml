@@ -112,6 +112,13 @@
     <string name="are_you_sure_to_delete">Are you sure you want to delete?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+    <string name="free">FREE</string>
+    <string name="original">ORIGINAL</string>
+    <string name="square">SQUARE</string>
+    <string name="_9_16">9:16</string>
+    <string name="_16_9">16:9</string>
+    <string name="select_color">SELECT COLOR</string>
+    <string name="passwords_dont_match">Passwords do not match</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>

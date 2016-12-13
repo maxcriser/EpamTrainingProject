@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.content.CursorLoader;
 
 import com.maxcriser.cards.database.DatabaseHelperImpl;
-import com.maxcriser.cards.database.models.ModelBankCards;
+import com.maxcriser.cards.util.Sql;
 
 public class CardsCursorLoader extends CursorLoader {
 
@@ -17,9 +17,8 @@ public class CardsCursorLoader extends CursorLoader {
 
     public CardsCursorLoader(Context context, String pQuery, Class modelClass) {
         super(context);
-        //TODO move to some sql utils
-        SQL_WITH_QUERY = "SELECT * FROM " + DatabaseHelperImpl.getTableName(modelClass) + " WHERE " + ModelBankCards.TITLE + " LIKE ? ";
-        SQL_ALL_ITEMS = "SELECT * FROM " + DatabaseHelperImpl.getTableName(modelClass);
+        SQL_WITH_QUERY = Sql.getSqlWithQuery(modelClass);
+        SQL_ALL_ITEMS = Sql.getSqlAllItems(modelClass);
         this.db = DatabaseHelperImpl.getInstance(context);
         mQuery = pQuery;
     }

@@ -85,6 +85,8 @@
 
                         <include layout="@layout/fragment_viewpager_preview_colors"/>
 
+                        <include layout="@layout/fragment_choose_color"/>
+
                         <include layout="@layout/fragment_cancel_save"/>
 
                     </LinearLayout>

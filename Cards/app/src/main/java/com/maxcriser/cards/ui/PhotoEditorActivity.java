@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -35,14 +36,17 @@ public class PhotoEditorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        WindowManager.LayoutParams attrs = getWindow().getAttributes();
+        attrs.flags = WindowManager.LayoutParams.FLAG_FULLSCREEN;
+        getWindow().setAttributes(attrs);
         setContentView(R.layout.activity_photo_editor);
         initViews();
-        image.setCropMode(CropImageView.CropMode.FREE);
         image.setInitialFrameScale(0.75f);
+        image.setCropMode(CropImageView.CropMode.FREE);
 //        setCustomRatio(int ratioX, int ratioY);
         //FIT_IMAGE, RATIO_4_3, RATIO_3_4, SQUARE(default), RATIO_16_9, RATIO_9_16, FREE, CUSTOM, CIRCLE, CIRCLE_SQUARE
         image.setHandleSizeInDp(0);
-        image.setFrameStrokeWeightInDp(2);
+        image.setFrameStrokeWeightInDp(1);
         image.setGuideStrokeWeightInDp(1);
         image.setTouchPaddingInDp(24);
         image.setMinFrameSizeInDp(150);
@@ -152,10 +156,10 @@ public class PhotoEditorActivity extends AppCompatActivity {
                 new SaveCallback() {
                     @Override
                     public void onSuccess(Uri outputUri) {
-                        mProgressBar.setVisibility(View.GONE);
                         Intent intent = new Intent();
                         intent.putExtra("uri", outputUri.toString());
                         setResult(RESULT_OK, intent);
+                        mProgressBar.setVisibility(View.GONE);
                         finish();
                     }
 
@@ -166,5 +170,29 @@ public class PhotoEditorActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    public void onFreeClicked(View view) {
+        image.setCropMode(CropImageView.CropMode.FREE);
+    }
+
+    public void onSquareClicked(View view) {
+        image.setCropMode(CropImageView.CropMode.SQUARE);
+    }
+
+    public void on43Clicked(View view) {
+        image.setCropMode(CropImageView.CropMode.RATIO_4_3);
+    }
+
+    public void on34Clicked(View view) {
+        image.setCropMode(CropImageView.CropMode.RATIO_3_4);
+    }
+
+    public void on169Clicked(View view) {
+        image.setCropMode(CropImageView.CropMode.RATIO_16_9);
+    }
+
+    public void on916Clicked(View view) {
+        image.setCropMode(CropImageView.CropMode.RATIO_9_16);
     }
 }

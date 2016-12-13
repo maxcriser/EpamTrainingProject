@@ -1,4 +1,4 @@
-package com.maxcriser.cards.ui.addition;
+package com.maxcriser.cards.ui.create_item;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -49,9 +49,9 @@ import java.util.Locale;
 import static android.view.View.GONE;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.sPreviewColorSetters;
 
-public class TicketActivity extends AppCompatActivity {
+public class CreateTicketActivity extends AppCompatActivity {
 
-    public static final String TICKET = "TicketActivity";
+    public static final String TICKET = "CreateTicketActivity";
     public static final byte FRONT_REQUEST_CAMERA = 0;
     public static final byte BACK_REQUEST_CAMERA = 1;
     public static final byte REQUEST_WRITE_STORAGE = 2;
@@ -103,7 +103,6 @@ public class TicketActivity extends AppCompatActivity {
         photoFileNameBack = BEG_FILE_NAME + UniqueStringGenerator.getUniqueString() + "back_photo.jpg";
         setDateOnView();
         setTimeOnView();
-// TODO: 12.12.2016 version
         db = DatabaseHelperImpl.getInstance(this);
         title.setText(Constants.NEW_TITLES.NEW_TICKET_TITLE);
 
@@ -397,5 +396,13 @@ public class TicketActivity extends AppCompatActivity {
 
     public void onCancelClicked(View view) {
         super.onBackPressed();
+    }
+
+    public void onPrevColorPagerClicked(View view) {
+        pager.setCurrentItem(pager.getCurrentItem() - 1);
+    }
+
+    public void onNextColorPagerClicked(View view) {
+        pager.setCurrentItem(pager.getCurrentItem() + 1);
     }
 }

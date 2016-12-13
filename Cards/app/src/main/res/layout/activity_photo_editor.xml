@@ -1,90 +1,330 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:card_view="http://schemas.android.com/apk/res-auto"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:orientation="vertical">
 
-    <include layout="@layout/fragment_toolbar_photo_editor"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#3a3a3a"
         android:orientation="vertical">
 
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            card_view:cardBackgroundColor="#3a3a3a"
+            card_view:cardElevation="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="CROP"
+                android:textColor="@color/text_white"
+                android:textSize="18sp"/>
+
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:background="@android:color/transparent"
+                android:onClick="onPhotoAgainClicked"
+                android:src="@drawable/ic_refresh"/>
+
+        </android.support.v7.widget.CardView>
+
         <com.isseiaoki.simplecropview.CropImageView
-            xmlns:custom="http://schemas.android.com/apk/res-auto"
             android:id="@+id/cropImageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
-            custom:scv_crop_mode="fit_image"
-            custom:scv_frame_color="@color/text_white"
-            custom:scv_frame_stroke_weight="1dp"
-            custom:scv_guide_color="@color/white_shadow_photo_editor"
-            custom:scv_guide_show_mode="show_always"
-            custom:scv_guide_stroke_weight="1dp"
-            custom:scv_handle_color="@color/text_white"
-            custom:scv_handle_show_mode="show_always"
-            custom:scv_handle_size="14dp"
-            custom:scv_min_frame_size="50dp"
-            custom:scv_overlay_color="@color/gray_shadow_photo_editor_back"
-            custom:scv_touch_padding="8dp"/>
+            android:padding="8dp"
+            card_view:scv_crop_mode="fit_image"
+            card_view:scv_frame_color="@color/text_white"
+            card_view:scv_frame_stroke_weight="1dp"
+            card_view:scv_guide_color="@color/white_shadow_photo_editor"
+            card_view:scv_guide_show_mode="show_always"
+            card_view:scv_guide_stroke_weight="1dp"
+            card_view:scv_handle_color="@color/text_white"
+            card_view:scv_handle_show_mode="show_always"
+            card_view:scv_handle_size="14dp"
+            card_view:scv_min_frame_size="50dp"
+            card_view:scv_overlay_color="@color/gray_shadow_photo_editor_back"
+            card_view:scv_touch_padding="8dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="88dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/text_toolbar"/>
+            android:layout_height="72dp"
+            android:background="#303030"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="onFreeClicked"
+                android:orientation="vertical">
 
                 <ImageButton
+                    android:id="@+id/imageButton2"
                     android:layout_width="match_parent"
-                    android:layout_height="44dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:onClick="onLeftRotate"
-                    android:src="@drawable/rotate_left"/>
+                    android:background="@android:color/transparent"
+                    android:onClick="onFreeClicked"
+                    android:src="@drawable/ic_broken_lines_square_border"/>
 
                 <TextView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/text_toolbar"/>
-
-                <ImageButton
                     android:layout_width="match_parent"
-                    android:layout_height="44dp"
+                    android:layout_height="48dp"
                     android:layout_weight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:onClick="onRightRotate"
-                    android:src="@drawable/rotate_right"/>
+                    android:gravity="center"
+                    android:text="@string/free"
+                    android:textColor="@color/text_white"
+                    android:textSize="12sp"/>
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/text_toolbar"/>
+            <!--//-->
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:background="?attr/selectableItemBackground"
-                android:gravity="center"
-                android:onClick="onDoneClicked"
-                android:text="@string/done"
-                android:textColor="@color/text_toolbar"
-                android:textSize="16sp"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="onSquareClicked"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:onClick="onSquareClicked"
+                    android:src="@drawable/frame_bold_square"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/square"
+                    android:textColor="@color/text_white"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <!--//-->
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="on43Clicked"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/frame_style_4_3"/>
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:onClick="on43Clicked"
+                        android:src="@drawable/frame_bold_4_3"/>
+
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="4:3"
+                    android:textColor="@color/text_white"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <!--//-->
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="on34Clicked"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/frame_style_3_4"/>
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:onClick="on34Clicked"
+                        android:src="@drawable/frame_bold_3_4"/>
+
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="3:4"
+                    android:textColor="@color/text_white"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <!--//-->
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="on169Clicked"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/frame_style_16_9"/>
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:onClick="on169Clicked"
+                        android:src="@drawable/frame_bold_16_9"/>
+
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/_16_9"
+                    android:textColor="@color/text_white"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="on916Clicked"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/frame_style_9_16"/>
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:onClick="on916Clicked"
+                        android:src="@drawable/frame_bold_9_16"/>
+
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/_9_16"
+                    android:textColor="@color/text_white"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
 
         </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="#252525">
+
+            <ImageButton
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_gravity="start|center"
+                android:background="@android:color/transparent"
+                android:onClick="onBackClicked"
+                android:src="@drawable/ic_cancel"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
+                <ImageButton
+                    android:layout_width="72dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:onClick="onLeftRotate"
+                    android:src="@drawable/ic_rotate_left"/>
+
+                <ImageButton
+                    android:layout_width="72dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:onClick="onRightRotate"
+                    android:src="@drawable/ic_rotate_right"/>
+
+            </LinearLayout>
+
+
+            <ImageButton
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_gravity="end|center"
+                android:background="@android:color/transparent"
+                android:onClick="onDoneClicked"
+                android:src="@drawable/ic_checked"/>
+
+        </FrameLayout>
+
     </LinearLayout>
 
     <include layout="@layout/fragment_please_wait"/>
+
 </merge>

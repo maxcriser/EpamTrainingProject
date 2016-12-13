@@ -247,6 +247,8 @@
 
                         <include layout="@layout/fragment_viewpager_preview_colors"/>
 
+                        <include layout="@layout/fragment_choose_color"/>
+
                         <CheckBox
                             android:id="@+id/add_to_calendar"
                             android:layout_width="match_parent"

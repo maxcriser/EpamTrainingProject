@@ -1,4 +1,4 @@
-package com.maxcriser.cards.ui.addition;
+package com.maxcriser.cards.ui.create_item;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -34,7 +34,7 @@ import com.maxcriser.cards.constant.Extras;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
-import com.maxcriser.cards.fragment.ViewPagerPreviewCard;
+import com.maxcriser.cards.fragment.FragmentPreviewCards;
 import com.maxcriser.cards.setter.PreviewColorsSetter;
 import com.maxcriser.cards.ui.PhotoEditorActivity;
 import com.maxcriser.cards.view.text_view.RobotoRegular;
@@ -48,40 +48,38 @@ import static android.view.View.GONE;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.sPreviewColorSetters;
 
-public class BankActivity extends AppCompatActivity {
+public class CreateBankActivity extends AppCompatActivity {
 
     public static final String BANK_ID = "BANK ";
+    public static final String BANK = "CreateBankActivity";
+    private static final int pagerMargin = 16;
+    private static int PAGE_COUNT_TEMPLATE;
+    private static int PAGE_COUNT;
     public final String APP_TAG = "thecrisertakephoto";
-    public static final String BANK = "BankActivity";
+    private int currentPositionColors;
     public String photoFileNameFront;
     public String photoFileNameBack;
-    //TODO private
-    ImageView frontPhoto;
-    ImageView backPhoto;
-    FrameLayout removeFront;
-    FrameLayout removeBack;
-    ContentValues cvNewCredit;
-    DatabaseHelperImpl db;
-    ScrollView mScrollView;
-    int currentPositionColors;
-    static int PAGE_COUNT;
-    static int PAGE_COUNT_TEMPLATE;
-    static final int pagerMargin = 16;
-    ViewPager pagerTypes;
-    ViewPager pagerTemplate;
-    PagerAdapter pagerAdapterTypes;
-    PagerAdapter pagerAdapterTemplate;
-    PreviewColorsSetter mListPreviewColorsSetter;
-    RobotoRegular title;
-    Calendar calendar = Calendar.getInstance();
-    EditText bank;
-    EditText cardholder;
-    MaskedEditText number;
-    EditText pin;
-    TextView validDate;
-    String myTypeCard;
-    String myColorName;
-    String myColorCode;
+    private ImageView frontPhoto;
+    private ImageView backPhoto;
+    private FrameLayout removeFront;
+    private FrameLayout removeBack;
+    private DatabaseHelperImpl db;
+    private ScrollView mScrollView;
+    private ViewPager pagerTypes;
+    private ViewPager pagerTemplate;
+    private PagerAdapter pagerAdapterTypes;
+    private PagerAdapter pagerAdapterTemplate;
+    private PreviewColorsSetter mListPreviewColorsSetter;
+    private RobotoRegular title;
+    private Calendar calendar = Calendar.getInstance();
+    private EditText bank;
+    private EditText cardholder;
+    private MaskedEditText number;
+    private EditText pin;
+    private TextView validDate;
+    private String myTypeCard;
+    private String myColorName;
+    private String myColorCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +87,8 @@ public class BankActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_bank_card);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
         initViews();
+        //todo refactor that method. move to initView for example
         db = DatabaseHelperImpl.getInstance(this);
-//todo refactor that method. move to initView for example
         setDateOnView();
         currentPositionColors = 0;
         title.setText(Constants.NEW_TITLES.NEW_BANK_TITLE);
@@ -136,7 +134,7 @@ public class BankActivity extends AppCompatActivity {
                 Constants.ID_PAGERS.ID_BANK_CARD_ITEM_TYPE,
                 PAGE_COUNT);
         pagerTypes.setAdapter(pagerAdapterTypes);
-        ViewPagerPreviewCard.icon = R.drawable.type_visa;
+        FragmentPreviewCards.icon = R.drawable.type_visa;
         pagerTypes.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -144,28 +142,28 @@ public class BankActivity extends AppCompatActivity {
                 Log.d(BANK, myTypeCard);
                 switch (myTypeCard) {
                     case Constants.CARDS.VISA:
-                        ViewPagerPreviewCard.icon = R.drawable.type_visa;
+                        FragmentPreviewCards.icon = R.drawable.type_visa;
                         break;
                     case Constants.CARDS.MAESTRO:
-                        ViewPagerPreviewCard.icon = R.drawable.type_maestro;
+                        FragmentPreviewCards.icon = R.drawable.type_maestro;
                         break;
                     case Constants.CARDS.MASTERCARD:
-                        ViewPagerPreviewCard.icon = R.drawable.type_mastercard;
+                        FragmentPreviewCards.icon = R.drawable.type_mastercard;
                         break;
                     case Constants.CARDS.AMEX:
-                        ViewPagerPreviewCard.icon = R.drawable.type_amex;
+                        FragmentPreviewCards.icon = R.drawable.type_amex;
                         break;
                     case Constants.CARDS.WESTERN_UNION:
-                        ViewPagerPreviewCard.icon = R.drawable.type_western_union;
+                        FragmentPreviewCards.icon = R.drawable.type_western_union;
                         break;
                     case Constants.CARDS.JCB:
-                        ViewPagerPreviewCard.icon = R.drawable.type_jcb;
+                        FragmentPreviewCards.icon = R.drawable.type_jcb;
                         break;
                     case Constants.CARDS.DINERS_CLUB:
-                        ViewPagerPreviewCard.icon = R.drawable.type_diners_club;
+                        FragmentPreviewCards.icon = R.drawable.type_diners_club;
                         break;
                     case Constants.CARDS.BELCARD:
-                        ViewPagerPreviewCard.icon = R.drawable.type_belcard;
+                        FragmentPreviewCards.icon = R.drawable.type_belcard;
                         break;
                 }
                 pagerTemplate.setAdapter(pagerAdapterTemplate);
@@ -338,7 +336,7 @@ public class BankActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.fill_all_fields, Toast.LENGTH_LONG).show();
             mScrollView.fullScroll(ScrollView.FOCUS_UP);
         } else {
-            cvNewCredit = new ContentValues();
+            ContentValues cvNewCredit = new ContentValues();
             cvNewCredit.put(ModelBankCards.TITLE, bankStr);
             cvNewCredit.put(ModelBankCards.CARDHOLDER, cardholderStr);
             cvNewCredit.put(ModelBankCards.NUMBER, numberStr);
@@ -398,5 +396,21 @@ public class BankActivity extends AppCompatActivity {
 
     public void onCancelClicked(View view) {
         onBackClicked(null);
+    }
+
+    public void onPrevTypePagerClicked(View view) {
+        pagerTypes.setCurrentItem(pagerTypes.getCurrentItem() - 1);
+    }
+
+    public void onNextTypePagerClicked(View view) {
+        pagerTypes.setCurrentItem(pagerTypes.getCurrentItem() + 1);
+    }
+
+    public void onPrevColorPagerClicked(View view) {
+        pagerTemplate.setCurrentItem(pagerTemplate.getCurrentItem() - 1);
+    }
+
+    public void onNextColorPagerClicked(View view) {
+        pagerTemplate.setCurrentItem(pagerTemplate.getCurrentItem() + 1);
     }
 }

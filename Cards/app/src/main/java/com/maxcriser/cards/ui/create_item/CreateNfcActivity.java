@@ -1,4 +1,4 @@
-package com.maxcriser.cards.ui.addition;
+package com.maxcriser.cards.ui.create_item;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -39,9 +39,9 @@ import java.util.Locale;
 import static android.view.View.GONE;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.sPreviewColorSetters;
 
-public class NfcActivity extends AppCompatActivity {
+public class CreateNfcActivity extends AppCompatActivity {
 
-    public static final String TICKET = "TicketActivity";
+    public static final String TICKET = "CreateTicketActivity";
     public final String APP_TAG = "thecrisertakephoto";
     public String photoFileNameFront;
     public String photoFileNameBack;

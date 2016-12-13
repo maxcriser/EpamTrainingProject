@@ -46,11 +46,11 @@ import com.maxcriser.cards.database.models.ModelNFCItems;
 import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.loader.CardsCursorLoader;
 import com.maxcriser.cards.ui.adapter.CursorAdapter;
-import com.maxcriser.cards.ui.addition.BankActivity;
-import com.maxcriser.cards.ui.addition.TicketActivity;
-import com.maxcriser.cards.ui.show.ShowBankCardActivity;
-import com.maxcriser.cards.ui.show.ShowDiscountCardActivity;
-import com.maxcriser.cards.ui.show.ShowTicketActivity;
+import com.maxcriser.cards.ui.create_item.CreateBankActivity;
+import com.maxcriser.cards.ui.create_item.CreateTicketActivity;
+import com.maxcriser.cards.ui.display_item.BankCardActivity;
+import com.maxcriser.cards.ui.display_item.DiscountCardActivity;
+import com.maxcriser.cards.ui.display_item.TicketActivity;
 import com.maxcriser.cards.util.RecyclerItemClickListener;
 import com.maxcriser.cards.view.text_view.RobotoRegular;
 
@@ -84,7 +84,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     LinearLayoutManager mLayoutManager;
     RecyclerView recyclerItems;
     CursorAdapter adapter;
-    // TODO: 12.12.2016  NfcActivity adapter
+    // TODO: 12.12.2016  CreateNfcActivity adapter
     CardView toolbarBack;
     CardView toolbarSearch;
     LinearLayout linearEmpty;
@@ -219,7 +219,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         String timeTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.TIME));
         String color = pCursor.getString(pCursor.getColumnIndex(ModelTickets.BACKGROUND_COLOR));
 
-        Intent intent = new Intent(ItemsActivity.this, ShowTicketActivity.class);
+        Intent intent = new Intent(ItemsActivity.this, TicketActivity.class);
         intent.putExtra(EXTRA_TICKET_ID, id);
         intent.putExtra(EXTRA_TICKET_TITLE, nameTicket);
         intent.putExtra(EXTRA_TICKET_CARDHOLDER, cardholderTicket);
@@ -235,7 +235,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         String cardBarcode = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.BARCODE));
         String cardColor = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.BACKGROUND_COLOR));
 
-        Intent intent = new Intent(ItemsActivity.this, ShowDiscountCardActivity.class);
+        Intent intent = new Intent(ItemsActivity.this, DiscountCardActivity.class);
         intent.putExtra(EXTRA_DISCOUNT_ID, cardID);
         intent.putExtra(EXTRA_DISCOUNT_TITLE, cardTitle);
         intent.putExtra(EXTRA_DISCOUNT_BARCODE, cardBarcode);
@@ -253,7 +253,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         String type = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.TYPE));
         String color = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.BACKGROUND_COLOR));
 
-        Intent intent = new Intent(ItemsActivity.this, ShowBankCardActivity.class);
+        Intent intent = new Intent(ItemsActivity.this, BankCardActivity.class);
         intent.putExtra(EXTRA_BANK_ID, id);
         intent.putExtra(EXTRA_BANK_BANK, bank);
         intent.putExtra(EXTRA_BANK_CARDHOLDER, cardholder);
@@ -345,11 +345,11 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
 
     public void onAddNewClicked(View view) {
         if (typeItems.equals(Constants.TITLES.BANK_TITLE)) {
-            startActivity(new Intent(ItemsActivity.this, BankActivity.class));
+            startActivity(new Intent(ItemsActivity.this, CreateBankActivity.class));
         } else if (typeItems.equals(Constants.TITLES.DISCOUNT_TITLE)) {
             getPermission(Constants.REQUESTS.REQUEST_CAMERA, Manifest.permission.CAMERA, Constants.REQUESTS.REQUEST_CAMERA);
         } else if (typeItems.equals(Constants.TITLES.TICKETS_TITLE)) {
-            startActivity(new Intent(ItemsActivity.this, TicketActivity.class));
+            startActivity(new Intent(ItemsActivity.this, CreateTicketActivity.class));
         } else {
             startActivity(new Intent(ItemsActivity.this, NfcReaderActivity.class));
         }
@@ -374,7 +374,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         } else if (typeItems.equals(Constants.TITLES.TICKETS_TITLE)) {
             return new CardsCursorLoader(this, searchText, ModelTickets.class);
         } else {
-            // TODO: 12.12.2016 NfcActivity
+            // TODO: 12.12.2016 CreateNfcActivity
             return new CardsCursorLoader(this, searchText, ModelBankCards.class);
         }
     }

@@ -12,14 +12,14 @@ import com.maxcriser.cards.constant.Constants;
 
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
 
-public class ViewPagerPreviewType extends Fragment {
+public class FragmentPreviewTypeCards extends Fragment {
 
     static final String ARGUMENT_PAGE_NUMBER_TYPE = "arg_page_number_type";
 
     int pageNumberType;
 
-    public static ViewPagerPreviewType newInstance(int page) {
-        ViewPagerPreviewType viewPagerPreviewCard = new ViewPagerPreviewType();
+    public static FragmentPreviewTypeCards newInstance(int page) {
+        FragmentPreviewTypeCards viewPagerPreviewCard = new FragmentPreviewTypeCards();
         Bundle arguments = new Bundle();
         arguments.putInt(ARGUMENT_PAGE_NUMBER_TYPE, page);
         viewPagerPreviewCard.setArguments(arguments);
