@@ -36,10 +36,10 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import static android.view.View.GONE;
-import static com.maxcriser.cards.constant.Constants.REQUESTS.CAPTURE_IMAGE_BACK;
-import static com.maxcriser.cards.constant.Constants.REQUESTS.CAPTURE_IMAGE_FRONT;
-import static com.maxcriser.cards.constant.Constants.REQUESTS.EDIT_IMAGE_BACK;
-import static com.maxcriser.cards.constant.Constants.REQUESTS.EDIT_IMAGE_FRONT;
+import static com.maxcriser.cards.constant.Constants.Requests.CAPTURE_IMAGE_BACK;
+import static com.maxcriser.cards.constant.Constants.Requests.CAPTURE_IMAGE_FRONT;
+import static com.maxcriser.cards.constant.Constants.Requests.EDIT_IMAGE_BACK;
+import static com.maxcriser.cards.constant.Constants.Requests.EDIT_IMAGE_FRONT;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
 public class CreateNfcActivity extends AppCompatActivity {
@@ -73,7 +73,7 @@ public class CreateNfcActivity extends AppCompatActivity {
         setDateOnView();
         setTimeOnView();
 
-        title.setText(Constants.NEW_TITLES.NEW_TICKET_TITLE);
+        title.setText(Constants.TitlesNew.NEW_TICKET_TITLE);
 
         mListPreviewColorsSetter = previewColors.get(0);
         myColorName = mListPreviewColorsSetter.getNameColorCards();
@@ -83,7 +83,7 @@ public class CreateNfcActivity extends AppCompatActivity {
 
         pager.setPageMargin(Constants.PAGER_MARGIN_PREVIEW);
         PagerAdapter pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
-                Constants.ID_PAGERS.ID_TICKET_ITEM,
+                Constants.PagerIDs.ID_TICKET_ITEM,
                 PAGE_COUNT);
 
         pager.setAdapter(pagerAdapter);

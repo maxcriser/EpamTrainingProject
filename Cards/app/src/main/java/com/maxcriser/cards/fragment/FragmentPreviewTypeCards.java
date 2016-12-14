@@ -38,21 +38,21 @@ public class FragmentPreviewTypeCards extends Fragment {
         View view = inflater.inflate(R.layout.preview_type_item, null);
         ImageView tvPage = (ImageView) view.findViewById(R.id.icon_type_card);
         String type = previewTypes.get(pageNumberType);
-        if (type.equals(Constants.CARDS.VISA)) {
+        if (type.equals(Constants.Cards.VISA)) {
             tvPage.setImageResource(R.drawable.type_visa);
-        } else if (type.equals(Constants.CARDS.MASTERCARD)) {
+        } else if (type.equals(Constants.Cards.MASTERCARD)) {
             tvPage.setImageResource(R.drawable.type_mastercard);
-        } else if (type.equals(Constants.CARDS.AMEX)) {
+        } else if (type.equals(Constants.Cards.AMEX)) {
             tvPage.setImageResource(R.drawable.type_amex);
-        } else if (type.equals(Constants.CARDS.MAESTRO)) {
+        } else if (type.equals(Constants.Cards.MAESTRO)) {
             tvPage.setImageResource(R.drawable.type_maestro);
-        } else if (type.equals(Constants.CARDS.WESTERN_UNION)) {
+        } else if (type.equals(Constants.Cards.WESTERN_UNION)) {
             tvPage.setImageResource(R.drawable.type_western_union);
-        } else if (type.equals(Constants.CARDS.JCB)) {
+        } else if (type.equals(Constants.Cards.JCB)) {
             tvPage.setImageResource(R.drawable.type_jcb);
-        } else if (type.equals(Constants.CARDS.DINERS_CLUB)) {
+        } else if (type.equals(Constants.Cards.DINERS_CLUB)) {
             tvPage.setImageResource(R.drawable.type_diners_club);
-        } else if (type.equals(Constants.CARDS.BELCARD)) {
+        } else if (type.equals(Constants.Cards.BELCARD)) {
             tvPage.setImageResource(R.drawable.type_belcard);
         }
         return view;

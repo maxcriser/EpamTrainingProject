@@ -6,7 +6,10 @@ import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -27,6 +30,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.pinball83.maskededittext.MaskedEditText;
+import com.googlecode.tesseract.android.TessBaseAPI;
+import com.maxcriser.cards.MainActivity;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.constant.Constants;
@@ -43,22 +48,33 @@ import com.maxcriser.cards.util.UniqueStringGenerator;
 import com.maxcriser.cards.view.text_view.RobotoRegular;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 import static android.view.View.GONE;
-import static com.maxcriser.cards.constant.Constants.REQUESTS.CAPTURE_IMAGE_BACK;
-import static com.maxcriser.cards.constant.Constants.REQUESTS.CAPTURE_IMAGE_FRONT;
-import static com.maxcriser.cards.constant.Constants.REQUESTS.EDIT_IMAGE_BACK;
-import static com.maxcriser.cards.constant.Constants.REQUESTS.EDIT_IMAGE_FRONT;
-import static com.maxcriser.cards.constant.Constants.REQUESTS.REQUEST_BACK_CAMERA;
-import static com.maxcriser.cards.constant.Constants.REQUESTS.REQUEST_FRONT_CAMERA;
-import static com.maxcriser.cards.constant.Constants.REQUESTS.REQUEST_WRITE_STORAGE;
+import static com.maxcriser.cards.constant.Constants.Requests.CAPTURE_IMAGE_BACK;
+import static com.maxcriser.cards.constant.Constants.Requests.CAPTURE_IMAGE_FRONT;
+import static com.maxcriser.cards.constant.Constants.Requests.EDIT_IMAGE_BACK;
+import static com.maxcriser.cards.constant.Constants.Requests.EDIT_IMAGE_FRONT;
+import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_BACK_CAMERA;
+import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_FRONT_CAMERA;
+import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STORAGE;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
 
 public class CreateBankActivity extends AppCompatActivity {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
+    private TessBaseAPI tessBaseApi;
+    private static final String lang = "eng";
+    String result = "";
+    private static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/TesseractSample/";
+    private static final String TESSDATA = "tessdata";
 
     public static final String BANK = "CreateBankActivity"; // TODO delete
     public String photoFileNameFront;
@@ -112,7 +128,7 @@ public class CreateBankActivity extends AppCompatActivity {
         db = DatabaseHelperImpl.getInstance(this);
         setDateOnView();
         currentPositionColors = 0;
-        title.setText(Constants.NEW_TITLES.NEW_BANK_TITLE);
+        title.setText(Constants.TitlesNew.NEW_BANK_TITLE);
 
         PreviewColorsSetter listPreviewColorsSetter = previewColors.get(0);
         myColorName = listPreviewColorsSetter.getNameColorCards();
@@ -124,7 +140,7 @@ public class CreateBankActivity extends AppCompatActivity {
         pagerTemplate.setPageMargin(Constants.PAGER_MARGIN_PREVIEW);
         pagerTemplate.setMinimumHeight(156);
         pagerAdapterTemplate = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
-                Constants.ID_PAGERS.ID_BANK_CARD_ITEM,
+                Constants.PagerIDs.ID_BANK_CARD_ITEM,
                 PAGE_COUNT_TEMPLATE);
         pagerTemplate.setAdapter(pagerAdapterTemplate);
 
@@ -142,7 +158,7 @@ public class CreateBankActivity extends AppCompatActivity {
         Log.d(BANK, myTypeCard);
         int PAGE_COUNT = previewTypes.size();
         PagerAdapter pagerAdapterTypes = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
-                Constants.ID_PAGERS.ID_BANK_CARD_ITEM_TYPE,
+                Constants.PagerIDs.ID_BANK_CARD_ITEM_TYPE,
                 PAGE_COUNT);
         pagerTypes.setAdapter(pagerAdapterTypes);
         FragmentPreviewCards.icon = R.drawable.type_visa;
@@ -183,7 +199,31 @@ public class CreateBankActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == EDIT_IMAGE_FRONT) {
                 Uri editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
+//                Bitmap editBitmap = BitmapFactory.decodeFile(editFrontUri.getPath());
                 frontPhoto.setImageURI(editFrontUri);
+                new AsyncTask<Uri, Void, Void>() {
+                    @Override
+                    protected Void doInBackground(Uri... uri) {
+                        doOCR(uri[0]);
+                        return null;
+                    }
+                }.execute(editFrontUri);
+//                OwnAsyncTask scan = new OwnAsyncTask();
+//                scan.execute(new ScanCreditCard(), editFrontUri, new OnResultCallback<String, String>() {
+//                    @Override
+//                    public void onSuccess(String pS) {
+//                        Toast.makeText(CreateBankActivity.this, pS + "-HANDLED", Toast.LENGTH_LONG).show();
+//                    }
+//
+//                    @Override
+//                    public void onError(Exception pE) {
+//                        Toast.makeText(CreateBankActivity.this, "ERROR-HANDLED", Toast.LENGTH_LONG).show();
+//                    }
+//
+//                    @Override
+//                    public void onProgressChanged(String pS) {
+//                    }
+//                });
                 removeFront.setVisibility(View.VISIBLE);
                 frontPhoto.setClickable(false);
             } else if (requestCode == EDIT_IMAGE_BACK) {
@@ -375,5 +415,114 @@ public class CreateBankActivity extends AppCompatActivity {
 
     public void onNextColorPagerClicked(View view) {
         pagerTemplate.setCurrentItem(pagerTemplate.getCurrentItem() + 1);
+    }
+
+    public void onScanBackFront(View view) {
+
+    }
+
+    public void onScanBackBack(View view) {
+    }
+
+
+    private void doOCR(Uri uri) {
+        prepareTesseract();
+        startOCR(uri);
+    }
+
+    private void prepareDirectory(String path) {
+
+        File dir = new File(path);
+        if (!dir.exists()) {
+            if (!dir.mkdirs()) {
+                Log.e(TAG, "ERROR: Creation of directory " + path + " failed, check does Android Manifest have permission to write to external storage.");
+            }
+        } else {
+            Log.i(TAG, "Created directory " + path);
+        }
+    }
+
+
+    private void prepareTesseract() {
+        try {
+            prepareDirectory(DATA_PATH + TESSDATA);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        copyTessDataFiles(TESSDATA);
+    }
+
+    private void copyTessDataFiles(String path) {
+        try {
+            String fileList[] = getAssets().list(path);
+
+            for (String fileName : fileList) {
+
+                // open file within the assets folder
+                // if it is not already there copy it to the sdcard
+                String pathToDataFile = DATA_PATH + path + "/" + fileName;
+                if (!(new File(pathToDataFile)).exists()) {
+
+                    InputStream in = getAssets().open(path + "/" + fileName);
+
+                    OutputStream out = new FileOutputStream(pathToDataFile);
+
+                    // Transfer bytes from in to out
+                    byte[] buf = new byte[1024];
+                    int len;
+
+                    while ((len = in.read(buf)) > 0) {
+                        out.write(buf, 0, len);
+                    }
+                    in.close();
+                    out.close();
+
+                    Log.e(TAG, "Copied " + fileName + "to tessdata");
+                }
+            }
+        } catch (IOException e) {
+            Log.e(TAG, "Unable to copy files to tessdata " + e.toString());
+        }
+    }
+
+    private void startOCR(Uri imgUri) {
+        try {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 4; // 1 - means max size. 4 - means maxsize/4 size. Don't use value <4, because you need more memory in the heap to store your data.
+            Bitmap bitmap = BitmapFactory.decodeFile(imgUri.getPath(), options);
+
+            result = extractText(bitmap);
+            Log.d("result", result);
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
+    }
+
+    private String extractText(Bitmap bitmap) {
+        try {
+            tessBaseApi = new TessBaseAPI();
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+            if (tessBaseApi == null) {
+                Log.e(TAG, "TessBaseAPI is null. TessFactory not returning tess object.");
+            }
+        }
+
+        tessBaseApi.init(DATA_PATH, lang);
+
+        //For example if we only want to detect numbers
+        tessBaseApi.setVariable(TessBaseAPI.VAR_CHAR_WHITELIST, "0123456789" + "AaBbCcDdEeFfGgHhIiJiKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz/,.-");
+
+        Log.d(TAG, "Training file loaded");
+        tessBaseApi.setImage(bitmap);
+        String extractedText = "empty result";
+        try {
+            extractedText = tessBaseApi.getUTF8Text();
+        } catch (Exception e) {
+            Log.e(TAG, "Error in recognizing text.");
+        }
+        tessBaseApi.end();
+        return extractedText;
     }
 }

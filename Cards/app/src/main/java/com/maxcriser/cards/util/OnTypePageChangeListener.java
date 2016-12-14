@@ -27,28 +27,28 @@ public class OnTypePageChangeListener implements ViewPager.OnPageChangeListener 
     public void onPageSelected(int position) {
         String myTypeCard = previewTypes.get(position);
         switch (myTypeCard) {
-            case Constants.CARDS.VISA:
+            case Constants.Cards.VISA:
                 mListener.onResult(position, R.drawable.type_visa, myTypeCard);
                 break;
-            case Constants.CARDS.MAESTRO:
+            case Constants.Cards.MAESTRO:
                 mListener.onResult(position, R.drawable.type_maestro, myTypeCard);
                 break;
-            case Constants.CARDS.MASTERCARD:
+            case Constants.Cards.MASTERCARD:
                 mListener.onResult(position, R.drawable.type_mastercard, myTypeCard);
                 break;
-            case Constants.CARDS.AMEX:
+            case Constants.Cards.AMEX:
                 mListener.onResult(position, R.drawable.type_amex, myTypeCard);
                 break;
-            case Constants.CARDS.WESTERN_UNION:
+            case Constants.Cards.WESTERN_UNION:
                 mListener.onResult(position, R.drawable.type_western_union, myTypeCard);
                 break;
-            case Constants.CARDS.JCB:
+            case Constants.Cards.JCB:
                 mListener.onResult(position, R.drawable.type_jcb, myTypeCard);
                 break;
-            case Constants.CARDS.DINERS_CLUB:
+            case Constants.Cards.DINERS_CLUB:
                 mListener.onResult(position, R.drawable.type_diners_club, myTypeCard);
                 break;
-            case Constants.CARDS.BELCARD:
+            case Constants.Cards.BELCARD:
                 mListener.onResult(position, R.drawable.type_belcard, myTypeCard);
                 break;
         }

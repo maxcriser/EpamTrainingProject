@@ -3,6 +3,8 @@
     <color name="gray_secondary_text">#a3a3a3</color>
     <color name="gray_bottom_create_card">#f2f2f2</color>
     <color name="transparent">#00ffffff</color>
+    <color name="background_color_empty_page">#f2f2f2</color>
+    <color name="text_color_empty_page">#8c8c8c</color>
     <color name="night_mode">#a9ff8400</color>
     <color name="gray_3">#262626</color>
     <color name="bluelight_500">#00897b</color>

@@ -30,14 +30,14 @@ public class PreviewListColorsSetter {
 
     public void setTypeCard() {
         typeCard = new ArrayList<>();
-        typeCard.add(Constants.CARDS.VISA);
-        typeCard.add(Constants.CARDS.MASTERCARD);
-        typeCard.add(Constants.CARDS.AMEX);
-        typeCard.add(Constants.CARDS.MAESTRO);
-        typeCard.add(Constants.CARDS.WESTERN_UNION);
-        typeCard.add(Constants.CARDS.JCB);
-        typeCard.add(Constants.CARDS.DINERS_CLUB);
-        typeCard.add(Constants.CARDS.BELCARD);
+        typeCard.add(Constants.Cards.VISA);
+        typeCard.add(Constants.Cards.MASTERCARD);
+        typeCard.add(Constants.Cards.AMEX);
+        typeCard.add(Constants.Cards.MAESTRO);
+        typeCard.add(Constants.Cards.WESTERN_UNION);
+        typeCard.add(Constants.Cards.JCB);
+        typeCard.add(Constants.Cards.DINERS_CLUB);
+        typeCard.add(Constants.Cards.BELCARD);
     }
 
     private void addPreviewColors(String name, String color) {

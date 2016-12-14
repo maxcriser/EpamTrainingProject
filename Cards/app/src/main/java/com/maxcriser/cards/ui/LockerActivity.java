@@ -228,52 +228,52 @@ public class LockerActivity extends AppCompatActivity {
     }
 
     public void zeroInput(View view) {
-        inputPassword(Constants.KEYBOARD.BUTTON_ZERO);
+        inputPassword(Constants.Keyboard.BUTTON_ZERO);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void oneInput(View view) {
-        inputPassword(Constants.KEYBOARD.BUTTON_ONE);
+        inputPassword(Constants.Keyboard.BUTTON_ONE);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void twoInput(View view) {
-        inputPassword(Constants.KEYBOARD.BUTTON_TWO);
+        inputPassword(Constants.Keyboard.BUTTON_TWO);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void threeInput(View view) {
-        inputPassword(Constants.KEYBOARD.BUTTON_THREE);
+        inputPassword(Constants.Keyboard.BUTTON_THREE);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void fourInput(View view) {
-        inputPassword(Constants.KEYBOARD.BUTTON_FOUR);
+        inputPassword(Constants.Keyboard.BUTTON_FOUR);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void fiveInput(View view) {
-        inputPassword(Constants.KEYBOARD.BUTTON_FIVE);
+        inputPassword(Constants.Keyboard.BUTTON_FIVE);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void sixInput(View view) {
-        inputPassword(Constants.KEYBOARD.BUTTON_SIX);
+        inputPassword(Constants.Keyboard.BUTTON_SIX);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void sevenInput(View view) {
-        inputPassword(Constants.KEYBOARD.BUTTON_SEVEN);
+        inputPassword(Constants.Keyboard.BUTTON_SEVEN);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void eightInput(View view) {
-        inputPassword(Constants.KEYBOARD.BUTTON_EIGHT);
+        inputPassword(Constants.Keyboard.BUTTON_EIGHT);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void nineInput(View view) {
-        inputPassword(Constants.KEYBOARD.BUTTON_NINE);
+        inputPassword(Constants.Keyboard.BUTTON_NINE);
         mVibrator.vibrate(durationVibrateInput);
     }
 
@@ -301,7 +301,7 @@ public class LockerActivity extends AppCompatActivity {
     public void start() {
         if (intentLockedPage.equals(MenuActivity.CREDIT_CARD)) {
             intent = new Intent(LockerActivity.this, ItemsActivity.class);
-            MenuActivity.selectItem = Constants.TITLES.BANK_TITLE;
+            MenuActivity.selectItem = Constants.Titles.BANK_TITLE;
             startActivity(intent);
         } else {
             Intent intent = new Intent(LockerActivity.this, SetupPinActivity.class);

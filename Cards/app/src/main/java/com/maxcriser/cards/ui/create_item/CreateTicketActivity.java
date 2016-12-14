@@ -48,14 +48,14 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import static android.view.View.GONE;
-import static com.maxcriser.cards.constant.Constants.REQUESTS.CAPTURE_IMAGE_BACK;
-import static com.maxcriser.cards.constant.Constants.REQUESTS.CAPTURE_IMAGE_FRONT;
-import static com.maxcriser.cards.constant.Constants.REQUESTS.EDIT_IMAGE_BACK;
-import static com.maxcriser.cards.constant.Constants.REQUESTS.EDIT_IMAGE_FRONT;
-import static com.maxcriser.cards.constant.Constants.REQUESTS.REQUEST_BACK_CAMERA;
-import static com.maxcriser.cards.constant.Constants.REQUESTS.REQUEST_CALENDAR;
-import static com.maxcriser.cards.constant.Constants.REQUESTS.REQUEST_FRONT_CAMERA;
-import static com.maxcriser.cards.constant.Constants.REQUESTS.REQUEST_WRITE_STORAGE;
+import static com.maxcriser.cards.constant.Constants.Requests.CAPTURE_IMAGE_BACK;
+import static com.maxcriser.cards.constant.Constants.Requests.CAPTURE_IMAGE_FRONT;
+import static com.maxcriser.cards.constant.Constants.Requests.EDIT_IMAGE_BACK;
+import static com.maxcriser.cards.constant.Constants.Requests.EDIT_IMAGE_FRONT;
+import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_BACK_CAMERA;
+import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_CALENDAR;
+import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_FRONT_CAMERA;
+import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STORAGE;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
 public class CreateTicketActivity extends AppCompatActivity {
@@ -96,7 +96,7 @@ public class CreateTicketActivity extends AppCompatActivity {
         setDateOnView();
         setTimeOnView();
         db = DatabaseHelperImpl.getInstance(this);
-        title.setText(Constants.NEW_TITLES.NEW_TICKET_TITLE);
+        title.setText(Constants.TitlesNew.NEW_TICKET_TITLE);
 
         mListPreviewColorsSetter = previewColors.get(0);
         myColorName = mListPreviewColorsSetter.getNameColorCards();
@@ -106,7 +106,7 @@ public class CreateTicketActivity extends AppCompatActivity {
 
         pager.setPageMargin(Constants.PAGER_MARGIN_PREVIEW);
         PagerAdapter pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
-                Constants.ID_PAGERS.ID_TICKET_ITEM,
+                Constants.PagerIDs.ID_TICKET_ITEM,
                 PAGE_COUNT);
 
         pager.setAdapter(pagerAdapter);

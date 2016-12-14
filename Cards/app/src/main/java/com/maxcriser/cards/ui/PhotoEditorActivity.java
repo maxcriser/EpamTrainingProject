@@ -23,8 +23,8 @@ import com.maxcriser.cards.constant.Extras;
 
 import java.io.File;
 
-import static com.maxcriser.cards.constant.Constants.REQUESTS.CAPTURE_IMAGE_BACK;
-import static com.maxcriser.cards.constant.Constants.REQUESTS.CAPTURE_IMAGE_FRONT;
+import static com.maxcriser.cards.constant.Constants.Requests.CAPTURE_IMAGE_BACK;
+import static com.maxcriser.cards.constant.Constants.Requests.CAPTURE_IMAGE_FRONT;
 
 public class PhotoEditorActivity extends AppCompatActivity {
 

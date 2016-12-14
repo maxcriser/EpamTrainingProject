@@ -39,19 +39,19 @@ public class CursorAdapter extends RecyclerView.Adapter<CursorHolder> {
             if (mView.equals(R.layout.item_list_bank)) {
                 String type = mCursor.getString(mCursor.getColumnIndex(ModelBankCards.TYPE));
                 Integer typeID;
-                if (type.equals(Constants.CARDS.VISA)) {
+                if (type.equals(Constants.Cards.VISA)) {
                     typeID = R.drawable.type_visa;
-                } else if (type.equals(Constants.CARDS.MASTERCARD)) {
+                } else if (type.equals(Constants.Cards.MASTERCARD)) {
                     typeID = R.drawable.type_mastercard;
-                } else if (type.equals(Constants.CARDS.AMEX)) {
+                } else if (type.equals(Constants.Cards.AMEX)) {
                     typeID = R.drawable.type_amex;
-                } else if (type.equals(Constants.CARDS.MAESTRO)) {
+                } else if (type.equals(Constants.Cards.MAESTRO)) {
                     typeID = R.drawable.type_maestro;
-                } else if (type.equals(Constants.CARDS.WESTERN_UNION)) {
+                } else if (type.equals(Constants.Cards.WESTERN_UNION)) {
                     typeID = R.drawable.type_western_union;
-                } else if (type.equals(Constants.CARDS.JCB)) {
+                } else if (type.equals(Constants.Cards.JCB)) {
                     typeID = R.drawable.type_jcb;
-                } else if (type.equals(Constants.CARDS.DINERS_CLUB)) {
+                } else if (type.equals(Constants.Cards.DINERS_CLUB)) {
                     typeID = R.drawable.type_diners_club;
                 } else {
                     typeID = R.drawable.type_belcard;

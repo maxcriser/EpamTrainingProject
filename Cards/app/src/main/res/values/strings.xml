@@ -5,7 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="text_empty_page">You have no cards</string>
+    <string name="text_empty_page">At this point you have no cards in this section.</string>
     <string name="text_big_add_new_card">add new card</string>
     <string name="title_of_cards">name</string>
     <string name="cancel">Cancel</string>

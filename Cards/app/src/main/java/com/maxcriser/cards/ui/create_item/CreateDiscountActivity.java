@@ -51,7 +51,7 @@ public class CreateDiscountActivity extends AppCompatActivity {
         initViews();
 
         db = DatabaseHelperImpl.getInstance(this);
-        title.setText(Constants.NEW_TITLES.NEW_DISCOUNT_TITLE);
+        title.setText(Constants.TitlesNew.NEW_DISCOUNT_TITLE);
         Intent barcodeIntent = getIntent();
         String barcode = barcodeIntent.getStringExtra(BarcodeScannerActivity.TAG_BARCODE);
         OwnAsyncTask barcodeGenerator = new OwnAsyncTask();
@@ -80,7 +80,7 @@ public class CreateDiscountActivity extends AppCompatActivity {
         //TODO move to common class
         pager.setPageMargin(Constants.PAGER_MARGIN_PREVIEW);
         PagerAdapter pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
-                Constants.ID_PAGERS.ID_DISCOUNT_ITEM,
+                Constants.PagerIDs.ID_DISCOUNT_ITEM,
                 PAGE_COUNT);
 
         pager.setAdapter(pagerAdapter);

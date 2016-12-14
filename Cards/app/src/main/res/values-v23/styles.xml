@@ -5,7 +5,7 @@
         <item name="colorPrimary">#ffffff</item>
         <item name="colorPrimaryDark">#f4f6f5</item>
         <item name="android:windowLightStatusBar">@color/text_toolbar</item>
-        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowBackground">@color/background_color_empty_page</item>
     </style>
 
     <style name="SplashTheme" parent="@android:style/Theme.NoTitleBar.Fullscreen">

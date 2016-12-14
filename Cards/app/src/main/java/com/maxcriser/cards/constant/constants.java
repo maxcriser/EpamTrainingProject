@@ -2,7 +2,7 @@ package com.maxcriser.cards.constant;
 
 public class Constants {
 
-    public interface REQUESTS {
+    public interface Requests {
         byte REQUEST_CAMERA = 0;
         byte REQUEST_FRONT_CAMERA = 1;
         byte REQUEST_BACK_CAMERA = 2;
@@ -14,18 +14,20 @@ public class Constants {
         int EDIT_IMAGE_BACK = 1100;
     }
 
-    public interface CARDS {
+    public interface Cards {
         String VISA = "visa";
         String MASTERCARD = "mastercard";
         String AMEX = "amex";
+        String AMEX2 = "american express";
         String MAESTRO = "maestro";
-        String WESTERN_UNION = "western_union";
+        String WESTERN_UNION = "western union";
         String JCB = "jcb";
-        String DINERS_CLUB = "diners_club";
+        String DINERS_CLUB = "diners club";
         String BELCARD = "belcard";
+        String BELCARD2 = "белкарт";
     }
 
-    public interface KEYBOARD {
+    public interface Keyboard {
         String BUTTON_ZERO = "0";
         String BUTTON_ONE = "1";
         String BUTTON_TWO = "2";
@@ -38,21 +40,21 @@ public class Constants {
         String BUTTON_NINE = "9";
     }
 
-    public interface TITLES {
+    public interface Titles {
         String BANK_TITLE = "Credit cards";
         String DISCOUNT_TITLE = "Discount cards";
         String TICKETS_TITLE = "Tickets";
         String NFC_TITLE = "NFC items";
     }
 
-    public interface NEW_TITLES {
+    public interface TitlesNew {
         String NEW_DISCOUNT_TITLE = "New discount card";
         String NEW_BANK_TITLE = "New credit card";
         String NEW_TICKET_TITLE = "New ticket";
         String NEW_NFC_TITLE = "New NFC item";
     }
 
-    public interface ID_PAGERS {
+    public interface PagerIDs {
         int ID_BANK_CARD_ITEM = 0;
         int ID_BANK_CARD_ITEM_TYPE = 1; // visa, mastercard and etc.
         int ID_DISCOUNT_ITEM = 2;
