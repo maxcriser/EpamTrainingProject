@@ -2,9 +2,12 @@ package com.maxcriser.cards.ui.display_item;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -19,22 +22,29 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
+import com.maxcriser.cards.async.OwnAsyncTask;
+import com.maxcriser.cards.async.task.LoadImage;
 import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
+
+import java.io.File;
 
 import static android.text.InputType.TYPE_CLASS_TEXT;
 import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_BACK_PHOTO;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_BANK;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_CARDHOLDER;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_COLOR;
+import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_FRONT_PHOTO;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_ID;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_NUMBER;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_PIN;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_TYPE;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_VALID;
+import static com.maxcriser.cards.constant.Extras.EXTRA_VERIFICATION_NUMBER_BANK;
 
 public class BankCardActivity extends Activity {
 
@@ -51,6 +61,7 @@ public class BankCardActivity extends Activity {
     private EditText editCardholder;
     private EditText editNumber;
     private EditText editPin;
+    private EditText verificationNumber;
     private EditText editValid;
     private ImageView editType;
     private ImageView eye;
@@ -58,6 +69,8 @@ public class BankCardActivity extends Activity {
     private Handler mHandler;
     private Animation animScaleDown;
     private Animation animScaleUp;
+    private ImageView ivFrontPhoto;
+    private ImageView ivBackPhoto;
 
     Handler.Callback hc = new Handler.Callback() {
         @Override
@@ -106,17 +119,30 @@ public class BankCardActivity extends Activity {
         Intent creditIntent = getIntent();
         id = creditIntent.getStringExtra(EXTRA_BANK_ID);
         String bank = creditIntent.getStringExtra(EXTRA_BANK_BANK);
+        String verNumber = creditIntent.getStringExtra(EXTRA_VERIFICATION_NUMBER_BANK);
         String cardholder = creditIntent.getStringExtra(EXTRA_BANK_CARDHOLDER);
         String number = creditIntent.getStringExtra(EXTRA_BANK_NUMBER);
         String pin = creditIntent.getStringExtra(EXTRA_BANK_PIN);
         String valid = creditIntent.getStringExtra(EXTRA_BANK_VALID);
         String type = creditIntent.getStringExtra(EXTRA_BANK_TYPE);
         String color = creditIntent.getStringExtra(EXTRA_BANK_COLOR);
+        String firstPhoto = creditIntent.getStringExtra(EXTRA_BANK_FRONT_PHOTO);
+        String secondPhoto = creditIntent.getStringExtra(EXTRA_BANK_BACK_PHOTO);
+
+        Uri takenPhotoUriFirst = getPhotoFileUri(firstPhoto);
+        if (takenPhotoUriFirst != null) {
+            ivFrontPhoto.setImageURI(takenPhotoUriFirst);
+        }
+        Uri takenPhotoUriSecond = getPhotoFileUri(secondPhoto);
+        if (takenPhotoUriSecond != null) {
+            ivBackPhoto.setImageURI(takenPhotoUriSecond);
+        }
 
         editBank.setText(bank);
         editCardholder.setText(cardholder);
         editNumber.setText(number);
         editPin.setText(pin);
+        verificationNumber.setText(verNumber);
         editValid.setText(valid);
         Integer typeID;
         if (type.equals(Constants.CARDS.VISA)) {
@@ -139,7 +165,27 @@ public class BankCardActivity extends Activity {
         editType.setBackgroundResource(typeID);
     }
 
+    private boolean isExternalStorageAvailable() {
+        String state = Environment.getExternalStorageState();
+        return state.equals(Environment.MEDIA_MOUNTED);
+    }
+
+    public Uri getPhotoFileUri(String fileName) {
+        if (isExternalStorageAvailable()) {
+            File mediaStorageDir = new File(
+                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.APP_TAG);
+            if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
+                Log.d(Constants.APP_TAG, getString(R.string.filed_to_create_directory));
+            }
+            return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
+        }
+        return null;
+    }
+
     private void initViews() {
+        ivFrontPhoto = (ImageView) findViewById(R.id.front_photo);
+        ivBackPhoto = (ImageView) findViewById(R.id.back_photo);
+        verificationNumber = (EditText) findViewById(R.id.ver_number);
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
         eye = (ImageView) findViewById(R.id.eye);
         editBank = (TextView) findViewById(R.id.title_show_discount);

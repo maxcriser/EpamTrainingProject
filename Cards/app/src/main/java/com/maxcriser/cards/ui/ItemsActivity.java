@@ -55,9 +55,11 @@ import com.maxcriser.cards.util.RecyclerItemClickListener;
 import com.maxcriser.cards.view.text_view.RobotoRegular;
 
 import static android.view.View.GONE;
+import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_BACK_PHOTO;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_BANK;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_CARDHOLDER;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_COLOR;
+import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_FRONT_PHOTO;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_ID;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_NUMBER;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_PIN;
@@ -70,9 +72,12 @@ import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_TITLE;
 import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_CARDHOLDER;
 import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_COLOR;
 import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_DATE;
+import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_FIRST_PHOTO;
 import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_ID;
+import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_SECOND_PHOTO;
 import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_TIME;
 import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_TITLE;
+import static com.maxcriser.cards.constant.Extras.EXTRA_VERIFICATION_NUMBER_BANK;
 
 public class ItemsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -216,6 +221,8 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         String dateTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.DATE));
         String timeTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.TIME));
         String color = pCursor.getString(pCursor.getColumnIndex(ModelTickets.BACKGROUND_COLOR));
+        String firstPhoto = pCursor.getString(pCursor.getColumnIndex(ModelTickets.PHOTO_FIRST));
+        String secondPhoto = pCursor.getString(pCursor.getColumnIndex(ModelTickets.PHOTO_SECOND));
 
         Intent intent = new Intent(ItemsActivity.this, TicketActivity.class);
         intent.putExtra(EXTRA_TICKET_ID, id);
@@ -224,6 +231,8 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         intent.putExtra(EXTRA_TICKET_DATE, dateTicket);
         intent.putExtra(EXTRA_TICKET_TIME, timeTicket);
         intent.putExtra(EXTRA_TICKET_COLOR, color);
+        intent.putExtra(EXTRA_TICKET_FIRST_PHOTO, firstPhoto);
+        intent.putExtra(EXTRA_TICKET_SECOND_PHOTO, secondPhoto);
         startActivity(intent);
     }
 
@@ -243,6 +252,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
 
     private void showBank(Cursor pCursor) {
         String id = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.ID));
+        String verNumber = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.VERIFICATION_NUMBER));
         String bank = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.TITLE));
         String cardholder = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.CARDHOLDER));
         String number = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.NUMBER));
@@ -250,16 +260,21 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         String valid = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.VALID));
         String type = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.TYPE));
         String color = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.BACKGROUND_COLOR));
+        String frontPhoto = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.PHOTO_FRONT));
+        String backPhoto = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.PHOTO_BACK));
 
         Intent intent = new Intent(ItemsActivity.this, BankCardActivity.class);
         intent.putExtra(EXTRA_BANK_ID, id);
         intent.putExtra(EXTRA_BANK_BANK, bank);
         intent.putExtra(EXTRA_BANK_CARDHOLDER, cardholder);
+        intent.putExtra(EXTRA_VERIFICATION_NUMBER_BANK, verNumber);
         intent.putExtra(EXTRA_BANK_NUMBER, number);
         intent.putExtra(EXTRA_BANK_PIN, pin);
         intent.putExtra(EXTRA_BANK_VALID, valid);
         intent.putExtra(EXTRA_BANK_TYPE, type);
         intent.putExtra(EXTRA_BANK_COLOR, color);
+        intent.putExtra(EXTRA_BANK_FRONT_PHOTO, frontPhoto);
+        intent.putExtra(EXTRA_BANK_BACK_PHOTO, backPhoto);
         startActivity(intent);
     }
 

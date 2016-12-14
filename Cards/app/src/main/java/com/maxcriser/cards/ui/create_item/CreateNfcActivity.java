@@ -45,7 +45,6 @@ import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 public class CreateNfcActivity extends AppCompatActivity {
 
     public static final String TICKET = "CreateTicketActivity";
-    public final String APP_TAG = "thecrisertakephoto";
     public String photoFileNameFront;
     public String photoFileNameBack;
     private TextView date;
@@ -164,9 +163,9 @@ public class CreateNfcActivity extends AppCompatActivity {
     public Uri getPhotoFileUri(String fileName) {
         if (isExternalStorageAvailable()) {
             File mediaStorageDir = new File(
-                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
+                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.APP_TAG);
             if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
-                Log.d(APP_TAG, "failed to create directory");
+                Log.d(Constants.APP_TAG, "failed to create directory");
             }
             return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
         }

@@ -61,8 +61,6 @@ import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 public class CreateTicketActivity extends AppCompatActivity {
 
     public static final String TICKET = "CreateTicketActivity";
-    public static final String TICKET_ID = "TICKET";
-    public final String APP_TAG = "thecrisertakephoto";
     public String photoFileNameFront;
     public String photoFileNameBack;
     private DatabaseHelperImpl db;
@@ -93,8 +91,8 @@ public class CreateTicketActivity extends AppCompatActivity {
         initViews();
         dateFormat = new SimpleDateFormat("d MMM yyyy", Locale.US);
         timeFormat = new SimpleDateFormat("h:mm a", Locale.US);
-        photoFileNameFront = Constants.BEG_FILE_NAME + UniqueStringGenerator.getUniqueString() + "front_photo.jpg";
-        photoFileNameBack = Constants.BEG_FILE_NAME + UniqueStringGenerator.getUniqueString() + "back_photo.jpg";
+        photoFileNameFront = Constants.BEG_FILE_NAME_TICKET + UniqueStringGenerator.getUniqueString() + "front_photo.jpg";
+        photoFileNameBack = Constants.BEG_FILE_NAME_TICKET + UniqueStringGenerator.getUniqueString() + "back_photo.jpg";
         setDateOnView();
         setTimeOnView();
         db = DatabaseHelperImpl.getInstance(this);
@@ -181,9 +179,9 @@ public class CreateTicketActivity extends AppCompatActivity {
     public Uri getPhotoFileUri(String fileName) {
         if (isExternalStorageAvailable()) {
             File mediaStorageDir = new File(
-                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
+                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.APP_TAG);
             if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
-                Log.d(APP_TAG, getResources().getString(R.string.filed_to_create_directory));
+                Log.d(Constants.APP_TAG, getResources().getString(R.string.filed_to_create_directory));
             }
             return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
         }
@@ -332,6 +330,8 @@ public class CreateTicketActivity extends AppCompatActivity {
 
             ContentValues cvNewTicket = new ContentValues();
             cvNewTicket.put(ModelTickets.TITLE, titleStr);
+            cvNewTicket.put(ModelTickets.PHOTO_FIRST, photoFileNameFront);
+            cvNewTicket.put(ModelTickets.PHOTO_SECOND, photoFileNameBack);
             cvNewTicket.put(ModelTickets.CARDHOLDER, cardholderStr);
             cvNewTicket.put(ModelTickets.DATE, dateStr);
             cvNewTicket.put(ModelTickets.TIME, timeStr);

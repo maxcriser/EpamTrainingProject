@@ -98,28 +98,6 @@ public class MenuActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
     }
 
-//    @TargetApi(23)
-//    private void getPermission(final byte CODE, final String PERMISSION) {
-//        if (ContextCompat.checkSelfPermission(this, PERMISSION) != PackageManager.PERMISSION_GRANTED) {
-//            if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-//                Toast.makeText(this, R.string.application_need_access, Toast.LENGTH_SHORT).show();
-//            } else if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-//                Toast.makeText(this, R.string.application_need_access, Toast.LENGTH_SHORT).show();
-//            }
-//            ActivityCompat.requestPermissions(this, new String[]{PERMISSION}, CODE);
-//        }
-//    }
-//
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        if (grantResults.length == 0) {
-//            return;
-//        } else if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-//            Toast.makeText(this, R.string.permission_has_not_been_granted, Toast.LENGTH_SHORT).show();
-//        }
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//    }
-
     private NetworkInfo getNetworkInfo(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo();

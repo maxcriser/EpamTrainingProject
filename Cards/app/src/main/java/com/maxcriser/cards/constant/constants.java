@@ -61,6 +61,8 @@ public class Constants {
 
     public static final String URL_JSON_LOCATION = "http://ip-api.com/json";
     public static final String EMPTY_STRING = "";
-    public static final String BEG_FILE_NAME = "ticket-";
+    public static final String BEG_FILE_NAME_BANK = "credit-card-";
+    public static final String BEG_FILE_NAME_TICKET = "ticket-";
     public static final int PAGER_MARGIN_PREVIEW = 16;
+    public static final String APP_TAG = "thecrisertakephoto";
 }

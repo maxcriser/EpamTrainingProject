@@ -143,6 +143,14 @@
                                         android:textColor="@color/text_toolbar"
                                         android:textSize="12sp"/>
 
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="48dp"
+                                        android:gravity="center|end"
+                                        android:text="@string/verification_nnumber"
+                                        android:textColor="@color/text_toolbar"
+                                        android:textSize="12sp"/>
+
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -215,6 +223,18 @@
                                         android:textColor="@color/text_toolbar"
                                         android:textSize="16sp"
                                         tools:text="02/16"/>
+
+                                    <EditText
+                                        android:id="@+id/ver_number"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="48dp"
+                                        android:imeOptions="actionDone"
+                                        android:enabled="false"
+                                        android:inputType="number"
+                                        android:gravity="center|start"
+                                        android:textColor="@color/text_toolbar"
+                                        android:textSize="16sp"
+                                        tools:text="12621009"/>
 
                                 </LinearLayout>
 

@@ -39,6 +39,7 @@ import com.maxcriser.cards.setter.PreviewColorsSetter;
 import com.maxcriser.cards.ui.PhotoEditorActivity;
 import com.maxcriser.cards.util.OnTemplatePageChangeListener;
 import com.maxcriser.cards.util.OnTypePageChangeListener;
+import com.maxcriser.cards.util.UniqueStringGenerator;
 import com.maxcriser.cards.view.text_view.RobotoRegular;
 
 import java.io.File;
@@ -60,7 +61,6 @@ import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
 public class CreateBankActivity extends AppCompatActivity {
 
     public static final String BANK = "CreateBankActivity"; // TODO delete
-    public final String APP_TAG = "thecrisertakephoto";
     public String photoFileNameFront;
     public String photoFileNameBack;
     private int currentPositionColors;
@@ -79,6 +79,7 @@ public class CreateBankActivity extends AppCompatActivity {
     private MaskedEditText number;
     private EditText pin;
     private TextView validDate;
+    private EditText verificationNumber;
     private String myTypeCard;
     private String myColorName;
     private String myColorCode;
@@ -92,6 +93,9 @@ public class CreateBankActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        photoFileNameFront = Constants.BEG_FILE_NAME_BANK + UniqueStringGenerator.getUniqueString() + "front_photo.jpg";
+        photoFileNameBack = Constants.BEG_FILE_NAME_BANK + UniqueStringGenerator.getUniqueString() + "back_photo.jpg";
+        verificationNumber = (EditText) findViewById(R.id.ver_number);
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
         bank = (EditText) findViewById(R.id.bank);
         cardholder = (EditText) findViewById(R.id.cardholder);
@@ -201,9 +205,9 @@ public class CreateBankActivity extends AppCompatActivity {
     public Uri getPhotoFileUri(String fileName) {
         if (isExternalStorageAvailable()) {
             File mediaStorageDir = new File(
-                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
+                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.APP_TAG);
             if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
-                Log.d(APP_TAG, getString(R.string.filed_to_create_directory));
+                Log.d(Constants.APP_TAG, getString(R.string.filed_to_create_directory));
             }
             return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
         }
@@ -282,8 +286,10 @@ public class CreateBankActivity extends AppCompatActivity {
         String validThru = validDate.getText().toString();
         String type = myTypeCard;
         String color = myColorCode;
+        String verNumber = verificationNumber.getText().toString();
         if (bankStr.equals(Constants.EMPTY_STRING)
                 || cardholderStr.equals(Constants.EMPTY_STRING)
+                || verNumber.equals(Constants.EMPTY_STRING)
                 || numberStr.equals(Constants.EMPTY_STRING)
                 || validThru.equals(Constants.EMPTY_STRING)
                 || type.equals(Constants.EMPTY_STRING)
@@ -293,6 +299,9 @@ public class CreateBankActivity extends AppCompatActivity {
         } else {
             ContentValues cvNewCredit = new ContentValues();
             cvNewCredit.put(ModelBankCards.TITLE, bankStr);
+            cvNewCredit.put(ModelBankCards.PHOTO_FRONT, photoFileNameFront);
+            cvNewCredit.put(ModelBankCards.PHOTO_BACK, photoFileNameBack);
+            cvNewCredit.put(ModelBankCards.VERIFICATION_NUMBER, verNumber);
             cvNewCredit.put(ModelBankCards.CARDHOLDER, cardholderStr);
             cvNewCredit.put(ModelBankCards.NUMBER, numberStr);
             cvNewCredit.put(ModelBankCards.PIN, pinStr);

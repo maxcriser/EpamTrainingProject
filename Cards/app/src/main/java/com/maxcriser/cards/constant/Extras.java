@@ -14,6 +14,10 @@ public class Extras {
     public static final String EXTRA_BANK_VALID = "extra_bank_valid";
     public static final String EXTRA_BANK_TYPE = "extra_bank_type";
     public static final String EXTRA_BANK_COLOR = "extra_bank_color";
+    public static final String EXTRA_BANK_FRONT_PHOTO = "extra_bank_front_photo";
+    public static final String EXTRA_BANK_BACK_PHOTO = "extra_bank_back_photo";
+    public static final String EXTRA_VERIFICATION_NUMBER_BANK = "extra_bank_ver_number";
+
 
     public static final String EXTRA_TICKET_ID = "extra_ticket_id";
     public static final String EXTRA_TICKET_TITLE = "extra_ticket_title";
@@ -21,6 +25,8 @@ public class Extras {
     public static final String EXTRA_TICKET_DATE = "extra_ticket_date";
     public static final String EXTRA_TICKET_TIME = "extra_ticket_time";
     public static final String EXTRA_TICKET_COLOR = "extra_ticket_color";
+    public static final String EXTRA_TICKET_FIRST_PHOTO = "extra_ticket_first_photo";
+    public static final String EXTRA_TICKET_SECOND_PHOTO = "extra_ticket_second_photo";
 
     public static final String EXTRA_URI = "uri";
 }

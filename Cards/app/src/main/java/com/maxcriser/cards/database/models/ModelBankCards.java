@@ -19,7 +19,16 @@ public final class ModelBankCards {
     public static final String TITLE = "title";
 
     @dbString
+    public static final String VERIFICATION_NUMBER = "verification_number";
+
+    @dbString
     public static final String CARDHOLDER = "cardholder";
+
+    @dbString
+    public static final String PHOTO_FRONT = "frontPhoto";
+
+    @dbString
+    public static final String PHOTO_BACK = "backPhoto";
 
     @dbString
     public static final String NUMBER = "number";

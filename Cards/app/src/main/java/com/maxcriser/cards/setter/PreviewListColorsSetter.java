@@ -13,6 +13,12 @@ public class PreviewListColorsSetter {
     private static final String COLOR_CYAN = "#00BCD4";
     private static final String BLUE_GRAY = "BLUE GRAY";
     private static final String COLOR_BLUE_GRAY = "#607D8B";
+    public static final String BLUE = "BLUE";
+    public static final String GRAY = "GRAY";
+    public static final String COLOR_BLUE = "#4f81b6";
+    public static final String COLOR_GRAY = "#78909c";
+    public static final String RED = "RED";
+    public static final String COLOR_RED = "#da513f";
     private List<PreviewColorsSetter> mPreviewColorSetters;
     private List<String> typeCard;
 
@@ -44,7 +50,9 @@ public class PreviewListColorsSetter {
     public void setPreviewColors() {
         addPreviewColors(TEAL, COLOR_TEAL);
         addPreviewColors(CYAN, COLOR_CYAN);
-        addPreviewColors(BLUE_GRAY, COLOR_BLUE_GRAY);
+        addPreviewColors(BLUE, COLOR_BLUE);
+        addPreviewColors(GRAY, COLOR_GRAY);
+        addPreviewColors(RED, COLOR_RED);
     }
 
     public List<PreviewColorsSetter> getPreviewColorSetters() {

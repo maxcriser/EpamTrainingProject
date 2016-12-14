@@ -2,13 +2,17 @@ package com.maxcriser.cards.ui.display_item;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -23,12 +27,16 @@ import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.view.text_view.RobotoThin;
 
+import java.io.File;
+
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_COLOR;
 import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_CARDHOLDER;
+import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_COLOR;
 import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_DATE;
+import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_FIRST_PHOTO;
 import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_ID;
+import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_SECOND_PHOTO;
 import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_TIME;
 import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_TITLE;
 
@@ -50,6 +58,8 @@ public class TicketActivity extends Activity {
     private Handler mHandler;
     private Animation animScaleDown;
     private Animation animScaleUp;
+    private ImageView ivFrontPhoto;
+    private ImageView ivBackPhoto;
 
     Handler.Callback hc = new Handler.Callback() {
         @Override
@@ -101,7 +111,18 @@ public class TicketActivity extends Activity {
         String cardholderStr = creditIntent.getStringExtra(EXTRA_TICKET_CARDHOLDER);
         String dateStr = creditIntent.getStringExtra(EXTRA_TICKET_DATE);
         String timeStr = creditIntent.getStringExtra(EXTRA_TICKET_TIME);
-        String colorStr = creditIntent.getStringExtra(EXTRA_BANK_COLOR);
+        String colorStr = creditIntent.getStringExtra(EXTRA_TICKET_COLOR);
+        String firstPhoto = creditIntent.getStringExtra(EXTRA_TICKET_FIRST_PHOTO);
+        String secondPhoto = creditIntent.getStringExtra(EXTRA_TICKET_SECOND_PHOTO);
+
+        Uri takenPhotoUriFirst = getPhotoFileUri(firstPhoto);
+        if (takenPhotoUriFirst != null) {
+            ivFrontPhoto.setImageURI(takenPhotoUriFirst);
+        }
+        Uri takenPhotoUriSecond = getPhotoFileUri(secondPhoto);
+        if (takenPhotoUriSecond != null) {
+            ivBackPhoto.setImageURI(takenPhotoUriSecond);
+        }
 
         editTitle.setText(titleStr);
         editCardholder.setText(cardholderStr);
@@ -110,6 +131,8 @@ public class TicketActivity extends Activity {
     }
 
     private void initViews() {
+        ivFrontPhoto = (ImageView) findViewById(R.id.front_photo);
+        ivBackPhoto = (ImageView) findViewById(R.id.back_photo);
         date = (RobotoThin) findViewById(R.id.date);
         time = (RobotoThin) findViewById(R.id.time);
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
@@ -121,6 +144,23 @@ public class TicketActivity extends Activity {
         floatingActionButtonDelete = (FloatingActionButton) findViewById(R.id.floating_delete_button);
         floatingActionButtonEdit = (FloatingActionButton) findViewById(R.id.floating_edit_button);
         linearFrameAction = (LinearLayout) findViewById(R.id.linear_frame_actions_discount);
+    }
+
+    private boolean isExternalStorageAvailable() {
+        String state = Environment.getExternalStorageState();
+        return state.equals(Environment.MEDIA_MOUNTED);
+    }
+
+    public Uri getPhotoFileUri(String fileName) {
+        if (isExternalStorageAvailable()) {
+            File mediaStorageDir = new File(
+                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.APP_TAG);
+            if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
+                Log.d(Constants.APP_TAG, getString(R.string.filed_to_create_directory));
+            }
+            return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
+        }
+        return null;
     }
 
     public void onBackClicked(View view) {
