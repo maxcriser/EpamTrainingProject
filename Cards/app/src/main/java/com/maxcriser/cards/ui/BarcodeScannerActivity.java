@@ -6,6 +6,7 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -180,7 +181,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
     private class onOkClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            releaseCamera();
+//            releaseCamera();
             Intent intent = new Intent(BarcodeScannerActivity.this, CreateDiscountActivity.class);
             intent.putExtra(TAG_BARCODE, scanResult);
             startActivity(intent);

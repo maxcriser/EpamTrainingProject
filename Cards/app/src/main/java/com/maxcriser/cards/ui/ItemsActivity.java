@@ -105,6 +105,93 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         setContentView(R.layout.activity_items);
         typeItems = MenuActivity.selectItem;
         initViews();
+    }
+
+    private void showTicket(Cursor pCursor) {
+        String id = pCursor.getString(pCursor.getColumnIndex(ModelTickets.ID));
+        String nameTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.TITLE));
+        String cardholderTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.CARDHOLDER));
+        String dateTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.DATE));
+        String timeTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.TIME));
+        String color = pCursor.getString(pCursor.getColumnIndex(ModelTickets.BACKGROUND_COLOR));
+        String firstPhoto = pCursor.getString(pCursor.getColumnIndex(ModelTickets.PHOTO_FIRST));
+        String secondPhoto = pCursor.getString(pCursor.getColumnIndex(ModelTickets.PHOTO_SECOND));
+
+        Intent intent = new Intent(ItemsActivity.this, TicketActivity.class);
+        intent.putExtra(EXTRA_TICKET_ID, id);
+        intent.putExtra(EXTRA_TICKET_TITLE, nameTicket);
+        intent.putExtra(EXTRA_TICKET_CARDHOLDER, cardholderTicket);
+        intent.putExtra(EXTRA_TICKET_DATE, dateTicket);
+        intent.putExtra(EXTRA_TICKET_TIME, timeTicket);
+        intent.putExtra(EXTRA_TICKET_COLOR, color);
+        intent.putExtra(EXTRA_TICKET_FIRST_PHOTO, firstPhoto);
+        intent.putExtra(EXTRA_TICKET_SECOND_PHOTO, secondPhoto);
+        startActivity(intent);
+
+    }
+
+    private void showDiscount(Cursor pCursor) {
+        String cardID = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.ID));
+        String cardTitle = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.TITLE));
+        String cardBarcode = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.BARCODE));
+        String cardColor = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.BACKGROUND_COLOR));
+
+        Intent intent = new Intent(ItemsActivity.this, DiscountCardActivity.class);
+        intent.putExtra(EXTRA_DISCOUNT_ID, cardID);
+        intent.putExtra(EXTRA_DISCOUNT_TITLE, cardTitle);
+        intent.putExtra(EXTRA_DISCOUNT_BARCODE, cardBarcode);
+        intent.putExtra(EXTRA_DISCOUNT_COLOR, cardColor);
+        startActivity(intent);
+    }
+
+    private void showBank(Cursor pCursor) {
+        String id = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.ID));
+        String verNumber = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.VERIFICATION_NUMBER));
+        String bank = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.TITLE));
+        String cardholder = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.CARDHOLDER));
+        String number = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.NUMBER));
+        String pin = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.PIN));
+        String valid = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.VALID));
+        String type = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.TYPE));
+        String color = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.BACKGROUND_COLOR));
+        String frontPhoto = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.PHOTO_FRONT));
+        String backPhoto = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.PHOTO_BACK));
+
+        Intent intent = new Intent(ItemsActivity.this, BankCardActivity.class);
+        intent.putExtra(EXTRA_BANK_ID, id);
+        intent.putExtra(EXTRA_BANK_BANK, bank);
+        intent.putExtra(EXTRA_BANK_CARDHOLDER, cardholder);
+        intent.putExtra(EXTRA_VERIFICATION_NUMBER_BANK, verNumber);
+        intent.putExtra(EXTRA_BANK_NUMBER, number);
+        intent.putExtra(EXTRA_BANK_PIN, pin);
+        intent.putExtra(EXTRA_BANK_VALID, valid);
+        intent.putExtra(EXTRA_BANK_TYPE, type);
+        intent.putExtra(EXTRA_BANK_COLOR, color);
+        intent.putExtra(EXTRA_BANK_FRONT_PHOTO, frontPhoto);
+        intent.putExtra(EXTRA_BANK_BACK_PHOTO, backPhoto);
+        startActivity(intent);
+    }
+
+    private void initViews() {
+        progressBar = (FrameLayout) findViewById(R.id.frame_progressbar);
+        newCard = (FloatingActionButton) findViewById(R.id.new_card);
+        linearEmpty = (LinearLayout) findViewById(R.id.empty_page_id_fragment);
+        noResultFor = (TextView) findViewById(R.id.frame_no_results_for);
+        clearSearch = (ImageView) findViewById(R.id.clearSearch);
+        searchEdit = (EditText) findViewById(R.id.search_edit);
+        toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
+        toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
+        title = (RobotoRegular) findViewById(R.id.title_toolbar);
+        recyclerItems = (RecyclerView) findViewById(R.id.recycler_view_items);
+        if (typeItems.equals(Constants.Titles.BANK_TITLE)) {
+            ModelClass = ModelBankCards.class;
+        } else if (typeItems.equals(Constants.Titles.DISCOUNT_TITLE)) {
+            ModelClass = ModelDiscountCards.class;
+        } else if (typeItems.equals(Constants.Titles.TICKETS_TITLE)) {
+            ModelClass = ModelTickets.class;
+        } else {
+            ModelClass = ModelNFCItems.class;
+        }
         getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
         searchEdit.addTextChangedListener(new TextWatcher() {
             @Override
@@ -212,92 +299,6 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
 
             }
         }));
-    }
-
-    private void showTicket(Cursor pCursor) {
-        String id = pCursor.getString(pCursor.getColumnIndex(ModelTickets.ID));
-        String nameTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.TITLE));
-        String cardholderTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.CARDHOLDER));
-        String dateTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.DATE));
-        String timeTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.TIME));
-        String color = pCursor.getString(pCursor.getColumnIndex(ModelTickets.BACKGROUND_COLOR));
-        String firstPhoto = pCursor.getString(pCursor.getColumnIndex(ModelTickets.PHOTO_FIRST));
-        String secondPhoto = pCursor.getString(pCursor.getColumnIndex(ModelTickets.PHOTO_SECOND));
-
-        Intent intent = new Intent(ItemsActivity.this, TicketActivity.class);
-        intent.putExtra(EXTRA_TICKET_ID, id);
-        intent.putExtra(EXTRA_TICKET_TITLE, nameTicket);
-        intent.putExtra(EXTRA_TICKET_CARDHOLDER, cardholderTicket);
-        intent.putExtra(EXTRA_TICKET_DATE, dateTicket);
-        intent.putExtra(EXTRA_TICKET_TIME, timeTicket);
-        intent.putExtra(EXTRA_TICKET_COLOR, color);
-        intent.putExtra(EXTRA_TICKET_FIRST_PHOTO, firstPhoto);
-        intent.putExtra(EXTRA_TICKET_SECOND_PHOTO, secondPhoto);
-        startActivity(intent);
-    }
-
-    private void showDiscount(Cursor pCursor) {
-        String cardID = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.ID));
-        String cardTitle = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.TITLE));
-        String cardBarcode = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.BARCODE));
-        String cardColor = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.BACKGROUND_COLOR));
-
-        Intent intent = new Intent(ItemsActivity.this, DiscountCardActivity.class);
-        intent.putExtra(EXTRA_DISCOUNT_ID, cardID);
-        intent.putExtra(EXTRA_DISCOUNT_TITLE, cardTitle);
-        intent.putExtra(EXTRA_DISCOUNT_BARCODE, cardBarcode);
-        intent.putExtra(EXTRA_DISCOUNT_COLOR, cardColor);
-        startActivity(intent);
-    }
-
-    private void showBank(Cursor pCursor) {
-        String id = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.ID));
-        String verNumber = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.VERIFICATION_NUMBER));
-        String bank = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.TITLE));
-        String cardholder = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.CARDHOLDER));
-        String number = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.NUMBER));
-        String pin = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.PIN));
-        String valid = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.VALID));
-        String type = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.TYPE));
-        String color = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.BACKGROUND_COLOR));
-        String frontPhoto = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.PHOTO_FRONT));
-        String backPhoto = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.PHOTO_BACK));
-
-        Intent intent = new Intent(ItemsActivity.this, BankCardActivity.class);
-        intent.putExtra(EXTRA_BANK_ID, id);
-        intent.putExtra(EXTRA_BANK_BANK, bank);
-        intent.putExtra(EXTRA_BANK_CARDHOLDER, cardholder);
-        intent.putExtra(EXTRA_VERIFICATION_NUMBER_BANK, verNumber);
-        intent.putExtra(EXTRA_BANK_NUMBER, number);
-        intent.putExtra(EXTRA_BANK_PIN, pin);
-        intent.putExtra(EXTRA_BANK_VALID, valid);
-        intent.putExtra(EXTRA_BANK_TYPE, type);
-        intent.putExtra(EXTRA_BANK_COLOR, color);
-        intent.putExtra(EXTRA_BANK_FRONT_PHOTO, frontPhoto);
-        intent.putExtra(EXTRA_BANK_BACK_PHOTO, backPhoto);
-        startActivity(intent);
-    }
-
-    private void initViews() {
-        progressBar = (FrameLayout) findViewById(R.id.frame_progressbar);
-        newCard = (FloatingActionButton) findViewById(R.id.new_card);
-        linearEmpty = (LinearLayout) findViewById(R.id.empty_page_id_fragment);
-        noResultFor = (TextView) findViewById(R.id.frame_no_results_for);
-        clearSearch = (ImageView) findViewById(R.id.clearSearch);
-        searchEdit = (EditText) findViewById(R.id.search_edit);
-        toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
-        toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
-        title = (RobotoRegular) findViewById(R.id.title_toolbar);
-        recyclerItems = (RecyclerView) findViewById(R.id.recycler_view_items);
-        if (typeItems.equals(Constants.Titles.BANK_TITLE)) {
-            ModelClass = ModelBankCards.class;
-        } else if (typeItems.equals(Constants.Titles.DISCOUNT_TITLE)) {
-            ModelClass = ModelDiscountCards.class;
-        } else if (typeItems.equals(Constants.Titles.TICKETS_TITLE)) {
-            ModelClass = ModelTickets.class;
-        } else {
-            ModelClass = ModelNFCItems.class;
-        }
     }
 
     @Override

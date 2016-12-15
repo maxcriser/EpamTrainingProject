@@ -32,9 +32,11 @@ public class NfcReaderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc_reader);
-
         initViews();
+    }
 
+    private void initViews() {
+        mTextView = (TextView) findViewById(R.id.textView_explanation);
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (!mNfcAdapter.isEnabled()) {
             Toast.makeText(this, "CreateNfcActivity is disabled.", Toast.LENGTH_SHORT).show();
@@ -42,10 +44,6 @@ public class NfcReaderActivity extends AppCompatActivity {
             Toast.makeText(this, "CreateNfcActivity is activated.", Toast.LENGTH_SHORT).show();
         }
         handleIntent(getIntent());
-    }
-
-    private void initViews() {
-        mTextView = (TextView) findViewById(R.id.textView_explanation);
     }
 
     @Override

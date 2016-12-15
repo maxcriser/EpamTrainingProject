@@ -76,6 +76,22 @@ public class TicketActivity extends Activity {
         setContentView(R.layout.activity_show_ticket);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
         initViews();
+    }
+
+    private void initViews() {
+        ivFrontPhoto = (ImageView) findViewById(R.id.front_photo);
+        ivBackPhoto = (ImageView) findViewById(R.id.back_photo);
+        date = (RobotoThin) findViewById(R.id.date);
+        time = (RobotoThin) findViewById(R.id.time);
+        mScrollView = (ScrollView) findViewById(R.id.scrollView);
+        editTitle = (TextView) findViewById(R.id.title_show_discount);
+        editCardholder = (EditText) findViewById(R.id.cardholder);
+        materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
+        editLinear = (LinearLayout) findViewById(R.id.linear_edit_frame_title_discount);
+        editName = (EditText) findViewById(R.id.rename_discount_title);
+        floatingActionButtonDelete = (FloatingActionButton) findViewById(R.id.floating_delete_button);
+        floatingActionButtonEdit = (FloatingActionButton) findViewById(R.id.floating_edit_button);
+        linearFrameAction = (LinearLayout) findViewById(R.id.linear_frame_actions_discount);
         mHandler = new Handler(hc);
 
         animScaleDown = AnimationUtils.loadAnimation(this, R.anim.scale_down);
@@ -128,22 +144,6 @@ public class TicketActivity extends Activity {
         editCardholder.setText(cardholderStr);
         date.setText(dateStr);
         time.setText(timeStr);
-    }
-
-    private void initViews() {
-        ivFrontPhoto = (ImageView) findViewById(R.id.front_photo);
-        ivBackPhoto = (ImageView) findViewById(R.id.back_photo);
-        date = (RobotoThin) findViewById(R.id.date);
-        time = (RobotoThin) findViewById(R.id.time);
-        mScrollView = (ScrollView) findViewById(R.id.scrollView);
-        editTitle = (TextView) findViewById(R.id.title_show_discount);
-        editCardholder = (EditText) findViewById(R.id.cardholder);
-        materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
-        editLinear = (LinearLayout) findViewById(R.id.linear_edit_frame_title_discount);
-        editName = (EditText) findViewById(R.id.rename_discount_title);
-        floatingActionButtonDelete = (FloatingActionButton) findViewById(R.id.floating_delete_button);
-        floatingActionButtonEdit = (FloatingActionButton) findViewById(R.id.floating_edit_button);
-        linearFrameAction = (LinearLayout) findViewById(R.id.linear_frame_actions_discount);
     }
 
     private boolean isExternalStorageAvailable() {

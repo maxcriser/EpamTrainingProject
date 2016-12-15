@@ -1,7 +1,10 @@
 package com.maxcriser.cards.ui.display_item;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -22,6 +25,7 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.LoadImage;
+import com.maxcriser.cards.async.task.UriToBitmap;
 import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
@@ -67,6 +71,8 @@ public class BankCardActivity extends Activity {
     private Animation animScaleUp;
     private ImageView ivFrontPhoto;
     private ImageView ivBackPhoto;
+    private Bitmap firstBitmap;
+    private Bitmap secondBitmap;
 
     Handler.Callback hc = new Handler.Callback() {
         @Override
@@ -83,6 +89,26 @@ public class BankCardActivity extends Activity {
         setContentView(R.layout.activity_show_bank);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
         initViews();
+    }
+
+    private void initViews() {
+        ivFrontPhoto = (ImageView) findViewById(R.id.front_photo);
+        ivBackPhoto = (ImageView) findViewById(R.id.back_photo);
+        verificationNumber = (EditText) findViewById(R.id.ver_number);
+        mScrollView = (ScrollView) findViewById(R.id.scrollView);
+        eye = (ImageView) findViewById(R.id.eye);
+        editBank = (TextView) findViewById(R.id.title_show_discount);
+        editCardholder = (EditText) findViewById(R.id.cardholder);
+        editNumber = (EditText) findViewById(R.id.number);
+        editPin = (EditText) findViewById(R.id.pin);
+        editValid = (EditText) findViewById(R.id.valid);
+        editType = (ImageView) findViewById(R.id.type_card);
+        materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
+        editLinear = (LinearLayout) findViewById(R.id.linear_edit_frame_title_discount);
+        editName = (EditText) findViewById(R.id.rename_discount_title);
+        floatingActionButtonDelete = (FloatingActionButton) findViewById(R.id.floating_delete_button);
+        floatingActionButtonEdit = (FloatingActionButton) findViewById(R.id.floating_edit_button);
+        linearFrameAction = (LinearLayout) findViewById(R.id.linear_frame_actions_discount);
         mHandler = new Handler(hc);
 
         animScaleDown = AnimationUtils.loadAnimation(this, R.anim.scale_down);
@@ -131,6 +157,40 @@ public class BankCardActivity extends Activity {
         own.execute(new LoadImage(getExternalFilesDir(Environment.DIRECTORY_PICTURES), ivBackPhoto),
                 secondPhoto, null);
 
+        own.execute(new UriToBitmap(getExternalFilesDir(Environment.DIRECTORY_PICTURES)), firstPhoto, new OnResultCallback<Bitmap, Void>() {
+            @Override
+            public void onSuccess(Bitmap pBitmap) {
+                firstBitmap = pBitmap;
+                Toast.makeText(BankCardActivity.this, "onsuccess first bitmap", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(Exception pE) {
+                Toast.makeText(BankCardActivity.this, "error first bitmap", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onProgressChanged(Void pVoid) {
+            }
+        });
+
+        own.execute(new UriToBitmap(getExternalFilesDir(Environment.DIRECTORY_PICTURES)), secondPhoto, new OnResultCallback<Bitmap, Void>() {
+            @Override
+            public void onSuccess(Bitmap pBitmap) {
+                secondBitmap = pBitmap;
+                Toast.makeText(BankCardActivity.this, "onsuccess second bitmap", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(Exception pE) {
+                Toast.makeText(BankCardActivity.this, "error second bitmap", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onProgressChanged(Void pVoid) {
+            }
+        });
+
         editBank.setText(bank);
         editCardholder.setText(cardholder);
         editNumber.setText(number);
@@ -156,26 +216,6 @@ public class BankCardActivity extends Activity {
             typeID = R.drawable.type_belcard;
         }
         editType.setBackgroundResource(typeID);
-    }
-
-    private void initViews() {
-        ivFrontPhoto = (ImageView) findViewById(R.id.front_photo);
-        ivBackPhoto = (ImageView) findViewById(R.id.back_photo);
-        verificationNumber = (EditText) findViewById(R.id.ver_number);
-        mScrollView = (ScrollView) findViewById(R.id.scrollView);
-        eye = (ImageView) findViewById(R.id.eye);
-        editBank = (TextView) findViewById(R.id.title_show_discount);
-        editCardholder = (EditText) findViewById(R.id.cardholder);
-        editNumber = (EditText) findViewById(R.id.number);
-        editPin = (EditText) findViewById(R.id.pin);
-        editValid = (EditText) findViewById(R.id.valid);
-        editType = (ImageView) findViewById(R.id.type_card);
-        materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
-        editLinear = (LinearLayout) findViewById(R.id.linear_edit_frame_title_discount);
-        editName = (EditText) findViewById(R.id.rename_discount_title);
-        floatingActionButtonDelete = (FloatingActionButton) findViewById(R.id.floating_delete_button);
-        floatingActionButtonEdit = (FloatingActionButton) findViewById(R.id.floating_edit_button);
-        linearFrameAction = (LinearLayout) findViewById(R.id.linear_frame_actions_discount);
     }
 
     public void onBackClicked(View view) {
@@ -241,4 +281,32 @@ public class BankCardActivity extends Activity {
             eye.setImageResource(R.drawable.eye_on);
         }
     }
+
+    void showPhoto(final Bitmap bitmap) {
+        ImageView image = new ImageView(this);
+        image.setImageBitmap(bitmap);
+
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(this).
+                        setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).
+                        setView(image);
+        builder.create().show();
+    }
+
+    public void onSecondPhotoClicked(View view) {
+        if (secondBitmap != null)
+            showPhoto(secondBitmap);
+    }
+
+    public void onFirstPhotoClicked(View view) {
+        if (firstBitmap != null)
+            showPhoto(firstBitmap);
+    }
+
+    // TODO copy tessdata to external storage for recognize
 }

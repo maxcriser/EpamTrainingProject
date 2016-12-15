@@ -121,6 +121,7 @@
     <string name="passwords_dont_match">Passwords do not match</string>
     <string name="verification_number">Verification number</string>
     <string name="verification_nnumber">Verification\nnumber</string>
+    <string name="close">CLOSE</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>

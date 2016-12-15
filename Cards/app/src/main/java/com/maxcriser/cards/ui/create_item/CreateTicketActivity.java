@@ -89,35 +89,6 @@ public class CreateTicketActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_ticket);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
         initViews();
-        dateFormat = new SimpleDateFormat("d MMM yyyy", Locale.US);
-        timeFormat = new SimpleDateFormat("h:mm a", Locale.US);
-        photoFileNameFront = Constants.BEG_FILE_NAME_TICKET + UniqueStringGenerator.getUniqueString() + "front_photo.jpg";
-        photoFileNameBack = Constants.BEG_FILE_NAME_TICKET + UniqueStringGenerator.getUniqueString() + "back_photo.jpg";
-        setDateOnView();
-        setTimeOnView();
-        db = DatabaseHelperImpl.getInstance(this);
-        title.setText(Constants.TitlesNew.NEW_TICKET_TITLE);
-
-        mListPreviewColor = previewColors.get(0);
-        myColorName = mListPreviewColor.getNameColorCards();
-        myColorCode = mListPreviewColor.getCodeColorCards();
-        Log.d(TICKET, myColorName + " " + myColorCode);
-        int PAGE_COUNT = previewColors.size();
-
-        pager.setPageMargin(Constants.PAGER_MARGIN_PREVIEW);
-        PagerAdapter pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
-                Constants.PagerIDs.ID_TICKET_ITEM,
-                PAGE_COUNT);
-
-        pager.setAdapter(pagerAdapter);
-        pager.addOnPageChangeListener(new OnTemplatePageChangeListener(new OnTemplatePageChangeListener.OnPageChangeListener() {
-            @Override
-            public void onResult(int position, String codeColor, String nameColor) {
-                myColorCode = codeColor;
-                myColorName = nameColor;
-                Log.d("COLOR", position + myColorName + myColorCode);
-            }
-        }));
     }
 
     @Override
@@ -208,6 +179,35 @@ public class CreateTicketActivity extends AppCompatActivity {
         time = (TextView) findViewById(R.id.time);
         removeBack = (FrameLayout) findViewById(R.id.remove_back);
         removeFront = (FrameLayout) findViewById(R.id.remove_front);
+        dateFormat = new SimpleDateFormat("d MMM yyyy", Locale.US);
+        timeFormat = new SimpleDateFormat("h:mm a", Locale.US);
+        photoFileNameFront = Constants.BEG_FILE_NAME_TICKET + UniqueStringGenerator.getUniqueString() + "front_photo.jpg";
+        photoFileNameBack = Constants.BEG_FILE_NAME_TICKET + UniqueStringGenerator.getUniqueString() + "back_photo.jpg";
+        setDateOnView();
+        setTimeOnView();
+        db = DatabaseHelperImpl.getInstance(this);
+        title.setText(Constants.TitlesNew.NEW_TICKET_TITLE);
+
+        mListPreviewColor = previewColors.get(0);
+        myColorName = mListPreviewColor.getNameColorCards();
+        myColorCode = mListPreviewColor.getCodeColorCards();
+        Log.d(TICKET, myColorName + " " + myColorCode);
+        int PAGE_COUNT = previewColors.size();
+
+        pager.setPageMargin(Constants.PAGER_MARGIN_PREVIEW);
+        PagerAdapter pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
+                Constants.PagerIDs.ID_TICKET_ITEM,
+                PAGE_COUNT);
+
+        pager.setAdapter(pagerAdapter);
+        pager.addOnPageChangeListener(new OnTemplatePageChangeListener(new OnTemplatePageChangeListener.OnPageChangeListener() {
+            @Override
+            public void onResult(int position, String codeColor, String nameColor) {
+                myColorCode = codeColor;
+                myColorName = nameColor;
+                Log.d("COLOR", position + myColorName + myColorCode);
+            }
+        }));
     }
 
     void setDateOnView() {

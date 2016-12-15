@@ -27,7 +27,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.pinball83.maskededittext.MaskedEditText;
 import com.googlecode.tesseract.android.TessBaseAPI;
 import com.maxcriser.cards.MainActivity;
 import com.maxcriser.cards.R;
@@ -120,7 +119,7 @@ public class CreateBankActivity extends AppCompatActivity {
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
         bank = (EditText) findViewById(R.id.bank);
         cardholder = (EditText) findViewById(R.id.cardholder);
-        number = (MaskedEditText) findViewById(R.id.number);
+        number = (EditText) findViewById(R.id.number);
         pin = (EditText) findViewById(R.id.pin);
         validDate = (TextView) findViewById(R.id.date);
         RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
@@ -208,24 +207,24 @@ public class CreateBankActivity extends AppCompatActivity {
                 frontPhoto.setImageURI(editFrontUri);
                 OwnAsyncTask scan = new OwnAsyncTask();
                 scan.execute(new ScanCreditCard(), editFrontUri, new OnResultCallback<String, String>() {
-                            @Override
-                            public void onSuccess(String pS) {
-                                Toast.makeText(CreateBankActivity.this, pS, Toast.LENGTH_LONG).show();
-                                cardholder.setText(pS);
-                                CreditCard.setValidCreditCard(pS);
-                                Log.d("RESULT", result);
-                            }
+                    @Override
+                    public void onSuccess(String pS) {
+                        Toast.makeText(CreateBankActivity.this, pS, Toast.LENGTH_LONG).show();
+                        cardholder.setText(pS);
+//                        CreditCard.setValidCreditCard(pS);
+                        Log.d("RESULT", result);
+                    }
 
-                            @Override
-                            public void onError(Exception pE) {
-                                Log.d("RESULT", pE.toString());
-                            }
+                    @Override
+                    public void onError(Exception pE) {
+                        Log.d("RESULT", pE.toString());
+                    }
 
-                            @Override
-                            public void onProgressChanged(String pS) {
+                    @Override
+                    public void onProgressChanged(String pS) {
 
-                            }
-                        });
+                    }
+                });
 //                OwnAsyncTask scan = new OwnAsyncTask();
 //                scan.execute(new ScanCreditCard(), editFrontUri, new OnResultCallback<String, String>() {
 //                    @Override

@@ -1,13 +1,23 @@
 package com.maxcriser.cards.model;
 
-import android.util.Log;
-
 import com.maxcriser.cards.constant.Constants;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CreditCard {
+
+    private String text;
+
+    public CreditCard(String text) {
+        this.text = text;
+        setCardholderCreditCard();
+        setNameCreditCard();
+        setNumberCreditCard();
+        setTypeCreditCard();
+        setValidCreditCard();
+        setVerificationNumberCreditCard();
+    }
 
     private String typeCreditCard = Constants.EMPTY_STRING;
     private String nameCreditCard = Constants.EMPTY_STRING;
@@ -17,58 +27,51 @@ public class CreditCard {
     private String verificationNumberCreditCard = Constants.EMPTY_STRING;
     private String validCreditCard = Constants.EMPTY_STRING;
 
-    public void setTypeCreditCard(String pTypeCreditCard) {
-        if (pTypeCreditCard.toLowerCase().contains(Constants.Cards.VISA)) {
+    public void setTypeCreditCard() {
+        if (text.toLowerCase().contains(Constants.Cards.VISA)) {
             typeCreditCard = Constants.Cards.VISA;
-        } else if (pTypeCreditCard.toLowerCase().contains(Constants.Cards.AMEX)
-                || pTypeCreditCard.toLowerCase().contains(Constants.Cards.AMEX2)) {
+        } else if (text.toLowerCase().contains(Constants.Cards.AMEX)
+                || text.toLowerCase().contains(Constants.Cards.AMEX2)) {
             typeCreditCard = Constants.Cards.AMEX;
-        } else if (pTypeCreditCard.toLowerCase().contains(Constants.Cards.MASTERCARD)) {
+        } else if (text.toLowerCase().contains(Constants.Cards.MASTERCARD)) {
             typeCreditCard = Constants.Cards.MASTERCARD;
-        } else if (pTypeCreditCard.toLowerCase().contains(Constants.Cards.MAESTRO)) {
+        } else if (text.toLowerCase().contains(Constants.Cards.MAESTRO)) {
             typeCreditCard = Constants.Cards.MAESTRO;
-        } else if (pTypeCreditCard.toLowerCase().contains(Constants.Cards.WESTERN_UNION)) {
+        } else if (text.toLowerCase().contains(Constants.Cards.WESTERN_UNION)) {
             typeCreditCard = Constants.Cards.WESTERN_UNION;
-        } else if (pTypeCreditCard.toLowerCase().contains(Constants.Cards.JCB)) {
+        } else if (text.toLowerCase().contains(Constants.Cards.JCB)) {
             typeCreditCard = Constants.Cards.JCB;
-        } else if (pTypeCreditCard.toLowerCase().contains(Constants.Cards.DINERS_CLUB)) {
+        } else if (text.toLowerCase().contains(Constants.Cards.DINERS_CLUB)) {
             typeCreditCard = Constants.Cards.DINERS_CLUB;
-        } else if (pTypeCreditCard.toLowerCase().contains(Constants.Cards.BELCARD)
-                || pTypeCreditCard.toLowerCase().contains(Constants.Cards.BELCARD2)) {
+        } else if (text.toLowerCase().contains(Constants.Cards.BELCARD)
+                || text.toLowerCase().contains(Constants.Cards.BELCARD2)) {
             typeCreditCard = Constants.Cards.BELCARD;
         }
-
-        typeCreditCard = pTypeCreditCard;
     }
 
-    public void setNameCreditCard(String pNameCreditCard) {
-        nameCreditCard = pNameCreditCard;
+    public void setNameCreditCard() {
+//        nameCreditCard = text;
     }
 
-    public void setCardholderCreditCard(String pCardholderCreditCard) {
-        cardholderCreditCard = pCardholderCreditCard;
+    public void setCardholderCreditCard() {
+        cardholderCreditCard = getRegexString(text, "[A-Z]{2,50} [A-Z]{2,50}");
     }
 
-    public void setNumberCreditCard(String pNumberCreditCard) {
-        numberCreditCard = pNumberCreditCard;
+    public void setNumberCreditCard() {
+        numberCreditCard = getRegexString(text,
+                "\\d\\d\\d\\d \\d\\d\\d\\d \\d\\d\\d\\d \\d\\d\\d\\d");
     }
 
-    public void setPinCreditCard(String pPinCreditCard) {
-        pinCreditCard = pPinCreditCard;
+    public void setPinCreditCard() {
+//        pinCreditCard = text;
     }
 
-    public void setVerificationNumberCreditCard(String pVerificationNumberCreditCard) {
-        verificationNumberCreditCard = pVerificationNumberCreditCard;
+    public void setVerificationNumberCreditCard() {
+//        verificationNumberCreditCard = text;
     }
 
-    public static void setValidCreditCard(String text) {
-        Pattern pattern = Pattern.compile("[0-9][0-9]/[0-9][0-9]");
-        Matcher m = pattern.matcher(text);
-        if (m.find()) {
-            Log.d("m.start()", m.start() + "");
-        }
-        Log.d("m.start()", "NOT");
-//        validCreditCard = text;
+    public void setValidCreditCard() {
+        validCreditCard = getRegexString(text, "[0-1][0-9]/\\d\\d");
     }
 
     public String getTypeCreditCard() {
@@ -97,5 +100,13 @@ public class CreditCard {
 
     public String getValidCreditCard() {
         return validCreditCard;
+    }
+
+    private String getRegexString(String text, String regex) {
+        String regexp = regex;
+        Pattern pattern = Pattern.compile(regexp);
+        Matcher matcher = pattern.matcher(text);
+
+        return (matcher.find() ? matcher.group() : Constants.EMPTY_STRING);
     }
 }

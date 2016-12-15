@@ -71,14 +71,6 @@ public class LockerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin_protected);
-        mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        intent = getIntent();
-        intentLockedPage = intent.getStringExtra(TYPE_LOCKED_SCREEN);
-
-        Toast.makeText(this, LaunchScreenActivity.loadPassword, Toast.LENGTH_SHORT).show();
-        mHandler = new Handler(hc);
-        builderPassword = Constants.EMPTY_STRING;
-
         initViews();
 
 //        TODO FIX BUG At least finger
@@ -131,6 +123,12 @@ public class LockerActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        intent = getIntent();
+        intentLockedPage = intent.getStringExtra(TYPE_LOCKED_SCREEN);
+        Toast.makeText(this, LaunchScreenActivity.loadPassword, Toast.LENGTH_SHORT).show();
+        mHandler = new Handler(hc);
+        builderPassword = Constants.EMPTY_STRING;
         firstCircle = (ImageView) findViewById(R.id.crlcOne);
         secondCircle = (ImageView) findViewById(R.id.crlcTwo);
         thirdCircle = (ImageView) findViewById(R.id.crlcThree);

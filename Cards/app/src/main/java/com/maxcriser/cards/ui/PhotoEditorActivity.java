@@ -42,6 +42,11 @@ public class PhotoEditorActivity extends AppCompatActivity {
         getWindow().setAttributes(attrs);
         setContentView(R.layout.activity_photo_editor);
         initViews();
+    }
+
+    void initViews() {
+        image = (CropImageView) findViewById(R.id.cropImageView);
+        mProgressBar = (FrameLayout) findViewById(R.id.frame_progressbar);
         image.setInitialFrameScale(0.75f);
         image.setCropMode(CropImageView.CropMode.FREE);
 //        setCustomRatio(int ratioX, int ratioY);
@@ -60,11 +65,6 @@ public class PhotoEditorActivity extends AppCompatActivity {
         } else {
             finish();
         }
-    }
-
-    void initViews() {
-        image = (CropImageView) findViewById(R.id.cropImageView);
-        mProgressBar = (FrameLayout) findViewById(R.id.frame_progressbar);
     }
 
     @Override

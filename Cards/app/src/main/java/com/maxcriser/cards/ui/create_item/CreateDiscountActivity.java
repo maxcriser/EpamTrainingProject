@@ -23,7 +23,6 @@ import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.BarcodeScannerActivity;
 import com.maxcriser.cards.util.OnTemplatePageChangeListener;
-import com.maxcriser.cards.view.text_view.BarcodeEan;
 import com.maxcriser.cards.view.text_view.RobotoRegular;
 
 import static android.view.View.GONE;
@@ -37,7 +36,7 @@ public class CreateDiscountActivity extends AppCompatActivity {
     private ScrollView mScrollView;
     private ViewPager pager;
     private EditText mEditText;
-    private BarcodeEan mBarcodeEan;
+    //    private BarcodeEan mBarcodeEan;
     private String myColorName;
     private String myColorCode;
     private String generateBarcode; // database
@@ -49,7 +48,14 @@ public class CreateDiscountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_discount);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
         initViews();
+    }
 
+    private void initViews() {
+//        mBarcodeEan = (BarcodeEan) findViewById(R.id.generate_barcode);
+        mScrollView = (ScrollView) findViewById(R.id.scrollView);
+        title = (RobotoRegular) findViewById(R.id.title_toolbar);
+        mEditText = (EditText) findViewById(R.id.id_edit_text_name_discount);
+        pager = (ViewPager) findViewById(R.id.pager);
         db = DatabaseHelperImpl.getInstance(this);
         title.setText(Constants.TitlesNew.NEW_DISCOUNT_TITLE);
         Intent barcodeIntent = getIntent();
@@ -59,7 +65,7 @@ public class CreateDiscountActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String pS) {
                 generateBarcode = pS;
-                mBarcodeEan.setText(generateBarcode);
+//                mBarcodeEan.setText(generateBarcode);
             }
 
             @Override
@@ -77,7 +83,6 @@ public class CreateDiscountActivity extends AppCompatActivity {
         Log.d(DISCOUNT_ID, myColorName + " " + myColorCode);
 
         int PAGE_COUNT = previewColors.size();
-        //TODO move to common class
         pager.setPageMargin(Constants.PAGER_MARGIN_PREVIEW);
         PagerAdapter pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 Constants.PagerIDs.ID_DISCOUNT_ITEM,
@@ -92,14 +97,6 @@ public class CreateDiscountActivity extends AppCompatActivity {
                 Log.d("COLOR", position + myColorName + myColorCode);
             }
         }));
-    }
-
-    private void initViews() {
-        mScrollView = (ScrollView) findViewById(R.id.scrollView);
-        title = (RobotoRegular) findViewById(R.id.title_toolbar);
-        mBarcodeEan = (BarcodeEan) findViewById(R.id.generate_barcode);
-        mEditText = (EditText) findViewById(R.id.id_edit_text_name_discount);
-        pager = (ViewPager) findViewById(R.id.pager);
     }
 
     @Override

@@ -63,6 +63,18 @@ public class DiscountCardActivity extends Activity {
         setContentView(R.layout.activity_show_discount);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
         initViews();
+    }
+
+    private void initViews() {
+        mScrollView = (ScrollView) findViewById(R.id.scrollView);
+        materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
+        editLinear = (LinearLayout) findViewById(R.id.linear_edit_frame_title_discount);
+        editName = (EditText) findViewById(R.id.rename_discount_title);
+        floatingActionButtonDelete = (FloatingActionButton) findViewById(R.id.floating_delete_button);
+        floatingActionButtonEdit = (FloatingActionButton) findViewById(R.id.floating_edit_button);
+        titleView = (TextView) findViewById(R.id.title_show_discount);
+        barcodeView = (BarcodeEan) findViewById(R.id.show_barcode);
+        linearFrameAction = (LinearLayout) findViewById(R.id.linear_frame_actions_discount);
         mHandler = new Handler(hc);
 
         animScaleDown = AnimationUtils.loadAnimation(DiscountCardActivity.this, R.anim.scale_down);
@@ -103,18 +115,6 @@ public class DiscountCardActivity extends Activity {
         WindowManager.LayoutParams layoutParam = getWindow().getAttributes();
         layoutParam.screenBrightness = 1.0f;
         getWindow().setAttributes(layoutParam);
-    }
-
-    private void initViews() {
-        mScrollView = (ScrollView) findViewById(R.id.scrollView);
-        materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
-        editLinear = (LinearLayout) findViewById(R.id.linear_edit_frame_title_discount);
-        editName = (EditText) findViewById(R.id.rename_discount_title);
-        floatingActionButtonDelete = (FloatingActionButton) findViewById(R.id.floating_delete_button);
-        floatingActionButtonEdit = (FloatingActionButton) findViewById(R.id.floating_edit_button);
-        titleView = (TextView) findViewById(R.id.title_show_discount);
-        barcodeView = (BarcodeEan) findViewById(R.id.show_barcode);
-        linearFrameAction = (LinearLayout) findViewById(R.id.linear_frame_actions_discount);
     }
 
     public void onBackClicked(View view) {

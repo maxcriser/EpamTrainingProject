@@ -9,12 +9,12 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
 public class TypesCardsReaderTest {
-
 
     @Test
     public void uniqueStringGenerator() {
@@ -24,7 +24,19 @@ public class TypesCardsReaderTest {
     }
 
     @Test
-    public void testSFSD() {
-        CreditCard.setValidCreditCard("SGKPSIH123feps/4o3ijowkk4i01/12o-r9uK_@T_");
+    public void testRegex() {
+        String text = "-#$YHEH#$Y#$weg23/324w@#T#/33John Smith312/32###Maxim Zaharenko###3g3maistro4g34/tg+#@(@#JGJosé BrasãoSkof01234 4444 1235 23463#(@kol3t[BbqfsPriorbank@i3k3gMAXIM ZAHARENKO29i39jgVISAp";
+        CreditCard creditCard = new CreditCard(text);
+        assertEquals(creditCard.getValidCreditCard(), "12/32");
+        assertEquals(creditCard.getCardholderCreditCard(), "MAXIM ZAHARENKO");
+        assertEquals(creditCard.getNumberCreditCard(), "1234 4444 1235 2346");
+        assertEquals(creditCard.getTypeCreditCard(), "visa");
+
+        String text2 = "@PO#KT(*J)GO@<_)(*U)IGO_H#)(NU@32523523523rvos23t23GWO>T)#)(GUVOQWPgoiego432t244/44l21t3-j0gnui-oL)#)#MG)W_(I)9.t30g90i";
+        CreditCard creditCard2 = new CreditCard(text2);
+        assertEquals(creditCard2.getValidCreditCard(), "");
+        assertEquals(creditCard2.getCardholderCreditCard(), "");
+        assertEquals(creditCard2.getNumberCreditCard(), "");
+        assertEquals(creditCard2.getTypeCreditCard(), "");
     }
 }

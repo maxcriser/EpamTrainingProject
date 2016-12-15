@@ -67,9 +67,16 @@ public class MenuActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initViews();
+    }
 
+    public void initViews() {
+        credit = (CardView) findViewById(R.id.main_credit_card);
+        discount = (CardView) findViewById(R.id.main_discount_card);
+        tickets = (CardView) findViewById(R.id.main_tickets_card);
+        nfc = (CardView) findViewById(R.id.main_nfc_card);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter == null) {
             nfc.setVisibility(GONE);
@@ -87,16 +94,6 @@ public class MenuActivity extends AppCompatActivity
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    public void initViews() {
-
-        credit = (CardView) findViewById(R.id.main_credit_card);
-        discount = (CardView) findViewById(R.id.main_discount_card);
-        tickets = (CardView) findViewById(R.id.main_tickets_card);
-        nfc = (CardView) findViewById(R.id.main_nfc_card);
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
     }
 
     private NetworkInfo getNetworkInfo(Context context) {
