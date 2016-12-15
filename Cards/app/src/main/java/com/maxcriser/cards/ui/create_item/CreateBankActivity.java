@@ -6,12 +6,10 @@ import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -34,13 +32,16 @@ import com.googlecode.tesseract.android.TessBaseAPI;
 import com.maxcriser.cards.MainActivity;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
+import com.maxcriser.cards.async.OwnAsyncTask;
+import com.maxcriser.cards.async.task.ScanCreditCard;
 import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.constant.Extras;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.fragment.FragmentPreviewCards;
-import com.maxcriser.cards.setter.PreviewColorsSetter;
+import com.maxcriser.cards.model.CreditCard;
+import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.PhotoEditorActivity;
 import com.maxcriser.cards.util.OnTemplatePageChangeListener;
 import com.maxcriser.cards.util.OnTypePageChangeListener;
@@ -48,10 +49,6 @@ import com.maxcriser.cards.util.UniqueStringGenerator;
 import com.maxcriser.cards.view.text_view.RobotoRegular;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -75,7 +72,6 @@ public class CreateBankActivity extends AppCompatActivity {
     String result = "";
     private static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/TesseractSample/";
     private static final String TESSDATA = "tessdata";
-
     public static final String BANK = "CreateBankActivity"; // TODO delete
     public String photoFileNameFront;
     public String photoFileNameBack;
@@ -92,13 +88,22 @@ public class CreateBankActivity extends AppCompatActivity {
     private Calendar calendar = Calendar.getInstance();
     private EditText bank;
     private EditText cardholder;
-    private MaskedEditText number;
+    private EditText number;
     private EditText pin;
     private TextView validDate;
     private EditText verificationNumber;
     private String myTypeCard;
     private String myColorName;
     private String myColorCode;
+
+    public Handler h = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            switch (msg.what) {
+                case 0:
+                    Toast.makeText(CreateBankActivity.this, msg.obj.toString(), Toast.LENGTH_LONG).show();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,9 +135,9 @@ public class CreateBankActivity extends AppCompatActivity {
         currentPositionColors = 0;
         title.setText(Constants.TitlesNew.NEW_BANK_TITLE);
 
-        PreviewColorsSetter listPreviewColorsSetter = previewColors.get(0);
-        myColorName = listPreviewColorsSetter.getNameColorCards();
-        myColorCode = listPreviewColorsSetter.getCodeColorCards();
+        PreviewColor listPreviewColor = previewColors.get(0);
+        myColorName = listPreviewColor.getNameColorCards();
+        myColorCode = listPreviewColor.getCodeColorCards();
         Log.d(BANK, myColorName + " " + myColorCode);
 
         int PAGE_COUNT_TEMPLATE = previewColors.size();
@@ -201,13 +206,26 @@ public class CreateBankActivity extends AppCompatActivity {
                 Uri editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
 //                Bitmap editBitmap = BitmapFactory.decodeFile(editFrontUri.getPath());
                 frontPhoto.setImageURI(editFrontUri);
-                new AsyncTask<Uri, Void, Void>() {
-                    @Override
-                    protected Void doInBackground(Uri... uri) {
-                        doOCR(uri[0]);
-                        return null;
-                    }
-                }.execute(editFrontUri);
+                OwnAsyncTask scan = new OwnAsyncTask();
+                scan.execute(new ScanCreditCard(), editFrontUri, new OnResultCallback<String, String>() {
+                            @Override
+                            public void onSuccess(String pS) {
+                                Toast.makeText(CreateBankActivity.this, pS, Toast.LENGTH_LONG).show();
+                                cardholder.setText(pS);
+                                CreditCard.setValidCreditCard(pS);
+                                Log.d("RESULT", result);
+                            }
+
+                            @Override
+                            public void onError(Exception pE) {
+                                Log.d("RESULT", pE.toString());
+                            }
+
+                            @Override
+                            public void onProgressChanged(String pS) {
+
+                            }
+                        });
 //                OwnAsyncTask scan = new OwnAsyncTask();
 //                scan.execute(new ScanCreditCard(), editFrontUri, new OnResultCallback<String, String>() {
 //                    @Override
@@ -425,104 +443,106 @@ public class CreateBankActivity extends AppCompatActivity {
     }
 
 
-    private void doOCR(Uri uri) {
-        prepareTesseract();
-        startOCR(uri);
-    }
-
-    private void prepareDirectory(String path) {
-
-        File dir = new File(path);
-        if (!dir.exists()) {
-            if (!dir.mkdirs()) {
-                Log.e(TAG, "ERROR: Creation of directory " + path + " failed, check does Android Manifest have permission to write to external storage.");
-            }
-        } else {
-            Log.i(TAG, "Created directory " + path);
-        }
-    }
-
-
-    private void prepareTesseract() {
-        try {
-            prepareDirectory(DATA_PATH + TESSDATA);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        copyTessDataFiles(TESSDATA);
-    }
-
-    private void copyTessDataFiles(String path) {
-        try {
-            String fileList[] = getAssets().list(path);
-
-            for (String fileName : fileList) {
-
-                // open file within the assets folder
-                // if it is not already there copy it to the sdcard
-                String pathToDataFile = DATA_PATH + path + "/" + fileName;
-                if (!(new File(pathToDataFile)).exists()) {
-
-                    InputStream in = getAssets().open(path + "/" + fileName);
-
-                    OutputStream out = new FileOutputStream(pathToDataFile);
-
-                    // Transfer bytes from in to out
-                    byte[] buf = new byte[1024];
-                    int len;
-
-                    while ((len = in.read(buf)) > 0) {
-                        out.write(buf, 0, len);
-                    }
-                    in.close();
-                    out.close();
-
-                    Log.e(TAG, "Copied " + fileName + "to tessdata");
-                }
-            }
-        } catch (IOException e) {
-            Log.e(TAG, "Unable to copy files to tessdata " + e.toString());
-        }
-    }
-
-    private void startOCR(Uri imgUri) {
-        try {
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 4; // 1 - means max size. 4 - means maxsize/4 size. Don't use value <4, because you need more memory in the heap to store your data.
-            Bitmap bitmap = BitmapFactory.decodeFile(imgUri.getPath(), options);
-
-            result = extractText(bitmap);
-            Log.d("result", result);
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
-        }
-    }
-
-    private String extractText(Bitmap bitmap) {
-        try {
-            tessBaseApi = new TessBaseAPI();
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
-            if (tessBaseApi == null) {
-                Log.e(TAG, "TessBaseAPI is null. TessFactory not returning tess object.");
-            }
-        }
-
-        tessBaseApi.init(DATA_PATH, lang);
-
-        //For example if we only want to detect numbers
-        tessBaseApi.setVariable(TessBaseAPI.VAR_CHAR_WHITELIST, "0123456789" + "AaBbCcDdEeFfGgHhIiJiKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz/,.-");
-
-        Log.d(TAG, "Training file loaded");
-        tessBaseApi.setImage(bitmap);
-        String extractedText = "empty result";
-        try {
-            extractedText = tessBaseApi.getUTF8Text();
-        } catch (Exception e) {
-            Log.e(TAG, "Error in recognizing text.");
-        }
-        tessBaseApi.end();
-        return extractedText;
-    }
+//    private void doOCR(Uri uri) {
+//        prepareTesseract();
+//        startOCR(uri);
+//    }
+//
+//    private void prepareDirectory(String path) {
+//
+//        File dir = new File(path);
+//        if (!dir.exists()) {
+//            if (!dir.mkdirs()) {
+//                Log.e(TAG, "ERROR: Creation of directory " + path + " failed, check does Android Manifest have permission to write to external storage.");
+//            }
+//        } else {
+//            Log.i(TAG, "Created directory " + path);
+//        }
+//    }
+//
+//
+//    private void prepareTesseract() {
+//        try {
+//            prepareDirectory(DATA_PATH + TESSDATA);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        copyTessDataFiles(TESSDATA);
+//    }
+//
+//    private void copyTessDataFiles(String path) {
+//        try {
+//            String fileList[] = getAssets().list(path);
+//
+//            for (String fileName : fileList) {
+//
+// //                open file within the assets folder
+//                 if it is not already there copy it to the sdcard
+//                String pathToDataFile = DATA_PATH + path + "/" + fileName;
+//                if (!(new File(pathToDataFile)).exists()) {
+//
+//                    InputStream in = getAssets().open(path + "/" + fileName);
+//
+//                    OutputStream out = new FileOutputStream(pathToDataFile);
+//
+    // //                   Transfer bytes from in to out
+//                    byte[] buf = new byte[1024];
+//                    int len;
+//
+//                    while ((len = in.read(buf)) > 0) {
+//                        out.write(buf, 0, len);
+//                    }
+//                    in.close();
+//                    out.close();
+//
+//                    Log.e(TAG, "Copied " + fileName + "to tessdata");
+//                }
+//            }
+//        } catch (IOException e) {
+//            Log.e(TAG, "Unable to copy files to tessdata " + e.toString());
+//        }
+//    }
+//
+//    private void startOCR(Uri imgUri) {
+//        try {
+//            BitmapFactory.Options options = new BitmapFactory.Options();
+//            options.inSampleSize = 4; // 1 - means max size. 4 - means maxsize/4 size. Don't use value <4, because you need more memory in the heap to store your data.
+//            Bitmap bitmap = BitmapFactory.decodeFile(imgUri.getPath(), options);
+//
+//            result = extractText(bitmap);
+//            Message msg = h.obtainMessage(0, result);
+//            h.sendMessage(msg);
+//            Log.d("result", result);
+//        } catch (Exception e) {
+//            Log.e(TAG, e.getMessage());
+//        }
+//    }
+//
+//    private String extractText(Bitmap bitmap) {
+//        try {
+//            tessBaseApi = new TessBaseAPI();
+//        } catch (Exception e) {
+//            Log.e(TAG, e.getMessage());
+//            if (tessBaseApi == null) {
+//                Log.e(TAG, "TessBaseAPI is null. TessFactory not returning tess object.");
+//            }
+//        }
+//
+//        tessBaseApi.init(DATA_PATH, lang);
+//
+//  //      For example if we only want to detect numbers
+//        tessBaseApi.setVariable(TessBaseAPI.VAR_CHAR_WHITELIST, "0123456789" + "AaBbCcDdEeFfGgHhIiJiKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz/,.-");
+//
+//        Log.d(TAG, "Training file loaded");
+//        tessBaseApi.setImage(bitmap);
+//        String extractedText = "empty result";
+//        try {
+//            extractedText = tessBaseApi.getUTF8Text();
+//        } catch (Exception e) {
+//            Log.e(TAG, "Error in recognizing text.");
+//        }
+//        tessBaseApi.end();
+//        return extractedText;
+//    }
 }

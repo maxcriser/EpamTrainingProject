@@ -4,9 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
 import com.maxcriser.cards.MainActivity;
@@ -14,12 +12,8 @@ import com.maxcriser.cards.async.ProgressCallback;
 import com.maxcriser.cards.async.Task;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
-public class ScanCreditCard extends AppCompatActivity implements Task<Uri, String, String> {
+public class ScanCreditCard implements Task<Uri, String, String> {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private TessBaseAPI tessBaseApi;
@@ -27,6 +21,9 @@ public class ScanCreditCard extends AppCompatActivity implements Task<Uri, Strin
     String result = "";
     private static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/TesseractSample/";
     private static final String TESSDATA = "tessdata";
+
+    public ScanCreditCard() {
+    }
 
     @Override
     public String doInBackground(Uri uri, ProgressCallback<String> pStringProgressCallback) throws Exception {
@@ -43,39 +40,39 @@ public class ScanCreditCard extends AppCompatActivity implements Task<Uri, Strin
             e.printStackTrace();
         }
 
-        try {
-            String fileList[] = getAssets().list(TESSDATA);
-            for (String fileName : fileList) {
-                String pathToDataFile = DATA_PATH + TESSDATA + "/" + fileName;
-                if (!(new File(pathToDataFile)).exists()) {
-                    InputStream in = getAssets().open(TESSDATA + "/" + fileName);
-                    OutputStream out = new FileOutputStream(pathToDataFile);
-                    byte[] buf = new byte[1024];
-                    int len;
-                    while ((len = in.read(buf)) > 0) {
-                        out.write(buf, 0, len);
-                    }
-                    in.close();
-                    out.close();
-                    Log.d(TAG, "Copied " + fileName + "to tessdata");
-                }
-            }
-        } catch (IOException e) {
-            Log.e(TAG, "Unable to copy files to tessdata " + e.toString());
-        }
+//        try {
+//            String fileList[] = getAssets().list(TESSDATA);
+//            for (String fileName : fileList) {
+//                String pathToDataFile = DATA_PATH + TESSDATA + "/" + fileName;
+//                if (!(new File(pathToDataFile)).exists()) {
+//                    InputStream in = getAssets().open(TESSDATA + "/" + fileName);
+//                    OutputStream out = new FileOutputStream(pathToDataFile);
+//                    byte[] buf = new byte[1024];
+//                    int len;
+//                    while ((len = in.read(buf)) > 0) {
+//                        out.write(buf, 0, len);
+//                    }
+//                    in.close();
+//                    out.close();
+//                    Log.d(TAG, "Copied " + fileName + "to tessdata");
+//                }
+//            }
+//        } catch (IOException e) {
+//            Log.e(TAG, "Unable to copy files to tessdata " + e.toString());
+//        }
 
         try {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 4; // 1 - means max size. 4 - means maxsize/4 size. Don't use value <4, because you need more memory in the heap to store your data.
             Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath(), options);
             result = extractText(bitmap);
-            Toast.makeText(this, result, Toast.LENGTH_LONG).show();
             Log.d("result", result);
             return result;
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
+
         }
-        return "suka_ne_proshla_TRY_block";
+        return "result: catch";
     }
 
     private String extractText(Bitmap bitmap) {

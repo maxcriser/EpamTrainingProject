@@ -1,8 +1,13 @@
-package com.maxcriser.cards.setter;
+package com.maxcriser.cards.model;
+
+import android.util.Log;
 
 import com.maxcriser.cards.constant.Constants;
 
-public class CreditCardFields {
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class CreditCard {
 
     private String typeCreditCard = Constants.EMPTY_STRING;
     private String nameCreditCard = Constants.EMPTY_STRING;
@@ -56,8 +61,14 @@ public class CreditCardFields {
         verificationNumberCreditCard = pVerificationNumberCreditCard;
     }
 
-    public void setValidCreditCard(String pValidCreditCard) {
-        validCreditCard = pValidCreditCard;
+    public static void setValidCreditCard(String text) {
+        Pattern pattern = Pattern.compile("[0-9][0-9]/[0-9][0-9]");
+        Matcher m = pattern.matcher(text);
+        if (m.find()) {
+            Log.d("m.start()", m.start() + "");
+        }
+        Log.d("m.start()", "NOT");
+//        validCreditCard = text;
     }
 
     public String getTypeCreditCard() {

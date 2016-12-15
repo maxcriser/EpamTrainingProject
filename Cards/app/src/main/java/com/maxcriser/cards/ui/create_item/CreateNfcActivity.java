@@ -25,7 +25,7 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.constant.Extras;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
-import com.maxcriser.cards.setter.PreviewColorsSetter;
+import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.PhotoEditorActivity;
 import com.maxcriser.cards.util.UniqueStringGenerator;
 import com.maxcriser.cards.view.text_view.RobotoRegular;
@@ -53,7 +53,7 @@ public class CreateNfcActivity extends AppCompatActivity {
     private ImageView backPhoto;
     private Calendar calendar = Calendar.getInstance();
     private ViewPager pager;
-    private PreviewColorsSetter mListPreviewColorsSetter;
+    private PreviewColor mListPreviewColor;
     private CheckBox checkBox;
     private String myColorName;
     private String myColorCode;
@@ -75,9 +75,9 @@ public class CreateNfcActivity extends AppCompatActivity {
 
         title.setText(Constants.TitlesNew.NEW_TICKET_TITLE);
 
-        mListPreviewColorsSetter = previewColors.get(0);
-        myColorName = mListPreviewColorsSetter.getNameColorCards();
-        myColorCode = mListPreviewColorsSetter.getCodeColorCards();
+        mListPreviewColor = previewColors.get(0);
+        myColorName = mListPreviewColor.getNameColorCards();
+        myColorCode = mListPreviewColor.getCodeColorCards();
         Log.d(TICKET, myColorName + " " + myColorCode);
         int PAGE_COUNT = previewColors.size();
 
@@ -95,9 +95,9 @@ public class CreateNfcActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                mListPreviewColorsSetter = previewColors.get(position);
-                myColorName = mListPreviewColorsSetter.getNameColorCards();
-                myColorCode = mListPreviewColorsSetter.getCodeColorCards();
+                mListPreviewColor = previewColors.get(position);
+                myColorName = mListPreviewColor.getNameColorCards();
+                myColorCode = mListPreviewColor.getCodeColorCards();
                 Log.d(TICKET, myColorName + " " + myColorCode);
             }
 

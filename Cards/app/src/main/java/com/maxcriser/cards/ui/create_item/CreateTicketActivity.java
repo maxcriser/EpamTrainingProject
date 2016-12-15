@@ -36,7 +36,7 @@ import com.maxcriser.cards.constant.Extras;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
-import com.maxcriser.cards.setter.PreviewColorsSetter;
+import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.PhotoEditorActivity;
 import com.maxcriser.cards.util.OnTemplatePageChangeListener;
 import com.maxcriser.cards.util.UniqueStringGenerator;
@@ -73,7 +73,7 @@ public class CreateTicketActivity extends AppCompatActivity {
     private Calendar calendar = Calendar.getInstance();
     private ViewPager pager;
     private ScrollView mScrollView;
-    private PreviewColorsSetter mListPreviewColorsSetter;
+    private PreviewColor mListPreviewColor;
     private CheckBox checkBox;
     private String myColorName;
     private String myColorCode;
@@ -98,9 +98,9 @@ public class CreateTicketActivity extends AppCompatActivity {
         db = DatabaseHelperImpl.getInstance(this);
         title.setText(Constants.TitlesNew.NEW_TICKET_TITLE);
 
-        mListPreviewColorsSetter = previewColors.get(0);
-        myColorName = mListPreviewColorsSetter.getNameColorCards();
-        myColorCode = mListPreviewColorsSetter.getCodeColorCards();
+        mListPreviewColor = previewColors.get(0);
+        myColorName = mListPreviewColor.getNameColorCards();
+        myColorCode = mListPreviewColor.getCodeColorCards();
         Log.d(TICKET, myColorName + " " + myColorCode);
         int PAGE_COUNT = previewColors.size();
 
@@ -125,6 +125,7 @@ public class CreateTicketActivity extends AppCompatActivity {
         if (requestCode == CAPTURE_IMAGE_FRONT ||
                 requestCode == CAPTURE_IMAGE_BACK) {
             if (resultCode == RESULT_OK) {
+                // TODO load in view
 //                Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
                 if (requestCode == CAPTURE_IMAGE_FRONT) {
                     Uri takenPhotoUri = getPhotoFileUri(photoFileNameFront);

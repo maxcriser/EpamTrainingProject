@@ -1,6 +1,6 @@
-package com.maxcriser.cards.setter;
+package com.maxcriser.cards.model;
 
-public class PreviewColorsSetter {
+public class PreviewColor {
 
     private String nameColorCards;
     private String codeColorCards;

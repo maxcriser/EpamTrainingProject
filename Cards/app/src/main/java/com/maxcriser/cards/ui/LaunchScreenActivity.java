@@ -9,14 +9,14 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.maxcriser.cards.holder.ContextHolder;
-import com.maxcriser.cards.setter.PreviewColorsSetter;
-import com.maxcriser.cards.setter.PreviewListColorsSetter;
+import com.maxcriser.cards.model.PreviewColor;
+import com.maxcriser.cards.model.PreviewListColorsSetter;
 
 import java.util.List;
 
 public class LaunchScreenActivity extends AppCompatActivity {
 
-    public static List<PreviewColorsSetter> previewColors;
+    public static List<PreviewColor> previewColors;
     public static List<String> previewTypes;
     public static String loadPassword;
     public static final String UNDEFENDED = "undefended";

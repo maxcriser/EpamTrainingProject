@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.setter.PreviewColorsSetter;
+import com.maxcriser.cards.model.PreviewColor;
 
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
@@ -47,7 +47,7 @@ public class FragmentPreviewCards extends Fragment {
         if (imageView != null) {
             imageView.setImageResource((Integer) icon);
         }
-        PreviewColorsSetter color = previewColors.get(pageNumberDiscount);
+        PreviewColor color = previewColors.get(pageNumberDiscount);
         mLinearCard.setBackgroundColor(Color.parseColor(color.getCodeColorCards()));
         tvPage.setText(color.getNameColorCards());
 

@@ -20,7 +20,7 @@ import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
-import com.maxcriser.cards.setter.PreviewColorsSetter;
+import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.BarcodeScannerActivity;
 import com.maxcriser.cards.util.OnTemplatePageChangeListener;
 import com.maxcriser.cards.view.text_view.BarcodeEan;
@@ -32,7 +32,7 @@ import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 public class CreateDiscountActivity extends AppCompatActivity {
 
     public static final String DISCOUNT_ID = "CreateDiscountActivity";
-    private PreviewColorsSetter mListPreviewColorsSetter;
+    private PreviewColor mListPreviewColor;
     private DatabaseHelperImpl db;
     private ScrollView mScrollView;
     private ViewPager pager;
@@ -71,9 +71,9 @@ public class CreateDiscountActivity extends AppCompatActivity {
             }
         });
 
-        mListPreviewColorsSetter = previewColors.get(0);
-        myColorName = mListPreviewColorsSetter.getNameColorCards();
-        myColorCode = mListPreviewColorsSetter.getCodeColorCards();
+        mListPreviewColor = previewColors.get(0);
+        myColorName = mListPreviewColor.getNameColorCards();
+        myColorCode = mListPreviewColor.getCodeColorCards();
         Log.d(DISCOUNT_ID, myColorName + " " + myColorCode);
 
         int PAGE_COUNT = previewColors.size();

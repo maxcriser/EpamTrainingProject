@@ -1,6 +1,7 @@
 package com.maxcriser.cards;
 
 
+import com.maxcriser.cards.model.CreditCard;
 import com.maxcriser.cards.util.UniqueStringGenerator;
 
 import org.junit.Test;
@@ -22,4 +23,8 @@ public class TypesCardsReaderTest {
         assertNotEquals(first, second);
     }
 
+    @Test
+    public void testSFSD() {
+        CreditCard.setValidCreditCard("SGKPSIH123feps/4o3ijowkk4i01/12o-r9uK_@T_");
+    }
 }

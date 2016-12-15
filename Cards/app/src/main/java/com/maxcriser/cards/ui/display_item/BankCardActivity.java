@@ -2,12 +2,10 @@ package com.maxcriser.cards.ui.display_item;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -22,11 +20,11 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
+import com.maxcriser.cards.async.OwnAsyncTask;
+import com.maxcriser.cards.async.task.LoadImage;
 import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
-
-import java.io.File;
 
 import static android.text.InputType.TYPE_CLASS_TEXT;
 import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
@@ -127,14 +125,11 @@ public class BankCardActivity extends Activity {
         String firstPhoto = creditIntent.getStringExtra(EXTRA_BANK_FRONT_PHOTO);
         String secondPhoto = creditIntent.getStringExtra(EXTRA_BANK_BACK_PHOTO);
 
-        Uri takenPhotoUriFirst = getPhotoFileUri(firstPhoto);
-        if (takenPhotoUriFirst != null) {
-            ivFrontPhoto.setImageURI(takenPhotoUriFirst);
-        }
-        Uri takenPhotoUriSecond = getPhotoFileUri(secondPhoto);
-        if (takenPhotoUriSecond != null) {
-            ivBackPhoto.setImageURI(takenPhotoUriSecond);
-        }
+        OwnAsyncTask own = new OwnAsyncTask();
+        own.execute(new LoadImage(getExternalFilesDir(Environment.DIRECTORY_PICTURES), ivFrontPhoto),
+                firstPhoto, null);
+        own.execute(new LoadImage(getExternalFilesDir(Environment.DIRECTORY_PICTURES), ivBackPhoto),
+                secondPhoto, null);
 
         editBank.setText(bank);
         editCardholder.setText(cardholder);
@@ -161,23 +156,6 @@ public class BankCardActivity extends Activity {
             typeID = R.drawable.type_belcard;
         }
         editType.setBackgroundResource(typeID);
-    }
-
-    private boolean isExternalStorageAvailable() {
-        String state = Environment.getExternalStorageState();
-        return state.equals(Environment.MEDIA_MOUNTED);
-    }
-
-    public Uri getPhotoFileUri(String fileName) {
-        if (isExternalStorageAvailable()) {
-            File mediaStorageDir = new File(
-                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.APP_TAG);
-            if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
-                Log.d(Constants.APP_TAG, getString(R.string.filed_to_create_directory));
-            }
-            return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
-        }
-        return null;
     }
 
     private void initViews() {

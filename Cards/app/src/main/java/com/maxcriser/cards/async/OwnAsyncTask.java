@@ -1,5 +1,8 @@
 package com.maxcriser.cards.async;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -22,7 +25,7 @@ public class OwnAsyncTask {
             final OnResultCallback<Result, Progress> onResultCallback) {
 
         mExecutorService.execute(new Runnable() {
-            android.os.Handler mHandler = new android.os.Handler();
+            android.os.Handler mHandler = new Handler(Looper.getMainLooper());
 
             @Override
             public void run() {
@@ -33,7 +36,8 @@ public class OwnAsyncTask {
                             mHandler.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    onResultCallback.onProgressChanged(pProgress);
+                                    if (onResultCallback != null)
+                                        onResultCallback.onProgressChanged(pProgress);
                                 }
                             });
                         }
@@ -41,11 +45,13 @@ public class OwnAsyncTask {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            onResultCallback.onSuccess(result);
+                            if (onResultCallback != null)
+                                onResultCallback.onSuccess(result);
                         }
                     });
                 } catch (Exception pE) {
-                    onResultCallback.onError(pE);
+                    if (onResultCallback != null)
+                        onResultCallback.onError(pE);
                 }
             }
         });

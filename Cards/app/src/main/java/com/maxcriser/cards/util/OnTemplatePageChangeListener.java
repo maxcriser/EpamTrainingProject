@@ -2,7 +2,7 @@ package com.maxcriser.cards.util;
 
 import android.support.v4.view.ViewPager;
 
-import com.maxcriser.cards.setter.PreviewColorsSetter;
+import com.maxcriser.cards.model.PreviewColor;
 
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
@@ -19,14 +19,14 @@ public class OnTemplatePageChangeListener implements ViewPager.OnPageChangeListe
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        PreviewColorsSetter mListPreviewColorsSetter = previewColors.get(position);
-        mListener.onResult(position, mListPreviewColorsSetter.getCodeColorCards(),
-                mListPreviewColorsSetter.getNameColorCards());
+
     }
 
     @Override
     public void onPageSelected(int position) {
-
+        PreviewColor mListPreviewColor = previewColors.get(position);
+        mListener.onResult(position, mListPreviewColor.getCodeColorCards(),
+                mListPreviewColor.getNameColorCards());
     }
 
     @Override

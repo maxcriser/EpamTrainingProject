@@ -1,4 +1,4 @@
-package com.maxcriser.cards.setter;
+package com.maxcriser.cards.model;
 
 import com.maxcriser.cards.constant.Constants;
 
@@ -19,7 +19,7 @@ public class PreviewListColorsSetter {
     public static final String COLOR_GRAY = "#78909c";
     public static final String RED = "RED";
     public static final String COLOR_RED = "#da513f";
-    private List<PreviewColorsSetter> mPreviewColorSetters;
+    private List<PreviewColor> mPreviewColorSetters;
     private List<String> typeCard;
 
     private static PreviewListColorsSetter sPreviewListColorsSetter;
@@ -41,7 +41,7 @@ public class PreviewListColorsSetter {
     }
 
     private void addPreviewColors(String name, String color) {
-        PreviewColorsSetter listTableItems = new PreviewColorsSetter();
+        PreviewColor listTableItems = new PreviewColor();
         listTableItems.setNameColorCards(name);
         listTableItems.setCodeColorCards(color);
         mPreviewColorSetters.add(listTableItems);
@@ -55,7 +55,7 @@ public class PreviewListColorsSetter {
         addPreviewColors(RED, COLOR_RED);
     }
 
-    public List<PreviewColorsSetter> getPreviewColorSetters() {
+    public List<PreviewColor> getPreviewColorSetters() {
         return mPreviewColorSetters;
     }
 
