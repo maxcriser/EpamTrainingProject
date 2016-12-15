@@ -49,8 +49,45 @@ public class CreditCard {
         }
     }
 
+    private boolean isCharacterOrSpace(char ch) {
+        String chStr = ch + Constants.EMPTY_STRING;
+        if ((chStr).matches("^[A-Za-z]+$") || (chStr).matches("^[А-Яа-я]+$") || ch == ' ' || ch == '.' || ch == '-' || ch == '&') {
+            return true;
+        }
+        return false;
+    }
+
     public void setNameCreditCard() {
-//        nameCreditCard = text;
+        String bank = "bank";
+        String handleText = text;
+        if (this.text.toLowerCase().contains(bank)) {
+            StringBuilder builder = new StringBuilder(bank);
+            int index = handleText.indexOf(bank);
+            if (index != 0) {
+                for (int i = index - 1; i >= 0; i--) {
+                    char ch = handleText.charAt(i);
+                    if (isCharacterOrSpace(ch)) {
+                        builder.insert(0, ch);
+                    } else {
+                        break;
+                    }
+                }
+            }
+            if (handleText.length() != index + 4) {
+                for (int i = index + 4; i < handleText.length(); i++) {
+                    char ch = handleText.charAt(i);
+                    if (isCharacterOrSpace(ch)) {
+                        builder.append(ch);
+                    } else {
+                        break;
+                    }
+                }
+            }
+            nameCreditCard = builder.toString();
+            nameCreditCard = nameCreditCard.trim();
+        } else {
+            nameCreditCard = Constants.EMPTY_STRING;
+        }
     }
 
     public void setCardholderCreditCard() {

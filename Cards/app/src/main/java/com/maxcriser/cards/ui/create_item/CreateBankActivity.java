@@ -65,12 +65,7 @@ import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
 
 public class CreateBankActivity extends AppCompatActivity {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
-    private TessBaseAPI tessBaseApi;
-    private static final String lang = "eng";
-    String result = "";
-    private static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/TesseractSample/";
-    private static final String TESSDATA = "tessdata";
+    private String result = Constants.EMPTY_STRING;
     public static final String BANK = "CreateBankActivity"; // TODO delete
     public String photoFileNameFront;
     public String photoFileNameBack;
@@ -206,13 +201,18 @@ public class CreateBankActivity extends AppCompatActivity {
 //                Bitmap editBitmap = BitmapFactory.decodeFile(editFrontUri.getPath());
                 frontPhoto.setImageURI(editFrontUri);
                 OwnAsyncTask scan = new OwnAsyncTask();
-                scan.execute(new ScanCreditCard(), editFrontUri, new OnResultCallback<String, String>() {
+                scan.execute(new ScanCreditCard(), editFrontUri, new OnResultCallback<CreditCard, String>() {
                     @Override
-                    public void onSuccess(String pS) {
-                        Toast.makeText(CreateBankActivity.this, pS, Toast.LENGTH_LONG).show();
-                        cardholder.setText(pS);
-//                        CreditCard.setValidCreditCard(pS);
-                        Log.d("RESULT", result);
+                    public void onSuccess(CreditCard pCredit) {
+                        if(pCredit !=null) {
+//                            CreditCard creditCard = pCredit;
+//                            String creditNumber
+//                                    String creditValid
+//                                            String creditCardholder
+//                            if(creditCard.getNameCreditCard()!=Constants.EMPTY_STRING){
+//                                number.setText();
+//                            }
+                        }
                     }
 
                     @Override

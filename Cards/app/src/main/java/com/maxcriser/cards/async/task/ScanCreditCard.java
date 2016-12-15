@@ -10,23 +10,25 @@ import com.googlecode.tesseract.android.TessBaseAPI;
 import com.maxcriser.cards.MainActivity;
 import com.maxcriser.cards.async.ProgressCallback;
 import com.maxcriser.cards.async.Task;
+import com.maxcriser.cards.model.CreditCard;
 
 import java.io.File;
 
-public class ScanCreditCard implements Task<Uri, String, String> {
+public class ScanCreditCard implements Task<Uri, String, CreditCard> {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private TessBaseAPI tessBaseApi;
     private static final String lang = "eng";
-    String result = "";
+    private String result = "";
     private static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/TesseractSample/";
     private static final String TESSDATA = "tessdata";
 
     public ScanCreditCard() {
+
     }
 
     @Override
-    public String doInBackground(Uri uri, ProgressCallback<String> pStringProgressCallback) throws Exception {
+    public CreditCard doInBackground(Uri uri, ProgressCallback<String> pStringProgressCallback) throws Exception {
         try {
             File dir = new File(DATA_PATH + TESSDATA);
             if (!dir.exists()) {
@@ -67,12 +69,11 @@ public class ScanCreditCard implements Task<Uri, String, String> {
             Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath(), options);
             result = extractText(bitmap);
             Log.d("result", result);
-            return result;
+            return new CreditCard(result);
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
-
         }
-        return "result: catch";
+        return null;
     }
 
     private String extractText(Bitmap bitmap) {
