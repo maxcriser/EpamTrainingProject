@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -27,8 +26,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.googlecode.tesseract.android.TessBaseAPI;
-import com.maxcriser.cards.MainActivity;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
@@ -90,15 +87,6 @@ public class CreateBankActivity extends AppCompatActivity {
     private String myColorName;
     private String myColorCode;
 
-    public Handler h = new Handler() {
-        public void handleMessage(android.os.Message msg) {
-            switch (msg.what) {
-                case 0:
-                    Toast.makeText(CreateBankActivity.this, msg.obj.toString(), Toast.LENGTH_LONG).show();
-            }
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,7 +105,6 @@ public class CreateBankActivity extends AppCompatActivity {
         number = (EditText) findViewById(R.id.number);
         pin = (EditText) findViewById(R.id.pin);
         validDate = (TextView) findViewById(R.id.date);
-        RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
         pagerTemplate = (ViewPager) findViewById(R.id.pager);
         pagerTypes = (ViewPager) findViewById(R.id.type_card);
         frontPhoto = (ImageView) findViewById(R.id.front_photo);
@@ -127,6 +114,7 @@ public class CreateBankActivity extends AppCompatActivity {
         db = DatabaseHelperImpl.getInstance(this);
         setDateOnView();
         currentPositionColors = 0;
+        RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
         title.setText(Constants.TitlesNew.NEW_BANK_TITLE);
 
         PreviewColor listPreviewColor = previewColors.get(0);
@@ -204,14 +192,46 @@ public class CreateBankActivity extends AppCompatActivity {
                 scan.execute(new ScanCreditCard(), editFrontUri, new OnResultCallback<CreditCard, String>() {
                     @Override
                     public void onSuccess(CreditCard pCredit) {
-                        if(pCredit !=null) {
-//                            CreditCard creditCard = pCredit;
-//                            String creditNumber
-//                                    String creditValid
-//                                            String creditCardholder
-//                            if(creditCard.getNameCreditCard()!=Constants.EMPTY_STRING){
-//                                number.setText();
-//                            }
+                        if (pCredit != null) {
+                            setTextToEmptyView(pCredit.getNumberCreditCard(), number);
+                            setTextToEmptyView(pCredit.getCardholderCreditCard(), cardholder);
+                            setTextToEmptyView(pCredit.getNameCreditCard(), bank);
+                            String creditType = pCredit.getTypeCreditCard();
+                            String creditValid = pCredit.getValidCreditCard();
+                            if (!creditValid.equals(Constants.EMPTY_STRING)
+                                    || validDate.getText().equals(Constants.EMPTY_STRING)) {
+                                validDate.setText(creditValid);
+                            }
+                            if (!creditType.equals(Constants.EMPTY_STRING)) {
+                                int numberType;
+                                switch (creditType) {
+                                    case Constants.Cards.VISA:
+                                        numberType = Constants.PagerTypesID.VISA;
+                                        break;
+                                    case Constants.Cards.MASTERCARD:
+                                        numberType = Constants.PagerTypesID.MASTERCAD;
+                                        break;
+                                    case Constants.Cards.AMEX:
+                                        numberType = Constants.PagerTypesID.AMEX;
+                                        break;
+                                    case Constants.Cards.MAESTRO:
+                                        numberType = Constants.PagerTypesID.MAESTRO;
+                                        break;
+                                    case Constants.Cards.WESTERN_UNION:
+                                        numberType = Constants.PagerTypesID.WESTERN_UNION;
+                                        break;
+                                    case Constants.Cards.JCB:
+                                        numberType = Constants.PagerTypesID.JCB;
+                                        break;
+                                    case Constants.Cards.DINERS_CLUB:
+                                        numberType = Constants.PagerTypesID.DINERS_CLUB;
+                                        break;
+                                    default:
+                                        numberType = Constants.PagerTypesID.BELCARD;
+                                        break;
+                                }
+                                pagerTypes.setCurrentItem(numberType);
+                            }
                         }
                     }
 
@@ -251,6 +271,13 @@ public class CreateBankActivity extends AppCompatActivity {
             }
         } else {
             Toast.makeText(this, R.string.picture_wasnt_edited, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void setTextToEmptyView(String text, EditText pView) {
+        if (!pView.getText().equals(Constants.EMPTY_STRING)
+                || !text.equals(Constants.EMPTY_STRING)) {
+            pView.setText(text);
         }
     }
 
@@ -433,115 +460,4 @@ public class CreateBankActivity extends AppCompatActivity {
     public void onNextColorPagerClicked(View view) {
         pagerTemplate.setCurrentItem(pagerTemplate.getCurrentItem() + 1);
     }
-
-    public void onScanBackFront(View view) {
-
-    }
-
-    public void onScanBackBack(View view) {
-    }
-
-
-//    private void doOCR(Uri uri) {
-//        prepareTesseract();
-//        startOCR(uri);
-//    }
-//
-//    private void prepareDirectory(String path) {
-//
-//        File dir = new File(path);
-//        if (!dir.exists()) {
-//            if (!dir.mkdirs()) {
-//                Log.e(TAG, "ERROR: Creation of directory " + path + " failed, check does Android Manifest have permission to write to external storage.");
-//            }
-//        } else {
-//            Log.i(TAG, "Created directory " + path);
-//        }
-//    }
-//
-//
-//    private void prepareTesseract() {
-//        try {
-//            prepareDirectory(DATA_PATH + TESSDATA);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        copyTessDataFiles(TESSDATA);
-//    }
-//
-//    private void copyTessDataFiles(String path) {
-//        try {
-//            String fileList[] = getAssets().list(path);
-//
-//            for (String fileName : fileList) {
-//
-// //                open file within the assets folder
-//                 if it is not already there copy it to the sdcard
-//                String pathToDataFile = DATA_PATH + path + "/" + fileName;
-//                if (!(new File(pathToDataFile)).exists()) {
-//
-//                    InputStream in = getAssets().open(path + "/" + fileName);
-//
-//                    OutputStream out = new FileOutputStream(pathToDataFile);
-//
-    // //                   Transfer bytes from in to out
-//                    byte[] buf = new byte[1024];
-//                    int len;
-//
-//                    while ((len = in.read(buf)) > 0) {
-//                        out.write(buf, 0, len);
-//                    }
-//                    in.close();
-//                    out.close();
-//
-//                    Log.e(TAG, "Copied " + fileName + "to tessdata");
-//                }
-//            }
-//        } catch (IOException e) {
-//            Log.e(TAG, "Unable to copy files to tessdata " + e.toString());
-//        }
-//    }
-//
-//    private void startOCR(Uri imgUri) {
-//        try {
-//            BitmapFactory.Options options = new BitmapFactory.Options();
-//            options.inSampleSize = 4; // 1 - means max size. 4 - means maxsize/4 size. Don't use value <4, because you need more memory in the heap to store your data.
-//            Bitmap bitmap = BitmapFactory.decodeFile(imgUri.getPath(), options);
-//
-//            result = extractText(bitmap);
-//            Message msg = h.obtainMessage(0, result);
-//            h.sendMessage(msg);
-//            Log.d("result", result);
-//        } catch (Exception e) {
-//            Log.e(TAG, e.getMessage());
-//        }
-//    }
-//
-//    private String extractText(Bitmap bitmap) {
-//        try {
-//            tessBaseApi = new TessBaseAPI();
-//        } catch (Exception e) {
-//            Log.e(TAG, e.getMessage());
-//            if (tessBaseApi == null) {
-//                Log.e(TAG, "TessBaseAPI is null. TessFactory not returning tess object.");
-//            }
-//        }
-//
-//        tessBaseApi.init(DATA_PATH, lang);
-//
-//  //      For example if we only want to detect numbers
-//        tessBaseApi.setVariable(TessBaseAPI.VAR_CHAR_WHITELIST, "0123456789" + "AaBbCcDdEeFfGgHhIiJiKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz/,.-");
-//
-//        Log.d(TAG, "Training file loaded");
-//        tessBaseApi.setImage(bitmap);
-//        String extractedText = "empty result";
-//        try {
-//            extractedText = tessBaseApi.getUTF8Text();
-//        } catch (Exception e) {
-//            Log.e(TAG, "Error in recognizing text.");
-//        }
-//        tessBaseApi.end();
-//        return extractedText;
-//    }
 }

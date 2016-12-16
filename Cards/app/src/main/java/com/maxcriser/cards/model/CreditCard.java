@@ -60,9 +60,9 @@ public class CreditCard {
     public void setNameCreditCard() {
         String bank = "bank";
         String handleText = text;
-        if (this.text.toLowerCase().contains(bank)) {
-            StringBuilder builder = new StringBuilder(bank);
-            int index = handleText.indexOf(bank);
+        if (text.toLowerCase().contains(bank)) {
+            StringBuilder builder = new StringBuilder();
+            int index = handleText.toLowerCase().indexOf(bank);
             if (index != 0) {
                 for (int i = index - 1; i >= 0; i--) {
                     char ch = handleText.charAt(i);
@@ -73,14 +73,12 @@ public class CreditCard {
                     }
                 }
             }
-            if (handleText.length() != index + 4) {
-                for (int i = index + 4; i < handleText.length(); i++) {
-                    char ch = handleText.charAt(i);
-                    if (isCharacterOrSpace(ch)) {
-                        builder.append(ch);
-                    } else {
-                        break;
-                    }
+            for (int i = index; i < handleText.length(); i++) {
+                char ch = handleText.charAt(i);
+                if (isCharacterOrSpace(ch)) {
+                    builder.append(ch);
+                } else {
+                    break;
                 }
             }
             nameCreditCard = builder.toString();

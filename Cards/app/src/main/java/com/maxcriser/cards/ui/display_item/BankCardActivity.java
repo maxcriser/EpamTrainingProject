@@ -309,4 +309,5 @@ public class BankCardActivity extends Activity {
     }
 
     // TODO copy tessdata to external storage for recognize
+    // TODO cannot edit name card which has photos ;/
 }

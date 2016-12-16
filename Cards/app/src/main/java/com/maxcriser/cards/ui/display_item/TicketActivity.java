@@ -131,6 +131,7 @@ public class TicketActivity extends Activity {
         String firstPhoto = creditIntent.getStringExtra(EXTRA_TICKET_FIRST_PHOTO);
         String secondPhoto = creditIntent.getStringExtra(EXTRA_TICKET_SECOND_PHOTO);
 
+        // TODO remake, example in CreateBankActivity.class
         Uri takenPhotoUriFirst = getPhotoFileUri(firstPhoto);
         if (takenPhotoUriFirst != null) {
             ivFrontPhoto.setImageURI(takenPhotoUriFirst);

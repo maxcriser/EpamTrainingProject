@@ -62,7 +62,6 @@ public class ScanCreditCard implements Task<Uri, String, CreditCard> {
 //        } catch (IOException e) {
 //            Log.e(TAG, "Unable to copy files to tessdata " + e.toString());
 //        }
-
         try {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 4; // 1 - means max size. 4 - means maxsize/4 size. Don't use value <4, because you need more memory in the heap to store your data.
@@ -88,8 +87,9 @@ public class ScanCreditCard implements Task<Uri, String, CreditCard> {
 
         tessBaseApi.init(DATA_PATH, lang);
 
-        //For example if we only want to detect numbers
-//        tessBaseApi.setVariable(TessBaseAPI.VAR_CHAR_WHITELIST, "0123456789" + "AaBbCcDdEeFfGgHhIiJiKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz/,.-");
+//        For example if we only want to detect numbers
+        tessBaseApi.setVariable(TessBaseAPI.VAR_CHAR_WHITELIST,
+                "0123456789" + "AaBbCcDdEeFfGgHhIiJiKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz /&,.-");
 
         Log.d(TAG, "Training file loaded");
         tessBaseApi.setImage(bitmap);

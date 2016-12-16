@@ -14,6 +14,17 @@ public class Constants {
         int EDIT_IMAGE_BACK = 1100;
     }
 
+    public interface PagerTypesID {
+        int VISA = 0;
+        int MASTERCAD = 1;
+        int AMEX = 2;
+        int MAESTRO = 3;
+        int WESTERN_UNION = 4;
+        int JCB = 5;
+        int DINERS_CLUB = 6;
+        int BELCARD = 7;
+    }
+
     public interface Cards {
         String VISA = "visa";
         String MASTERCARD = "mastercard";

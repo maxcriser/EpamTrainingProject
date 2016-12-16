@@ -319,14 +319,7 @@ public class CreateTicketActivity extends AppCompatActivity {
                 && !timeStr.equals(Constants.EMPTY_STRING)
                 && !dateStr.equals(Constants.EMPTY_STRING)) {
             if (checkBox.isChecked()) {
-//                Intent intent = new Intent(Intent.ACTION_EDIT);
-//                intent.setType("vnd.android.cursor.item/event");
-//                intent.putExtra("beginTime", calendar.getTimeInMillis());
-//                intent.putExtra("allDay", false);
-//                intent.putExtra("rrule", "FREQ=YEARLY");
-//                intent.putExtra("endTime", calendar.getTimeInMillis() + 60 * 60 * 1000);
-//                intent.putExtra("title", ticketTitle.getText().toString());
-//                startActivity(intent);
+                addCalendarEvent(calendar.getTimeInMillis(), ticketTitle.getText().toString());
             }
 
             ContentValues cvNewTicket = new ContentValues();
@@ -357,6 +350,17 @@ public class CreateTicketActivity extends AppCompatActivity {
             mScrollView.fullScroll(ScrollView.FOCUS_UP);
             Toast.makeText(this, getResources().getString(R.string.fill_all_fields), Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void addCalendarEvent(Long timeInMillis, String title) {
+        Intent intent = new Intent(Intent.ACTION_EDIT);
+        intent.setType("vnd.android.cursor.item/event");
+        intent.putExtra("beginTime", timeInMillis);
+        intent.putExtra("allDay", false);
+        intent.putExtra("rrule", "FREQ=YEARLY");
+        intent.putExtra("endTime", timeInMillis + 60 * 60 * 1000);
+        intent.putExtra("title", title);
+        startActivity(intent);
     }
 
     public void onCreateCardClicked(View view) {

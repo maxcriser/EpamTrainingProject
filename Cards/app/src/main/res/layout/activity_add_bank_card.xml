@@ -190,6 +190,13 @@
                             android:inputType="number"
                             android:textSize="18sp"/>
 
+                        <ImageView
+                            android:id="@+id/scannerBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="4dp"
+                            android:background="@color/card_view"
+                            android:visibility="invisible"/>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="56dp">
@@ -290,16 +297,6 @@
                                         android:text="@string/front"
                                         android:textColor="@color/text_toolbar"/>
 
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="36dp"
-                                        android:background="@color/card_view"
-                                        android:gravity="center"
-                                        android:onClick="onScanBackFront"
-                                        android:text="SCAN FRONT"
-                                        android:textColor="@android:color/white"
-                                        android:textSize="20sp"/>
-
                                     <ImageView
                                         android:id="@+id/front_photo"
                                         android:layout_width="match_parent"
@@ -333,16 +330,6 @@
                                     android:layout_margin="16dp"
                                     card_view:cardCornerRadius="2dp"
                                     card_view:cardElevation="2dp">
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="36dp"
-                                        android:background="@color/card_view"
-                                        android:gravity="center"
-                                        android:onClick="onScanBeackBack"
-                                        android:text="SCAN FRONT"
-                                        android:textColor="@android:color/white"
-                                        android:textSize="20sp"/>
 
                                     <ImageView
                                         android:layout_width="36dp"
