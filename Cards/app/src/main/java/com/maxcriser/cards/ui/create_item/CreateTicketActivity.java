@@ -322,8 +322,16 @@ public class CreateTicketActivity extends AppCompatActivity {
 
             ContentValues cvNewTicket = new ContentValues();
             cvNewTicket.put(ModelTickets.TITLE, titleStr);
-            cvNewTicket.put(ModelTickets.PHOTO_FIRST, photoFileNameFront);
-            cvNewTicket.put(ModelTickets.PHOTO_SECOND, photoFileNameBack);
+            if (removeFront.getVisibility() == View.VISIBLE) {
+                cvNewTicket.put(ModelTickets.PHOTO_FIRST, photoFileNameFront);
+            } else {
+                cvNewTicket.put(ModelTickets.PHOTO_FIRST, Constants.EMPTY_STRING);
+            }
+            if (removeBack.getVisibility() == View.VISIBLE) {
+                cvNewTicket.put(ModelTickets.PHOTO_SECOND, photoFileNameBack);
+            } else {
+                cvNewTicket.put(ModelTickets.PHOTO_SECOND, Constants.EMPTY_STRING);
+            }
             cvNewTicket.put(ModelTickets.CARDHOLDER, cardholderStr);
             cvNewTicket.put(ModelTickets.DATE, dateStr);
             cvNewTicket.put(ModelTickets.TIME, timeStr);

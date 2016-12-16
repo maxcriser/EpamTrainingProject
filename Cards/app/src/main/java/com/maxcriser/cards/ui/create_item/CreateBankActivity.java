@@ -60,6 +60,8 @@ import static com.maxcriser.cards.constant.Constants.Requests.EDIT_IMAGE_FRONT;
 import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_BACK_CAMERA;
 import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_FRONT_CAMERA;
 import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STORAGE;
+import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STORAGE_BACK;
+import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STORAGE_FRONT;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
 
@@ -341,11 +343,13 @@ public class CreateBankActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{PERMISSION}, CODE);
         } else {
             if (CODE == REQUEST_FRONT_CAMERA) {
-                startCameraForPhoto(CAPTURE_IMAGE_FRONT, photoFileNameFront);
+                getPermission(REQUEST_WRITE_STORAGE_FRONT, Manifest.permission.WRITE_EXTERNAL_STORAGE);
             } else if (CODE == REQUEST_BACK_CAMERA) {
+                getPermission(REQUEST_WRITE_STORAGE_BACK, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            } else if (CODE == REQUEST_WRITE_STORAGE_FRONT) {
+                startCameraForPhoto(CAPTURE_IMAGE_FRONT, photoFileNameFront);
+            } else if (CODE == REQUEST_WRITE_STORAGE_BACK) {
                 startCameraForPhoto(CAPTURE_IMAGE_BACK, photoFileNameBack);
-            } else if (CODE == REQUEST_WRITE_STORAGE) {
-                createCard();
             }
         }
     }
@@ -365,7 +369,7 @@ public class CreateBankActivity extends AppCompatActivity {
         } else if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, R.string.permission_has_not_been_granted, Toast.LENGTH_SHORT).show();
         } else if (requestCode == REQUEST_FRONT_CAMERA) {
-            startCameraForPhoto(CAPTURE_IMAGE_FRONT, photoFileNameFront);
+            getPermission(REQUEST_WRITE_STORAGE_FRONT, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         } else if (requestCode == REQUEST_BACK_CAMERA) {
             startCameraForPhoto(CAPTURE_IMAGE_BACK, photoFileNameBack);
         } else if (requestCode == REQUEST_WRITE_STORAGE) {
@@ -407,8 +411,16 @@ public class CreateBankActivity extends AppCompatActivity {
         } else {
             ContentValues cvNewCredit = new ContentValues();
             cvNewCredit.put(ModelBankCards.TITLE, bankStr);
-            cvNewCredit.put(ModelBankCards.PHOTO_FRONT, photoFileNameFront);
-            cvNewCredit.put(ModelBankCards.PHOTO_BACK, photoFileNameBack);
+            if (removeFront.getVisibility() == View.VISIBLE) {
+                cvNewCredit.put(ModelBankCards.PHOTO_FRONT, photoFileNameFront);
+            } else {
+                cvNewCredit.put(ModelBankCards.PHOTO_FRONT, Constants.EMPTY_STRING);
+            }
+            if (removeBack.getVisibility() == View.VISIBLE) {
+                cvNewCredit.put(ModelBankCards.PHOTO_BACK, photoFileNameBack);
+            } else {
+                cvNewCredit.put(ModelBankCards.PHOTO_BACK, Constants.EMPTY_STRING);
+            }
             cvNewCredit.put(ModelBankCards.VERIFICATION_NUMBER, verNumber);
             cvNewCredit.put(ModelBankCards.CARDHOLDER, cardholderStr);
             cvNewCredit.put(ModelBankCards.NUMBER, numberStr);
