@@ -19,7 +19,6 @@ import android.support.v7.widget.CardView;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.maxcriser.cards.MainActivity;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.Constants;
 
@@ -243,10 +242,9 @@ public class MenuActivity extends AppCompatActivity
                     startActivity(intent);
                     break;
                 case R.id.main_nfc_card:
-                    startActivity(new Intent(MenuActivity.this, MainActivity.class));
-//                    intent = new Intent(MenuActivity.this, ItemsActivity.class);
-//                    selectItem = Constants.Titles.NFC_TITLE;
-//                    startActivity(intent);
+                    intent = new Intent(MenuActivity.this, ItemsActivity.class);
+                    selectItem = Constants.Titles.NFC_TITLE;
+                    startActivity(intent);
                     break;
                 case R.id.main_tickets_card:
                     intent = new Intent(MenuActivity.this, ItemsActivity.class);

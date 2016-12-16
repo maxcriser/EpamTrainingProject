@@ -59,7 +59,6 @@ import static com.maxcriser.cards.constant.Constants.Requests.EDIT_IMAGE_BACK;
 import static com.maxcriser.cards.constant.Constants.Requests.EDIT_IMAGE_FRONT;
 import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_BACK_CAMERA;
 import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_FRONT_CAMERA;
-import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STORAGE;
 import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STORAGE_BACK;
 import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STORAGE_FRONT;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;

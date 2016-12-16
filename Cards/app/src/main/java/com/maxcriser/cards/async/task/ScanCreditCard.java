@@ -7,7 +7,6 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
-import com.maxcriser.cards.MainActivity;
 import com.maxcriser.cards.async.ProgressCallback;
 import com.maxcriser.cards.async.Task;
 import com.maxcriser.cards.model.CreditCard;
@@ -16,7 +15,7 @@ import java.io.File;
 
 public class ScanCreditCard implements Task<Uri, String, CreditCard> {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = "TAG";
     private TessBaseAPI tessBaseApi;
     private static final String lang = "eng";
     private static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/TesseractSample/";
