@@ -20,8 +20,7 @@ import com.isseiaoki.simplecropview.callback.SaveCallback;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.Extras;
 
-import static com.maxcriser.cards.constant.Constants.Requests.CAPTURE_IMAGE_BACK;
-import static com.maxcriser.cards.constant.Constants.Requests.CAPTURE_IMAGE_FRONT;
+import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_REUSE_CAMERA;
 import static com.maxcriser.cards.util.Storage.getPhotoFileUri;
 
 public class PhotoEditorActivity extends AppCompatActivity {
@@ -38,6 +37,7 @@ public class PhotoEditorActivity extends AppCompatActivity {
         attrs.flags = WindowManager.LayoutParams.FLAG_FULLSCREEN;
         getWindow().setAttributes(attrs);
         setContentView(R.layout.activity_photo_editor);
+//        getPermission(REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         initViews();
     }
 
@@ -66,7 +66,7 @@ public class PhotoEditorActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAPTURE_IMAGE_FRONT || requestCode == CAPTURE_IMAGE_BACK) {
+        if (requestCode == REQUEST_REUSE_CAMERA) {
             if (resultCode == RESULT_OK) {
                 photoUri = getPhotoFileUri(getExternalFilesDir(Environment.DIRECTORY_PICTURES),
                         photoFileName);
@@ -98,9 +98,8 @@ public class PhotoEditorActivity extends AppCompatActivity {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT,
                 getPhotoFileUri(getExternalFilesDir(Environment.DIRECTORY_PICTURES), photoFileName)); // set the image file name
-
         if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(intent, CAPTURE_IMAGE_FRONT);
+            startActivityForResult(intent, REQUEST_REUSE_CAMERA);
         }
     }
 
@@ -116,7 +115,7 @@ public class PhotoEditorActivity extends AppCompatActivity {
         image.rotateImage(CropImageView.RotateDegrees.ROTATE_90D);
     }
 
-    public void onDoneClicked(View view) {
+    private void savePhoto() {
         mProgressBar.setVisibility(View.VISIBLE);
         image.startCrop(
 
@@ -151,6 +150,10 @@ public class PhotoEditorActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    public void onDoneClicked(View view) {
+        savePhoto();
     }
 
     public void onFreeClicked(View view) {

@@ -6,8 +6,10 @@ public class Constants {
         byte REQUEST_CAMERA = 0;
         byte REQUEST_FRONT_CAMERA = 1;
         byte REQUEST_BACK_CAMERA = 2;
-        byte REQUEST_WRITE_STORAGE = 3;
+        byte REQUEST_WRITE_STORAGE_FRONT = 3;
+        byte REQUEST_WRITE_STORAGE_BACK = 6;
         byte REQUEST_CALENDAR = 4;
+        byte REQUEST_REUSE_CAMERA = 5;
         int CAPTURE_IMAGE_FRONT = 1001;
         int CAPTURE_IMAGE_BACK = 1010;
         int EDIT_IMAGE_FRONT = 1011;

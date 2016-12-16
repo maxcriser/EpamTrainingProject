@@ -47,7 +47,6 @@ import com.maxcriser.cards.util.OnTypePageChangeListener;
 import com.maxcriser.cards.util.UniqueStringGenerator;
 import com.maxcriser.cards.view.text_view.RobotoRegular;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -59,9 +58,11 @@ import static com.maxcriser.cards.constant.Constants.Requests.EDIT_IMAGE_BACK;
 import static com.maxcriser.cards.constant.Constants.Requests.EDIT_IMAGE_FRONT;
 import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_BACK_CAMERA;
 import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_FRONT_CAMERA;
-import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STORAGE;
+import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STORAGE_BACK;
+import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STORAGE_FRONT;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
+import static com.maxcriser.cards.util.Storage.getPhotoFileUri;
 
 public class CreateBankActivity extends AppCompatActivity {
 
@@ -170,12 +171,12 @@ public class CreateBankActivity extends AppCompatActivity {
                 requestCode == CAPTURE_IMAGE_BACK) {
             if (resultCode == RESULT_OK) {
                 if (requestCode == CAPTURE_IMAGE_FRONT) {
-                    Uri takenPhotoUri = getPhotoFileUri(photoFileNameFront);
+                    Uri takenPhotoUri = getPhotoFileUri(getExternalFilesDir(Environment.DIRECTORY_PICTURES), photoFileNameFront);
                     Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
                     startActivityForResult(intent, EDIT_IMAGE_FRONT);
                 } else {
-                    Uri takenPhotoUri = getPhotoFileUri(photoFileNameBack);
+                    Uri takenPhotoUri = getPhotoFileUri(getExternalFilesDir(Environment.DIRECTORY_PICTURES), photoFileNameBack);
                     Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
                     startActivityForResult(intent, EDIT_IMAGE_BACK);
@@ -310,23 +311,6 @@ public class CreateBankActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isExternalStorageAvailable() {
-        String state = Environment.getExternalStorageState();
-        return state.equals(Environment.MEDIA_MOUNTED);
-    }
-
-    public Uri getPhotoFileUri(String fileName) {
-        if (isExternalStorageAvailable()) {
-            File mediaStorageDir = new File(
-                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.APP_TAG);
-            if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
-                Log.d(Constants.APP_TAG, getString(R.string.filed_to_create_directory));
-            }
-            return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
-        }
-        return null;
-    }
-
     public void onBackPhotoClicked(View view) {
         getPermission(REQUEST_BACK_CAMERA, Manifest.permission.CAMERA);
     }
@@ -339,20 +323,21 @@ public class CreateBankActivity extends AppCompatActivity {
     private void getPermission(final byte CODE, final String PERMISSION) {
         if (ContextCompat.checkSelfPermission(this, PERMISSION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{PERMISSION}, CODE);
-        } else {
-            if (CODE == REQUEST_FRONT_CAMERA) {
-                startCameraForPhoto(CAPTURE_IMAGE_FRONT, photoFileNameFront);
-            } else if (CODE == REQUEST_BACK_CAMERA) {
-                startCameraForPhoto(CAPTURE_IMAGE_BACK, photoFileNameBack);
-            } else if (CODE == REQUEST_WRITE_STORAGE) {
-                createCard();
-            }
+        } else if (CODE == REQUEST_WRITE_STORAGE_FRONT) {
+            startCameraForPhoto(CAPTURE_IMAGE_FRONT, photoFileNameFront);
+        } else if (CODE == REQUEST_WRITE_STORAGE_BACK) {
+            startCameraForPhoto(CAPTURE_IMAGE_BACK, photoFileNameBack);
+        } else if (CODE == REQUEST_FRONT_CAMERA) {
+            getPermission(REQUEST_WRITE_STORAGE_FRONT, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        } else if (CODE == REQUEST_BACK_CAMERA) {
+            getPermission(REQUEST_WRITE_STORAGE_BACK, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
     }
 
     private void startCameraForPhoto(int code, String fileName) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(fileName)); // set the image file name
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,
+                getPhotoFileUri(getExternalFilesDir(Environment.DIRECTORY_PICTURES), fileName)); // set the image file name
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, code);
         }
@@ -365,11 +350,13 @@ public class CreateBankActivity extends AppCompatActivity {
         } else if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, R.string.permission_has_not_been_granted, Toast.LENGTH_SHORT).show();
         } else if (requestCode == REQUEST_FRONT_CAMERA) {
-            startCameraForPhoto(CAPTURE_IMAGE_FRONT, photoFileNameFront);
+            getPermission(REQUEST_WRITE_STORAGE_FRONT, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         } else if (requestCode == REQUEST_BACK_CAMERA) {
+            getPermission(REQUEST_WRITE_STORAGE_BACK, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        } else if (requestCode == REQUEST_WRITE_STORAGE_FRONT) {
+            startCameraForPhoto(CAPTURE_IMAGE_FRONT, photoFileNameFront);
+        } else if (requestCode == REQUEST_WRITE_STORAGE_BACK) {
             startCameraForPhoto(CAPTURE_IMAGE_BACK, photoFileNameBack);
-        } else if (requestCode == REQUEST_WRITE_STORAGE) {
-            createCard();
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
@@ -437,7 +424,8 @@ public class CreateBankActivity extends AppCompatActivity {
 
     public void onCreateCardClicked(View view) {
         // // TODO: 12.12.2016 filesDir
-        getPermission(REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        createCard();
+//        getPermission(REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     public void onToolbarBackClicked(View view) {
