@@ -64,19 +64,6 @@ public class PhotoEditorActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAPTURE_IMAGE_FRONT || requestCode == CAPTURE_IMAGE_BACK) {
-            if (resultCode == RESULT_OK) {
-                photoUri = getPhotoFileUri(getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-                        photoFileName);
-                startCrop(photoUri);
-            } else {
-                Toast.makeText(this, R.string.picture_wasnt_taken, Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
     void startCrop(Uri uri) {
         image.startLoad(
 
@@ -92,16 +79,6 @@ public class PhotoEditorActivity extends AppCompatActivity {
                         Toast.makeText(PhotoEditorActivity.this, R.string.cannot_load_image, Toast.LENGTH_LONG).show();
                     }
                 });
-    }
-
-    public void onPhotoAgainClicked(View view) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                getPhotoFileUri(getExternalFilesDir(Environment.DIRECTORY_PICTURES), photoFileName)); // set the image file name
-
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(intent, CAPTURE_IMAGE_FRONT);
-        }
     }
 
     public void onBackClicked(View view) {

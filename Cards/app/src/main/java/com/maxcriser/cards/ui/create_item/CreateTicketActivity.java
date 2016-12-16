@@ -118,13 +118,13 @@ public class CreateTicketActivity extends AppCompatActivity {
             if (requestCode == EDIT_IMAGE_FRONT) {
                 Uri editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
                 sync.execute(new UriToView(frontPhoto), editFrontUri, null);
-                removeFront.setVisibility(View.VISIBLE);
                 frontPhoto.setClickable(false);
+                removeFront.setVisibility(View.VISIBLE);
             } else if (requestCode == EDIT_IMAGE_BACK) {
                 Uri editBackUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
                 sync.execute(new UriToView(backPhoto), editBackUri, null);
-                removeBack.setVisibility(View.VISIBLE);
                 backPhoto.setClickable(false);
+                removeBack.setVisibility(View.VISIBLE);
             }
         } else {
             Toast.makeText(this, R.string.picture_wasnt_edited, Toast.LENGTH_SHORT).show();
