@@ -57,7 +57,8 @@ import static com.maxcriser.cards.constant.Constants.Requests.EDIT_IMAGE_FRONT;
 import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_BACK_CAMERA;
 import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_CALENDAR;
 import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_FRONT_CAMERA;
-import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STORAGE;
+import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STORAGE_BACK;
+import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STORAGE_FRONT;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
 public class CreateTicketActivity extends AppCompatActivity {
@@ -167,7 +168,7 @@ public class CreateTicketActivity extends AppCompatActivity {
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View pView) {
-                getPermission(REQUEST_CALENDAR, Manifest.permission.WRITE_CALENDAR, REQUEST_CALENDAR);
+                getPermission(REQUEST_CALENDAR, Manifest.permission.WRITE_CALENDAR);
             }
         });
         ticketTitle = (EditText) findViewById(R.id.title_name_ticket);
@@ -267,26 +268,30 @@ public class CreateTicketActivity extends AppCompatActivity {
             }
             Toast.makeText(this, R.string.permission_has_not_been_granted, Toast.LENGTH_SHORT).show();
         } else if (requestCode == REQUEST_FRONT_CAMERA) {
-            startCameraForPhoto(CAPTURE_IMAGE_FRONT, photoFileNameFront);
+            getPermission(REQUEST_WRITE_STORAGE_FRONT, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         } else if (requestCode == REQUEST_BACK_CAMERA) {
+            getPermission(REQUEST_WRITE_STORAGE_BACK, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        } else if (requestCode == REQUEST_WRITE_STORAGE_FRONT) {
+            startCameraForPhoto(CAPTURE_IMAGE_FRONT, photoFileNameFront);
+        } else if (requestCode == REQUEST_WRITE_STORAGE_BACK) {
             startCameraForPhoto(CAPTURE_IMAGE_BACK, photoFileNameBack);
-        } else if (requestCode == REQUEST_WRITE_STORAGE) {
-            createCard();
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @TargetApi(23)
-    private void getPermission(final byte CODE, final String PERMISSION, int INTENT) {
+    private void getPermission(final byte CODE, final String PERMISSION) {
         if (ContextCompat.checkSelfPermission(this, PERMISSION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{PERMISSION}, CODE);
         } else {
-            if (INTENT == CAPTURE_IMAGE_FRONT) {
+            if (CODE == REQUEST_FRONT_CAMERA) {
+                getPermission(REQUEST_WRITE_STORAGE_FRONT, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            } else if (CODE == REQUEST_BACK_CAMERA) {
+                getPermission(REQUEST_WRITE_STORAGE_BACK, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            } else if (CODE == REQUEST_WRITE_STORAGE_FRONT) {
                 startCameraForPhoto(CAPTURE_IMAGE_FRONT, photoFileNameFront);
-            } else if (INTENT == CAPTURE_IMAGE_BACK) {
+            } else if (CODE == REQUEST_WRITE_STORAGE_BACK) {
                 startCameraForPhoto(CAPTURE_IMAGE_BACK, photoFileNameBack);
-            } else if (INTENT == REQUEST_WRITE_STORAGE) {
-                createCard();
             }
         }
     }
@@ -300,11 +305,11 @@ public class CreateTicketActivity extends AppCompatActivity {
     }
 
     public void onFrontPhotoClicked(View view) {
-        getPermission(REQUEST_FRONT_CAMERA, Manifest.permission.CAMERA, CAPTURE_IMAGE_FRONT);
+        getPermission(REQUEST_FRONT_CAMERA, Manifest.permission.CAMERA);
     }
 
     public void onBackPhotoClicked(View view) {
-        getPermission(REQUEST_BACK_CAMERA, Manifest.permission.CAMERA, CAPTURE_IMAGE_BACK);
+        getPermission(REQUEST_BACK_CAMERA, Manifest.permission.CAMERA);
     }
 
     private void createCard() {
@@ -371,7 +376,8 @@ public class CreateTicketActivity extends AppCompatActivity {
 
     public void onCreateCardClicked(View view) {
         // // TODO: 12.12.2016 filesDir
-        getPermission(REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, REQUEST_WRITE_STORAGE);
+        createCard();
+//        getPermission(REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     public void onRemoveBackClicked(View view) {

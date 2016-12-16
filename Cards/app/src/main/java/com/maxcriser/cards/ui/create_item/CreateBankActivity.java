@@ -371,9 +371,11 @@ public class CreateBankActivity extends AppCompatActivity {
         } else if (requestCode == REQUEST_FRONT_CAMERA) {
             getPermission(REQUEST_WRITE_STORAGE_FRONT, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         } else if (requestCode == REQUEST_BACK_CAMERA) {
+            getPermission(REQUEST_WRITE_STORAGE_BACK, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        } else if (requestCode == REQUEST_WRITE_STORAGE_FRONT) {
+            startCameraForPhoto(CAPTURE_IMAGE_FRONT, photoFileNameFront);
+        } else if (requestCode == REQUEST_WRITE_STORAGE_BACK) {
             startCameraForPhoto(CAPTURE_IMAGE_BACK, photoFileNameBack);
-        } else if (requestCode == REQUEST_WRITE_STORAGE) {
-            createCard();
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
@@ -449,7 +451,8 @@ public class CreateBankActivity extends AppCompatActivity {
 
     public void onCreateCardClicked(View view) {
         // // TODO: 12.12.2016 filesDir
-        getPermission(REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+//        getPermission(REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        createCard();
     }
 
     public void onToolbarBackClicked(View view) {
