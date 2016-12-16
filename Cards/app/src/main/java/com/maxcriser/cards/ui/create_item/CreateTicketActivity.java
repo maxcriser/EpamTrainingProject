@@ -76,13 +76,11 @@ public class CreateTicketActivity extends AppCompatActivity {
     private Calendar calendar = Calendar.getInstance();
     private ViewPager pager;
     private ScrollView mScrollView;
-    private PreviewColor mListPreviewColor;
     private CheckBox checkBox;
     private String myColorName;
     private String myColorCode;
     private EditText ticketTitle;
     private EditText ticketCardholder;
-    private RobotoRegular title;
     private FrameLayout removeFront;
     private FrameLayout removeBack;
 
@@ -173,7 +171,7 @@ public class CreateTicketActivity extends AppCompatActivity {
             }
         });
         ticketTitle = (EditText) findViewById(R.id.title_name_ticket);
-        title = (RobotoRegular) findViewById(R.id.title_toolbar);
+        RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
         pager = (ViewPager) findViewById(R.id.pager);
         date = (TextView) findViewById(R.id.date);
         time = (TextView) findViewById(R.id.time);
@@ -188,9 +186,9 @@ public class CreateTicketActivity extends AppCompatActivity {
         db = DatabaseHelperImpl.getInstance(this);
         title.setText(Constants.TitlesNew.NEW_TICKET_TITLE);
 
-        mListPreviewColor = previewColors.get(0);
-        myColorName = mListPreviewColor.getNameColorCards();
-        myColorCode = mListPreviewColor.getCodeColorCards();
+        PreviewColor listPreviewColor = previewColors.get(0);
+        myColorName = listPreviewColor.getNameColorCards();
+        myColorCode = listPreviewColor.getCodeColorCards();
         Log.d(TICKET, myColorName + " " + myColorCode);
         int PAGE_COUNT = previewColors.size();
 
@@ -369,13 +367,13 @@ public class CreateTicketActivity extends AppCompatActivity {
     }
 
     public void onRemoveBackClicked(View view) {
-        backPhoto.setImageURI(null);
+        backPhoto.setImageBitmap(null);
         backPhoto.setClickable(true);
         removeBack.setVisibility(GONE);
     }
 
     public void onRemoveFrontClicked(View view) {
-        frontPhoto.setImageURI(null);
+        frontPhoto.setImageBitmap(null);
         frontPhoto.setClickable(true);
         removeFront.setVisibility(GONE);
     }

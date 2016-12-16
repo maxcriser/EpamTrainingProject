@@ -51,17 +51,12 @@ public class MenuActivity extends AppCompatActivity
     private static final String ISP_ID = "isp";
     private static final String QUERY_ID = "query";
     private static final String TIMEZONE_ID = "timezone";
-    private CardView credit;
-    private CardView discount;
-    private CardView tickets;
-    private CardView nfc;
     private String pCountry = "#country";
     private String pCountryCode = "#country code";
     private String pIsp = "#isp";
     private String pQuery = "#query";
     private String pTimezone = "#timezone";
     private DrawerLayout drawer;
-    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +66,12 @@ public class MenuActivity extends AppCompatActivity
     }
 
     public void initViews() {
-        credit = (CardView) findViewById(R.id.main_credit_card);
-        discount = (CardView) findViewById(R.id.main_discount_card);
-        tickets = (CardView) findViewById(R.id.main_tickets_card);
-        nfc = (CardView) findViewById(R.id.main_nfc_card);
+        CardView credit = (CardView) findViewById(R.id.main_credit_card);
+        CardView discount = (CardView) findViewById(R.id.main_discount_card);
+        CardView tickets = (CardView) findViewById(R.id.main_tickets_card);
+        CardView nfc = (CardView) findViewById(R.id.main_nfc_card);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter == null) {
             nfc.setVisibility(GONE);

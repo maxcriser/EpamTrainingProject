@@ -65,7 +65,6 @@ import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
 
 public class CreateBankActivity extends AppCompatActivity {
 
-    private String result = Constants.EMPTY_STRING;
     public static final String BANK = "CreateBankActivity"; // TODO delete
     public String photoFileNameFront;
     public String photoFileNameBack;
@@ -206,7 +205,7 @@ public class CreateBankActivity extends AppCompatActivity {
                                         creditType, creditValid);
                             } else {
                                 Toast.makeText(CreateBankActivity.this, "Not found matches", Toast.LENGTH_LONG).show();
-                        Log.d("TAG", "SFDSDFS");
+                                Log.d("TAG", "SFDSDFS");
                             }
                         }
                     }
@@ -250,12 +249,11 @@ public class CreateBankActivity extends AppCompatActivity {
             message += "Card number: " + creditNumber + "\n";
         }
         if (!creditValid.isEmpty()) {
-            message += "Valid through: " + creditValid;
+            message += "Valid through: " + creditValid + "\n\n";
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(CreateBankActivity.this);
         builder.setTitle(R.string.matches_found)
-                .setMessage(getString(R.string.fount_matches_on_fields) + message +
-                        getString(R.string.click_apply_if_matches))
+                .setMessage(message)
                 .setNegativeButton(R.string.cancel,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -377,13 +375,13 @@ public class CreateBankActivity extends AppCompatActivity {
     }
 
     public void onRemoveBackClicked(View view) {
-        backPhoto.setImageURI(null);
+        backPhoto.setImageBitmap(null);
         backPhoto.setClickable(true);
         removeBack.setVisibility(GONE);
     }
 
     public void onRemoveFrontClicked(View view) {
-        frontPhoto.setImageURI(null);
+        frontPhoto.setImageBitmap(null);
         frontPhoto.setClickable(true);
         removeFront.setVisibility(GONE);
     }

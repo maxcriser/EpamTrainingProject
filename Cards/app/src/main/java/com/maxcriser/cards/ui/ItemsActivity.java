@@ -95,7 +95,6 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     private LinearLayout linearEmpty;
     private ImageView clearSearch;
     private EditText searchEdit;
-    private RobotoRegular title;
     private String searchText = Constants.EMPTY_STRING;
     private Class ModelClass;
 
@@ -181,7 +180,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         searchEdit = (EditText) findViewById(R.id.search_edit);
         toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
         toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
-        title = (RobotoRegular) findViewById(R.id.title_toolbar);
+        RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
         recyclerItems = (RecyclerView) findViewById(R.id.recycler_view_items);
         if (typeItems.equals(Constants.Titles.BANK_TITLE)) {
             ModelClass = ModelBankCards.class;

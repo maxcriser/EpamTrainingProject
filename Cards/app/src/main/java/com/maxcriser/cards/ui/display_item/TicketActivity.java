@@ -49,7 +49,6 @@ import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_TITLE;
 public class TicketActivity extends Activity {
 
     private FloatingActionMenu materialDesignFAM;
-    private FloatingActionButton floatingActionButtonDelete, floatingActionButtonEdit;
     private LinearLayout editLinear;
     private ScrollView mScrollView;
     private TextView editTitle;
@@ -57,15 +56,10 @@ public class TicketActivity extends Activity {
     private String editTitleStr;
     private LinearLayout linearFrameAction;
     private String id;
-    private RobotoThin date;
-    private RobotoThin time;
-    private EditText editCardholder;
     private DatabaseHelperImpl dbHelper;
     private Handler mHandler;
     private Animation animScaleDown;
     private Animation animScaleUp;
-    private ImageView ivFrontPhoto;
-    private ImageView ivBackPhoto;
     private Bitmap firstBitmap;
     private Bitmap secondBitmap;
     private OwnAsyncTask sync;
@@ -89,18 +83,18 @@ public class TicketActivity extends Activity {
     }
 
     private void initViews() {
-        ivFrontPhoto = (ImageView) findViewById(R.id.front_photo);
-        ivBackPhoto = (ImageView) findViewById(R.id.back_photo);
-        date = (RobotoThin) findViewById(R.id.date);
-        time = (RobotoThin) findViewById(R.id.time);
+        ImageView ivFrontPhoto = (ImageView) findViewById(R.id.front_photo);
+        ImageView ivBackPhoto = (ImageView) findViewById(R.id.back_photo);
+        RobotoThin date = (RobotoThin) findViewById(R.id.date);
+        RobotoThin time = (RobotoThin) findViewById(R.id.time);
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
         editTitle = (TextView) findViewById(R.id.title_show_discount);
-        editCardholder = (EditText) findViewById(R.id.cardholder);
+        EditText editCardholder = (EditText) findViewById(R.id.cardholder);
         materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
         editLinear = (LinearLayout) findViewById(R.id.linear_edit_frame_title_discount);
         editName = (EditText) findViewById(R.id.rename_discount_title);
-        floatingActionButtonDelete = (FloatingActionButton) findViewById(R.id.floating_delete_button);
-        floatingActionButtonEdit = (FloatingActionButton) findViewById(R.id.floating_edit_button);
+        FloatingActionButton floatingActionButtonDelete = (FloatingActionButton) findViewById(R.id.floating_delete_button);
+        FloatingActionButton floatingActionButtonEdit = (FloatingActionButton) findViewById(R.id.floating_edit_button);
         linearFrameAction = (LinearLayout) findViewById(R.id.linear_frame_actions_discount);
         mHandler = new Handler(hc);
 

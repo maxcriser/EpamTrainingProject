@@ -33,13 +33,11 @@ import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_TITLE;
 public class DiscountCardActivity extends Activity {
 
     private FloatingActionMenu materialDesignFAM;
-    private FloatingActionButton floatingActionButtonDelete, floatingActionButtonEdit;
     private LinearLayout editLinear;
     private ScrollView mScrollView;
     private TextView titleView;
     private EditText editName;
     private String editString;
-    private BarcodeEan barcodeView;
     private LinearLayout linearFrameAction;
     private String id;
     private DatabaseHelperImpl dbHelper;
@@ -69,10 +67,10 @@ public class DiscountCardActivity extends Activity {
         materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
         editLinear = (LinearLayout) findViewById(R.id.linear_edit_frame_title_discount);
         editName = (EditText) findViewById(R.id.rename_discount_title);
-        floatingActionButtonDelete = (FloatingActionButton) findViewById(R.id.floating_delete_button);
-        floatingActionButtonEdit = (FloatingActionButton) findViewById(R.id.floating_edit_button);
+        FloatingActionButton floatingActionButtonDelete = (FloatingActionButton) findViewById(R.id.floating_delete_button);
+        FloatingActionButton floatingActionButtonEdit = (FloatingActionButton) findViewById(R.id.floating_edit_button);
         titleView = (TextView) findViewById(R.id.title_show_discount);
-        barcodeView = (BarcodeEan) findViewById(R.id.show_barcode);
+        BarcodeEan barcodeView = (BarcodeEan) findViewById(R.id.show_barcode);
         linearFrameAction = (LinearLayout) findViewById(R.id.linear_frame_actions_discount);
         mHandler = new Handler(hc);
 

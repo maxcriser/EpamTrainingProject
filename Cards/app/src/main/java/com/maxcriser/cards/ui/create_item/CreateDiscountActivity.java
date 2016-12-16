@@ -31,7 +31,6 @@ import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 public class CreateDiscountActivity extends AppCompatActivity {
 
     public static final String DISCOUNT_ID = "CreateDiscountActivity";
-    private PreviewColor mListPreviewColor;
     private DatabaseHelperImpl db;
     private ScrollView mScrollView;
     private ViewPager pager;
@@ -40,7 +39,6 @@ public class CreateDiscountActivity extends AppCompatActivity {
     private String myColorName;
     private String myColorCode;
     private String generateBarcode; // database
-    private RobotoRegular title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +51,7 @@ public class CreateDiscountActivity extends AppCompatActivity {
     private void initViews() {
 //        mBarcodeEan = (BarcodeEan) findViewById(R.id.generate_barcode);
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
-        title = (RobotoRegular) findViewById(R.id.title_toolbar);
+        RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
         mEditText = (EditText) findViewById(R.id.id_edit_text_name_discount);
         pager = (ViewPager) findViewById(R.id.pager);
         db = DatabaseHelperImpl.getInstance(this);
@@ -77,9 +75,9 @@ public class CreateDiscountActivity extends AppCompatActivity {
             }
         });
 
-        mListPreviewColor = previewColors.get(0);
-        myColorName = mListPreviewColor.getNameColorCards();
-        myColorCode = mListPreviewColor.getCodeColorCards();
+        PreviewColor listPreviewColor = previewColors.get(0);
+        myColorName = listPreviewColor.getNameColorCards();
+        myColorCode = listPreviewColor.getCodeColorCards();
         Log.d(DISCOUNT_ID, myColorName + " " + myColorCode);
 
         int PAGE_COUNT = previewColors.size();
