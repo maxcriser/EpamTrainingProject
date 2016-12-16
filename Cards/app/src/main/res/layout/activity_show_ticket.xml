@@ -102,7 +102,7 @@
                                     card_view:cardCornerRadius="2dp"
                                     card_view:cardElevation="2dp">
 
-                                    <com.maxcriser.cards.view.text_view.RobotoThin
+                                    <com.maxcriser.cards.view.custom_view.RobotoThin
                                         android:id="@+id/date"
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
@@ -113,7 +113,7 @@
                                         android:textSize="16sp"
                                         tools:text="16 SEPT 2016"/>
 
-                                    <com.maxcriser.cards.view.text_view.RobotoThin
+                                    <com.maxcriser.cards.view.custom_view.RobotoThin
                                         android:id="@+id/time"
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
@@ -190,7 +190,7 @@
                                         android:layout_gravity="center"
                                         android:background="@drawable/ic_camera"/>
 
-                                    <com.maxcriser.cards.view.text_view.RobotoThin
+                                    <com.maxcriser.cards.view.custom_view.RobotoThin
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="bottom"
@@ -222,7 +222,7 @@
                                         android:layout_gravity="center"
                                         android:background="@drawable/ic_camera"/>
 
-                                    <com.maxcriser.cards.view.text_view.RobotoThin
+                                    <com.maxcriser.cards.view.custom_view.RobotoThin
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="bottom"

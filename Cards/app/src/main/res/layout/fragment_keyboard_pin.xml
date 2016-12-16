@@ -26,7 +26,7 @@
                 android:layout_height="68dp"
                 android:orientation="vertical">
 
-                <com.maxcriser.cards.view.text_view.RobotoThin
+                <com.maxcriser.cards.view.custom_view.RobotoThin
                     android:id="@+id/button_one"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
                     android:textColor="@color/text_white"
                     android:textSize="@dimen/keyboard_number_size"/>
 
-                <com.maxcriser.cards.view.text_view.RobotoThin
+                <com.maxcriser.cards.view.custom_view.RobotoThin
                     android:layout_marginTop="-6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
                 android:layout_height="68dp"
                 android:orientation="vertical">
 
-                <com.maxcriser.cards.view.text_view.RobotoThin
+                <com.maxcriser.cards.view.custom_view.RobotoThin
                     android:id="@+id/button_two"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                     android:textColor="@color/text_white"
                     android:textSize="@dimen/keyboard_number_size"/>
 
-                <com.maxcriser.cards.view.text_view.RobotoThin
+                <com.maxcriser.cards.view.custom_view.RobotoThin
                     android:layout_marginTop="-6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
                 android:layout_height="68dp"
                 android:orientation="vertical">
 
-                <com.maxcriser.cards.view.text_view.RobotoThin
+                <com.maxcriser.cards.view.custom_view.RobotoThin
                     android:id="@+id/button_three"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
                     android:textColor="@color/text_white"
                     android:textSize="@dimen/keyboard_number_size"/>
 
-                <com.maxcriser.cards.view.text_view.RobotoThin
+                <com.maxcriser.cards.view.custom_view.RobotoThin
                     android:layout_marginTop="-6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:orientation="vertical">
 
-                <com.maxcriser.cards.view.text_view.RobotoThin
+                <com.maxcriser.cards.view.custom_view.RobotoThin
                     android:id="@+id/button_four"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
                     android:textColor="@color/text_white"
                     android:textSize="@dimen/keyboard_number_size"/>
 
-                <com.maxcriser.cards.view.text_view.RobotoThin
+                <com.maxcriser.cards.view.custom_view.RobotoThin
                     android:layout_marginTop="-6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -144,7 +144,7 @@
                 android:layout_height="68dp"
                 android:orientation="vertical">
 
-                <com.maxcriser.cards.view.text_view.RobotoThin
+                <com.maxcriser.cards.view.custom_view.RobotoThin
                     android:id="@+id/button_five"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -154,7 +154,7 @@
                     android:textColor="@color/text_white"
                     android:textSize="@dimen/keyboard_number_size"/>
 
-                <com.maxcriser.cards.view.text_view.RobotoThin
+                <com.maxcriser.cards.view.custom_view.RobotoThin
                     android:layout_marginTop="-6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -172,7 +172,7 @@
                 android:layout_height="68dp"
                 android:orientation="vertical">
 
-                <com.maxcriser.cards.view.text_view.RobotoThin
+                <com.maxcriser.cards.view.custom_view.RobotoThin
                     android:id="@+id/button_six"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -182,7 +182,7 @@
                     android:textColor="@color/text_white"
                     android:textSize="@dimen/keyboard_number_size"/>
 
-                <com.maxcriser.cards.view.text_view.RobotoThin
+                <com.maxcriser.cards.view.custom_view.RobotoThin
                     android:layout_marginTop="-6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -208,7 +208,7 @@
                 android:layout_height="68dp"
                 android:orientation="vertical">
 
-                <com.maxcriser.cards.view.text_view.RobotoThin
+                <com.maxcriser.cards.view.custom_view.RobotoThin
                     android:id="@+id/button_seven"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -218,7 +218,7 @@
                     android:textColor="@color/text_white"
                     android:textSize="@dimen/keyboard_number_size"/>
 
-                <com.maxcriser.cards.view.text_view.RobotoThin
+                <com.maxcriser.cards.view.custom_view.RobotoThin
                     android:layout_marginTop="-6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -236,7 +236,7 @@
                 android:layout_height="68dp"
                 android:orientation="vertical">
 
-                <com.maxcriser.cards.view.text_view.RobotoThin
+                <com.maxcriser.cards.view.custom_view.RobotoThin
                     android:id="@+id/button_eight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -246,7 +246,7 @@
                     android:textColor="@color/text_white"
                     android:textSize="@dimen/keyboard_number_size"/>
 
-                <com.maxcriser.cards.view.text_view.RobotoThin
+                <com.maxcriser.cards.view.custom_view.RobotoThin
                     android:layout_marginTop="-6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -264,7 +264,7 @@
                 android:layout_height="68dp"
                 android:orientation="vertical">
 
-                <com.maxcriser.cards.view.text_view.RobotoThin
+                <com.maxcriser.cards.view.custom_view.RobotoThin
                     android:id="@+id/button_nine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -274,7 +274,7 @@
                     android:textColor="@color/text_white"
                     android:textSize="@dimen/keyboard_number_size"/>
 
-                <com.maxcriser.cards.view.text_view.RobotoThin
+                <com.maxcriser.cards.view.custom_view.RobotoThin
                     android:layout_marginTop="-6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -310,7 +310,7 @@
                 android:layout_height="68dp"
                 android:orientation="vertical">
 
-                <com.maxcriser.cards.view.text_view.RobotoThin
+                <com.maxcriser.cards.view.custom_view.RobotoThin
                     android:id="@+id/button_zero"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

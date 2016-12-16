@@ -40,7 +40,7 @@ import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.PhotoEditorActivity;
 import com.maxcriser.cards.util.OnTemplatePageChangeListener;
 import com.maxcriser.cards.util.UniqueStringGenerator;
-import com.maxcriser.cards.view.text_view.RobotoRegular;
+import com.maxcriser.cards.view.custom_view.RobotoRegular;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -314,10 +314,10 @@ public class CreateTicketActivity extends AppCompatActivity {
         String titleStr = ticketTitle.getText().toString();
         String timeStr = timeFormat.format(calendar.getTime());
         String dateStr = dateFormat.format(calendar.getTime());
-        if (!titleStr.equals(Constants.EMPTY_STRING)
-                && !cardholderStr.equals(Constants.EMPTY_STRING)
-                && !timeStr.equals(Constants.EMPTY_STRING)
-                && !dateStr.equals(Constants.EMPTY_STRING)) {
+        if (!titleStr.isEmpty()
+                && !cardholderStr.isEmpty()
+                && !timeStr.isEmpty()
+                && !dateStr.isEmpty()) {
             if (checkBox.isChecked()) {
                 addCalendarEvent(calendar.getTimeInMillis(), ticketTitle.getText().toString());
             }

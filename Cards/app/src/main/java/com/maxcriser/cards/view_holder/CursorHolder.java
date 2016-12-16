@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.view.text_view.RobotoThin;
+import com.maxcriser.cards.view.custom_view.RobotoThin;
 
 public class CursorHolder extends RecyclerView.ViewHolder {
 

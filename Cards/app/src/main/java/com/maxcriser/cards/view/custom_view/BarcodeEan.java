@@ -1,30 +1,30 @@
-package com.maxcriser.cards.view.text_view;
+package com.maxcriser.cards.view.custom_view;
 
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-public class RobotoRegular extends TextView {
+public class BarcodeEan extends TextView {
 
-    public RobotoRegular(Context context) {
+    public BarcodeEan(Context context) {
         super(context);
         init();
     }
 
-    public RobotoRegular(Context context, AttributeSet attrs) {
+    public BarcodeEan(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public RobotoRegular(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BarcodeEan(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
     private void init() {
         if (!isInEditMode()) {
-            Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/NotoSansUI-Bold.ttf");
+            Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/EANP72-1.TTF");
             setTypeface(tf);
         }
     }

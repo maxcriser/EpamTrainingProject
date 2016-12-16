@@ -25,7 +25,7 @@ import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelTickets;
-import com.maxcriser.cards.view.text_view.RobotoThin;
+import com.maxcriser.cards.view.custom_view.RobotoThin;
 
 import java.io.File;
 
@@ -179,7 +179,7 @@ public class TicketActivity extends Activity {
 
     public void onCreateCardClicked(View view) {
         editTitleStr = editName.getText().toString();
-        if (!editTitleStr.equals(Constants.EMPTY_STRING)) {
+        if (!editTitleStr.isEmpty()) {
             editTitle.setText(editTitleStr);
             editLinear.setVisibility(GONE);
             editTitle.setVisibility(VISIBLE);

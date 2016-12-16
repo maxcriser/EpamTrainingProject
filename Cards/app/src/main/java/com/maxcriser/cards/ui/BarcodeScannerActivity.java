@@ -6,7 +6,6 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,7 +14,7 @@ import android.widget.FrameLayout;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.barcode.CameraPreview;
 import com.maxcriser.cards.ui.create_item.CreateDiscountActivity;
-import com.maxcriser.cards.view.text_view.RobotoThin;
+import com.maxcriser.cards.view.custom_view.RobotoThin;
 
 import net.sourceforge.zbar.Config;
 import net.sourceforge.zbar.Image;

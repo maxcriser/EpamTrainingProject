@@ -12,6 +12,7 @@ import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
@@ -50,5 +51,10 @@ public class TypesCardsReaderTest {
         assertEquals(creditCard2.getNumberCreditCard(), "");
         assertEquals(creditCard2.getTypeCreditCard(), "");
         assertEquals(creditCard2.getNameCreditCard(), "");
+    }
+
+    @Test
+    public void isEmptyTest(){
+        String message = "";
     }
 }

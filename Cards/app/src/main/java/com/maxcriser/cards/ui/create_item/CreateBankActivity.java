@@ -2,8 +2,10 @@ package com.maxcriser.cards.ui.create_item;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -42,12 +44,20 @@ import com.maxcriser.cards.ui.PhotoEditorActivity;
 import com.maxcriser.cards.util.OnTemplatePageChangeListener;
 import com.maxcriser.cards.util.OnTypePageChangeListener;
 import com.maxcriser.cards.util.UniqueStringGenerator;
-import com.maxcriser.cards.view.text_view.RobotoRegular;
+import com.maxcriser.cards.view.custom_view.RobotoRegular;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import static android.view.View.GONE;
 import static com.maxcriser.cards.constant.Constants.Requests.CAPTURE_IMAGE_BACK;
@@ -184,55 +194,30 @@ public class CreateBankActivity extends AppCompatActivity {
             }
         }
         if (resultCode == RESULT_OK) {
+            OwnAsyncTask scan = new OwnAsyncTask();
             if (requestCode == EDIT_IMAGE_FRONT) {
                 Uri editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
-//                Bitmap editBitmap = BitmapFactory.decodeFile(editFrontUri.getPath());
-                frontPhoto.setImageURI(editFrontUri);
-                OwnAsyncTask scan = new OwnAsyncTask();
+//                frontPhoto.setImageURI(editFrontUri);
                 scan.execute(new ScanCreditCard(), editFrontUri, new OnResultCallback<CreditCard, String>() {
                     @Override
                     public void onSuccess(CreditCard pCredit) {
-                        if (pCredit != null) {
-                            setTextToEmptyView(pCredit.getNumberCreditCard(), number);
-                            setTextToEmptyView(pCredit.getCardholderCreditCard(), cardholder);
-                            setTextToEmptyView(pCredit.getNameCreditCard(), bank);
-                            String creditType = pCredit.getTypeCreditCard();
-                            String creditValid = pCredit.getValidCreditCard();
-                            if (!creditValid.equals(Constants.EMPTY_STRING)
-                                    || validDate.getText().equals(Constants.EMPTY_STRING)) {
-                                validDate.setText(creditValid);
-                            }
-                            if (!creditType.equals(Constants.EMPTY_STRING)) {
-                                int numberType;
-                                switch (creditType) {
-                                    case Constants.Cards.VISA:
-                                        numberType = Constants.PagerTypesID.VISA;
-                                        break;
-                                    case Constants.Cards.MASTERCARD:
-                                        numberType = Constants.PagerTypesID.MASTERCAD;
-                                        break;
-                                    case Constants.Cards.AMEX:
-                                        numberType = Constants.PagerTypesID.AMEX;
-                                        break;
-                                    case Constants.Cards.MAESTRO:
-                                        numberType = Constants.PagerTypesID.MAESTRO;
-                                        break;
-                                    case Constants.Cards.WESTERN_UNION:
-                                        numberType = Constants.PagerTypesID.WESTERN_UNION;
-                                        break;
-                                    case Constants.Cards.JCB:
-                                        numberType = Constants.PagerTypesID.JCB;
-                                        break;
-                                    case Constants.Cards.DINERS_CLUB:
-                                        numberType = Constants.PagerTypesID.DINERS_CLUB;
-                                        break;
-                                    default:
-                                        numberType = Constants.PagerTypesID.BELCARD;
-                                        break;
-                                }
-                                pagerTypes.setCurrentItem(numberType);
-                            }
-                        }
+//                        if (pCredit != null) {
+//                            String creditNumber = pCredit.getNumberCreditCard();
+//                            String creditCardholder = pCredit.getCardholderCreditCard();
+//                            String creditName = pCredit.getNameCreditCard();
+//                            String creditType = pCredit.getTypeCreditCard();
+//                            String creditValid = pCredit.getValidCreditCard();
+//
+//                            if (!creditNumber.isEmpty() || !creditCardholder.isEmpty()
+//                                    || !creditName.isEmpty() || !creditType.isEmpty()
+//                                    || !creditValid.isEmpty()) {
+//                                showAlertDialogRecognize(creditNumber, creditCardholder, creditName,
+//                                        creditType, creditValid);
+//                            } else {
+//                                Toast.makeText(CreateBankActivity.this, "Not found matches", Toast.LENGTH_LONG).show();
+                        Log.d("TAG", "SFDSDFS");
+//                            }
+//                        }
                     }
 
                     @Override
@@ -245,27 +230,12 @@ public class CreateBankActivity extends AppCompatActivity {
 
                     }
                 });
-//                OwnAsyncTask scan = new OwnAsyncTask();
-//                scan.execute(new ScanCreditCard(), editFrontUri, new OnResultCallback<String, String>() {
-//                    @Override
-//                    public void onSuccess(String pS) {
-//                        Toast.makeText(CreateBankActivity.this, pS + "-HANDLED", Toast.LENGTH_LONG).show();
-//                    }
-//
-//                    @Override
-//                    public void onError(Exception pE) {
-//                        Toast.makeText(CreateBankActivity.this, "ERROR-HANDLED", Toast.LENGTH_LONG).show();
-//                    }
-//
-//                    @Override
-//                    public void onProgressChanged(String pS) {
-//                    }
-//                });
                 removeFront.setVisibility(View.VISIBLE);
                 frontPhoto.setClickable(false);
             } else if (requestCode == EDIT_IMAGE_BACK) {
                 Uri editBackUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
-                backPhoto.setImageURI(editBackUri);
+                // TODO: 16.12.2016  recognize
+                scan.execute(new ScanCreditCard(), editBackUri, null);
                 removeBack.setVisibility(View.VISIBLE);
                 backPhoto.setClickable(false);
             }
@@ -274,10 +244,81 @@ public class CreateBankActivity extends AppCompatActivity {
         }
     }
 
-    private void setTextToEmptyView(String text, EditText pView) {
-        if (!pView.getText().equals(Constants.EMPTY_STRING)
-                || !text.equals(Constants.EMPTY_STRING)) {
-            pView.setText(text);
+    private void showAlertDialogRecognize(final String creditNumber, final String creditCardholder,
+                                          final String creditName, final String creditType, final String creditValid) {
+        String message = "";
+        if (!creditName.isEmpty()) {
+            message += "Name of the bank: " + creditName + "\n";
+        }
+        if (!creditCardholder.isEmpty()) {
+            message += "Cardholder: " + creditCardholder + "\n";
+        }
+        if (!creditType.isEmpty()) {
+            message += "Card type: " + creditType + "\n";
+        }
+        if (!creditNumber.isEmpty()) {
+            message += "Card number: " + creditNumber + "\n";
+        }
+        if (!creditValid.isEmpty()) {
+            message += "Valid through: " + creditValid;
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(CreateBankActivity.this);
+        builder.setTitle(R.string.matches_found)
+                .setMessage(getString(R.string.fount_matches_on_fields) + message +
+                        getString(R.string.click_apply_if_matches))
+                .setNegativeButton(R.string.cancel,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        })
+                .setPositiveButton(getString(R.string.apply), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int pI) {
+                        pasteRecognizeTextToViews(creditNumber, creditCardholder, creditName,
+                                creditType, creditValid);
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void pasteRecognizeTextToViews(String creditNumber, String creditCardholder,
+                                           String creditName, String creditType, String creditValid) {
+        number.setText(creditNumber);
+        cardholder.setText(creditCardholder);
+        bank.setText(creditName);
+        validDate.setText(creditValid);
+        if (!creditType.isEmpty()) {
+            int numberType;
+            switch (creditType) {
+                case Constants.Cards.VISA:
+                    numberType = Constants.PagerTypesID.VISA;
+                    break;
+                case Constants.Cards.MASTERCARD:
+                    numberType = Constants.PagerTypesID.MASTERCAD;
+                    break;
+                case Constants.Cards.AMEX:
+                    numberType = Constants.PagerTypesID.AMEX;
+                    break;
+                case Constants.Cards.MAESTRO:
+                    numberType = Constants.PagerTypesID.MAESTRO;
+                    break;
+                case Constants.Cards.WESTERN_UNION:
+                    numberType = Constants.PagerTypesID.WESTERN_UNION;
+                    break;
+                case Constants.Cards.JCB:
+                    numberType = Constants.PagerTypesID.JCB;
+                    break;
+                case Constants.Cards.DINERS_CLUB:
+                    numberType = Constants.PagerTypesID.DINERS_CLUB;
+                    break;
+                default:
+                    numberType = Constants.PagerTypesID.BELCARD;
+                    break;
+            }
+            pagerTypes.setCurrentItem(numberType);
         }
     }
 
@@ -371,13 +412,8 @@ public class CreateBankActivity extends AppCompatActivity {
         String type = myTypeCard;
         String color = myColorCode;
         String verNumber = verificationNumber.getText().toString();
-        if (bankStr.equals(Constants.EMPTY_STRING)
-                || cardholderStr.equals(Constants.EMPTY_STRING)
-                || verNumber.equals(Constants.EMPTY_STRING)
-                || numberStr.equals(Constants.EMPTY_STRING)
-                || validThru.equals(Constants.EMPTY_STRING)
-                || type.equals(Constants.EMPTY_STRING)
-                || color.equals(Constants.EMPTY_STRING)) {
+        if (bankStr.isEmpty() || cardholderStr.isEmpty() || verNumber.isEmpty() || numberStr.isEmpty()
+                || validThru.isEmpty() || type.isEmpty() || color.isEmpty()) {
             Toast.makeText(this, R.string.fill_all_fields, Toast.LENGTH_LONG).show();
             mScrollView.fullScroll(ScrollView.FOCUS_UP);
         } else {

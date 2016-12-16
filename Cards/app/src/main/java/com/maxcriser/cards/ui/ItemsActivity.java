@@ -52,7 +52,7 @@ import com.maxcriser.cards.ui.display_item.BankCardActivity;
 import com.maxcriser.cards.ui.display_item.DiscountCardActivity;
 import com.maxcriser.cards.ui.display_item.TicketActivity;
 import com.maxcriser.cards.util.RecyclerItemClickListener;
-import com.maxcriser.cards.view.text_view.RobotoRegular;
+import com.maxcriser.cards.view.custom_view.RobotoRegular;
 
 import static android.view.View.GONE;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_BACK_PHOTO;
@@ -204,7 +204,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
 
             @Override
             public void afterTextChanged(Editable pEditable) {
-                if (!pEditable.toString().equals(Constants.EMPTY_STRING)) {
+                if (!pEditable.toString().isEmpty()) {
                     clearSearch.setVisibility(View.VISIBLE);
                 } else {
                     clearSearch.setVisibility(View.GONE);
@@ -397,7 +397,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         progressBar.setVisibility(GONE);
         if (data.getCount() == 0) {
-            if (!searchText.equals(Constants.EMPTY_STRING)) {
+            if (!searchText.isEmpty()) {
                 Spannable text = new SpannableString(getString(R.string.no_result_for) + " '" + searchText + "'");
                 text.setSpan(new StyleSpan(Typeface.BOLD), text.length() - searchText.length() - 1, text.length() - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 noResultFor.setText(text);

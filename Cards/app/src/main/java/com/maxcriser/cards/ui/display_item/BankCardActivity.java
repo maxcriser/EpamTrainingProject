@@ -233,7 +233,7 @@ public class BankCardActivity extends Activity {
 
     public void onCreateCardClicked(View view) {
         editString = editName.getText().toString();
-        if (!editString.equals(Constants.EMPTY_STRING)) {
+        if (!editString.isEmpty()) {
             editBank.setText(editString);
             editLinear.setVisibility(GONE);
             editBank.setVisibility(VISIBLE);

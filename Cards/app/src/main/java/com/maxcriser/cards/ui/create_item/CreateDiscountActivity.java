@@ -23,7 +23,7 @@ import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.BarcodeScannerActivity;
 import com.maxcriser.cards.util.OnTemplatePageChangeListener;
-import com.maxcriser.cards.view.text_view.RobotoRegular;
+import com.maxcriser.cards.view.custom_view.RobotoRegular;
 
 import static android.view.View.GONE;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
@@ -110,7 +110,7 @@ public class CreateDiscountActivity extends AppCompatActivity {
 
     public void onCreateCardClicked(View view) {
         String titleStr = mEditText.getText().toString();
-        if (!titleStr.equals(Constants.EMPTY_STRING)) {
+        if (!titleStr.isEmpty()) {
             ContentValues cvNewDiscount = new ContentValues();
             cvNewDiscount.put(ModelDiscountCards.TITLE, titleStr);
             cvNewDiscount.put(ModelDiscountCards.BARCODE, generateBarcode);

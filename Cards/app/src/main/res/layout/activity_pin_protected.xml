@@ -10,7 +10,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <com.maxcriser.cards.view.text_view.RobotoThin
+        <com.maxcriser.cards.view.custom_view.RobotoThin
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"

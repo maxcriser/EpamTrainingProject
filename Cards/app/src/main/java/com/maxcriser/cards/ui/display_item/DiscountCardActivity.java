@@ -22,7 +22,7 @@ import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
-import com.maxcriser.cards.view.text_view.BarcodeEan;
+import com.maxcriser.cards.view.custom_view.BarcodeEan;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -132,7 +132,7 @@ public class DiscountCardActivity extends Activity {
 
     public void onCreateCardClicked(View view) {
         editString = editName.getText().toString();
-        if (!editString.equals(Constants.EMPTY_STRING)) {
+        if (!editString.isEmpty()) {
             titleView.setText(editString);
             editLinear.setVisibility(GONE);
             titleView.setVisibility(VISIBLE);
