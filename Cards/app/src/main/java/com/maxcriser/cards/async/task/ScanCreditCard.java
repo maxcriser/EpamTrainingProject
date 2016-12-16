@@ -19,7 +19,6 @@ public class ScanCreditCard implements Task<Uri, String, CreditCard> {
     private static final String TAG = MainActivity.class.getSimpleName();
     private TessBaseAPI tessBaseApi;
     private static final String lang = "eng";
-    private String result = "";
     private static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/TesseractSample/";
     private static final String TESSDATA = "tessdata";
 
@@ -66,7 +65,7 @@ public class ScanCreditCard implements Task<Uri, String, CreditCard> {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 4; // 1 - means max size. 4 - means maxsize/4 size. Don't use value <4, because you need more memory in the heap to store your data.
             Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath(), options);
-            result = extractText(bitmap);
+            String result = extractText(bitmap);
             Log.d("result", result);
             return new CreditCard(result);
         } catch (Exception e) {

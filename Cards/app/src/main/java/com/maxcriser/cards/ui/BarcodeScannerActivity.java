@@ -14,7 +14,7 @@ import android.widget.FrameLayout;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.barcode.CameraPreview;
 import com.maxcriser.cards.ui.create_item.CreateDiscountActivity;
-import com.maxcriser.cards.view.custom_view.RobotoThin;
+import com.maxcriser.cards.view.text_view.RobotoThin;
 
 import net.sourceforge.zbar.Config;
 import net.sourceforge.zbar.Image;

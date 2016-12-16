@@ -26,6 +26,7 @@ import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.LoadImage;
 import com.maxcriser.cards.async.task.UriToBitmap;
+import com.maxcriser.cards.async.task.UriToView;
 import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
@@ -53,6 +54,7 @@ public class BankCardActivity extends Activity {
     private LinearLayout editLinear;
     private ScrollView mScrollView;
     private Boolean showPin = false;
+    private OwnAsyncTask sync;
     private TextView editBank;
     private EditText editName;
     private String editString;
@@ -88,6 +90,7 @@ public class BankCardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_bank);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
+        sync = new OwnAsyncTask();
         initViews();
     }
 
@@ -151,13 +154,12 @@ public class BankCardActivity extends Activity {
         String firstPhoto = creditIntent.getStringExtra(EXTRA_BANK_FRONT_PHOTO);
         String secondPhoto = creditIntent.getStringExtra(EXTRA_BANK_BACK_PHOTO);
 
-        OwnAsyncTask own = new OwnAsyncTask();
-        own.execute(new LoadImage(getExternalFilesDir(Environment.DIRECTORY_PICTURES), ivFrontPhoto),
+        sync.execute(new LoadImage(getExternalFilesDir(Environment.DIRECTORY_PICTURES), ivFrontPhoto),
                 firstPhoto, null);
-        own.execute(new LoadImage(getExternalFilesDir(Environment.DIRECTORY_PICTURES), ivBackPhoto),
+        sync.execute(new LoadImage(getExternalFilesDir(Environment.DIRECTORY_PICTURES), ivBackPhoto),
                 secondPhoto, null);
 
-        own.execute(new UriToBitmap(getExternalFilesDir(Environment.DIRECTORY_PICTURES)), firstPhoto, new OnResultCallback<Bitmap, Void>() {
+        sync.execute(new UriToBitmap(getExternalFilesDir(Environment.DIRECTORY_PICTURES)), firstPhoto, new OnResultCallback<Bitmap, Void>() {
             @Override
             public void onSuccess(Bitmap pBitmap) {
                 firstBitmap = pBitmap;
@@ -174,7 +176,7 @@ public class BankCardActivity extends Activity {
             }
         });
 
-        own.execute(new UriToBitmap(getExternalFilesDir(Environment.DIRECTORY_PICTURES)), secondPhoto, new OnResultCallback<Bitmap, Void>() {
+        sync.execute(new UriToBitmap(getExternalFilesDir(Environment.DIRECTORY_PICTURES)), secondPhoto, new OnResultCallback<Bitmap, Void>() {
             @Override
             public void onSuccess(Bitmap pBitmap) {
                 secondBitmap = pBitmap;

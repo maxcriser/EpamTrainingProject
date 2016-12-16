@@ -40,7 +40,7 @@
                             card_view:cardCornerRadius="0dp"
                             card_view:cardElevation="4dp">
 
-                            <com.maxcriser.cards.view.custom_view.RobotoRegular
+                            <com.maxcriser.cards.view.text_view.RobotoRegular
                                 android:layout_width="match_parent"
                                 android:layout_height="48dp"
                                 android:gravity="center|start"
@@ -220,7 +220,7 @@
                                 card_view:cardCornerRadius="2dp"
                                 card_view:cardElevation="2dp">
 
-                                <com.maxcriser.cards.view.custom_view.RobotoThin
+                                <com.maxcriser.cards.view.text_view.RobotoThin
                                     android:id="@+id/date"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -248,7 +248,7 @@
                                 card_view:cardCornerRadius="2dp"
                                 card_view:cardElevation="2dp">
 
-                                <com.maxcriser.cards.view.custom_view.RobotoThin
+                                <com.maxcriser.cards.view.text_view.RobotoThin
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center"
@@ -285,7 +285,7 @@
                                         android:layout_gravity="center"
                                         android:background="@drawable/ic_camera"/>
 
-                                    <com.maxcriser.cards.view.custom_view.RobotoThin
+                                    <com.maxcriser.cards.view.text_view.RobotoThin
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="bottom"
@@ -334,7 +334,7 @@
                                         android:layout_gravity="center"
                                         android:background="@drawable/ic_camera"/>
 
-                                    <com.maxcriser.cards.view.custom_view.RobotoThin
+                                    <com.maxcriser.cards.view.text_view.RobotoThin
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="bottom"

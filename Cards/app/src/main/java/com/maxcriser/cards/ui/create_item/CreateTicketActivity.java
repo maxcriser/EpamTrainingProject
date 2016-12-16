@@ -31,6 +31,8 @@ import android.widget.Toast;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
+import com.maxcriser.cards.async.OwnAsyncTask;
+import com.maxcriser.cards.async.task.UriToView;
 import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.constant.Extras;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
@@ -40,7 +42,7 @@ import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.PhotoEditorActivity;
 import com.maxcriser.cards.util.OnTemplatePageChangeListener;
 import com.maxcriser.cards.util.UniqueStringGenerator;
-import com.maxcriser.cards.view.custom_view.RobotoRegular;
+import com.maxcriser.cards.view.text_view.RobotoRegular;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -68,6 +70,7 @@ public class CreateTicketActivity extends AppCompatActivity {
     private TextView time;
     private ImageView frontPhoto;
     private ImageView backPhoto;
+    private OwnAsyncTask sync;
     private SimpleDateFormat dateFormat;
     private SimpleDateFormat timeFormat;
     private Calendar calendar = Calendar.getInstance();
@@ -88,6 +91,7 @@ public class CreateTicketActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_ticket);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
+        sync = new OwnAsyncTask();
         initViews();
     }
 
@@ -96,20 +100,16 @@ public class CreateTicketActivity extends AppCompatActivity {
         if (requestCode == CAPTURE_IMAGE_FRONT ||
                 requestCode == CAPTURE_IMAGE_BACK) {
             if (resultCode == RESULT_OK) {
-                // TODO load in view
-//                Bitmap takenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
                 if (requestCode == CAPTURE_IMAGE_FRONT) {
                     Uri takenPhotoUri = getPhotoFileUri(photoFileNameFront);
                     Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
                     startActivityForResult(intent, EDIT_IMAGE_FRONT);
-//                    frontPhoto.setImageURI(takenPhotoUri);
                 } else {
                     Uri takenPhotoUri = getPhotoFileUri(photoFileNameBack);
                     Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
                     startActivityForResult(intent, EDIT_IMAGE_BACK);
-//                    backPhoto.setImageURI(takenPhotoUri);
                 }
             } else {
                 Toast.makeText(this, R.string.picture_wasnt_taken, Toast.LENGTH_SHORT).show();
@@ -118,12 +118,12 @@ public class CreateTicketActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == EDIT_IMAGE_FRONT) {
                 Uri editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
-                frontPhoto.setImageURI(editFrontUri);
+                sync.execute(new UriToView(frontPhoto), editFrontUri, null);
                 removeFront.setVisibility(View.VISIBLE);
                 frontPhoto.setClickable(false);
             } else if (requestCode == EDIT_IMAGE_BACK) {
                 Uri editBackUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
-                backPhoto.setImageURI(editBackUri);
+                sync.execute(new UriToView(backPhoto), editBackUri, null);
                 removeBack.setVisibility(View.VISIBLE);
                 backPhoto.setClickable(false);
             }

@@ -52,7 +52,7 @@ import com.maxcriser.cards.ui.display_item.BankCardActivity;
 import com.maxcriser.cards.ui.display_item.DiscountCardActivity;
 import com.maxcriser.cards.ui.display_item.TicketActivity;
 import com.maxcriser.cards.util.RecyclerItemClickListener;
-import com.maxcriser.cards.view.custom_view.RobotoRegular;
+import com.maxcriser.cards.view.text_view.RobotoRegular;
 
 import static android.view.View.GONE;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_BACK_PHOTO;

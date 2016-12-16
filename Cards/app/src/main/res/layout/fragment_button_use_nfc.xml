@@ -3,7 +3,7 @@
        android:layout_width="match_parent"
        android:layout_height="match_parent">
 
-    <com.maxcriser.cards.view.custom_view.NotoSans
+    <com.maxcriser.cards.view.text_view.NotoSans
         android:textColor="@color/text_white"
         android:textSize="16sp"
         android:gravity="center"
@@ -12,6 +12,6 @@
         android:layout_height="48dp"
         android:background="@color/bluelight_500" android:id="@+id/robotoThinTextView2">
 
-    </com.maxcriser.cards.view.custom_view.NotoSans>
+    </com.maxcriser.cards.view.text_view.NotoSans>
 
 </merge>

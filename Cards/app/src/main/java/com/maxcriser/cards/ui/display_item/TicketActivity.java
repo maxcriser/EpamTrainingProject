@@ -1,7 +1,10 @@
 package com.maxcriser.cards.ui.display_item;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -22,10 +25,13 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
+import com.maxcriser.cards.async.OwnAsyncTask;
+import com.maxcriser.cards.async.task.LoadImage;
+import com.maxcriser.cards.async.task.UriToBitmap;
 import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelTickets;
-import com.maxcriser.cards.view.custom_view.RobotoThin;
+import com.maxcriser.cards.view.text_view.RobotoThin;
 
 import java.io.File;
 
@@ -60,6 +66,9 @@ public class TicketActivity extends Activity {
     private Animation animScaleUp;
     private ImageView ivFrontPhoto;
     private ImageView ivBackPhoto;
+    private Bitmap firstBitmap;
+    private Bitmap secondBitmap;
+    private OwnAsyncTask sync;
 
     Handler.Callback hc = new Handler.Callback() {
         @Override
@@ -75,6 +84,7 @@ public class TicketActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_ticket);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
+        sync = new OwnAsyncTask();
         initViews();
     }
 
@@ -131,16 +141,44 @@ public class TicketActivity extends Activity {
         String firstPhoto = creditIntent.getStringExtra(EXTRA_TICKET_FIRST_PHOTO);
         String secondPhoto = creditIntent.getStringExtra(EXTRA_TICKET_SECOND_PHOTO);
 
-        // TODO remake, example in CreateBankActivity.class
-        Uri takenPhotoUriFirst = getPhotoFileUri(firstPhoto);
-        if (takenPhotoUriFirst != null) {
-            ivFrontPhoto.setImageURI(takenPhotoUriFirst);
-        }
-        Uri takenPhotoUriSecond = getPhotoFileUri(secondPhoto);
-        if (takenPhotoUriSecond != null) {
-            ivBackPhoto.setImageURI(takenPhotoUriSecond);
-        }
+        sync.execute(new LoadImage(getExternalFilesDir(Environment.DIRECTORY_PICTURES), ivFrontPhoto),
+                firstPhoto, null);
+        sync.execute(new LoadImage(getExternalFilesDir(Environment.DIRECTORY_PICTURES), ivBackPhoto),
+                secondPhoto, null);
 
+        sync.execute(new UriToBitmap(getExternalFilesDir(Environment.DIRECTORY_PICTURES)), firstPhoto, new OnResultCallback<Bitmap, Void>() {
+            @Override
+            public void onSuccess(Bitmap pBitmap) {
+                firstBitmap = pBitmap;
+                Toast.makeText(TicketActivity.this, "onsuccess first bitmap", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(Exception pE) {
+                Toast.makeText(TicketActivity.this, "error first bitmap", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onProgressChanged(Void pVoid) {
+            }
+        });
+
+        sync.execute(new UriToBitmap(getExternalFilesDir(Environment.DIRECTORY_PICTURES)), secondPhoto, new OnResultCallback<Bitmap, Void>() {
+            @Override
+            public void onSuccess(Bitmap pBitmap) {
+                secondBitmap = pBitmap;
+                Toast.makeText(TicketActivity.this, "onsuccess second bitmap", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(Exception pE) {
+                Toast.makeText(TicketActivity.this, "error second bitmap", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onProgressChanged(Void pVoid) {
+            }
+        });
         editTitle.setText(titleStr);
         editCardholder.setText(cardholderStr);
         date.setText(dateStr);
@@ -216,5 +254,31 @@ public class TicketActivity extends Activity {
 
     public void onToolbarBackClicked(View view) {
 
+    }
+
+    void showPhoto(final Bitmap bitmap) {
+        ImageView image = new ImageView(this);
+        image.setImageBitmap(bitmap);
+
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(this).
+                        setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).
+                        setView(image);
+        builder.create().show();
+    }
+
+    public void onSecondPhotoClicked(View view) {
+        if (secondBitmap != null)
+            showPhoto(secondBitmap);
+    }
+
+    public void onFirstPhotoClicked(View view) {
+        if (firstBitmap != null)
+            showPhoto(firstBitmap);
     }
 }

@@ -19,10 +19,9 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
-import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
-import com.maxcriser.cards.view.custom_view.BarcodeEan;
+import com.maxcriser.cards.view.text_view.BarcodeEan;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;

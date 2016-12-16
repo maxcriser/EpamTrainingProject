@@ -102,7 +102,7 @@
                                     card_view:cardCornerRadius="2dp"
                                     card_view:cardElevation="2dp">
 
-                                    <com.maxcriser.cards.view.custom_view.RobotoThin
+                                    <com.maxcriser.cards.view.text_view.RobotoThin
                                         android:id="@+id/date"
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
@@ -113,7 +113,7 @@
                                         android:textSize="16sp"
                                         tools:text="16 SEPT 2016"/>
 
-                                    <com.maxcriser.cards.view.custom_view.RobotoThin
+                                    <com.maxcriser.cards.view.text_view.RobotoThin
                                         android:id="@+id/time"
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
@@ -176,11 +176,11 @@
                                 android:orientation="horizontal">
 
                                 <android.support.v7.widget.CardView
-                                    android:layout_weight="1"
                                     android:layout_width="match_parent"
                                     android:layout_height="124dp"
                                     android:layout_gravity="center"
                                     android:layout_margin="16dp"
+                                    android:layout_weight="1"
                                     card_view:cardCornerRadius="2dp"
                                     card_view:cardElevation="2dp">
 
@@ -190,7 +190,7 @@
                                         android:layout_gravity="center"
                                         android:background="@drawable/ic_camera"/>
 
-                                    <com.maxcriser.cards.view.custom_view.RobotoThin
+                                    <com.maxcriser.cards.view.text_view.RobotoThin
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="bottom"
@@ -203,16 +203,17 @@
                                         android:id="@+id/front_photo"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:onClick="onFirstPhotoClicked"
                                         android:scaleType="centerCrop"/>
 
                                 </android.support.v7.widget.CardView>
 
                                 <android.support.v7.widget.CardView
-                                    android:layout_weight="1"
                                     android:layout_width="match_parent"
                                     android:layout_height="124dp"
                                     android:layout_gravity="center"
                                     android:layout_margin="16dp"
+                                    android:layout_weight="1"
                                     card_view:cardCornerRadius="2dp"
                                     card_view:cardElevation="2dp">
 
@@ -222,7 +223,7 @@
                                         android:layout_gravity="center"
                                         android:background="@drawable/ic_camera"/>
 
-                                    <com.maxcriser.cards.view.custom_view.RobotoThin
+                                    <com.maxcriser.cards.view.text_view.RobotoThin
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="bottom"
@@ -235,6 +236,7 @@
                                         android:id="@+id/back_photo"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:onClick="onSecondPhotoClicked"
                                         android:scaleType="centerCrop"/>
 
                                 </android.support.v7.widget.CardView>

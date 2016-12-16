@@ -12,19 +12,25 @@ import java.io.File;
 
 public class Storage extends AppCompatActivity {
 
-    boolean isExternalStorageAvailable() {
+
+    public static boolean isExternalStorageAvailable() {
         String state = Environment.getExternalStorageState();
         return state.equals(Environment.MEDIA_MOUNTED);
     }
 
-    public Uri getPhotoFileUri(String fileName) {
+    public static Uri getPhotoFileUri(File file, String fileName) {
         if (isExternalStorageAvailable()) {
-            File mediaStorageDir = new File(
-                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.APP_TAG);
-            if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
-                Log.d(Constants.APP_TAG, getString(R.string.filed_to_create_directory));
+            if (file != null) {
+                File mediaStorageDir = new File(
+                        file, Constants.APP_TAG);
+                if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
+                    Log.d(Constants.APP_TAG, "Error creating directory");
+                }
+                File imagePath = new File(mediaStorageDir.getPath() + File.separator + fileName);
+                if (imagePath.exists()) {
+                    return Uri.fromFile(imagePath);
+                }
             }
-            return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
         }
         return null;
     }
