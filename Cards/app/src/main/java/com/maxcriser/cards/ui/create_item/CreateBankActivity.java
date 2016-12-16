@@ -167,8 +167,7 @@ public class CreateBankActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAPTURE_IMAGE_FRONT ||
-                requestCode == CAPTURE_IMAGE_BACK) {
+        if (requestCode == CAPTURE_IMAGE_FRONT || requestCode == CAPTURE_IMAGE_BACK) {
             if (resultCode == RESULT_OK) {
                 if (requestCode == CAPTURE_IMAGE_FRONT) {
                     Uri takenPhotoUri = getPhotoFileUri(getExternalFilesDir(Environment.DIRECTORY_PICTURES), photoFileNameFront);

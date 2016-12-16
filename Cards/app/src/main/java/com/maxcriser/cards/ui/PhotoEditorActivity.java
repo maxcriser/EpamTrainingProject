@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -18,10 +19,12 @@ import com.isseiaoki.simplecropview.callback.CropCallback;
 import com.isseiaoki.simplecropview.callback.LoadCallback;
 import com.isseiaoki.simplecropview.callback.SaveCallback;
 import com.maxcriser.cards.R;
+import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.constant.Extras;
 
+import java.io.File;
+
 import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_REUSE_CAMERA;
-import static com.maxcriser.cards.util.Storage.getPhotoFileUri;
 
 public class PhotoEditorActivity extends AppCompatActivity {
 
@@ -68,13 +71,29 @@ public class PhotoEditorActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_REUSE_CAMERA) {
             if (resultCode == RESULT_OK) {
-                photoUri = getPhotoFileUri(getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-                        photoFileName);
+                photoUri = getPhotoFileUri(photoFileName);
                 startCrop(photoUri);
             } else {
                 Toast.makeText(this, R.string.picture_wasnt_taken, Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private boolean isExternalStorageAvailable() {
+        String state = Environment.getExternalStorageState();
+        return state.equals(Environment.MEDIA_MOUNTED);
+    }
+
+    public Uri getPhotoFileUri(String fileName) {
+        if (isExternalStorageAvailable()) {
+            File mediaStorageDir = new File(
+                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.APP_TAG);
+            if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
+                Log.d(Constants.APP_TAG, getResources().getString(R.string.filed_to_create_directory));
+            }
+            return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
+        }
+        return null;
     }
 
     void startCrop(Uri uri) {
@@ -97,7 +116,7 @@ public class PhotoEditorActivity extends AppCompatActivity {
     public void onPhotoAgainClicked(View view) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                getPhotoFileUri(getExternalFilesDir(Environment.DIRECTORY_PICTURES), photoFileName)); // set the image file name
+                getPhotoFileUri(photoFileName)); // set the image file name
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, REQUEST_REUSE_CAMERA);
         }
