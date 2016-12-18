@@ -1,12 +1,17 @@
 package com.maxcriser.cards.ui;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.maxcriser.cards.R;
+import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.loader.image.ImageLoader;
+import com.maxcriser.cards.util.AlertImageViewer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +23,7 @@ public class ImageLoaderTestActivity extends AppCompatActivity {
     private ImageView image3;
     private ImageView image4;
     private ImageView image5;
-    private ImageView image6;
-    private ImageView image7;
-    private ImageView image8;
-    private ImageView image9;
-    private ImageView image10;
+    private Bitmap mBitmap;
 
     private List<String> urls = new ArrayList<>();
 
@@ -40,10 +41,27 @@ public class ImageLoaderTestActivity extends AppCompatActivity {
         image3 = (ImageView) findViewById(R.id.third);
         image4 = (ImageView) findViewById(R.id.fourth);
         image5 = (ImageView) findViewById(R.id.fifth);
-        ImageLoader.getInstance().downloadAndDraw(urls.get(0), image1, null);
+        ImageLoader.getInstance().downloadAndDraw(urls.get(1), image1, new OnResultCallback<Bitmap, Void>() {
+            @Override
+            public void onSuccess(Bitmap pBitmap) {
+                mBitmap = pBitmap;
+            }
+
+            @Override
+            public void onError(Exception pE) {
+
+            }
+
+            @Override
+            public void onProgressChanged(Void pVoid) {
+
+            }
+        });
         ImageLoader.getInstance().downloadAndDraw(urls.get(1), image2, null);
-        ImageLoader.getInstance().downloadAndDraw("file:///storage/emulated/0/Android/data/com.maxcriser.cards/files/Pictures/thecrisertakephoto/credit-card-1482070451258-18-12-2016-125095656-9-back_photo.jpg", image3, null);
+        ImageLoader.getInstance().downloadAndDraw(urls.get(2), image3, null);
         ImageLoader.getInstance().downloadAndDraw(urls.get(3), image4, null);
-        ImageLoader.getInstance().downloadAndDraw("file:///storage/emulated/0/Android/data/com.maxcriser.cards/files/Pictures/thecrisertakephoto/credit-card-1482070451258-18-12-2016-125095656-9-back_photo.jpg", image5, null);
+        ImageLoader.getInstance().downloadAndDraw(urls.get(4), image5, null);
+
+
     }
 }

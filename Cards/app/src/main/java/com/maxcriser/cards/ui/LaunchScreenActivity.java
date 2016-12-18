@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -22,6 +23,8 @@ public class LaunchScreenActivity extends AppCompatActivity {
     public static final String UNDEFENDED = "undefended";
     public static final String PASSWORD_TAG = "shared_password";
     public static SharedPreferences mSharedPreferences;
+    public static int SCREEN_WIDTH;
+    public static int SCREEN_HEIGHT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,10 @@ public class LaunchScreenActivity extends AppCompatActivity {
 
         //TODO APP
         ContextHolder.getInstance().setContext(getApplicationContext());
+
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        SCREEN_WIDTH = metrics.widthPixels;
+        SCREEN_HEIGHT = metrics.heightPixels;
 
         final PreviewListColorsSetter tcReader = PreviewListColorsSetter.getInstance();
         tcReader.setPreviewColors();

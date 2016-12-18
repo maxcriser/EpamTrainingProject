@@ -1,8 +1,6 @@
 package com.maxcriser.cards.ui.display_item;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -29,6 +27,8 @@ import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.loader.image.ImageLoader;
+import com.maxcriser.cards.ui.LaunchScreenActivity;
+import com.maxcriser.cards.util.AlertImageViewer;
 
 import static android.text.InputType.TYPE_CLASS_TEXT;
 import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
@@ -150,7 +150,8 @@ public class BankCardActivity extends Activity {
         ImageLoader.getInstance().downloadAndDraw(firstPhoto, ivFrontPhoto, new OnResultCallback<Bitmap, Void>() {
             @Override
             public void onSuccess(Bitmap pBitmap) {
-                firstBitmap = pBitmap;
+                if (pBitmap != null)
+                    firstBitmap = pBitmap;
             }
 
             @Override
@@ -167,7 +168,8 @@ public class BankCardActivity extends Activity {
         ImageLoader.getInstance().downloadAndDraw(secondPhoto, ivBackPhoto, new OnResultCallback<Bitmap, Void>() {
             @Override
             public void onSuccess(Bitmap pBitmap) {
-                secondBitmap = pBitmap;
+                if (pBitmap != null)
+                    secondBitmap = pBitmap;
             }
 
             @Override
@@ -273,19 +275,9 @@ public class BankCardActivity extends Activity {
     }
 
     void showPhoto(final Bitmap bitmap) {
-        ImageView image = new ImageView(this);
-        image.setImageBitmap(bitmap);
-
-        AlertDialog.Builder builder =
-                new AlertDialog.Builder(this).
-                        setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        }).
-                        setView(image);
-        builder.create().show();
+        AlertImageViewer dialog = new AlertImageViewer(BankCardActivity.this, bitmap,
+                LaunchScreenActivity.SCREEN_WIDTH, LaunchScreenActivity.SCREEN_HEIGHT);
+        dialog.startDialog();
     }
 
     public void onSecondPhotoClicked(View view) {

@@ -28,6 +28,8 @@ import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.loader.image.ImageLoader;
+import com.maxcriser.cards.ui.LaunchScreenActivity;
+import com.maxcriser.cards.util.AlertImageViewer;
 import com.maxcriser.cards.view.text_view.RobotoThin;
 
 import static android.view.View.GONE;
@@ -227,19 +229,9 @@ public class TicketActivity extends Activity {
     }
 
     void showPhoto(final Bitmap bitmap) {
-        ImageView image = new ImageView(this);
-        image.setImageBitmap(bitmap);
-
-        AlertDialog.Builder builder =
-                new AlertDialog.Builder(this).
-                        setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        }).
-                        setView(image);
-        builder.create().show();
+        AlertImageViewer dialog = new AlertImageViewer(TicketActivity.this, bitmap,
+                LaunchScreenActivity.SCREEN_WIDTH, LaunchScreenActivity.SCREEN_HEIGHT);
+        dialog.startDialog();
     }
 
     public void onSecondPhotoClicked(View view) {
