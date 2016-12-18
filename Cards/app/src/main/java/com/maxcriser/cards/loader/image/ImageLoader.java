@@ -2,6 +2,7 @@ package com.maxcriser.cards.loader.image;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
@@ -25,6 +26,7 @@ import java.util.Stack;
 
 public class ImageLoader {
 
+    private static final String FILE = "file://";
     private static ImageLoader sImageLoader;
     private final HttpClient mHttpClient;
     private final ThreadManager mThreadManager;
@@ -91,36 +93,45 @@ public class ImageLoader {
         }
         final Handler handler = new Handler(Looper.getMainLooper());
         final PriorityRunnable<String, Void, Bitmap> priorityRunnable = new PriorityRunnable<>(handler, new ITask<String, Void, Bitmap>() {
-
             @Override
             public Bitmap doInBackground(String pUrl, ProgressCallback<Void> pProgressCallback) {
-                HttpURLConnection connection = null;
-                InputStream inputStream = null;
                 Bitmap bitmap = null;
-                try {
-                    connection = (HttpURLConnection) mHttpClient.getConnection(new Request.Builder().setUrl(pUrl).setMethod("GET").build());
-                    inputStream = connection.getInputStream();
-                    bitmap = BitmapFactory.decodeStream(inputStream);
-                } catch (final Exception e) {
-                    Log.e(TAG, "download: ", e);
-                } finally {
-                    if (inputStream != null) {
-                        try {
-                            inputStream.close();
-                        } catch (final IOException e) {
-                            Log.e(TAG, "download: inputStream did not closed: ", e);
+                Log.d("startWith file://", pUrl.startsWith(FILE) + "");
+                if (pUrl.startsWith(FILE)) {
+                    Log.d("pUrl", pUrl);
+                    Uri pUri = Uri.parse(pUrl);
+                    bitmap = BitmapFactory.decodeFile(pUri.getPath());
+                    return bitmap;
+                } else {
+                    HttpURLConnection connection = null;
+                    InputStream inputStream = null;
+                    try {
+                        connection = (HttpURLConnection) mHttpClient.getConnection(new Request.Builder().setUrl(pUrl).setMethod("GET").build());
+                        inputStream = connection.getInputStream();
+                        bitmap = BitmapFactory.decodeStream(inputStream);
+                    } catch (final Exception e) {
+                        Log.e(TAG, "download: ", e);
+                    } finally {
+                        if (inputStream != null) {
+                            try {
+                                inputStream.close();
+                            } catch (final IOException e) {
+                                Log.e(TAG, "download: inputStream did not closed: ", e);
+                            }
+                        }
+                        if (connection != null) {
+                            connection.disconnect();
                         }
                     }
-                    if (connection != null) {
-                        connection.disconnect();
-                    }
+                    return bitmap;
                 }
-                return bitmap;
             }
         },
                 pUrl,
                 null,
-                new OnResultCallback<Bitmap, Void>() {
+                new OnResultCallback<Bitmap, Void>()
+
+                {
 
                     @Override
                     public void onProgressChanged(Void pVoid) {

@@ -5,8 +5,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -24,11 +24,10 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
-import com.maxcriser.cards.async.task.LoadImage;
-import com.maxcriser.cards.async.task.PhotoNameToBitmap;
 import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelTickets;
+import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.view.text_view.RobotoThin;
 
 import static android.view.View.GONE;
@@ -114,10 +113,8 @@ public class TicketActivity extends Activity {
         floatingActionButtonDelete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dbHelper.delete(ModelTickets.class, null, ModelTickets.ID + " = ?", String.valueOf(id));
-                sync.execute(new RemovePhoto(getExternalFilesDir(Environment.DIRECTORY_PICTURES)),
-                        firstPhoto, null);
-                sync.execute(new RemovePhoto(getExternalFilesDir(Environment.DIRECTORY_PICTURES)),
-                        secondPhoto, null);
+                sync.execute(new RemovePhoto(), Uri.parse(firstPhoto), null);
+                sync.execute(new RemovePhoto(), Uri.parse(secondPhoto), null);
                 onBackClicked(null);
 
             }
@@ -135,44 +132,40 @@ public class TicketActivity extends Activity {
             }
         });
 
-        sync.execute(new LoadImage(getExternalFilesDir(Environment.DIRECTORY_PICTURES), ivFrontPhoto),
-                firstPhoto, null);
-        sync.execute(new LoadImage(getExternalFilesDir(Environment.DIRECTORY_PICTURES), ivBackPhoto),
-                secondPhoto, null);
-
-        sync.execute(new PhotoNameToBitmap(getExternalFilesDir(Environment.DIRECTORY_PICTURES)), firstPhoto, new OnResultCallback<Bitmap, Void>() {
+        ImageLoader.getInstance().downloadAndDraw(firstPhoto, ivFrontPhoto, new OnResultCallback<Bitmap, Void>() {
             @Override
             public void onSuccess(Bitmap pBitmap) {
                 firstBitmap = pBitmap;
-                Toast.makeText(TicketActivity.this, "onsuccess first bitmap", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onError(Exception pE) {
-                Toast.makeText(TicketActivity.this, "error first bitmap", Toast.LENGTH_LONG).show();
+
             }
 
             @Override
             public void onProgressChanged(Void pVoid) {
+
             }
         });
 
-        sync.execute(new PhotoNameToBitmap(getExternalFilesDir(Environment.DIRECTORY_PICTURES)), secondPhoto, new OnResultCallback<Bitmap, Void>() {
+        ImageLoader.getInstance().downloadAndDraw(secondPhoto, ivBackPhoto, new OnResultCallback<Bitmap, Void>() {
             @Override
             public void onSuccess(Bitmap pBitmap) {
                 secondBitmap = pBitmap;
-                Toast.makeText(TicketActivity.this, "onsuccess second bitmap", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onError(Exception pE) {
-                Toast.makeText(TicketActivity.this, "error second bitmap", Toast.LENGTH_LONG).show();
+
             }
 
             @Override
             public void onProgressChanged(Void pVoid) {
+
             }
         });
+
         editTitle.setText(titleStr);
         editCardholder.setText(cardholderStr);
         date.setText(dateStr);

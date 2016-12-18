@@ -1,23 +1,20 @@
 package com.maxcriser.cards.async.task;
 
+import android.net.Uri;
+
 import com.maxcriser.cards.async.ProgressCallback;
 import com.maxcriser.cards.async.Task;
 
 import java.io.File;
 
-import static com.maxcriser.cards.util.Storage.removePhotoFile;
-
-public class RemovePhoto implements Task<String, Void, Void> {
-
-    private File file;
-
-    public RemovePhoto(File file) {
-        this.file = file;
-    }
+public class RemovePhoto implements Task<Uri, Void, Void> {
 
     @Override
-    public Void doInBackground(String pS, ProgressCallback<Void> pVoidProgressCallback) throws Exception {
-        removePhotoFile(file, pS);
+    public Void doInBackground(Uri uri, ProgressCallback<Void> pVoidProgressCallback) throws Exception {
+        File fileToDelete = new File(uri.getPath());
+        if (fileToDelete.exists()) {
+            fileToDelete.delete();
+        }
         return null;
     }
 }

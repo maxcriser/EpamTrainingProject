@@ -5,7 +5,7 @@
     android:toXScale="1.0"
     android:fromYScale="0.1"
     android:toYScale="1.0"
-    android:pivotX="90%"
-    android:pivotY="93%"
-    android:duration="375">
+    android:pivotX="50%"
+    android:pivotY="80%"
+    android:duration="225">
 </scale>

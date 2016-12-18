@@ -5,8 +5,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -24,12 +24,11 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
-import com.maxcriser.cards.async.task.LoadImage;
-import com.maxcriser.cards.async.task.PhotoNameToBitmap;
 import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
+import com.maxcriser.cards.loader.image.ImageLoader;
 
 import static android.text.InputType.TYPE_CLASS_TEXT;
 import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
@@ -46,7 +45,6 @@ import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_PIN;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_TYPE;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_VALID;
 import static com.maxcriser.cards.constant.Extras.EXTRA_VERIFICATION_NUMBER_BANK;
-import static com.maxcriser.cards.util.Storage.removePhotoFile;
 
 public class BankCardActivity extends Activity {
 
@@ -88,8 +86,8 @@ public class BankCardActivity extends Activity {
     }
 
     private void initViews() {
-        ImageView ivFrontPhoto = (ImageView) findViewById(R.id.front_photo);
-        ImageView ivBackPhoto = (ImageView) findViewById(R.id.back_photo);
+        final ImageView ivFrontPhoto = (ImageView) findViewById(R.id.front_photo);
+        final ImageView ivBackPhoto = (ImageView) findViewById(R.id.back_photo);
         EditText verificationNumber = (EditText) findViewById(R.id.ver_number);
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
         eye = (ImageView) findViewById(R.id.eye);
@@ -130,10 +128,8 @@ public class BankCardActivity extends Activity {
         floatingActionButtonDelete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dbHelper.delete(ModelBankCards.class, null, ModelBankCards.ID + " = ?", String.valueOf(id));
-                sync.execute(new RemovePhoto(getExternalFilesDir(Environment.DIRECTORY_PICTURES)),
-                        firstPhoto, null);
-                sync.execute(new RemovePhoto(getExternalFilesDir(Environment.DIRECTORY_PICTURES)),
-                        secondPhoto, null);
+                sync.execute(new RemovePhoto(), Uri.parse(firstPhoto), null);
+                sync.execute(new RemovePhoto(), Uri.parse(secondPhoto), null);
                 onBackClicked(null);
 
             }
@@ -151,42 +147,37 @@ public class BankCardActivity extends Activity {
             }
         });
 
-        sync.execute(new LoadImage(getExternalFilesDir(Environment.DIRECTORY_PICTURES), ivFrontPhoto),
-                firstPhoto, null);
-        sync.execute(new LoadImage(getExternalFilesDir(Environment.DIRECTORY_PICTURES), ivBackPhoto),
-                secondPhoto, null);
-
-        sync.execute(new PhotoNameToBitmap(getExternalFilesDir(Environment.DIRECTORY_PICTURES)), firstPhoto, new OnResultCallback<Bitmap, Void>() {
+        ImageLoader.getInstance().downloadAndDraw(firstPhoto, ivFrontPhoto, new OnResultCallback<Bitmap, Void>() {
             @Override
             public void onSuccess(Bitmap pBitmap) {
                 firstBitmap = pBitmap;
-                Toast.makeText(BankCardActivity.this, "onsuccess first bitmap", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onError(Exception pE) {
-                Toast.makeText(BankCardActivity.this, "error first bitmap", Toast.LENGTH_LONG).show();
+
             }
 
             @Override
             public void onProgressChanged(Void pVoid) {
+
             }
         });
 
-        sync.execute(new PhotoNameToBitmap(getExternalFilesDir(Environment.DIRECTORY_PICTURES)), secondPhoto, new OnResultCallback<Bitmap, Void>() {
+        ImageLoader.getInstance().downloadAndDraw(secondPhoto, ivBackPhoto, new OnResultCallback<Bitmap, Void>() {
             @Override
             public void onSuccess(Bitmap pBitmap) {
                 secondBitmap = pBitmap;
-                Toast.makeText(BankCardActivity.this, "onsuccess second bitmap", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onError(Exception pE) {
-                Toast.makeText(BankCardActivity.this, "error second bitmap", Toast.LENGTH_LONG).show();
+
             }
 
             @Override
             public void onProgressChanged(Void pVoid) {
+
             }
         });
 

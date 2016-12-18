@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -33,13 +34,13 @@ import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.async.task.ScanCreditCard;
-import com.maxcriser.cards.async.task.UriToView;
 import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.constant.Extras;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.fragment.FragmentPreviewCards;
+import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.model.CreditCard;
 import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.PhotoEditorActivity;
@@ -92,6 +93,8 @@ public class CreateBankActivity extends AppCompatActivity {
     private String myTypeCard;
     private String myColorName;
     private String myColorCode;
+    private Uri editFrontUri;
+    private Uri editBackUri;
     private boolean statusSave = false;
 
     @Override
@@ -104,8 +107,9 @@ public class CreateBankActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        photoFileNameFront = Constants.BEG_FILE_NAME_BANK + UniqueStringGenerator.getUniqueString() + "front_photo.jpg";
-        photoFileNameBack = Constants.BEG_FILE_NAME_BANK + UniqueStringGenerator.getUniqueString() + "back_photo.jpg";
+        String uniqueString = UniqueStringGenerator.getUniqueString();
+        photoFileNameFront = Constants.BEG_FILE_NAME_BANK + uniqueString + "front_photo.jpg";
+        photoFileNameBack = Constants.BEG_FILE_NAME_BANK + uniqueString + "back_photo.jpg";
         verificationNumber = (EditText) findViewById(R.id.ver_number);
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
         bank = (EditText) findViewById(R.id.bank);
@@ -190,8 +194,24 @@ public class CreateBankActivity extends AppCompatActivity {
         }
         if (resultCode == RESULT_OK) {
             if (requestCode == EDIT_IMAGE_FRONT) {
-                Uri editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
-                sync.execute(new UriToView(frontPhoto), editFrontUri, null);
+                editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
+                ImageLoader.getInstance().downloadAndDraw(editFrontUri.toString(), frontPhoto, new OnResultCallback<Bitmap, Void>() {
+                    @Override
+                    public void onSuccess(Bitmap pBitmap) {
+                        removeFront.setVisibility(View.VISIBLE);
+                        frontPhoto.setClickable(false);
+                    }
+
+                    @Override
+                    public void onError(Exception pE) {
+
+                    }
+
+                    @Override
+                    public void onProgressChanged(Void pVoid) {
+
+                    }
+                });
                 sync.execute(new ScanCreditCard(), editFrontUri, new OnResultCallback<CreditCard, String>() {
                     @Override
                     public void onSuccess(CreditCard pCredit) {
@@ -227,10 +247,24 @@ public class CreateBankActivity extends AppCompatActivity {
                 removeFront.setVisibility(View.VISIBLE);
                 frontPhoto.setClickable(false);
             } else if (requestCode == EDIT_IMAGE_BACK) {
-                Uri editBackUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
-                sync.execute(new UriToView(backPhoto), editBackUri, null);
-                removeBack.setVisibility(View.VISIBLE);
-                backPhoto.setClickable(false);
+                editBackUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
+                ImageLoader.getInstance().downloadAndDraw(editBackUri.toString(), backPhoto, new OnResultCallback<Bitmap, Void>() {
+                    @Override
+                    public void onSuccess(Bitmap pBitmap) {
+                        removeBack.setVisibility(View.VISIBLE);
+                        backPhoto.setClickable(false);
+                    }
+
+                    @Override
+                    public void onError(Exception pE) {
+
+                    }
+
+                    @Override
+                    public void onProgressChanged(Void pVoid) {
+
+                    }
+                });
             }
         } else {
             Toast.makeText(this, R.string.picture_wasnt_edited, Toast.LENGTH_SHORT).show();
@@ -411,13 +445,12 @@ public class CreateBankActivity extends AppCompatActivity {
             ContentValues cvNewCredit = new ContentValues();
             cvNewCredit.put(ModelBankCards.TITLE, bankStr);
             if (removeFront.getVisibility() == View.VISIBLE) {
-
-                cvNewCredit.put(ModelBankCards.PHOTO_FRONT, photoFileNameFront);
+                cvNewCredit.put(ModelBankCards.PHOTO_FRONT, editFrontUri.toString());
             } else {
                 cvNewCredit.put(ModelBankCards.PHOTO_FRONT, Constants.EMPTY_STRING);
             }
             if (removeBack.getVisibility() == View.VISIBLE) {
-                cvNewCredit.put(ModelBankCards.PHOTO_BACK, photoFileNameBack);
+                cvNewCredit.put(ModelBankCards.PHOTO_BACK, editBackUri.toString());
             } else {
                 cvNewCredit.put(ModelBankCards.PHOTO_BACK, Constants.EMPTY_STRING);
             }
@@ -451,10 +484,10 @@ public class CreateBankActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         if (!statusSave) {
-            sync.execute(new RemovePhoto(getExternalFilesDir(Environment.DIRECTORY_PICTURES)),
-                    photoFileNameFront, null);
-            sync.execute(new RemovePhoto(getExternalFilesDir(Environment.DIRECTORY_PICTURES)),
-                    photoFileNameBack, null);
+            if (editBackUri != null)
+                sync.execute(new RemovePhoto(), editBackUri, null);
+            if (editFrontUri != null)
+                sync.execute(new RemovePhoto(), editFrontUri, null);
         }
         super.onDestroy();
     }

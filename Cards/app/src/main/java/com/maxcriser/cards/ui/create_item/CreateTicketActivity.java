@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -33,12 +34,12 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.RemovePhoto;
-import com.maxcriser.cards.async.task.UriToView;
 import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.constant.Extras;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
+import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.PhotoEditorActivity;
 import com.maxcriser.cards.util.OnTemplatePageChangeListener;
@@ -62,7 +63,6 @@ import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STOR
 import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STORAGE_FRONT;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 import static com.maxcriser.cards.util.Storage.isExternalStorageAvailable;
-import static com.maxcriser.cards.util.Storage.removePhotoFile;
 
 public class CreateTicketActivity extends AppCompatActivity {
 
@@ -79,6 +79,8 @@ public class CreateTicketActivity extends AppCompatActivity {
     private SimpleDateFormat dateFormat;
     private SimpleDateFormat timeFormat;
     private Calendar calendar = Calendar.getInstance();
+    private Uri editBackUri;
+    private Uri editFrontUri;
     private ViewPager pager;
     private ScrollView mScrollView;
     private CheckBox checkBox;
@@ -120,15 +122,43 @@ public class CreateTicketActivity extends AppCompatActivity {
         }
         if (resultCode == RESULT_OK) {
             if (requestCode == EDIT_IMAGE_FRONT) {
-                Uri editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
-                sync.execute(new UriToView(frontPhoto), editFrontUri, null);
-                frontPhoto.setClickable(false);
-                removeFront.setVisibility(View.VISIBLE);
+                editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
+                ImageLoader.getInstance().downloadAndDraw(editFrontUri.toString(), frontPhoto, new OnResultCallback<Bitmap, Void>() {
+                    @Override
+                    public void onSuccess(Bitmap pBitmap) {
+                        removeFront.setVisibility(View.VISIBLE);
+                        frontPhoto.setClickable(false);
+                    }
+
+                    @Override
+                    public void onError(Exception pE) {
+
+                    }
+
+                    @Override
+                    public void onProgressChanged(Void pVoid) {
+
+                    }
+                });
             } else if (requestCode == EDIT_IMAGE_BACK) {
-                Uri editBackUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
-                sync.execute(new UriToView(backPhoto), editBackUri, null);
-                backPhoto.setClickable(false);
-                removeBack.setVisibility(View.VISIBLE);
+                editBackUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
+                ImageLoader.getInstance().downloadAndDraw(editBackUri.toString(), backPhoto, new OnResultCallback<Bitmap, Void>() {
+                    @Override
+                    public void onSuccess(Bitmap pBitmap) {
+                        removeBack.setVisibility(View.VISIBLE);
+                        backPhoto.setClickable(false);
+                    }
+
+                    @Override
+                    public void onError(Exception pE) {
+
+                    }
+
+                    @Override
+                    public void onProgressChanged(Void pVoid) {
+
+                    }
+                });
             }
         } else {
             Toast.makeText(this, R.string.picture_wasnt_edited, Toast.LENGTH_SHORT).show();
@@ -150,10 +180,10 @@ public class CreateTicketActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         if (!statusSave) {
-            sync.execute(new RemovePhoto(getExternalFilesDir(Environment.DIRECTORY_PICTURES)),
-                    photoFileNameFront, null);
-            sync.execute(new RemovePhoto(getExternalFilesDir(Environment.DIRECTORY_PICTURES)),
-                    photoFileNameBack, null);
+            if (editBackUri != null)
+                sync.execute(new RemovePhoto(), editBackUri, null);
+            if (editFrontUri != null)
+                sync.execute(new RemovePhoto(), editFrontUri, null);
         }
         super.onDestroy();
     }
@@ -180,8 +210,10 @@ public class CreateTicketActivity extends AppCompatActivity {
         removeFront = (FrameLayout) findViewById(R.id.remove_front);
         dateFormat = new SimpleDateFormat("d MMM yyyy", Locale.US);
         timeFormat = new SimpleDateFormat("h:mm a", Locale.US);
-        photoFileNameFront = Constants.BEG_FILE_NAME_TICKET + UniqueStringGenerator.getUniqueString() + "front_photo.jpg";
-        photoFileNameBack = Constants.BEG_FILE_NAME_TICKET + UniqueStringGenerator.getUniqueString() + "back_photo.jpg";
+
+        String uniqueString = UniqueStringGenerator.getUniqueString();
+        photoFileNameFront = Constants.BEG_FILE_NAME_TICKET + uniqueString + "front_photo.jpg";
+        photoFileNameBack = Constants.BEG_FILE_NAME_TICKET + uniqueString + "back_photo.jpg";
         setDateOnView();
         setTimeOnView();
         db = DatabaseHelperImpl.getInstance(this);
@@ -328,12 +360,12 @@ public class CreateTicketActivity extends AppCompatActivity {
             ContentValues cvNewTicket = new ContentValues();
             cvNewTicket.put(ModelTickets.TITLE, titleStr);
             if (removeFront.getVisibility() == View.VISIBLE) {
-                cvNewTicket.put(ModelTickets.PHOTO_FIRST, photoFileNameFront);
+                cvNewTicket.put(ModelTickets.PHOTO_FIRST, editFrontUri.toString());
             } else {
                 cvNewTicket.put(ModelTickets.PHOTO_FIRST, Constants.EMPTY_STRING);
             }
             if (removeBack.getVisibility() == View.VISIBLE) {
-                cvNewTicket.put(ModelTickets.PHOTO_SECOND, photoFileNameBack);
+                cvNewTicket.put(ModelTickets.PHOTO_SECOND, editBackUri.toString());
             } else {
                 cvNewTicket.put(ModelTickets.PHOTO_SECOND, Constants.EMPTY_STRING);
             }

@@ -42,8 +42,8 @@ public class ImageLoaderTestActivity extends AppCompatActivity {
         image5 = (ImageView) findViewById(R.id.fifth);
         ImageLoader.getInstance().downloadAndDraw(urls.get(0), image1, null);
         ImageLoader.getInstance().downloadAndDraw(urls.get(1), image2, null);
-        ImageLoader.getInstance().downloadAndDraw(urls.get(2), image3, null);
+        ImageLoader.getInstance().downloadAndDraw("file:///storage/emulated/0/Android/data/com.maxcriser.cards/files/Pictures/thecrisertakephoto/credit-card-1482070451258-18-12-2016-125095656-9-back_photo.jpg", image3, null);
         ImageLoader.getInstance().downloadAndDraw(urls.get(3), image4, null);
-        ImageLoader.getInstance().downloadAndDraw(urls.get(4), image5, null);
+        ImageLoader.getInstance().downloadAndDraw("file:///storage/emulated/0/Android/data/com.maxcriser.cards/files/Pictures/thecrisertakephoto/credit-card-1482070451258-18-12-2016-125095656-9-back_photo.jpg", image5, null);
     }
 }
