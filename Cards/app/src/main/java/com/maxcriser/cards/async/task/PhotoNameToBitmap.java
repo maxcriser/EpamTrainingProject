@@ -3,7 +3,6 @@ package com.maxcriser.cards.async.task;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.widget.ImageView;
 
 import com.maxcriser.cards.async.ProgressCallback;
 import com.maxcriser.cards.async.Task;
@@ -12,28 +11,22 @@ import java.io.File;
 
 import static com.maxcriser.cards.util.Storage.getPhotoFileUri;
 
-public class LoadImage implements Task<String, Void, Void> {
+public class PhotoNameToBitmap implements Task<String, Void, Bitmap> {
 
     private File file;
-    private ImageView view;
 
-    public LoadImage(File pFile, ImageView pView) {
+    public PhotoNameToBitmap(File pFile) {
         this.file = pFile;
-        this.view = pView;
     }
 
     @Override
-    public Void doInBackground(String pS, ProgressCallback<Void> pVoidProgressCallback) throws Exception {
+    public Bitmap doInBackground(String pS, ProgressCallback<Void> pVoidProgressCallback) throws Exception {
         Uri imageUri = getPhotoFileUri(file, pS);
         if (imageUri != null) {
             Bitmap bitmap = BitmapFactory.decodeFile(imageUri.getPath());
             if (bitmap != null) {
-                view.setImageBitmap(bitmap);
-            } else {
-                // TODO cannot load
+                return bitmap;
             }
-        } else {
-            // TODO you have no photo this card
         }
         return null;
     }

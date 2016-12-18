@@ -11,17 +11,10 @@ import java.io.File;
 
 import static com.maxcriser.cards.util.Storage.getPhotoFileUri;
 
-public class UriToBitmap implements Task<String, Void, Bitmap> {
-
-    File file;
-
-    public UriToBitmap(File pFile) {
-        this.file = pFile;
-    }
+public class UriToBitmap implements Task<Uri, Void, Bitmap> {
 
     @Override
-    public Bitmap doInBackground(String pS, ProgressCallback<Void> pVoidProgressCallback) throws Exception {
-        Uri imageUri = getPhotoFileUri(file, pS);
+    public Bitmap doInBackground(Uri imageUri, ProgressCallback<Void> pVoidProgressCallback) throws Exception {
         if (imageUri != null) {
             Bitmap bitmap = BitmapFactory.decodeFile(imageUri.getPath());
             if (bitmap != null) {

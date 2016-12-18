@@ -25,27 +25,28 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".ui.LaunchScreenActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.MenuActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".ui.PhotoEditorActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".ui.ImageLoaderTestActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
 
@@ -53,7 +54,6 @@
             android:name=".ui.NfcReaderActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
-
             <intent-filter>
                 <action android:name="android.nfc.action.TECH_DISCOVERED"/>
             </intent-filter>
@@ -67,69 +67,59 @@
                 <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
+
                 <data android:mimeType="text/plain"/>
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.create_item.CreateBankActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
-
         <activity
             android:name=".ui.ItemsActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing"/>
-
         <activity
             android:name=".ui.display_item.DiscountCardActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
-
         <activity
             android:name=".ui.display_item.BankCardActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
-
         <activity
             android:name=".ui.display_item.TicketActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
-
         <activity
             android:name=".ui.BarcodeScannerActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".ui.create_item.CreateDiscountActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
-
         <activity
             android:name=".ui.create_item.CreateTicketActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
-
         <activity
             android:name=".ui.SetupPinActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"/>
-
         <activity
             android:name=".ui.LockerActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
-
     </application>
 
 </manifest>

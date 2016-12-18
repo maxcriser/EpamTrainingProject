@@ -5,12 +5,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -27,13 +25,11 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.LoadImage;
-import com.maxcriser.cards.async.task.UriToBitmap;
-import com.maxcriser.cards.constant.Constants;
+import com.maxcriser.cards.async.task.PhotoNameToBitmap;
+import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.view.text_view.RobotoThin;
-
-import java.io.File;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -105,9 +101,23 @@ public class TicketActivity extends Activity {
 
         dbHelper = DatabaseHelperImpl.getInstance(this);
 
+        Intent creditIntent = getIntent();
+        id = creditIntent.getStringExtra(EXTRA_TICKET_ID);
+        String titleStr = creditIntent.getStringExtra(EXTRA_TICKET_TITLE);
+        String cardholderStr = creditIntent.getStringExtra(EXTRA_TICKET_CARDHOLDER);
+        String dateStr = creditIntent.getStringExtra(EXTRA_TICKET_DATE);
+        String timeStr = creditIntent.getStringExtra(EXTRA_TICKET_TIME);
+        String colorStr = creditIntent.getStringExtra(EXTRA_TICKET_COLOR);
+        final String firstPhoto = creditIntent.getStringExtra(EXTRA_TICKET_FIRST_PHOTO);
+        final String secondPhoto = creditIntent.getStringExtra(EXTRA_TICKET_SECOND_PHOTO);
+
         floatingActionButtonDelete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dbHelper.delete(ModelTickets.class, null, ModelTickets.ID + " = ?", String.valueOf(id));
+                sync.execute(new RemovePhoto(getExternalFilesDir(Environment.DIRECTORY_PICTURES)),
+                        firstPhoto, null);
+                sync.execute(new RemovePhoto(getExternalFilesDir(Environment.DIRECTORY_PICTURES)),
+                        secondPhoto, null);
                 onBackClicked(null);
 
             }
@@ -125,22 +135,12 @@ public class TicketActivity extends Activity {
             }
         });
 
-        Intent creditIntent = getIntent();
-        id = creditIntent.getStringExtra(EXTRA_TICKET_ID);
-        String titleStr = creditIntent.getStringExtra(EXTRA_TICKET_TITLE);
-        String cardholderStr = creditIntent.getStringExtra(EXTRA_TICKET_CARDHOLDER);
-        String dateStr = creditIntent.getStringExtra(EXTRA_TICKET_DATE);
-        String timeStr = creditIntent.getStringExtra(EXTRA_TICKET_TIME);
-        String colorStr = creditIntent.getStringExtra(EXTRA_TICKET_COLOR);
-        String firstPhoto = creditIntent.getStringExtra(EXTRA_TICKET_FIRST_PHOTO);
-        String secondPhoto = creditIntent.getStringExtra(EXTRA_TICKET_SECOND_PHOTO);
-
         sync.execute(new LoadImage(getExternalFilesDir(Environment.DIRECTORY_PICTURES), ivFrontPhoto),
                 firstPhoto, null);
         sync.execute(new LoadImage(getExternalFilesDir(Environment.DIRECTORY_PICTURES), ivBackPhoto),
                 secondPhoto, null);
 
-        sync.execute(new UriToBitmap(getExternalFilesDir(Environment.DIRECTORY_PICTURES)), firstPhoto, new OnResultCallback<Bitmap, Void>() {
+        sync.execute(new PhotoNameToBitmap(getExternalFilesDir(Environment.DIRECTORY_PICTURES)), firstPhoto, new OnResultCallback<Bitmap, Void>() {
             @Override
             public void onSuccess(Bitmap pBitmap) {
                 firstBitmap = pBitmap;
@@ -157,7 +157,7 @@ public class TicketActivity extends Activity {
             }
         });
 
-        sync.execute(new UriToBitmap(getExternalFilesDir(Environment.DIRECTORY_PICTURES)), secondPhoto, new OnResultCallback<Bitmap, Void>() {
+        sync.execute(new PhotoNameToBitmap(getExternalFilesDir(Environment.DIRECTORY_PICTURES)), secondPhoto, new OnResultCallback<Bitmap, Void>() {
             @Override
             public void onSuccess(Bitmap pBitmap) {
                 secondBitmap = pBitmap;
@@ -177,23 +177,6 @@ public class TicketActivity extends Activity {
         editCardholder.setText(cardholderStr);
         date.setText(dateStr);
         time.setText(timeStr);
-    }
-
-    private boolean isExternalStorageAvailable() {
-        String state = Environment.getExternalStorageState();
-        return state.equals(Environment.MEDIA_MOUNTED);
-    }
-
-    public Uri getPhotoFileUri(String fileName) {
-        if (isExternalStorageAvailable()) {
-            File mediaStorageDir = new File(
-                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.APP_TAG);
-            if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
-                Log.d(Constants.APP_TAG, getString(R.string.filed_to_create_directory));
-            }
-            return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
-        }
-        return null;
     }
 
     public void onBackClicked(View view) {

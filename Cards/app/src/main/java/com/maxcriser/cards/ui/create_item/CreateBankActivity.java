@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
+import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.async.task.ScanCreditCard;
 import com.maxcriser.cards.async.task.UriToView;
 import com.maxcriser.cards.constant.Constants;
@@ -63,6 +64,7 @@ import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STOR
 import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STORAGE_FRONT;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
+import static com.maxcriser.cards.util.Storage.isExternalStorageAvailable;
 
 public class CreateBankActivity extends AppCompatActivity {
 
@@ -90,6 +92,7 @@ public class CreateBankActivity extends AppCompatActivity {
     private String myTypeCard;
     private String myColorName;
     private String myColorCode;
+    private boolean statusSave = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,12 +174,12 @@ public class CreateBankActivity extends AppCompatActivity {
                 requestCode == CAPTURE_IMAGE_BACK) {
             if (resultCode == RESULT_OK) {
                 if (requestCode == CAPTURE_IMAGE_FRONT) {
-                    Uri takenPhotoUri = getPhotoFileUri(photoFileNameFront);
+                    Uri takenPhotoUri = getUri(photoFileNameFront);
                     Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
                     startActivityForResult(intent, EDIT_IMAGE_FRONT);
                 } else {
-                    Uri takenPhotoUri = getPhotoFileUri(photoFileNameBack);
+                    Uri takenPhotoUri = getUri(photoFileNameBack);
                     Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
                     startActivityForResult(intent, EDIT_IMAGE_BACK);
@@ -311,12 +314,7 @@ public class CreateBankActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isExternalStorageAvailable() {
-        String state = Environment.getExternalStorageState();
-        return state.equals(Environment.MEDIA_MOUNTED);
-    }
-
-    public Uri getPhotoFileUri(String fileName) {
+    public Uri getUri(String fileName) {
         if (isExternalStorageAvailable()) {
             File mediaStorageDir = new File(
                     getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.APP_TAG);
@@ -355,7 +353,7 @@ public class CreateBankActivity extends AppCompatActivity {
 
     private void startCameraForPhoto(int code, String fileName) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(fileName)); // set the image file name
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, getUri(fileName)); // set the image file name
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, code);
         }
@@ -413,6 +411,7 @@ public class CreateBankActivity extends AppCompatActivity {
             ContentValues cvNewCredit = new ContentValues();
             cvNewCredit.put(ModelBankCards.TITLE, bankStr);
             if (removeFront.getVisibility() == View.VISIBLE) {
+
                 cvNewCredit.put(ModelBankCards.PHOTO_FRONT, photoFileNameFront);
             } else {
                 cvNewCredit.put(ModelBankCards.PHOTO_FRONT, Constants.EMPTY_STRING);
@@ -434,6 +433,7 @@ public class CreateBankActivity extends AppCompatActivity {
             db.insert(ModelBankCards.class, cvNewCredit, new OnResultCallback<Long, Void>() {
                 @Override
                 public void onSuccess(Long pLong) {
+                    statusSave = true;
                     onBackClicked(null);
                 }
 
@@ -446,6 +446,17 @@ public class CreateBankActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (!statusSave) {
+            sync.execute(new RemovePhoto(getExternalFilesDir(Environment.DIRECTORY_PICTURES)),
+                    photoFileNameFront, null);
+            sync.execute(new RemovePhoto(getExternalFilesDir(Environment.DIRECTORY_PICTURES)),
+                    photoFileNameBack, null);
+        }
+        super.onDestroy();
     }
 
     public void onCreateCardClicked(View view) {

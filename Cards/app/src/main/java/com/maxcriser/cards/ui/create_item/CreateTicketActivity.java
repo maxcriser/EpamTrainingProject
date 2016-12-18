@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
+import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.async.task.UriToView;
 import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.constant.Extras;
@@ -60,6 +61,8 @@ import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_FRONT_CAME
 import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STORAGE_BACK;
 import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STORAGE_FRONT;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
+import static com.maxcriser.cards.util.Storage.isExternalStorageAvailable;
+import static com.maxcriser.cards.util.Storage.removePhotoFile;
 
 public class CreateTicketActivity extends AppCompatActivity {
 
@@ -68,6 +71,7 @@ public class CreateTicketActivity extends AppCompatActivity {
     public String photoFileNameBack;
     private DatabaseHelperImpl db;
     private TextView date;
+    private boolean statusSave = false;
     private TextView time;
     private ImageView frontPhoto;
     private ImageView backPhoto;
@@ -100,12 +104,12 @@ public class CreateTicketActivity extends AppCompatActivity {
                 requestCode == CAPTURE_IMAGE_BACK) {
             if (resultCode == RESULT_OK) {
                 if (requestCode == CAPTURE_IMAGE_FRONT) {
-                    Uri takenPhotoUri = getPhotoFileUri(photoFileNameFront);
+                    Uri takenPhotoUri = getUri(photoFileNameFront);
                     Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
                     startActivityForResult(intent, EDIT_IMAGE_FRONT);
                 } else {
-                    Uri takenPhotoUri = getPhotoFileUri(photoFileNameBack);
+                    Uri takenPhotoUri = getUri(photoFileNameBack);
                     Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
                     startActivityForResult(intent, EDIT_IMAGE_BACK);
@@ -131,23 +135,7 @@ public class CreateTicketActivity extends AppCompatActivity {
         }
     }
 
-//    public static File savebitmap(Bitmap bmp, String fileName) throws IOException {
-//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-//        bmp.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
-//        File f = new File(getApplicationContext().getFilesDir() + fileName);
-//        f.createNewFile();
-//        FileOutputStream fo = new FileOutputStream(f);
-//        fo.write(bytes.toByteArray());
-//        fo.close();
-//        return f;
-//    }
-
-    private boolean isExternalStorageAvailable() {
-        String state = Environment.getExternalStorageState();
-        return state.equals(Environment.MEDIA_MOUNTED);
-    }
-
-    public Uri getPhotoFileUri(String fileName) {
+    public Uri getUri(String fileName) {
         if (isExternalStorageAvailable()) {
             File mediaStorageDir = new File(
                     getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.APP_TAG);
@@ -158,6 +146,18 @@ public class CreateTicketActivity extends AppCompatActivity {
         }
         return null;
     }
+
+    @Override
+    protected void onDestroy() {
+        if (!statusSave) {
+            sync.execute(new RemovePhoto(getExternalFilesDir(Environment.DIRECTORY_PICTURES)),
+                    photoFileNameFront, null);
+            sync.execute(new RemovePhoto(getExternalFilesDir(Environment.DIRECTORY_PICTURES)),
+                    photoFileNameBack, null);
+        }
+        super.onDestroy();
+    }
+
 
     private void initViews() {
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
@@ -298,7 +298,7 @@ public class CreateTicketActivity extends AppCompatActivity {
 
     private void startCameraForPhoto(int code, String fileName) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoFileUri(fileName)); // set the image file name
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, getUri(fileName)); // set the image file name
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, code);
         }
@@ -346,6 +346,7 @@ public class CreateTicketActivity extends AppCompatActivity {
             db.insert(ModelTickets.class, cvNewTicket, new OnResultCallback<Long, Void>() {
                 @Override
                 public void onSuccess(Long pLong) {
+                    statusSave = true;
                     onBackClicked(null);
                 }
 

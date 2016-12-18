@@ -19,7 +19,6 @@ import com.maxcriser.cards.database.annotations.dbFloat;
 import com.maxcriser.cards.database.annotations.dbInteger;
 import com.maxcriser.cards.database.annotations.dbPrimaryKey;
 import com.maxcriser.cards.database.annotations.dbString;
-import com.maxcriser.cards.holder.ContextHolder;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
@@ -38,7 +37,7 @@ public class DatabaseHelperImpl extends SQLiteOpenHelper {
     private static final int dbVersion = 1;
     private static DatabaseHelperImpl mHelper;
 
-    DatabaseHelperImpl(Context pContext) {
+    private DatabaseHelperImpl(Context pContext) {
         super(pContext, mDatabaseName, null, dbVersion);
 //        ContextHolder.getInstance().getContext().deleteDatabase(mDatabaseName);
         getWritableDatabase();

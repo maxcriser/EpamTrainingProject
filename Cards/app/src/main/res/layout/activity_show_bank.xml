@@ -44,9 +44,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginBottom="4dp"
+                                card_view:cardBackgroundColor="@color/gray_bottom_create_card"
                                 card_view:cardCornerRadius="0dp"
-                                card_view:cardElevation="4dp"
-                                card_view:cardBackgroundColor="@color/gray_bottom_create_card">
+                                card_view:cardElevation="4dp">
 
                                 <LinearLayout
                                     android:id="@+id/linear_edit_frame_title_discount"
@@ -94,7 +94,7 @@
 
                                 <ImageView
                                     android:id="@+id/type_card"
-                                    android:layout_width="104dp"
+                                    android:layout_width="100dp"
                                     android:layout_height="56dp"
                                     android:layout_gravity="center"/>
 
@@ -228,10 +228,10 @@
                                         android:id="@+id/ver_number"
                                         android:layout_width="match_parent"
                                         android:layout_height="48dp"
-                                        android:imeOptions="actionDone"
                                         android:enabled="false"
-                                        android:inputType="number"
                                         android:gravity="center|start"
+                                        android:imeOptions="actionDone"
+                                        android:inputType="number"
                                         android:textColor="@color/text_toolbar"
                                         android:textSize="16sp"
                                         tools:text="12621009"/>

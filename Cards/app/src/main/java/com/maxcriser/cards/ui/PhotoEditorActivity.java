@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -20,13 +18,8 @@ import com.isseiaoki.simplecropview.callback.SaveCallback;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.Extras;
 
-import static com.maxcriser.cards.constant.Constants.Requests.CAPTURE_IMAGE_BACK;
-import static com.maxcriser.cards.constant.Constants.Requests.CAPTURE_IMAGE_FRONT;
-import static com.maxcriser.cards.util.Storage.getPhotoFileUri;
-
 public class PhotoEditorActivity extends AppCompatActivity {
 
-    private String photoFileName = "photo.jpg";
     private CropImageView image;
     private FrameLayout mProgressBar;
     private Uri photoUri;

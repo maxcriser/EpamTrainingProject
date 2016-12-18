@@ -25,8 +25,8 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.LoadImage;
-import com.maxcriser.cards.async.task.UriToBitmap;
-import com.maxcriser.cards.async.task.UriToView;
+import com.maxcriser.cards.async.task.PhotoNameToBitmap;
+import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
@@ -46,6 +46,7 @@ import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_PIN;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_TYPE;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_VALID;
 import static com.maxcriser.cards.constant.Extras.EXTRA_VERIFICATION_NUMBER_BANK;
+import static com.maxcriser.cards.util.Storage.removePhotoFile;
 
 public class BankCardActivity extends Activity {
 
@@ -113,9 +114,26 @@ public class BankCardActivity extends Activity {
 
         dbHelper = DatabaseHelperImpl.getInstance(this);
 
+        Intent creditIntent = getIntent();
+        id = creditIntent.getStringExtra(EXTRA_BANK_ID);
+        String bank = creditIntent.getStringExtra(EXTRA_BANK_BANK);
+        String verNumber = creditIntent.getStringExtra(EXTRA_VERIFICATION_NUMBER_BANK);
+        String cardholder = creditIntent.getStringExtra(EXTRA_BANK_CARDHOLDER);
+        String number = creditIntent.getStringExtra(EXTRA_BANK_NUMBER);
+        String pin = creditIntent.getStringExtra(EXTRA_BANK_PIN);
+        String valid = creditIntent.getStringExtra(EXTRA_BANK_VALID);
+        String type = creditIntent.getStringExtra(EXTRA_BANK_TYPE);
+        String color = creditIntent.getStringExtra(EXTRA_BANK_COLOR);
+        final String firstPhoto = creditIntent.getStringExtra(EXTRA_BANK_FRONT_PHOTO);
+        final String secondPhoto = creditIntent.getStringExtra(EXTRA_BANK_BACK_PHOTO);
+
         floatingActionButtonDelete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dbHelper.delete(ModelBankCards.class, null, ModelBankCards.ID + " = ?", String.valueOf(id));
+                sync.execute(new RemovePhoto(getExternalFilesDir(Environment.DIRECTORY_PICTURES)),
+                        firstPhoto, null);
+                sync.execute(new RemovePhoto(getExternalFilesDir(Environment.DIRECTORY_PICTURES)),
+                        secondPhoto, null);
                 onBackClicked(null);
 
             }
@@ -133,25 +151,12 @@ public class BankCardActivity extends Activity {
             }
         });
 
-        Intent creditIntent = getIntent();
-        id = creditIntent.getStringExtra(EXTRA_BANK_ID);
-        String bank = creditIntent.getStringExtra(EXTRA_BANK_BANK);
-        String verNumber = creditIntent.getStringExtra(EXTRA_VERIFICATION_NUMBER_BANK);
-        String cardholder = creditIntent.getStringExtra(EXTRA_BANK_CARDHOLDER);
-        String number = creditIntent.getStringExtra(EXTRA_BANK_NUMBER);
-        String pin = creditIntent.getStringExtra(EXTRA_BANK_PIN);
-        String valid = creditIntent.getStringExtra(EXTRA_BANK_VALID);
-        String type = creditIntent.getStringExtra(EXTRA_BANK_TYPE);
-        String color = creditIntent.getStringExtra(EXTRA_BANK_COLOR);
-        String firstPhoto = creditIntent.getStringExtra(EXTRA_BANK_FRONT_PHOTO);
-        String secondPhoto = creditIntent.getStringExtra(EXTRA_BANK_BACK_PHOTO);
-
         sync.execute(new LoadImage(getExternalFilesDir(Environment.DIRECTORY_PICTURES), ivFrontPhoto),
                 firstPhoto, null);
         sync.execute(new LoadImage(getExternalFilesDir(Environment.DIRECTORY_PICTURES), ivBackPhoto),
                 secondPhoto, null);
 
-        sync.execute(new UriToBitmap(getExternalFilesDir(Environment.DIRECTORY_PICTURES)), firstPhoto, new OnResultCallback<Bitmap, Void>() {
+        sync.execute(new PhotoNameToBitmap(getExternalFilesDir(Environment.DIRECTORY_PICTURES)), firstPhoto, new OnResultCallback<Bitmap, Void>() {
             @Override
             public void onSuccess(Bitmap pBitmap) {
                 firstBitmap = pBitmap;
@@ -168,7 +173,7 @@ public class BankCardActivity extends Activity {
             }
         });
 
-        sync.execute(new UriToBitmap(getExternalFilesDir(Environment.DIRECTORY_PICTURES)), secondPhoto, new OnResultCallback<Bitmap, Void>() {
+        sync.execute(new PhotoNameToBitmap(getExternalFilesDir(Environment.DIRECTORY_PICTURES)), secondPhoto, new OnResultCallback<Bitmap, Void>() {
             @Override
             public void onSuccess(Bitmap pBitmap) {
                 secondBitmap = pBitmap;
