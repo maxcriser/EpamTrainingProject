@@ -1,12 +1,14 @@
-package com.maxcriser.cards.loader.image;
+package com.maxcriser.cards.model;
 
 
-public class PriorityModel {
+import com.maxcriser.cards.thread.PriorityRunnable;
+
+public class Priority {
 
     private String mUrl;
     private final PriorityRunnable mRunnable;
 
-    public PriorityModel(final PriorityRunnable pRunnable) {
+    public Priority(final PriorityRunnable pRunnable) {
         mRunnable = pRunnable;
     }
 

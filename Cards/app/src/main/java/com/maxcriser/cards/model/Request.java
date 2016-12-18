@@ -9,59 +9,59 @@ public class Request {
     private String body;
     private String method;
 
-    public String getMethod() {
-        return method;
+    private void setMethod(final String method) {
+        this.method = method;
     }
 
-    private void setMethod(final String mMethod) {
-        this.method = mMethod;
+    private void setUrl(final String url) {
+        this.url = url;
+    }
+
+    private void setHeaders(final Map<String, String> headers) {
+        this.headers = headers;
+    }
+
+    private void setBody(final String body) {
+        this.body = body;
+    }
+
+    public String getMethod() {
+        return method;
     }
 
     public String getUrl() {
         return url;
     }
 
-    private void setUrl(final String mUrl) {
-        this.url = mUrl;
-    }
-
     public Map<String, String> getHeaders() {
         return headers;
-    }
-
-    private void setHeaders(final Map<String, String> mHeaders) {
-        this.headers = mHeaders;
     }
 
     public String getBody() {
         return body;
     }
 
-    private void setBody(final String mBody) {
-        this.body = mBody;
-    }
-
     public static class Builder {
 
         private final Request request = new Request();
 
-        public Builder setUrl(final String pUrl) {
-            this.request.setUrl(pUrl);
+        public Builder setUrl(final String url) {
+            this.request.setUrl(url);
             return this;
         }
 
-        public Builder setHeaders(final Map<String, String> pHeaders) {
-            this.request.setHeaders(pHeaders);
+        public Builder setHeaders(final Map<String, String> headers) {
+            this.request.setHeaders(headers);
             return this;
         }
 
-        public Builder setBody(final String pBody) {
-            this.request.setBody(pBody);
+        public Builder setBody(final String body) {
+            this.request.setBody(body);
             return this;
         }
 
-        public Builder setMethod(final String pMethod) {
-            this.request.setMethod(pMethod);
+        public Builder setMethod(final String method) {
+            this.request.setMethod(method);
             return this;
         }
 

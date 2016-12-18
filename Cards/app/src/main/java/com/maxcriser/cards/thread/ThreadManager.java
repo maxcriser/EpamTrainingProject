@@ -1,4 +1,4 @@
-package com.maxcriser.cards.loader.image;
+package com.maxcriser.cards.thread;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.PriorityBlockingQueue;
@@ -8,17 +8,17 @@ import java.util.concurrent.TimeUnit;
 public class ThreadManager {
 
     private static ThreadManager sThreadManager;
-    private int mNumberOfThreads = 3;
     private final ExecutorService mExecutorService;
     private final PriorityBlockingQueue<Runnable> mThreadQueue;
 
     private ThreadManager() {
+        int numberOfThreads = 3;
         if (Runtime.getRuntime().availableProcessors() > 2) {
-            mNumberOfThreads = Runtime.getRuntime().availableProcessors();
+            numberOfThreads = Runtime.getRuntime().availableProcessors();
         }
         mThreadQueue = new PriorityBlockingQueue<>();
-        this.mExecutorService = new ThreadPoolExecutor(mNumberOfThreads, mNumberOfThreads, Long.MAX_VALUE, TimeUnit.NANOSECONDS, mThreadQueue);
-//        this.mExecutorService = Executors.newFixedThreadPool(mNumberOfThreads);
+        this.mExecutorService = new ThreadPoolExecutor(numberOfThreads, numberOfThreads,
+                Long.MAX_VALUE, TimeUnit.NANOSECONDS, mThreadQueue);
     }
 
     public static ThreadManager getInstance() {

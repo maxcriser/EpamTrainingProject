@@ -12,7 +12,11 @@ import android.widget.ImageView;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.ProgressCallback;
 import com.maxcriser.cards.http.HttpClient;
+import com.maxcriser.cards.model.Priority;
 import com.maxcriser.cards.model.Request;
+import com.maxcriser.cards.thread.ITask;
+import com.maxcriser.cards.thread.PriorityRunnable;
+import com.maxcriser.cards.thread.ThreadManager;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,22 +25,22 @@ import java.util.Stack;
 
 public class ImageLoader {
 
-    private static ImageLoader sLoader;
-    private final HttpClient mClient;
-    private final ThreadManager mThreadManagerInstance;
+    private static ImageLoader sImageLoader;
+    private final HttpClient mHttpClient;
+    private final ThreadManager mThreadManager;
     private final LruCache<String, Bitmap> mLruCache;
-    private final Stack<PriorityModel> mDownloadPriorities;
-    private final int mDefaultCacheSize = 12 * 1024 * 1024;
+    private final Stack<Priority> mDownloadPriorities;
     private final Object mLockObj = new Object();
-    private final String TAG = "IMAGELOADER";
+    private final String TAG = "ImageLoader";
 
     private ImageLoader() {
-        mThreadManagerInstance = ThreadManager.getInstance();
+        mThreadManager = ThreadManager.getInstance();
         mDownloadPriorities = new Stack<>();
-        mClient = new HttpClient();
+        mHttpClient = new HttpClient();
         long size;
-        if (Runtime.getRuntime().maxMemory() / 4 > mDefaultCacheSize) {
-            size = mDefaultCacheSize;
+        int defaultCacheSize = 12 * 1024 * 1024;
+        if (Runtime.getRuntime().maxMemory() / 4 > defaultCacheSize) {
+            size = defaultCacheSize;
         } else {
             size = Runtime.getRuntime().maxMemory() / 4;
         }
@@ -52,13 +56,14 @@ public class ImageLoader {
     }
 
     public static ImageLoader getInstance() {
-        if (sLoader == null) {
-            sLoader = new ImageLoader();
+        if (sImageLoader == null) {
+            sImageLoader = new ImageLoader();
         }
-        return sLoader;
+        return sImageLoader;
     }
 
-    public void downloadAndDraw(final String pUrl, final ImageView pView, @Nullable final IBitmapDownloadedCallback pCallback, final int... pArgs) {
+    public void downloadAndDraw(final String pUrl, final ImageView pView,
+                                @Nullable final OnResultCallback<Bitmap, Void> pCallback, final int... pArgs) {
         if (findModel(pUrl) != -1) {
             risePriority(pUrl);
             recalculatePriorities();
@@ -80,7 +85,7 @@ public class ImageLoader {
                 pView.setImageBitmap(cachedBitmap);
             }
             if (pCallback != null) {
-                pCallback.onDownload(cachedBitmap);
+                pCallback.onSuccess(cachedBitmap);
             }
             return;
         }
@@ -93,7 +98,7 @@ public class ImageLoader {
                 InputStream inputStream = null;
                 Bitmap bitmap = null;
                 try {
-                    connection = (HttpURLConnection) mClient.getConnection(new Request.Builder().setUrl(pUrl).setMethod("GET").build());
+                    connection = (HttpURLConnection) mHttpClient.getConnection(new Request.Builder().setUrl(pUrl).setMethod("GET").build());
                     inputStream = connection.getInputStream();
                     bitmap = BitmapFactory.decodeStream(inputStream);
                 } catch (final Exception e) {
@@ -149,7 +154,7 @@ public class ImageLoader {
                                     pView.setImageBitmap(pBitmap);
                                 }
                                 if (pCallback != null) {
-                                    pCallback.onDownload(pBitmap);
+                                    pCallback.onSuccess(pBitmap);
                                 }
                             }
                         }
@@ -162,20 +167,20 @@ public class ImageLoader {
                         Log.e(TAG, "onError: ", e);
                     }
                 });
-        final PriorityModel model = new PriorityModel(priorityRunnable);
+        final Priority model = new Priority(priorityRunnable);
         model.setUrl(pUrl);
         model.setPriority(Thread.MAX_PRIORITY);
         synchronized (mLockObj) {
             mDownloadPriorities.push(model);
         }
         recalculatePriorities();
-        mThreadManagerInstance.execute(priorityRunnable);
+        mThreadManager.execute(priorityRunnable);
     }
 
     private synchronized int findModel(final String pUrl) {
         int index = 0;
-        for (final PriorityModel priorityModel : mDownloadPriorities) {
-            if (priorityModel.getUrl().equalsIgnoreCase(pUrl)) {
+        for (final Priority priority : mDownloadPriorities) {
+            if (priority.getUrl().equalsIgnoreCase(pUrl)) {
                 return index;
             }
             index++;
@@ -184,13 +189,13 @@ public class ImageLoader {
     }
 
     private synchronized void risePriority(final String pUrl) {
-        final PriorityModel modelToRise = mDownloadPriorities.remove(findModel(pUrl));
+        final Priority modelToRise = mDownloadPriorities.remove(findModel(pUrl));
         modelToRise.setPriority(Thread.MAX_PRIORITY);
         mDownloadPriorities.push(modelToRise);
     }
 
     private synchronized void recalculatePriorities() {
-        for (final PriorityModel priorityModel : mDownloadPriorities) {
+        for (final Priority priorityModel : mDownloadPriorities) {
             int priority = Math.round((float) mDownloadPriorities.indexOf(priorityModel) * 10 / mDownloadPriorities.size());
             if (priority == 0) {
                 priority = Thread.MIN_PRIORITY;

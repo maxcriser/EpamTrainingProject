@@ -18,17 +18,21 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class HttpClient {
 
-    private String executeRequest(final Request pRequest) throws Exception {
+    private static final String HTTPS = "https";
+
+    private String executeRequest(final Request request) throws Exception {
         InputStream inputStream = null;
         HttpURLConnection connection;
-        if (pRequest.getUrl().contains("https")) {
-            connection = (HttpsURLConnection) getConnection(pRequest);
+        if (request.getUrl().contains(HTTPS)) {
+            connection = (HttpsURLConnection) getConnection(request);
         } else {
-            connection = (HttpURLConnection) getConnection(pRequest);
+            connection = (HttpURLConnection) getConnection(request);
         }
         try {
             inputStream = connection.getInputStream();
-            if (inputStream == null) throw new Exception("inputStream == null");
+            if (inputStream == null) {
+                throw new Exception("connection error");
+            }
             final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             final StringBuilder stringBuilder = new StringBuilder();
             String line;
@@ -46,29 +50,31 @@ public class HttpClient {
         }
     }
 
-    public URLConnection getConnection(final Request pRequest) throws Exception {
-        final String urlString = pRequest.getUrl();
-        if (urlString == null) {
-            throw new IllegalArgumentException("No url provided");
+    public URLConnection getConnection(final Request request) throws Exception {
+        final String pUrl = request.getUrl();
+        if (pUrl == null) {
+            throw new IllegalArgumentException("URL provided error");
         }
-        final URL url = new URL(urlString);
+        final URL url = new URL(pUrl);
         final URLConnection connection = url.openConnection();
-        if (connection == null) throw new Exception("connection == null");
-        addProperties(pRequest, connection);
+        if (connection == null) {
+            throw new Exception("Connection error");
+        }
+        addProperties(request, connection);
         return connection;
     }
 
-    private void addProperties(final Request pRequest, final URLConnection pConnection) throws Exception {
-        final Map<String, String> headers = pRequest.getHeaders();
-        final String bodyString = pRequest.getBody();
+    private void addProperties(final Request request, final URLConnection connection) throws Exception {
+        final Map<String, String> headers = request.getHeaders();
+        final String bodyString = request.getBody();
         if (headers != null) {
             for (final String key : headers.keySet()) {
-                pConnection.addRequestProperty(key, headers.get(key));
+                connection.addRequestProperty(key, headers.get(key));
             }
         }
         if (bodyString != null) {
             final byte[] body = bodyString.getBytes("UTF-8");
-            final OutputStream stream = pConnection.getOutputStream();
+            final OutputStream stream = connection.getOutputStream();
             stream.write(body);
             stream.close();
         }

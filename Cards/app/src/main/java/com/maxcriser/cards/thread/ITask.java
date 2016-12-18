@@ -1,4 +1,4 @@
-package com.maxcriser.cards.loader.image;
+package com.maxcriser.cards.thread;
 
 import com.maxcriser.cards.async.ProgressCallback;
 
