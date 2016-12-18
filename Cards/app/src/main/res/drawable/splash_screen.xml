@@ -5,9 +5,10 @@
         android:drawable="@android:color/white"/>
 
     <item>
+
         <bitmap
             android:gravity="center"
-            android:src="@drawable/logo_splash_screen"/>
+            android:src="@drawable/ck_logo_200_200"/>
     </item>
 
 </layer-list>

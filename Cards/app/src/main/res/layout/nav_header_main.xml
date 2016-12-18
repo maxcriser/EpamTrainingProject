@@ -18,13 +18,13 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:paddingTop="16dp"
-        app:srcCompat="@drawable/logo"/>
+        app:srcCompat="@drawable/ck_logo"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
-        android:text="Cards application"
+        android:text="Максим Захаренко"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <TextView
