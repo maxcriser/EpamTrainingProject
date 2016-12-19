@@ -1,4 +1,4 @@
-package com.maxcriser.cards.util;
+package com.maxcriser.cards.utils;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

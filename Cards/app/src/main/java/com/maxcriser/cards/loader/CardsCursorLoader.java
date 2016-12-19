@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.content.CursorLoader;
 
 import com.maxcriser.cards.database.DatabaseHelperImpl;
-import com.maxcriser.cards.util.Sql;
+import com.maxcriser.cards.utils.Sql;
 
 public class CardsCursorLoader extends CursorLoader {
 

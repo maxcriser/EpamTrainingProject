@@ -1,4 +1,4 @@
-package com.maxcriser.cards.util;
+package com.maxcriser.cards.utils;
 
 import android.net.Uri;
 import android.os.Environment;

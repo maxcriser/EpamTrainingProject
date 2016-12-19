@@ -28,7 +28,7 @@ import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.ui.LaunchScreenActivity;
-import com.maxcriser.cards.util.AlertImageViewer;
+import com.maxcriser.cards.utils.AlertImageViewer;
 
 import static android.text.InputType.TYPE_CLASS_TEXT;
 import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;

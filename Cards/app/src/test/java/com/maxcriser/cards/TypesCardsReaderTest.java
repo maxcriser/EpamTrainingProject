@@ -3,7 +3,7 @@ package com.maxcriser.cards;
 
 import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.model.CreditCard;
-import com.maxcriser.cards.util.UniqueStringGenerator;
+import com.maxcriser.cards.utils.UniqueStringGenerator;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

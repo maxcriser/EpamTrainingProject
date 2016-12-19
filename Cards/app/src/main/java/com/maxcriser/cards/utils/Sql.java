@@ -1,4 +1,4 @@
-package com.maxcriser.cards.util;
+package com.maxcriser.cards.utils;
 
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;

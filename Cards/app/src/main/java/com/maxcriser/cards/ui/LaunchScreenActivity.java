@@ -9,7 +9,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.maxcriser.cards.holder.ContextHolder;
 import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.model.PreviewListColorsSetter;
 
@@ -32,9 +31,6 @@ public class LaunchScreenActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         loadPassword();
-
-        //TODO APP
-        ContextHolder.getInstance().setContext(getApplicationContext());
 
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         SCREEN_WIDTH = metrics.widthPixels;

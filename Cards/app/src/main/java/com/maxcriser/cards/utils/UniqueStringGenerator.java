@@ -1,4 +1,4 @@
-package com.maxcriser.cards.util;
+package com.maxcriser.cards.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

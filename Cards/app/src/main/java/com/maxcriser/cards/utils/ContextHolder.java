@@ -1,4 +1,4 @@
-package com.maxcriser.cards.holder;
+package com.maxcriser.cards.utils;
 
 import android.content.Context;
 

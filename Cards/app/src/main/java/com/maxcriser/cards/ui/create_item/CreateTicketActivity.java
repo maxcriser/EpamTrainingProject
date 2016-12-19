@@ -2,6 +2,7 @@ package com.maxcriser.cards.ui.create_item;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
@@ -20,6 +21,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -42,8 +44,8 @@ import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.PhotoEditorActivity;
-import com.maxcriser.cards.util.OnTemplatePageChangeListener;
-import com.maxcriser.cards.util.UniqueStringGenerator;
+import com.maxcriser.cards.utils.OnTemplatePageChangeListener;
+import com.maxcriser.cards.utils.UniqueStringGenerator;
 import com.maxcriser.cards.view.text_view.RobotoRegular;
 
 import java.io.File;
@@ -62,7 +64,7 @@ import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_FRONT_CAME
 import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STORAGE_BACK;
 import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STORAGE_FRONT;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
-import static com.maxcriser.cards.util.Storage.isExternalStorageAvailable;
+import static com.maxcriser.cards.utils.Storage.isExternalStorageAvailable;
 
 public class CreateTicketActivity extends AppCompatActivity {
 
@@ -239,6 +241,18 @@ public class CreateTicketActivity extends AppCompatActivity {
                 Log.d("COLOR", position + myColorName + myColorCode);
             }
         }));
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            mScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(View pView, int pI, int pI1, int pI2, int pI3) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    View view = getCurrentFocus();
+                    assert view != null;
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+            });
+        }
     }
 
     void setDateOnView() {

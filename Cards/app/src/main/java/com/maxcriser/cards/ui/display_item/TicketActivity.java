@@ -1,8 +1,6 @@
 package com.maxcriser.cards.ui.display_item;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -29,7 +27,7 @@ import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.ui.LaunchScreenActivity;
-import com.maxcriser.cards.util.AlertImageViewer;
+import com.maxcriser.cards.utils.AlertImageViewer;
 import com.maxcriser.cards.view.text_view.RobotoThin;
 
 import static android.view.View.GONE;
