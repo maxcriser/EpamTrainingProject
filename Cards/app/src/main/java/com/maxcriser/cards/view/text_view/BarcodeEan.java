@@ -24,7 +24,7 @@ public class BarcodeEan extends TextView {
 
     private void init() {
         if (!isInEditMode()) {
-            Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/EANP72-1.TTF");
+            Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/Barcode.ttf");
             setTypeface(tf);
         }
     }

@@ -211,7 +211,6 @@ public class BankCardActivity extends Activity {
     }
 
     public void onBackClicked(View view) {
-        // TODO: 07.12.2016   handler close materialFloating
         super.onBackPressed();
     }
 
@@ -289,7 +288,4 @@ public class BankCardActivity extends Activity {
         if (firstBitmap != null)
             showPhoto(firstBitmap);
     }
-
-    // TODO copy tessdata to external storage for recognize
-    // TODO cannot edit name card which has photos ;/
 }

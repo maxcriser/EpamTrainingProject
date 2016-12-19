@@ -5,6 +5,7 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.repackaged.com.google.api.client.util.SecurityUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,6 +16,8 @@ import java.util.Iterator;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import static servlet.backend.auth.SecurityUtils.hasPermission;
 
 public class ConfigServlet extends HttpServlet {
 
@@ -56,8 +59,7 @@ public class ConfigServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-        // TODO: 17.12.2016 SecurityUtils.hasPermission(req, resp)
-        if (true) {
+        if (hasPermission(req, resp)) {
             //TODO update config
             String value = req.getParameter("value");
             resp.setContentType("application/json");

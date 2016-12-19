@@ -408,9 +408,8 @@ public class CreateTicketActivity extends AppCompatActivity {
     }
 
     public void onCreateCardClicked(View view) {
-        // // TODO: 12.12.2016 filesDir
-        createCard();
 //        getPermission(REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        createCard();
     }
 
     public void onRemoveBackClicked(View view) {

@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.pinball83.maskededittext.MaskedEditText;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
@@ -69,7 +71,6 @@ import static com.maxcriser.cards.util.Storage.isExternalStorageAvailable;
 
 public class CreateBankActivity extends AppCompatActivity {
 
-    public static final String BANK = "CreateBankActivity"; // TODO delete
     public String photoFileNameFront;
     public String photoFileNameBack;
     private int currentPositionColors;
@@ -86,7 +87,7 @@ public class CreateBankActivity extends AppCompatActivity {
     private Calendar calendar = Calendar.getInstance();
     private EditText bank;
     private EditText cardholder;
-    private EditText number;
+    private MaskedEditText number;
     private EditText pin;
     private TextView validDate;
     private EditText verificationNumber;
@@ -114,7 +115,7 @@ public class CreateBankActivity extends AppCompatActivity {
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
         bank = (EditText) findViewById(R.id.bank);
         cardholder = (EditText) findViewById(R.id.cardholder);
-        number = (EditText) findViewById(R.id.number);
+        number = (MaskedEditText) findViewById(R.id.number);
         pin = (EditText) findViewById(R.id.pin);
         validDate = (TextView) findViewById(R.id.date);
         pagerTemplate = (ViewPager) findViewById(R.id.pager);
@@ -132,7 +133,7 @@ public class CreateBankActivity extends AppCompatActivity {
         PreviewColor listPreviewColor = previewColors.get(0);
         myColorName = listPreviewColor.getNameColorCards();
         myColorCode = listPreviewColor.getCodeColorCards();
-        Log.d(BANK, myColorName + " " + myColorCode);
+        Log.d("BANK", myColorName + " " + myColorCode);
 
         int PAGE_COUNT_TEMPLATE = previewColors.size();
 
@@ -154,7 +155,7 @@ public class CreateBankActivity extends AppCompatActivity {
         }));
 
         myTypeCard = previewTypes.get(0);
-        Log.d(BANK, myTypeCard);
+        Log.d("BANK", myTypeCard);
         int PAGE_COUNT = previewTypes.size();
         PagerAdapter pagerAdapterTypes = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 Constants.PagerIDs.ID_BANK_CARD_ITEM_TYPE,
@@ -212,7 +213,7 @@ public class CreateBankActivity extends AppCompatActivity {
 
                     }
                 });
-                sync.execute(new ScanCreditCard(), editFrontUri, new OnResultCallback<CreditCard, String>() {
+                sync.execute(new ScanCreditCard(getAssets()), editFrontUri, new OnResultCallback<CreditCard, String>() {
                     @Override
                     public void onSuccess(CreditCard pCredit) {
                         if (pCredit != null) {
@@ -493,7 +494,6 @@ public class CreateBankActivity extends AppCompatActivity {
     }
 
     public void onCreateCardClicked(View view) {
-        // // TODO: 12.12.2016 filesDir
 //        getPermission(REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         createCard();
     }

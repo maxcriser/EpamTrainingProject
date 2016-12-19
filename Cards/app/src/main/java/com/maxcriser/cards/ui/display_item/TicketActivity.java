@@ -175,7 +175,6 @@ public class TicketActivity extends Activity {
     }
 
     public void onBackClicked(View view) {
-        // TODO: 07.12.2016   handler close materialFloating
         super.onBackPressed();
     }
 
