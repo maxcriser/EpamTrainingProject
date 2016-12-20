@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <com.maxcriser.cards.view.text_view.RobotoThin
+            android:layout_margin="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/hold_nfc_item_to_your_phone"
+            android:textAllCaps="true"
+            android:textColor="@color/text_toolbar"
+            android:textSize="16sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/card"
+                android:layout_width="124dp"
+                android:layout_height="124dp"
+                android:layout_gravity="center|start"
+                android:layout_marginBottom="28dp"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1000"
+                android:src="@drawable/card"/>
+
+            <FrameLayout
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="-4dp"
+                    android:src="@drawable/hand"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

@@ -126,6 +126,7 @@
     <string name="fount_matches_on_fields">Found matches on fields\n</string>
     <string name="matches_found">Matches found</string>
     <string name="click_apply_if_matches">Click to apply if the credit card data matches</string>
+    <string name="hold_nfc_item_to_your_phone">Hold nfc item to your phone</string>
 
     <string-array name="type_of_cards">
         <item>bank cards</item>

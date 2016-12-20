@@ -242,7 +242,7 @@ public class MenuActivity extends AppCompatActivity
                     startActivity(intent);
                     break;
                 case R.id.main_nfc_card:
-                    startActivity(new Intent(MenuActivity.this, ImageLoaderTestActivity.class));
+                    startActivity(new Intent(MenuActivity.this, NFCTest.class));
 //                    intent = new Intent(MenuActivity.this, ItemsActivity.class);
 //                    selectItem = Constants.Titles.NFC_TITLE;
 //                    startActivity(intent);

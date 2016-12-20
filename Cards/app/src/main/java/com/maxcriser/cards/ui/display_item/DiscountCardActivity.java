@@ -74,8 +74,8 @@ public class DiscountCardActivity extends Activity {
         linearFrameAction = (LinearLayout) findViewById(R.id.linear_frame_actions_discount);
         mHandler = new Handler(hc);
 
-        animScaleDown = AnimationUtils.loadAnimation(DiscountCardActivity.this, R.anim.scale_down);
-        animScaleUp = AnimationUtils.loadAnimation(DiscountCardActivity.this, R.anim.scale_up);
+        animScaleDown = AnimationUtils.loadAnimation(DiscountCardActivity.this, R.anim.scale_down_floating);
+        animScaleUp = AnimationUtils.loadAnimation(DiscountCardActivity.this, R.anim.scale_up_floating);
         registerForContextMenu(materialDesignFAM);
         dbHelper = DatabaseHelperImpl.getInstance(this);
 

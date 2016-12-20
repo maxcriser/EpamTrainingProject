@@ -46,7 +46,7 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".ui.ImageLoaderTestActivity"
+            android:name=".ui.NFCTest"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
 

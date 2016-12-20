@@ -4,10 +4,5 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <com.google.android.gms.common.SignInButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/signin_google_plus"
-        android:layout_gravity="center"/>
 
 </LinearLayout>
