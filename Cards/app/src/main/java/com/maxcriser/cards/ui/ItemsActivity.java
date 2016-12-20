@@ -27,6 +27,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -51,6 +52,8 @@ import com.maxcriser.cards.ui.create_item.CreateTicketActivity;
 import com.maxcriser.cards.ui.display_item.BankCardActivity;
 import com.maxcriser.cards.ui.display_item.DiscountCardActivity;
 import com.maxcriser.cards.ui.display_item.TicketActivity;
+import com.maxcriser.cards.utils.AlertNfcInput;
+import com.maxcriser.cards.utils.AlertNfcOutput;
 import com.maxcriser.cards.utils.RecyclerItemClickListener;
 import com.maxcriser.cards.view.text_view.RobotoRegular;
 
@@ -89,7 +92,6 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     private DatabaseHelperImpl dbHelper;
     private CursorAdapter adapter;
     private RecyclerView recyclerItems;
-    // TODO: 12.12.2016  CreateNfcActivity adapter
     private CardView toolbarBack;
     private CardView toolbarSearch;
     private LinearLayout linearEmpty;
@@ -104,6 +106,18 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         setContentView(R.layout.activity_items);
         typeItems = MenuActivity.selectItem;
         initViews();
+    }
+
+    private void showNfc(Cursor pCursor) {
+        String id = pCursor.getString(pCursor.getColumnIndex(ModelNFCItems.ID));
+        String nameNfc = pCursor.getString(pCursor.getColumnIndex(ModelNFCItems.TITLE));
+        String tagNfc = pCursor.getString(pCursor.getColumnIndex(ModelNFCItems.TAG));
+        String color = pCursor.getString(pCursor.getColumnIndex(ModelNFCItems.BACKGROUND_COLOR));
+
+        Log.d("showNfc", id + "\n" + nameNfc + "\n" + tagNfc + "\n" + color);
+
+        AlertNfcOutput alertNfcOutput = new AlertNfcOutput(this);
+        alertNfcOutput.startDialog();
     }
 
     private void showTicket(Cursor pCursor) {
@@ -364,7 +378,8 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         } else if (typeItems.equals(Constants.Titles.TICKETS_TITLE)) {
             startActivity(new Intent(ItemsActivity.this, CreateTicketActivity.class));
         } else {
-            startActivity(new Intent(ItemsActivity.this, NfcReaderActivity.class));
+            AlertNfcInput alertNfcInput = new AlertNfcInput(this);
+            alertNfcInput.startDialog();
         }
     }
 
@@ -388,7 +403,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
             return new CardsCursorLoader(this, searchText, ModelTickets.class);
         } else {
             // TODO: 12.12.2016 CreateNfcActivity
-            return new CardsCursorLoader(this, searchText, ModelBankCards.class);
+            return new CardsCursorLoader(this, searchText, ModelNFCItems.class);
         }
     }
 
@@ -412,13 +427,13 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         }
 
         if (typeItems.equals(Constants.Titles.BANK_TITLE)) {
-            adapter = new CursorAdapter(data, ItemsActivity.this, R.layout.item_list_bank);
+            adapter = new CursorAdapter(data, ItemsActivity.this, R.layout.item_bank);
         } else if (typeItems.equals(Constants.Titles.DISCOUNT_TITLE)) {
             adapter = new CursorAdapter(data, ItemsActivity.this, R.layout.item_discount);
         } else if (typeItems.equals(Constants.Titles.TICKETS_TITLE)) {
             adapter = new CursorAdapter(data, ItemsActivity.this, R.layout.item_ticket);
-        } else {
-            // TODO: 12.12.2016 CNFCAdapter
+        } else if (typeItems.equals(Constants.Titles.NFC_TITLE)) {
+            adapter = new CursorAdapter(data, ItemsActivity.this, R.layout.item_nfc);
         }
         recyclerItems.swapAdapter(adapter, true);
     }

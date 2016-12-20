@@ -16,7 +16,7 @@ public final class ModelNFCItems {
     public static final String TITLE = "title";
 
     @dbString
-    public static final String NFC = "nfc";
+    public static final String TAG = "tag";
 
     @dbString
     public static final String BACKGROUND_COLOR = "backgroundColor";
