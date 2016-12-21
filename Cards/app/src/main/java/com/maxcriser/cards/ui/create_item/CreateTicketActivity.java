@@ -39,6 +39,7 @@ import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.constant.Extras;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
+import com.maxcriser.cards.database.models.ModelNFCItems;
 import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.loader.image.ImageLoader;
@@ -388,6 +389,17 @@ public class CreateTicketActivity extends AppCompatActivity {
             cvNewTicket.put(ModelTickets.TIME, timeStr);
             cvNewTicket.put(ModelTickets.BACKGROUND_COLOR, myColorCode);
             cvNewTicket.put(ModelTickets.ID, (Integer) null);
+
+            // TODO DELETE DOWN
+
+            ContentValues cv = new ContentValues();
+            cv.put(ModelNFCItems.TITLE, titleStr);
+            cv.put(ModelNFCItems.ID, (Integer) null);
+            cv.put(ModelNFCItems.TAG, "Checking TAG");
+            cv.put(ModelNFCItems.BACKGROUND_COLOR, myColorCode);
+
+            db.insert(ModelNFCItems.class, cv, null);
+            // TODO DELETE UP
 
             db.insert(ModelTickets.class, cvNewTicket, new OnResultCallback<Long, Void>() {
                 @Override

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <com.maxcriser.cards.view.text_view.RobotoThin
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:text="@string/hold_your_phone_to_edc_or_pos_machine"
+            android:textAllCaps="true"
+            android:textColor="@color/text_toolbar"
+            android:textSize="16sp"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/pos_machine"
+                android:layout_width="124dp"
+                android:layout_height="124dp"
+                android:layout_gravity="center|start"
+                android:layout_marginBottom="-12dp"
+                android:layout_marginStart="24dp"
+                android:src="@drawable/pos_machine"/>
+
+            <ImageView
+                android:id="@+id/long_hand"
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="-24dp"
+                android:layout_marginBottom="-30dp"
+                android:src="@drawable/long_hand"/>
+
+        </FrameLayout>
+    </LinearLayout>
+</FrameLayout>

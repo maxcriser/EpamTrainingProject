@@ -12,6 +12,7 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
+import com.maxcriser.cards.database.models.ModelNFCItems;
 import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.view_holder.CursorHolder;
 
@@ -36,7 +37,7 @@ public class CursorAdapter extends RecyclerView.Adapter<CursorHolder> {
     @Override
     public void onBindViewHolder(CursorHolder holder, int position) {
         if (mCursor.moveToPosition(position)) {
-            if (mView.equals(R.layout.item_list_bank)) {
+            if (mView.equals(R.layout.item_bank)) {
                 String type = mCursor.getString(mCursor.getColumnIndex(ModelBankCards.TYPE));
                 Integer typeID;
                 if (type.equals(Constants.Cards.VISA)) {
@@ -83,9 +84,12 @@ public class CursorAdapter extends RecyclerView.Adapter<CursorHolder> {
                 holder.mTitle.setText(mCursor
                         .getString(mCursor.getColumnIndex(ModelDiscountCards.TITLE)));
                 holder.mTitle.setTag(mCursor.getInt(mCursor.getColumnIndex(ModelDiscountCards.ID)));
-
-            } else {
-
+            } else if (mView.equals(R.layout.item_nfc)) {
+                holder.mLinearCard.setBackgroundColor(Color.parseColor(mCursor
+                        .getString(mCursor.getColumnIndex(ModelNFCItems.BACKGROUND_COLOR))));
+                holder.mTitle.setText(mCursor
+                        .getString(mCursor.getColumnIndex(ModelNFCItems.TITLE)));
+                holder.mTitle.setTag(mCursor.getInt(mCursor.getColumnIndex(ModelNFCItems.ID)));
             }
         }
     }

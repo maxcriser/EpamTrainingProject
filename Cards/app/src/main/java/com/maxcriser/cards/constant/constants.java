@@ -72,6 +72,7 @@ public class Constants {
         int ID_BANK_CARD_ITEM_TYPE = 1; // visa, mastercard and etc.
         int ID_DISCOUNT_ITEM = 2;
         int ID_TICKET_ITEM = 3;
+        int ID_NFC_ITEM = 4;
     }
 
     public static final String URL_JSON_LOCATION = "http://ip-api.com/json";

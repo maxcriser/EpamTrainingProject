@@ -290,7 +290,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
                             } else if (typeItems.equals(Constants.Titles.TICKETS_TITLE)) {
                                 showTicket(pCursor);
                             } else {
-                                // TODO: 12.12.2016 showNFC(pCursor)
+                                showNfc(pCursor);
                             }
                         }
                     }
