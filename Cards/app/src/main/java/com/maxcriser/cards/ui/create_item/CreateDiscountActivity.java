@@ -55,7 +55,7 @@ public class CreateDiscountActivity extends AppCompatActivity {
         mEditText = (EditText) findViewById(R.id.id_edit_text_name_discount);
         pager = (ViewPager) findViewById(R.id.pager);
         db = DatabaseHelperImpl.getInstance(this);
-        title.setText(Constants.TitlesNew.NEW_DISCOUNT_TITLE);
+        title.setText(getResources().getString(R.string.new_discount_title));
         Intent barcodeIntent = getIntent();
         String barcode = barcodeIntent.getStringExtra(BarcodeScannerActivity.TAG_BARCODE);
         OwnAsyncTask barcodeGenerator = new OwnAsyncTask();

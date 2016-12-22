@@ -299,7 +299,7 @@ public class LockerActivity extends AppCompatActivity {
     public void start() {
         if (intentLockedPage.equals(MenuActivity.CREDIT_CARD)) {
             intent = new Intent(LockerActivity.this, ItemsActivity.class);
-            MenuActivity.selectItem = Constants.Titles.BANK_TITLE;
+            MenuActivity.selectItem = getResources().getString(R.string.bank_title);;
             startActivity(intent);
         } else {
             Intent intent = new Intent(LockerActivity.this, SetupPinActivity.class);

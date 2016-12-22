@@ -53,20 +53,6 @@ public class Constants {
         String BUTTON_NINE = "9";
     }
 
-    public interface Titles {
-        String BANK_TITLE = "Credit cards";
-        String DISCOUNT_TITLE = "Discount cards";
-        String TICKETS_TITLE = "Tickets";
-        String NFC_TITLE = "NFC items";
-    }
-
-    public interface TitlesNew {
-        String NEW_DISCOUNT_TITLE = "New discount card";
-        String NEW_BANK_TITLE = "New credit card";
-        String NEW_TICKET_TITLE = "New ticket";
-        String NEW_NFC_TITLE = "New NFC item";
-    }
-
     public interface PagerIDs {
         int ID_BANK_CARD_ITEM = 0;
         int ID_BANK_CARD_ITEM_TYPE = 1; // visa, mastercard and etc.

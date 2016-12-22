@@ -12,11 +12,11 @@
         android:toYDelta="0%"/>
 
     <rotate
-        android:duration="300"
+        android:duration="800"
         android:fromDegrees="0"
         android:pivotX="50%"
         android:pivotY="50%"
-        android:startOffset="1500"
+        android:startOffset="1000"
         android:toDegrees="-22"/>
 
     <translate
@@ -28,7 +28,7 @@
         android:toYDelta="0%"/>
 
     <rotate
-        android:duration="300"
+        android:duration="800"
         android:fromDegrees="0"
         android:pivotX="50%"
         android:pivotY="50%"

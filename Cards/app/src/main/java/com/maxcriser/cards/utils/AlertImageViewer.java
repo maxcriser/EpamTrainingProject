@@ -36,7 +36,7 @@ public class AlertImageViewer extends AlertDialog {
 
     public void startDialog() {
         LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.test_alert_dialog, null);
+        View layout = inflater.inflate(R.layout.fragment_alertdialog_imageviewer, null);
         Builder builder = new Builder(context);
         builder.setView(layout);
         builder.setPositiveButton("Ok", new OnClickListener() {

@@ -238,18 +238,18 @@ public class MenuActivity extends AppCompatActivity
                     break;
                 case R.id.main_discount_card:
                     intent = new Intent(MenuActivity.this, ItemsActivity.class);
-                    selectItem = Constants.Titles.DISCOUNT_TITLE;
+                    selectItem = getResources().getString(R.string.discount_title);
                     startActivity(intent);
                     break;
                 case R.id.main_nfc_card:
 //                    startActivity(new Intent(MenuActivity.this, NFCTest.class));
                     intent = new Intent(MenuActivity.this, ItemsActivity.class);
-                    selectItem = Constants.Titles.NFC_TITLE;
+                    selectItem = getResources().getString(R.string.nfc_title);
                     startActivity(intent);
                     break;
                 case R.id.main_tickets_card:
                     intent = new Intent(MenuActivity.this, ItemsActivity.class);
-                    selectItem = Constants.Titles.TICKETS_TITLE;
+                    selectItem = getResources().getString(R.string.tickets_title);
                     startActivity(intent);
                     break;
             }

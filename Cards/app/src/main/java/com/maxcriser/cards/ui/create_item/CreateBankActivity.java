@@ -130,7 +130,7 @@ public class CreateBankActivity extends AppCompatActivity {
         setDateOnView();
         currentPositionColors = 0;
         RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
-        title.setText(Constants.TitlesNew.NEW_BANK_TITLE);
+        title.setText(getResources().getString(R.string.bank_title));
 
         PreviewColor listPreviewColor = previewColors.get(0);
         myColorName = listPreviewColor.getNameColorCards();

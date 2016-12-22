@@ -19,7 +19,7 @@
     <color name="text_black">#ff000000</color>
     <color name="white_shadow">#96ffffff</color>
     <color name="black">#000000</color>
-        <color name="card_view">#009687</color>
+    <color name="card_view">#009687</color>
     <color name="floating_menu_button">#db4437</color>
     <color name="text_color_launch_screen">#cdcdcd</color>
     <color name="no_result_for_color">#5c6c79</color>

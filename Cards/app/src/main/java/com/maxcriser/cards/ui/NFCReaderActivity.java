@@ -43,7 +43,7 @@ public class NfcReaderActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_nfc_reader);
         context = this;
 
         tvNFCContent = (TextView) findViewById(R.id.nfc_contents);

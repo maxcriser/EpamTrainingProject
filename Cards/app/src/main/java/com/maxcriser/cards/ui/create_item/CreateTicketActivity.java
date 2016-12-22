@@ -220,7 +220,7 @@ public class CreateTicketActivity extends AppCompatActivity {
         setDateOnView();
         setTimeOnView();
         db = DatabaseHelperImpl.getInstance(this);
-        title.setText(Constants.TitlesNew.NEW_TICKET_TITLE);
+        title.setText(getResources().getString(R.string.new_ticket_title));
 
         PreviewColor listPreviewColor = previewColors.get(0);
         myColorName = listPreviewColor.getNameColorCards();

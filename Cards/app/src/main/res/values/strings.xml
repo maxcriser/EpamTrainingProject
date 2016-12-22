@@ -1,9 +1,7 @@
 <resources>
-    <string name="app_name">Cards</string>
-
+    <string name="app_name">CKeeper</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_settings">Settings</string>
     <string name="text_empty_page">At this point you have no cards in this section.</string>
     <string name="text_big_add_new_card">add new card</string>
@@ -22,18 +20,12 @@
     <string name="enter_name_of_the_card">Enter name of the card...</string>
     <string name="search_your_cards">Search your cards</string>
     <string name="nfc">NFC</string>
-    <string name="now_all_contactless_cards_in_your_mobile_phone">Now all contactless cards in your
-        mobile phone
-    </string>
-    <string name="keep_your_tickets_on_the_same_device">Keep your tickets on the same device
-    </string>
+    <string name="now_all_contactless_cards_in_your_mobile_phone">Now all contactless cards in your mobile phone</string>
+    <string name="keep_your_tickets_on_the_same_device">Keep your tickets on the same device</string>
     <string name="tickets">Tickets</string>
-    <string name="to_use_the_discount_cards_are_now_much_easier">To use the discount cards are now
-        much easier
-    </string>
+    <string name="to_use_the_discount_cards_are_now_much_easier">To use the discount cards are now much easier</string>
     <string name="discount_cards">Discount cards</string>
-    <string name="keep_your_credit_cards_for_quick_access">Keep your credit cards for quick access
-    </string>
+    <string name="keep_your_credit_cards_for_quick_access">Keep your credit cards for quick access</string>
     <string name="credit_cards">Credit cards</string>
     <string name="_0">0</string>
     <string name="_9">9</string>
@@ -55,20 +47,15 @@
     <string name="wxyz">WXYZ</string>
     <string name="location">Location</string>
     <string name="no_internet_connection">No Internet Connection</string>
-    <string name="looks_like_iconnection">It looks like your internet connection is off. Please turn
-        it on and try again.
-    </string>
+    <string name="looks_like_iconnection">It looks like your internet connection is off. Please turn it on and try again.</string>
     <string name="btn_continue">continue</string>
-    <string name="shared_input_password_first">To protect your credit cards please install the
-        security PIN
-    </string>
+    <string name="shared_input_password_first">To protect your credit cards please install the security PIN</string>
     <string name="confirm_your_pin">\nConfirm your PIN</string>
     <string name="version">Version: 1.0.0.0 (1)</string>
     <string name="night_mode">Night mode</string>
     <string name="share">Share</string>
     <string name="title_second_group">Communicate</string>
-    <string name="attach_the_card_to_the_device_to_read">Attach the card to the device to read
-    </string>
+    <string name="attach_the_card_to_the_device_to_read">Attach the card to the device to read</string>
     <string name="scanned_the_code_right_here">Scanned code right here</string>
     <string name="say_what_no_results_for_test">Say what?! No results for \'test\'</string>
     <string name="no_result_for">Say what?! No result for</string>
@@ -130,18 +117,14 @@
     <string name="enter_the_name_of_the_card">Enter the name of the card:</string>
     <string name="new_nfc_item">New NFC item</string>
     <string name="hold_your_phone_to_edc_or_pos_machine">Please hold your phone to edc or pos machine</string>
+    <string name="bank_title">Credit cards</string>
+    <string name="discount_title">Discount cards</string>
+    <string name="tickets_title">Tickets</string>
+    <string name="nfc_title">NFC items</string>
+    <string name="new_discount_title">New discount card</string>
+    <string name="new_bank_title">New credit card</string>
+    <string name="new_ticket_title">New ticket</string>
+    <string name="new_nfc_title">New NFC item</string>
+    <string name="setup_pin">Setup PIN</string>
 
-    <string-array name="type_of_cards">
-        <item>bank cards</item>
-        <item>discount cards</item>
-        <item>tickets</item>
-    </string-array>
-
-    <string-array name="drawer_bar">
-        <item>Profile</item>
-        <item>Theme</item>
-        <item>Settings</item>
-        <item>About</item>
-        <item>Exit</item>
-    </string-array>
 </resources>
