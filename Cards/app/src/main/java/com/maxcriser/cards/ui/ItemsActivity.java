@@ -39,7 +39,7 @@ import android.widget.Toast;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
-import com.maxcriser.cards.constant.Constants;
+import com.maxcriser.cards.constant.constants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
@@ -97,7 +97,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     private LinearLayout linearEmpty;
     private ImageView clearSearch;
     private EditText searchEdit;
-    private String searchText = Constants.EMPTY_STRING;
+    private String searchText = constants.EMPTY_STRING;
     private Class ModelClass;
 
     @Override
@@ -326,6 +326,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     @Override
     protected void onResume() {
         super.onResume();
+        //TODO find answer why here loaders but in another place tasks and in one more place Executors
         LoaderManager supportLoaderManager = getSupportLoaderManager();
         if (supportLoaderManager.getLoader(LOADER_ID) != null) {
             supportLoaderManager.getLoader(LOADER_ID).forceLoad();
@@ -346,7 +347,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         if (ContextCompat.checkSelfPermission(this, PERMISSION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{PERMISSION}, CODE);
         } else {
-            if (INTENT == Constants.Requests.REQUEST_CAMERA) {
+            if (INTENT == constants.Requests.REQUEST_CAMERA) {
                 startBarcodeReader();
             }
         }
@@ -358,7 +359,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
             return;
         } else if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, R.string.permission_has_not_been_granted, Toast.LENGTH_SHORT).show();
-        } else if (requestCode == Constants.Requests.REQUEST_CAMERA) {
+        } else if (requestCode == constants.Requests.REQUEST_CAMERA) {
             startBarcodeReader();
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -374,7 +375,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         if (typeItems.equals(getResources().getString(R.string.bank_title))) {
             startActivity(new Intent(ItemsActivity.this, CreateBankActivity.class));
         } else if (typeItems.equals(getResources().getString(R.string.discount_title))) {
-            getPermission(Constants.Requests.REQUEST_CAMERA, Manifest.permission.CAMERA, Constants.Requests.REQUEST_CAMERA);
+            getPermission(constants.Requests.REQUEST_CAMERA, Manifest.permission.CAMERA, constants.Requests.REQUEST_CAMERA);
         } else if (typeItems.equals(getResources().getString(R.string.tickets_title))) {
             startActivity(new Intent(ItemsActivity.this, CreateTicketActivity.class));
         } else {
@@ -386,7 +387,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     public void onBackSearchClicked(View view) {
         toolbarBack.setVisibility(View.VISIBLE);
         toolbarSearch.setVisibility(GONE);
-        searchEdit.setText(Constants.EMPTY_STRING);
+        searchEdit.setText(constants.EMPTY_STRING);
         searchText = searchEdit.getText().toString();
         getSupportLoaderManager().restartLoader(LOADER_ID, null, ItemsActivity.this);
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -450,7 +451,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     public void onSearchClicked(View view) {
         toolbarSearch.setVisibility(View.VISIBLE);
         toolbarBack.setVisibility(GONE);
-        searchEdit.setText(Constants.EMPTY_STRING);
+        searchEdit.setText(constants.EMPTY_STRING);
         searchEdit.clearFocus();
         searchEdit.requestFocus();
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -458,6 +459,6 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
     public void onClearSearchClicked(View view) {
-        searchEdit.setText(Constants.EMPTY_STRING);
+        searchEdit.setText(constants.EMPTY_STRING);
     }
 }

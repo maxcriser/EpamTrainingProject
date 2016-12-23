@@ -58,6 +58,7 @@ public class ImageLoader {
         };
     }
 
+    //TODO move to Application
     public static ImageLoader getInstance() {
         if (sImageLoader == null) {
             sImageLoader = new ImageLoader();
@@ -79,6 +80,7 @@ public class ImageLoader {
             cachedBitmap = mLruCache.get(pUrl);
         }
         Log.d(TAG, "downloadToView: CACHED: " + (cachedBitmap == null ? "NO" : "YES") + " " + pUrl);
+        //TODO need to be someString.equals(anotherString)
         if (cachedBitmap != null && pView.getTag() == pUrl) {
             Log.d(TAG, "downloadToView: FROM LRU CACHE " + pUrl);
             if (pArgs.length != 0) {
@@ -111,6 +113,7 @@ public class ImageLoader {
                         inputStream = connection.getInputStream();
                         bitmap = BitmapFactory.decodeStream(inputStream);
                     } catch (final Exception e) {
+                        //TODO rethrow to next level
                         Log.e(TAG, "download: ", e);
                     } finally {
                         if (inputStream != null) {

@@ -11,7 +11,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.maxcriser.cards.async.OnResultCallback;
-import com.maxcriser.cards.constant.Constants;
+import com.maxcriser.cards.constant.constants;
 import com.maxcriser.cards.database.annotations.Table;
 import com.maxcriser.cards.database.annotations.dbBlob;
 import com.maxcriser.cards.database.annotations.dbBoolean;
@@ -19,7 +19,6 @@ import com.maxcriser.cards.database.annotations.dbFloat;
 import com.maxcriser.cards.database.annotations.dbInteger;
 import com.maxcriser.cards.database.annotations.dbPrimaryKey;
 import com.maxcriser.cards.database.annotations.dbString;
-import com.maxcriser.cards.utils.ContextHolder;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
@@ -48,6 +47,7 @@ public class DatabaseHelperImpl extends SQLiteOpenHelper {
     // TODO move to Application
     // TODO ue interfaces (see how Vova implement that)
     public static synchronized DatabaseHelperImpl getInstance(Context pContext) {
+        //TODO not thread safe
         if (mHelper == null) {
             mHelper = new DatabaseHelperImpl(pContext);
         }
@@ -75,7 +75,7 @@ public class DatabaseHelperImpl extends SQLiteOpenHelper {
                 for (int i = 0; i < fields.length; i++) {
                     final Annotation[] annotations = fields[i].getAnnotations();
                     String type = null;
-                    String additionalKeys = Constants.EMPTY_STRING;
+                    String additionalKeys = constants.EMPTY_STRING;
                     for (Annotation annotation : annotations) {
                         if (annotation instanceof dbInteger) {
                             type = ((dbInteger) annotation).value();
@@ -152,6 +152,7 @@ public class DatabaseHelperImpl extends SQLiteOpenHelper {
     public synchronized void insert(final Class<?> pModel,
                                     final ContentValues pValues,
                                     @Nullable final OnResultCallback<Long, Void> pCallback) {
+        //TODO check Executors
         new AsyncTask<Void, Void, Long>() {
             @Override
             protected Long doInBackground(Void... params) {

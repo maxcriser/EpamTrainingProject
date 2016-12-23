@@ -10,7 +10,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.maxcriser.cards.R;
-
+//TODO rename extends Dialog
 public class AlertNfcOutput extends AlertDialog {
 
     private Context context;

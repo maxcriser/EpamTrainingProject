@@ -1,6 +1,6 @@
 package com.maxcriser.cards.model;
 
-import com.maxcriser.cards.constant.Constants;
+import com.maxcriser.cards.constant.constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,14 +30,14 @@ public class PreviewListColorsSetter {
 
     public void setTypeCard() {
         typeCard = new ArrayList<>();
-        typeCard.add(Constants.Cards.VISA);
-        typeCard.add(Constants.Cards.MASTERCARD);
-        typeCard.add(Constants.Cards.AMEX);
-        typeCard.add(Constants.Cards.MAESTRO);
-        typeCard.add(Constants.Cards.WESTERN_UNION);
-        typeCard.add(Constants.Cards.JCB);
-        typeCard.add(Constants.Cards.DINERS_CLUB);
-        typeCard.add(Constants.Cards.BELCARD);
+        typeCard.add(constants.Cards.VISA);
+        typeCard.add(constants.Cards.MASTERCARD);
+        typeCard.add(constants.Cards.AMEX);
+        typeCard.add(constants.Cards.MAESTRO);
+        typeCard.add(constants.Cards.WESTERN_UNION);
+        typeCard.add(constants.Cards.JCB);
+        typeCard.add(constants.Cards.DINERS_CLUB);
+        typeCard.add(constants.Cards.BELCARD);
     }
 
     private void addPreviewColors(String name, String color) {
@@ -63,6 +63,7 @@ public class PreviewListColorsSetter {
         return typeCard;
     }
 
+    //TODO static
     public static PreviewListColorsSetter getInstance() {
         if (sPreviewListColorsSetter == null) {
             sPreviewListColorsSetter = new PreviewListColorsSetter();

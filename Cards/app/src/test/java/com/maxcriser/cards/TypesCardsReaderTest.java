@@ -1,7 +1,7 @@
 package com.maxcriser.cards;
 
 
-import com.maxcriser.cards.constant.Constants;
+import com.maxcriser.cards.constant.constants;
 import com.maxcriser.cards.model.CreditCard;
 import com.maxcriser.cards.utils.UniqueStringGenerator;
 
@@ -27,7 +27,7 @@ public class TypesCardsReaderTest {
 
 
     private boolean isCharacterOrSpace(char ch) {
-        String chStr = ch + Constants.EMPTY_STRING;
+        String chStr = ch + constants.EMPTY_STRING;
         if ((chStr).matches("^[A-Za-z]+$") || (chStr).matches("^[А-Яа-я]+$") || ch == ' ' || ch == '.' || ch == '-' || ch == '&') {
             return true;
         }

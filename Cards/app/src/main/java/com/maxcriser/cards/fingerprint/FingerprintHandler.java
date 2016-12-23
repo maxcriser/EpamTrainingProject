@@ -22,6 +22,8 @@ import java.util.concurrent.locks.Lock;
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
 
     private Context appContext;
+
+    //TODO ???
     private LockerActivity mLockerActivity = new LockerActivity();
 
     public FingerprintHandler(Context context) {

@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.ui.NfcReaderActivity;
+import com.maxcriser.cards.ui.NFCReaderActivity;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -50,7 +50,7 @@ public class NFCWriteFragment extends DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mListener = (NfcReaderActivity)context;
+        mListener = (NFCReaderActivity)context;
         mListener.onDialogDisplayed();
     }
 
@@ -75,6 +75,7 @@ public class NFCWriteFragment extends DialogFragment {
                 ndef1.connect();
                 NdefRecord mimeRecord = NdefRecord.createMime("text/plain", message.getBytes(Charset.forName("US-ASCII")));
                 ndef1.writeNdefMessage(new NdefMessage(mimeRecord));
+                //TODO move to final
                 ndef1.close();
                 //Write Successful
                 mTvMessage.setText(getString(R.string.message_write_success));

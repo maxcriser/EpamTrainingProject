@@ -1,3 +1,4 @@
+//TODO move to dialog package
 package com.maxcriser.cards.utils;
 
 import android.app.AlertDialog;
@@ -10,6 +11,9 @@ import android.widget.Toast;
 
 import com.maxcriser.cards.R;
 
+
+//TODO strings to resource
+//TODO rename to EnterNfcNameDialogBuilder
 public class AlertEnterNfcName extends AlertDialog {
 
     private Context context;

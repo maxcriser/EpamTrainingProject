@@ -22,7 +22,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.constant.Constants;
+import com.maxcriser.cards.constant.constants;
 import com.maxcriser.cards.fingerprint.FingerprintHandler;
 
 import java.io.IOException;
@@ -52,8 +52,8 @@ public class LockerActivity extends AppCompatActivity {
     private ImageView fourthCircle;
     private Vibrator mVibrator;
     private Intent intent;
-    private String intentLockedPage = Constants.EMPTY_STRING;
-    private String builderPassword = Constants.EMPTY_STRING;
+    private String intentLockedPage = constants.EMPTY_STRING;
+    private String builderPassword = constants.EMPTY_STRING;
     private Integer durationVibrateError = 200;
     private Integer durationVibrateInput = 10;
     private KeyStore keyStore;
@@ -128,7 +128,7 @@ public class LockerActivity extends AppCompatActivity {
         intentLockedPage = intent.getStringExtra(TYPE_LOCKED_SCREEN);
         Toast.makeText(this, LaunchScreenActivity.loadPassword, Toast.LENGTH_SHORT).show();
         mHandler = new Handler(hc);
-        builderPassword = Constants.EMPTY_STRING;
+        builderPassword = constants.EMPTY_STRING;
         firstCircle = (ImageView) findViewById(R.id.crlcOne);
         secondCircle = (ImageView) findViewById(R.id.crlcTwo);
         thirdCircle = (ImageView) findViewById(R.id.crlcThree);
@@ -140,6 +140,7 @@ public class LockerActivity extends AppCompatActivity {
         try {
             keyStore = KeyStore.getInstance("AndroidKeyStore");
         } catch (Exception e) {
+            //TODO throw runtime exception
             e.printStackTrace();
         }
 
@@ -222,58 +223,66 @@ public class LockerActivity extends AppCompatActivity {
             } else {
                 mVibrator.vibrate(durationVibrateError);
                 setBackgroundCircles(false, firstCircle, secondCircle, thirdCircle, fourthCircle);
+//                TODO
+//                new Handler().postDelayed(new Runnable() {
+//
+//                    @Override
+//                    public void run() {
+//                        error();
+//                    }
+//                }, 350);
                 mHandler.sendEmptyMessageDelayed(1, 350);
             }
         }
     }
 
     public void zeroInput(View view) {
-        inputPassword(Constants.Keyboard.BUTTON_ZERO);
+        inputPassword(constants.Keyboard.BUTTON_ZERO);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void oneInput(View view) {
-        inputPassword(Constants.Keyboard.BUTTON_ONE);
+        inputPassword(constants.Keyboard.BUTTON_ONE);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void twoInput(View view) {
-        inputPassword(Constants.Keyboard.BUTTON_TWO);
+        inputPassword(constants.Keyboard.BUTTON_TWO);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void threeInput(View view) {
-        inputPassword(Constants.Keyboard.BUTTON_THREE);
+        inputPassword(constants.Keyboard.BUTTON_THREE);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void fourInput(View view) {
-        inputPassword(Constants.Keyboard.BUTTON_FOUR);
+        inputPassword(constants.Keyboard.BUTTON_FOUR);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void fiveInput(View view) {
-        inputPassword(Constants.Keyboard.BUTTON_FIVE);
+        inputPassword(constants.Keyboard.BUTTON_FIVE);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void sixInput(View view) {
-        inputPassword(Constants.Keyboard.BUTTON_SIX);
+        inputPassword(constants.Keyboard.BUTTON_SIX);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void sevenInput(View view) {
-        inputPassword(Constants.Keyboard.BUTTON_SEVEN);
+        inputPassword(constants.Keyboard.BUTTON_SEVEN);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void eightInput(View view) {
-        inputPassword(Constants.Keyboard.BUTTON_EIGHT);
+        inputPassword(constants.Keyboard.BUTTON_EIGHT);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void nineInput(View view) {
-        inputPassword(Constants.Keyboard.BUTTON_NINE);
+        inputPassword(constants.Keyboard.BUTTON_NINE);
         mVibrator.vibrate(durationVibrateInput);
     }
 
@@ -289,7 +298,7 @@ public class LockerActivity extends AppCompatActivity {
 
     public void onDeleteClicked(View view) {
         if (builderPassword.length() != 0) {
-            builderPassword = Constants.EMPTY_STRING;
+            builderPassword = constants.EMPTY_STRING;
             setBackgroundCircles(true, firstCircle, secondCircle, thirdCircle, fourthCircle);
         }
     }
@@ -302,6 +311,7 @@ public class LockerActivity extends AppCompatActivity {
         if (intentLockedPage.equals(MenuActivity.CREDIT_CARD)) {
             setBackgroundCircle(firstCircle, secondCircle, thirdCircle, fourthCircle);
             intent = new Intent(LockerActivity.this, ItemsActivity.class);
+            //TODO remove magic
             MenuActivity.selectItem = getResources().getString(R.string.bank_title);
             startActivity(intent);
         } else {

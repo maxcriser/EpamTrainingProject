@@ -3,7 +3,6 @@ package com.maxcriser.cards.ui;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.nfc.NfcAdapter;
@@ -17,13 +16,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.SwitchCompat;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CompoundButton;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.constant.Constants;
+import com.maxcriser.cards.constant.constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,17 +32,22 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import static android.view.View.GONE;
-import static com.maxcriser.cards.constant.Constants.URL_JSON_LOCATION;
+import static com.maxcriser.cards.constant.constants.URL_JSON_LOCATION;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    //TODO remove static
     public static String selectItem;
     public static final String TYPE_LOCKED_SCREEN = "type_locked_screen";
     public static final String CREDIT_CARD = "credit_card";
+
+    //TODO move all constants to separate class
     private final String SETUP_PIN = "setup_pin";
     private final String TEXT_PLAIN = "text/plain";
     private final String SHARE_BODY = "Donwloads my application on playmarket: cards_application.com";
+
+    //TODO move to resources
     private final String SHARE_TITLE = "Cards application";
     private final String SHARE_USING = "Share using";
     private final String COUNTRY_ID = "country";
@@ -74,6 +76,8 @@ public class MenuActivity extends AppCompatActivity
         CardView nfc = (CardView) findViewById(R.id.main_nfc_card);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+
         NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter == null) {
             nfc.setVisibility(GONE);
@@ -93,6 +97,7 @@ public class MenuActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    //TODO ConnectivityManager
     private NetworkInfo getNetworkInfo(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo();
@@ -172,10 +177,11 @@ public class MenuActivity extends AppCompatActivity
     private class ParseLocation extends AsyncTask<Void, Void, String> {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
-        String resultJson = Constants.EMPTY_STRING;
+        String resultJson = constants.EMPTY_STRING;
 
         @Override
         protected String doInBackground(Void... params) {
+            //TODO try catch final
             try {
                 URL url = new URL(URL_JSON_LOCATION);
 
@@ -183,6 +189,7 @@ public class MenuActivity extends AppCompatActivity
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
 
+                //TODO inputStream is not closed
                 InputStream inputStream = urlConnection.getInputStream();
                 StringBuilder buffer = new StringBuilder();
 
@@ -241,17 +248,19 @@ public class MenuActivity extends AppCompatActivity
                     break;
                 case R.id.main_discount_card:
                     intent = new Intent(MenuActivity.this, ItemsActivity.class);
+                    //TODO magic
                     selectItem = getResources().getString(R.string.discount_title);
                     startActivity(intent);
                     break;
                 case R.id.main_nfc_card:
-                    startActivity(new Intent(MenuActivity.this, NfcReaderActivity.class));
+                    startActivity(new Intent(MenuActivity.this, NFCReaderActivity.class));
 //                    intent = new Intent(MenuActivity.this, ItemsActivity.class);
 //                    selectItem = getResources().getString(R.string.nfc_title);
 //                    startActivity(intent);
                     break;
                 case R.id.main_tickets_card:
                     intent = new Intent(MenuActivity.this, ItemsActivity.class);
+                    //TODO magic
                     selectItem = getResources().getString(R.string.tickets_title);
                     startActivity(intent);
                     break;

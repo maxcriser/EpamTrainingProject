@@ -11,6 +11,8 @@ public class OwnAsyncTask {
     private ExecutorService mExecutorService;
 
     public OwnAsyncTask() {
+
+        //TODO why 3? should be number of cores
         int COUNT_CORES = 3;
         this.mExecutorService = Executors.newFixedThreadPool(COUNT_CORES);
     }
@@ -50,6 +52,7 @@ public class OwnAsyncTask {
                         }
                     });
                 } catch (Exception pE) {
+                    //TODO {}
                     if (onResultCallback != null)
                         onResultCallback.onError(pE);
                 }

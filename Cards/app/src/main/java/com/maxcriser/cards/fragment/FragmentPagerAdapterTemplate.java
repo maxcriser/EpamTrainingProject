@@ -19,6 +19,7 @@ public class FragmentPagerAdapterTemplate extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        //TODO magic numbers
         if (adapter == 1)
             return FragmentPreviewTypeCards.newInstance(position);
         else if (adapter == 2)

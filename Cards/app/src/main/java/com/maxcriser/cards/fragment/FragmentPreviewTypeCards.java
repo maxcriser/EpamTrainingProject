@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.constant.Constants;
+import com.maxcriser.cards.constant.constants;
 
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
 
@@ -38,21 +38,21 @@ public class FragmentPreviewTypeCards extends Fragment {
         View view = inflater.inflate(R.layout.preview_type_item, null);
         ImageView tvPage = (ImageView) view.findViewById(R.id.icon_type_card);
         String type = previewTypes.get(pageNumberType);
-        if (type.equals(Constants.Cards.VISA)) {
+        if (type.equals(constants.Cards.VISA)) {
             tvPage.setImageResource(R.drawable.type_visa);
-        } else if (type.equals(Constants.Cards.MASTERCARD)) {
+        } else if (type.equals(constants.Cards.MASTERCARD)) {
             tvPage.setImageResource(R.drawable.type_mastercard);
-        } else if (type.equals(Constants.Cards.AMEX)) {
+        } else if (type.equals(constants.Cards.AMEX)) {
             tvPage.setImageResource(R.drawable.type_amex);
-        } else if (type.equals(Constants.Cards.MAESTRO)) {
+        } else if (type.equals(constants.Cards.MAESTRO)) {
             tvPage.setImageResource(R.drawable.type_maestro);
-        } else if (type.equals(Constants.Cards.WESTERN_UNION)) {
+        } else if (type.equals(constants.Cards.WESTERN_UNION)) {
             tvPage.setImageResource(R.drawable.type_western_union);
-        } else if (type.equals(Constants.Cards.JCB)) {
+        } else if (type.equals(constants.Cards.JCB)) {
             tvPage.setImageResource(R.drawable.type_jcb);
-        } else if (type.equals(Constants.Cards.DINERS_CLUB)) {
+        } else if (type.equals(constants.Cards.DINERS_CLUB)) {
             tvPage.setImageResource(R.drawable.type_diners_club);
-        } else if (type.equals(Constants.Cards.BELCARD)) {
+        } else if (type.equals(constants.Cards.BELCARD)) {
             tvPage.setImageResource(R.drawable.type_belcard);
         }
         return view;

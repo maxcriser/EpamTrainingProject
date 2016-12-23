@@ -18,12 +18,13 @@ import com.maxcriser.cards.fragment.Listener;
 import com.maxcriser.cards.fragment.NFCReadFragment;
 import com.maxcriser.cards.fragment.NFCWriteFragment;
 
-public class NfcReaderActivity extends AppCompatActivity implements Listener {
+public class NFCReaderActivity extends AppCompatActivity implements Listener {
 
-    public static final String TAG = NfcReaderActivity.class.getSimpleName();
+    public static final String TAG = NFCReaderActivity.class.getSimpleName();
 
     private EditText mEtMessage;
 
+    //TODO almost the same, need to be common abstraction
     private NFCWriteFragment mNfcWriteFragment;
     private NFCReadFragment mNfcReadFragment;
 
@@ -123,6 +124,7 @@ public class NfcReaderActivity extends AppCompatActivity implements Listener {
         Log.d(TAG, "onNewIntent: " + intent.getAction());
 
         if (tag != null) {
+            //TODO debug and Google
             Ndef ndef = Ndef.get(tag);
 
             if (isDialogDisplayed) {

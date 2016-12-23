@@ -23,7 +23,7 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.RemovePhoto;
-import com.maxcriser.cards.constant.Constants;
+import com.maxcriser.cards.constant.constants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.loader.image.ImageLoader;
@@ -190,19 +190,19 @@ public class BankCardActivity extends Activity {
         verificationNumber.setText(verNumber);
         editValid.setText(valid);
         Integer typeID;
-        if (type.equals(Constants.Cards.VISA)) {
+        if (type.equals(constants.Cards.VISA)) {
             typeID = R.drawable.type_visa;
-        } else if (type.equals(Constants.Cards.MASTERCARD)) {
+        } else if (type.equals(constants.Cards.MASTERCARD)) {
             typeID = R.drawable.type_mastercard;
-        } else if (type.equals(Constants.Cards.AMEX)) {
+        } else if (type.equals(constants.Cards.AMEX)) {
             typeID = R.drawable.type_amex;
-        } else if (type.equals(Constants.Cards.MAESTRO)) {
+        } else if (type.equals(constants.Cards.MAESTRO)) {
             typeID = R.drawable.type_maestro;
-        } else if (type.equals(Constants.Cards.WESTERN_UNION)) {
+        } else if (type.equals(constants.Cards.WESTERN_UNION)) {
             typeID = R.drawable.type_western_union;
-        } else if (type.equals(Constants.Cards.JCB)) {
+        } else if (type.equals(constants.Cards.JCB)) {
             typeID = R.drawable.type_jcb;
-        } else if (type.equals(Constants.Cards.DINERS_CLUB)) {
+        } else if (type.equals(constants.Cards.DINERS_CLUB)) {
             typeID = R.drawable.type_diners_club;
         } else {
             typeID = R.drawable.type_belcard;

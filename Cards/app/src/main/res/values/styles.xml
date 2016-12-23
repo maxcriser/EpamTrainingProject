@@ -6,6 +6,7 @@
         <item name="colorPrimary">#ffffff</item>
         <item name="colorPrimaryDark">@color/text_toolbar</item>
         <item name="android:windowBackground">@color/background_color_empty_page</item>
+        <!--TODO where is custom styles and attrs !-->
     </style>
 
     <style name="SplashTheme" parent="@android:style/Theme.NoTitleBar.Fullscreen">
