@@ -22,7 +22,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -214,7 +213,7 @@ public class CreateBankActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == EDIT_IMAGE_FRONT) {
                 editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
-                ImageLoader.getInstance().downloadAndDraw(editFrontUri.toString(), frontPhoto, new OnResultCallback<Bitmap, Void>() {
+                ImageLoader.getInstance().downloadToView(editFrontUri.toString(), frontPhoto, new OnResultCallback<Bitmap, Void>() {
                     @Override
                     public void onSuccess(Bitmap pBitmap) {
                         removeFront.setVisibility(View.VISIBLE);
@@ -267,7 +266,7 @@ public class CreateBankActivity extends AppCompatActivity {
                 frontPhoto.setClickable(false);
             } else if (requestCode == EDIT_IMAGE_BACK) {
                 editBackUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
-                ImageLoader.getInstance().downloadAndDraw(editBackUri.toString(), backPhoto, new OnResultCallback<Bitmap, Void>() {
+                ImageLoader.getInstance().downloadToView(editBackUri.toString(), backPhoto, new OnResultCallback<Bitmap, Void>() {
                     @Override
                     public void onSuccess(Bitmap pBitmap) {
                         removeBack.setVisibility(View.VISIBLE);

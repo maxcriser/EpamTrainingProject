@@ -12,7 +12,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -129,7 +128,7 @@ public class CreateTicketActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == EDIT_IMAGE_FRONT) {
                 editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
-                ImageLoader.getInstance().downloadAndDraw(editFrontUri.toString(), frontPhoto, new OnResultCallback<Bitmap, Void>() {
+                ImageLoader.getInstance().downloadToView(editFrontUri.toString(), frontPhoto, new OnResultCallback<Bitmap, Void>() {
                     @Override
                     public void onSuccess(Bitmap pBitmap) {
                         removeFront.setVisibility(View.VISIBLE);
@@ -148,7 +147,7 @@ public class CreateTicketActivity extends AppCompatActivity {
                 });
             } else if (requestCode == EDIT_IMAGE_BACK) {
                 editBackUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
-                ImageLoader.getInstance().downloadAndDraw(editBackUri.toString(), backPhoto, new OnResultCallback<Bitmap, Void>() {
+                ImageLoader.getInstance().downloadToView(editBackUri.toString(), backPhoto, new OnResultCallback<Bitmap, Void>() {
                     @Override
                     public void onSuccess(Bitmap pBitmap) {
                         removeBack.setVisibility(View.VISIBLE);

@@ -147,7 +147,7 @@ public class BankCardActivity extends Activity {
             }
         });
 
-        ImageLoader.getInstance().downloadAndDraw(firstPhoto, ivFrontPhoto, new OnResultCallback<Bitmap, Void>() {
+        ImageLoader.getInstance().downloadToView(firstPhoto, ivFrontPhoto, new OnResultCallback<Bitmap, Void>() {
             @Override
             public void onSuccess(Bitmap pBitmap) {
                 if (pBitmap != null)
@@ -165,7 +165,7 @@ public class BankCardActivity extends Activity {
             }
         });
 
-        ImageLoader.getInstance().downloadAndDraw(secondPhoto, ivBackPhoto, new OnResultCallback<Bitmap, Void>() {
+        ImageLoader.getInstance().downloadToView(secondPhoto, ivBackPhoto, new OnResultCallback<Bitmap, Void>() {
             @Override
             public void onSuccess(Bitmap pBitmap) {
                 if (pBitmap != null)

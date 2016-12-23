@@ -65,12 +65,12 @@ public class ImageLoader {
         return sImageLoader;
     }
 
-    public void downloadAndDraw(final String pUrl, final ImageView pView,
-                                @Nullable final OnResultCallback<Bitmap, Void> pCallback, final int... pArgs) {
+    public void downloadToView(final String pUrl, final ImageView pView,
+                               @Nullable final OnResultCallback<Bitmap, Void> pCallback, final int... pArgs) {
         if (findModel(pUrl) != -1) {
             risePriority(pUrl);
             recalculatePriorities();
-            Log.d(TAG, "downloadAndDraw: UP PRIORITY FOR " + pUrl);
+            Log.d(TAG, "downloadToView: UP PRIORITY FOR " + pUrl);
             return;
         }
         pView.setTag(pUrl);
@@ -78,9 +78,9 @@ public class ImageLoader {
         synchronized (mLockObj) {
             cachedBitmap = mLruCache.get(pUrl);
         }
-        Log.d(TAG, "downloadAndDraw: CACHED: " + (cachedBitmap == null ? "NO" : "YES") + " " + pUrl);
+        Log.d(TAG, "downloadToView: CACHED: " + (cachedBitmap == null ? "NO" : "YES") + " " + pUrl);
         if (cachedBitmap != null && pView.getTag() == pUrl) {
-            Log.d(TAG, "downloadAndDraw: FROM LRU CACHE " + pUrl);
+            Log.d(TAG, "downloadToView: FROM LRU CACHE " + pUrl);
             if (pArgs.length != 0) {
                 final Bitmap resizedBitmap = Bitmap.createScaledBitmap(cachedBitmap, pArgs[0], pArgs[1], true);
                 pView.setImageBitmap(resizedBitmap);
@@ -97,7 +97,7 @@ public class ImageLoader {
             @Override
             public Bitmap doInBackground(String pUrl, ProgressCallback<Void> pProgressCallback) {
                 Bitmap bitmap = null;
-                Log.d("startWith file://", pUrl.startsWith(FILE) + "");
+                Log.d("startWith file://", pUrl.startsWith(FILE) + " - ImageLoader");
                 if (pUrl.startsWith(FILE)) {
                     Log.d("pUrl", pUrl);
                     Uri pUri = Uri.parse(pUrl);
@@ -134,7 +134,6 @@ public class ImageLoader {
                 new OnResultCallback<Bitmap, Void>()
 
                 {
-
                     @Override
                     public void onProgressChanged(Void pVoid) {
 
@@ -152,8 +151,6 @@ public class ImageLoader {
                     @Override
                     public void onSuccess(final Bitmap pBitmap) {
                         if (pBitmap != null) {
-                            Log.d(TAG, "onSuccess: DOWNLOADED " + pUrl);
-                            Log.d(TAG, "onSuccess: LAY IN LRU");
                             synchronized (mLockObj) {
                                 if (!mLruCache.snapshot().containsKey(pUrl)) {
                                     mLruCache.put(pUrl, pBitmap);

@@ -132,7 +132,7 @@ public class TicketActivity extends Activity {
             }
         });
 
-        ImageLoader.getInstance().downloadAndDraw(firstPhoto, ivFrontPhoto, new OnResultCallback<Bitmap, Void>() {
+        ImageLoader.getInstance().downloadToView(firstPhoto, ivFrontPhoto, new OnResultCallback<Bitmap, Void>() {
             @Override
             public void onSuccess(Bitmap pBitmap) {
                 firstBitmap = pBitmap;
@@ -149,7 +149,7 @@ public class TicketActivity extends Activity {
             }
         });
 
-        ImageLoader.getInstance().downloadAndDraw(secondPhoto, ivBackPhoto, new OnResultCallback<Bitmap, Void>() {
+        ImageLoader.getInstance().downloadToView(secondPhoto, ivBackPhoto, new OnResultCallback<Bitmap, Void>() {
             @Override
             public void onSuccess(Bitmap pBitmap) {
                 secondBitmap = pBitmap;
