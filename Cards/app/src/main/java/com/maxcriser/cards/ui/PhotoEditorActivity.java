@@ -27,9 +27,9 @@ public class PhotoEditorActivity extends AppCompatActivity {
     private Uri photoUri;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WindowManager.LayoutParams attrs = getWindow().getAttributes();
+        final WindowManager.LayoutParams attrs = getWindow().getAttributes();
         attrs.flags = WindowManager.LayoutParams.FLAG_FULLSCREEN;
         getWindow().setAttributes(attrs);
         setContentView(R.layout.activity_photo_editor);
@@ -37,14 +37,14 @@ public class PhotoEditorActivity extends AppCompatActivity {
     }
 
     void initViews() {
-        Intent intent = getIntent();
-        String statusEditor = intent.getStringExtra(constants.STATUS_PHOTOEDITOR);
-        LinearLayout menuBar = (LinearLayout) findViewById(R.id.menu_bar);
+        final Intent intent = getIntent();
+        final String statusEditor = intent.getStringExtra(constants.STATUS_PHOTOEDITOR);
+        final LinearLayout menuBar = (LinearLayout) findViewById(R.id.menu_bar);
         image = (CropImageView) findViewById(R.id.cropImageView);
         mProgressBar = (FrameLayout) findViewById(R.id.frame_progressbar);
         image.setInitialFrameScale(0.75f);
         if (statusEditor.equals(constants.STATUS_PHOTOEEDITOR_CREDIT_CARD)) {
-            image.setCustomRatio(90, 55);
+            image.setCustomRatio(87, 55);
             menuBar.setVisibility(View.GONE);
         } else {
             image.setCropMode(CropImageView.CropMode.FREE);
@@ -58,9 +58,9 @@ public class PhotoEditorActivity extends AppCompatActivity {
         image.setTouchPaddingInDp(24);
         image.setMinFrameSizeInDp(85);
 
-        Bundle bundle = getIntent().getExtras();
+        final Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            String uri_Str = bundle.getString(Extras.EXTRA_URI);
+            final String uri_Str = bundle.getString(Extras.EXTRA_URI);
             photoUri = Uri.parse(uri_Str);
             startCrop(photoUri);
         } else {
@@ -68,7 +68,7 @@ public class PhotoEditorActivity extends AppCompatActivity {
         }
     }
 
-    void startCrop(Uri uri) {
+    void startCrop(final Uri uri) {
         image.startLoad(
 
                 uri,
@@ -85,19 +85,19 @@ public class PhotoEditorActivity extends AppCompatActivity {
                 });
     }
 
-    public void onBackClicked(View view) {
+    public void onBackClicked(final View view) {
         super.onBackPressed();
     }
 
-    public void onLeftRotate(View view) {
+    public void onLeftRotate(final View view) {
         image.rotateImage(CropImageView.RotateDegrees.ROTATE_M90D);
     }
 
-    public void onRightRotate(View view) {
+    public void onRightRotate(final View view) {
         image.rotateImage(CropImageView.RotateDegrees.ROTATE_90D);
     }
 
-    public void onDoneClicked(View view) {
+    public void onDoneClicked(final View view) {
         mProgressBar.setVisibility(View.VISIBLE);
         image.startCrop(
 
@@ -105,7 +105,7 @@ public class PhotoEditorActivity extends AppCompatActivity {
 
                 new CropCallback() {
                     @Override
-                    public void onSuccess(Bitmap cropped) {
+                    public void onSuccess(final Bitmap cropped) {
 
                     }
 
@@ -117,8 +117,8 @@ public class PhotoEditorActivity extends AppCompatActivity {
 
                 new SaveCallback() {
                     @Override
-                    public void onSuccess(Uri outputUri) {
-                        Intent intent = new Intent();
+                    public void onSuccess(final Uri outputUri) {
+                        final Intent intent = new Intent();
                         intent.putExtra(Extras.EXTRA_URI, outputUri.toString());
                         setResult(RESULT_OK, intent);
                         mProgressBar.setVisibility(View.GONE);
@@ -134,27 +134,27 @@ public class PhotoEditorActivity extends AppCompatActivity {
         );
     }
 
-    public void onFreeClicked(View view) {
+    public void onFreeClicked(final View view) {
         image.setCropMode(CropImageView.CropMode.FREE);
     }
 
-    public void onSquareClicked(View view) {
+    public void onSquareClicked(final View view) {
         image.setCropMode(CropImageView.CropMode.SQUARE);
     }
 
-    public void on43Clicked(View view) {
+    public void on43Clicked(final View view) {
         image.setCropMode(CropImageView.CropMode.RATIO_4_3);
     }
 
-    public void on34Clicked(View view) {
+    public void on34Clicked(final View view) {
         image.setCropMode(CropImageView.CropMode.RATIO_3_4);
     }
 
-    public void on169Clicked(View view) {
+    public void on169Clicked(final View view) {
         image.setCropMode(CropImageView.CropMode.RATIO_16_9);
     }
 
-    public void on916Clicked(View view) {
+    public void on916Clicked(final View view) {
         image.setCropMode(CropImageView.CropMode.RATIO_9_16);
     }
 }

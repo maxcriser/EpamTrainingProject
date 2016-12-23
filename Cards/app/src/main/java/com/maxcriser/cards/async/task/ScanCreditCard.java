@@ -23,47 +23,47 @@ public class ScanCreditCard implements Task<Uri, String, CreditCard> {
     private static final String TAG = "TAG";
     private TessBaseAPI tessBaseApi;
     private static final String lang = "eng";
-    private static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/TesseractSample/";
+    private static final String DATA_PATH = Environment.getExternalStorageDirectory() + "/TesseractSample/";
     private static final String TESSDATA = "tessdata";
-    private AssetManager mAssetManager;
+    private final AssetManager mAssetManager;
 
-    public ScanCreditCard(AssetManager pAssetManager) {
+    public ScanCreditCard(final AssetManager pAssetManager) {
         this.mAssetManager = pAssetManager;
     }
 
     @Override
-    public CreditCard doInBackground(Uri uri, ProgressCallback<String> pStringProgressCallback) throws Exception {
+    public CreditCard doInBackground(final Uri uri, final ProgressCallback<String> pStringProgressCallback) throws Exception {
         prepareTesseract();
         return startOCR(uri);
     }
 
-    private CreditCard startOCR(Uri imgUri) {
+    private CreditCard startOCR(final Uri imgUri) {
         try {
-            BitmapFactory.Options options = new BitmapFactory.Options();
+            final BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 4; // 1 - means max size. 4 - means maxsize/4 size. Don't use value <4, because you need more memory in the heap to store your data.
-            Bitmap bitmap = BitmapFactory.decodeFile(imgUri.getPath(), options);
-            String result = extractText(bitmap);
+            final Bitmap bitmap = BitmapFactory.decodeFile(imgUri.getPath(), options);
+            final String result = extractText(bitmap);
             Log.d("Result OCR", result);
             return new CreditCard(result);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Log.e(TAG, e.getMessage());
             return null;
         }
     }
 
-    private void copyTessDataFiles(String path) {
+    private void copyTessDataFiles(final String path) {
         try {
-            String fileList[] = mAssetManager.list(path);
-            for (String fileName : fileList) {
+            final String[] fileList = mAssetManager.list(path);
+            for (final String fileName : fileList) {
                 Log.d("fileName", fileName);
-                String pathToDataFile = DATA_PATH + path + "/" + fileName;
+                final String pathToDataFile = DATA_PATH + path + "/" + fileName;
                 Log.d("pathToDataFile", DATA_PATH + path + "/" + fileName);
 
                 if (!(new File(pathToDataFile)).exists()) {
-                    InputStream in = mAssetManager.open(path + "/" + fileName);
+                    final InputStream in = mAssetManager.open(path + "/" + fileName);
                     Log.d("path + / + fileName", path + "/" + fileName);
-                    OutputStream out = new FileOutputStream(pathToDataFile);
-                    byte[] buf = new byte[1024];
+                    final OutputStream out = new FileOutputStream(pathToDataFile);
+                    final byte[] buf = new byte[1024];
                     int len;
                     while ((len = in.read(buf)) > 0) {
                         out.write(buf, 0, len);
@@ -73,8 +73,8 @@ public class ScanCreditCard implements Task<Uri, String, CreditCard> {
                     Log.d(TAG, "Copied " + fileName + "to tessdata");
                 }
             }
-        } catch (IOException e) {
-            Log.e(TAG, "Unable to copy files to tessdata " + e.toString());
+        } catch (final IOException e) {
+            Log.e(TAG, "Unable to copy files to tessdata " + e);
         }
     }
 
@@ -82,15 +82,15 @@ public class ScanCreditCard implements Task<Uri, String, CreditCard> {
         try {
             prepareDirectory(DATA_PATH + TESSDATA);
             Log.d("DATA_PATH + PATH", DATA_PATH + TESSDATA);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (final Exception e) {
+            Log.d("TAG", e.toString());
         }
         copyTessDataFiles(TESSDATA);
     }
 
-    private void prepareDirectory(String path) {
+    private void prepareDirectory(final String path) {
 
-        File dir = new File(path);
+        final File dir = new File(path);
         if (!dir.exists()) {
             if (!dir.mkdirs()) {
                 Log.e(TAG, "ERROR: Creation of directory " + path + " failed, check does Android Manifest have permission to write to external storage.");
@@ -100,10 +100,10 @@ public class ScanCreditCard implements Task<Uri, String, CreditCard> {
         }
     }
 
-    private String extractText(Bitmap bitmap) {
+    private String extractText(final Bitmap bitmap) {
         try {
             tessBaseApi = new TessBaseAPI();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Log.e(TAG, e.getMessage());
             if (tessBaseApi == null) {
                 Log.e(TAG, "TessBaseAPI is null. TessFactory not returning tess object.");
@@ -119,7 +119,7 @@ public class ScanCreditCard implements Task<Uri, String, CreditCard> {
         String extractedText = "empty result";
         try {
             extractedText = tessBaseApi.getUTF8Text();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Log.e(TAG, "Error in recognizing text.");
         }
         tessBaseApi.end();

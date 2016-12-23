@@ -40,8 +40,8 @@ public class ImageLoader {
         mThreadManager = ThreadManager.getInstance();
         mDownloadPriorities = new Stack<>();
         mHttpClient = new HttpClient();
-        long size;
-        int defaultCacheSize = 12 * 1024 * 1024;
+        final long size;
+        final int defaultCacheSize = 12 * 1024 * 1024;
         if (Runtime.getRuntime().maxMemory() / 4 > defaultCacheSize) {
             size = defaultCacheSize;
         } else {
@@ -81,7 +81,7 @@ public class ImageLoader {
         }
         Log.d(TAG, "downloadToView: CACHED: " + (cachedBitmap == null ? "NO" : "YES") + " " + pUrl);
         //TODO need to be someString.equals(anotherString)
-        if (cachedBitmap != null && pView.getTag() == pUrl) {
+        if (cachedBitmap != null && pView.getTag().equals(pUrl)) {
             Log.d(TAG, "downloadToView: FROM LRU CACHE " + pUrl);
             if (pArgs.length != 0) {
                 final Bitmap resizedBitmap = Bitmap.createScaledBitmap(cachedBitmap, pArgs[0], pArgs[1], true);

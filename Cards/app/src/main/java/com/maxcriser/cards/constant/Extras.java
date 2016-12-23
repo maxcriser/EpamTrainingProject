@@ -1,6 +1,7 @@
 package com.maxcriser.cards.constant;
 
-public class Extras {
+public final class Extras {
+
     public static final String EXTRA_DISCOUNT_ID = "discount_id_extra";
     public static final String EXTRA_DISCOUNT_TITLE = "discount_title_extra";
     public static final String EXTRA_DISCOUNT_BARCODE = "discount_barcode_extra";
@@ -17,7 +18,6 @@ public class Extras {
     public static final String EXTRA_BANK_FRONT_PHOTO = "extra_bank_front_photo";
     public static final String EXTRA_BANK_BACK_PHOTO = "extra_bank_back_photo";
     public static final String EXTRA_VERIFICATION_NUMBER_BANK = "extra_bank_ver_number";
-
 
     public static final String EXTRA_TICKET_ID = "extra_ticket_id";
     public static final String EXTRA_TICKET_TITLE = "extra_ticket_title";

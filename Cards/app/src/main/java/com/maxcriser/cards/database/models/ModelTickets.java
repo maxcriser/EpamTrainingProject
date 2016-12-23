@@ -1,7 +1,5 @@
 package com.maxcriser.cards.database.models;
 
-import android.content.ContentValues;
-
 import com.maxcriser.cards.database.annotations.Table;
 import com.maxcriser.cards.database.annotations.dbInteger;
 import com.maxcriser.cards.database.annotations.dbPrimaryKey;

@@ -17,10 +17,12 @@ public class CursorHolder extends RecyclerView.ViewHolder {
     public FrameLayout mLinearCard;
     public RobotoThin mDate;
     public TextView mTime;
+    public ImageView backgroundCredit;
 
     //TODO rename to some card holder
     public CursorHolder(View itemView) {
         super(itemView);
+        backgroundCredit = (ImageView) itemView.findViewById(R.id.background_photo);
         mLinearCard = (FrameLayout) itemView.findViewById(R.id.linear_card);
         mTitle = (TextView) itemView.findViewById(R.id.title_main_cards);
         mSubhead = (TextView) itemView.findViewById(R.id.subhead_main_cards);

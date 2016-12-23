@@ -41,7 +41,4 @@ public final class ModelBankCards {
 
     @dbInteger
     public static final String PIN = "pin";
-
-    @dbString
-    public static final String NFC = "nfc";
 }

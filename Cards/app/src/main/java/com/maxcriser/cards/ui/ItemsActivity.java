@@ -101,36 +101,36 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     private Class ModelClass;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_items);
         typeItems = MenuActivity.selectItem;
         initViews();
     }
 
-    private void showNfc(Cursor pCursor) {
-        String id = pCursor.getString(pCursor.getColumnIndex(ModelNFCItems.ID));
-        String nameNfc = pCursor.getString(pCursor.getColumnIndex(ModelNFCItems.TITLE));
-        String tagNfc = pCursor.getString(pCursor.getColumnIndex(ModelNFCItems.TAG));
-        String color = pCursor.getString(pCursor.getColumnIndex(ModelNFCItems.BACKGROUND_COLOR));
+    private void showNfc(final Cursor pCursor) {
+        final String id = pCursor.getString(pCursor.getColumnIndex(ModelNFCItems.ID));
+        final String nameNfc = pCursor.getString(pCursor.getColumnIndex(ModelNFCItems.TITLE));
+        final String tagNfc = pCursor.getString(pCursor.getColumnIndex(ModelNFCItems.TAG));
+        final String color = pCursor.getString(pCursor.getColumnIndex(ModelNFCItems.BACKGROUND_COLOR));
 
         Log.d("showNfc", id + "\n" + nameNfc + "\n" + tagNfc + "\n" + color);
 
-        AlertNfcOutput alertNfcOutput = new AlertNfcOutput(this);
+        final AlertNfcOutput alertNfcOutput = new AlertNfcOutput(this);
         alertNfcOutput.startDialog();
     }
 
-    private void showTicket(Cursor pCursor) {
-        String id = pCursor.getString(pCursor.getColumnIndex(ModelTickets.ID));
-        String nameTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.TITLE));
-        String cardholderTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.CARDHOLDER));
-        String dateTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.DATE));
-        String timeTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.TIME));
-        String color = pCursor.getString(pCursor.getColumnIndex(ModelTickets.BACKGROUND_COLOR));
-        String firstPhoto = pCursor.getString(pCursor.getColumnIndex(ModelTickets.PHOTO_FIRST));
-        String secondPhoto = pCursor.getString(pCursor.getColumnIndex(ModelTickets.PHOTO_SECOND));
+    private void showTicket(final Cursor pCursor) {
+        final String id = pCursor.getString(pCursor.getColumnIndex(ModelTickets.ID));
+        final String nameTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.TITLE));
+        final String cardholderTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.CARDHOLDER));
+        final String dateTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.DATE));
+        final String timeTicket = pCursor.getString(pCursor.getColumnIndex(ModelTickets.TIME));
+        final String color = pCursor.getString(pCursor.getColumnIndex(ModelTickets.BACKGROUND_COLOR));
+        final String firstPhoto = pCursor.getString(pCursor.getColumnIndex(ModelTickets.PHOTO_FIRST));
+        final String secondPhoto = pCursor.getString(pCursor.getColumnIndex(ModelTickets.PHOTO_SECOND));
 
-        Intent intent = new Intent(ItemsActivity.this, TicketActivity.class);
+        final Intent intent = new Intent(ItemsActivity.this, TicketActivity.class);
         intent.putExtra(EXTRA_TICKET_ID, id);
         intent.putExtra(EXTRA_TICKET_TITLE, nameTicket);
         intent.putExtra(EXTRA_TICKET_CARDHOLDER, cardholderTicket);
@@ -143,13 +143,13 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
 
     }
 
-    private void showDiscount(Cursor pCursor) {
-        String cardID = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.ID));
-        String cardTitle = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.TITLE));
-        String cardBarcode = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.BARCODE));
-        String cardColor = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.BACKGROUND_COLOR));
+    private void showDiscount(final Cursor pCursor) {
+        final String cardID = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.ID));
+        final String cardTitle = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.TITLE));
+        final String cardBarcode = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.BARCODE));
+        final String cardColor = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.BACKGROUND_COLOR));
 
-        Intent intent = new Intent(ItemsActivity.this, DiscountCardActivity.class);
+        final Intent intent = new Intent(ItemsActivity.this, DiscountCardActivity.class);
         intent.putExtra(EXTRA_DISCOUNT_ID, cardID);
         intent.putExtra(EXTRA_DISCOUNT_TITLE, cardTitle);
         intent.putExtra(EXTRA_DISCOUNT_BARCODE, cardBarcode);
@@ -157,20 +157,20 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         startActivity(intent);
     }
 
-    private void showBank(Cursor pCursor) {
-        String id = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.ID));
-        String verNumber = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.VERIFICATION_NUMBER));
-        String bank = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.TITLE));
-        String cardholder = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.CARDHOLDER));
-        String number = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.NUMBER));
-        String pin = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.PIN));
-        String valid = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.VALID));
-        String type = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.TYPE));
-        String color = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.BACKGROUND_COLOR));
-        String frontPhoto = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.PHOTO_FRONT));
-        String backPhoto = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.PHOTO_BACK));
+    private void showBank(final Cursor pCursor) {
+        final String id = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.ID));
+        final String verNumber = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.VERIFICATION_NUMBER));
+        final String bank = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.TITLE));
+        final String cardholder = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.CARDHOLDER));
+        final String number = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.NUMBER));
+        final String pin = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.PIN));
+        final String valid = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.VALID));
+        final String type = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.TYPE));
+        final String color = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.BACKGROUND_COLOR));
+        final String frontPhoto = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.PHOTO_FRONT));
+        final String backPhoto = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.PHOTO_BACK));
 
-        Intent intent = new Intent(ItemsActivity.this, BankCardActivity.class);
+        final Intent intent = new Intent(this, BankCardActivity.class);
         intent.putExtra(EXTRA_BANK_ID, id);
         intent.putExtra(EXTRA_BANK_BANK, bank);
         intent.putExtra(EXTRA_BANK_CARDHOLDER, cardholder);
@@ -194,7 +194,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         searchEdit = (EditText) findViewById(R.id.search_edit);
         toolbarBack = (CardView) findViewById(R.id.card_view_toolbar_back);
         toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
-        RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
+        final RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
         recyclerItems = (RecyclerView) findViewById(R.id.recycler_view_items);
         if (typeItems.equals(getResources().getString(R.string.bank_title))) {
             ModelClass = ModelBankCards.class;
@@ -208,15 +208,15 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
         searchEdit.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence pCharSequence, int pI, int pI1, int pI2) {
+            public void beforeTextChanged(final CharSequence pCharSequence, final int pI, final int pI1, final int pI2) {
             }
 
             @Override
-            public void onTextChanged(CharSequence pCharSequence, int pI, int pI1, int pI2) {
+            public void onTextChanged(final CharSequence pCharSequence, final int pI, final int pI1, final int pI2) {
             }
 
             @Override
-            public void afterTextChanged(Editable pEditable) {
+            public void afterTextChanged(final Editable pEditable) {
                 if (!pEditable.toString().isEmpty()) {
                     clearSearch.setVisibility(View.VISIBLE);
                 } else {
@@ -231,57 +231,57 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         dbHelper = DatabaseHelperImpl.getInstance(this);
 
         recyclerItems.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recyclerItems.setLayoutManager(layoutManager);
 
-        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0,
+        final ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
             @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            public boolean onMove(final RecyclerView recyclerView, final RecyclerView.ViewHolder viewHolder, final RecyclerView.ViewHolder target) {
                 return false;
             }
 
             @Override
-            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ItemsActivity.this);
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, final int swipeDir) {
+                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ItemsActivity.this);
                 alertDialogBuilder.setTitle(R.string.remove);
                 alertDialogBuilder
                         .setMessage(R.string.are_you_sure_to_delete)
                         .setCancelable(false)
                         .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+                            public void onClick(final DialogInterface dialog, final int id) {
                                 getSupportLoaderManager().restartLoader(LOADER_ID, null, ItemsActivity.this);
                                 dialog.cancel();
                             }
                         })
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                TextView cardTitle = (TextView) viewHolder.itemView.findViewById(R.id.title_main_cards);
-                                Integer idDelete = (Integer) cardTitle.getTag();
+                            public void onClick(final DialogInterface dialog, final int id) {
+                                final TextView cardTitle = (TextView) viewHolder.itemView.findViewById(R.id.title_main_cards);
+                                final Integer idDelete = (Integer) cardTitle.getTag();
                                 dbHelper.delete(ModelClass, null, ModelBankCards.ID + " = ?", String.valueOf(idDelete));
                                 getSupportLoaderManager().restartLoader(LOADER_ID, null, ItemsActivity.this);
                                 dialog.cancel();
                             }
                         });
-                AlertDialog alertDialog = alertDialogBuilder.create();
+                final AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
             }
         };
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(recyclerItems);
 
         recyclerItems.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerItems, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                TextView mTitle = (TextView) view.findViewById(R.id.title_main_cards);
-                int id = (Integer) mTitle.getTag();
+            public void onItemClick(final View view, final int position) {
+                final TextView mTitle = (TextView) view.findViewById(R.id.title_main_cards);
+                final int id = (Integer) mTitle.getTag();
                 dbHelper.query(new OnResultCallback<Cursor, Void>() {
                     @Override
-                    public void onSuccess(Cursor pCursor) {
+                    public void onSuccess(final Cursor pCursor) {
                         if (pCursor.moveToFirst()) {
                             if (typeItems.equals(getResources().getString(R.string.bank_title))) {
                                 showBank(pCursor);
@@ -296,19 +296,19 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
                     }
 
                     @Override
-                    public void onError(Exception pE) {
+                    public void onError(final Exception pE) {
                         Toast.makeText(ItemsActivity.this, R.string.connot_find_card, Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
-                    public void onProgressChanged(Void pVoid) {
+                    public void onProgressChanged(final Void pVoid) {
                     }
                 }, "*", ModelClass, "WHERE "
                         + ModelBankCards.ID + " = ?", String.valueOf(id));
             }
 
             @Override
-            public void onItemLongClick(View view, int position) {
+            public void onItemLongClick(final View view, final int position) {
 
             }
         }));
@@ -327,7 +327,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     protected void onResume() {
         super.onResume();
         //TODO find answer why here loaders but in another place tasks and in one more place Executors
-        LoaderManager supportLoaderManager = getSupportLoaderManager();
+        final LoaderManager supportLoaderManager = getSupportLoaderManager();
         if (supportLoaderManager.getLoader(LOADER_ID) != null) {
             supportLoaderManager.getLoader(LOADER_ID).forceLoad();
         }
@@ -338,12 +338,12 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         }
     }
 
-    public void onBackClicked(View view) {
+    public void onBackClicked(final View view) {
         super.onBackPressed();
     }
 
     @TargetApi(23)
-    private void getPermission(final byte CODE, final String PERMISSION, int INTENT) {
+    private void getPermission(final byte CODE, final String PERMISSION, final int INTENT) {
         if (ContextCompat.checkSelfPermission(this, PERMISSION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{PERMISSION}, CODE);
         } else {
@@ -354,7 +354,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
         if (grantResults.length == 0) {
             return;
         } else if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
@@ -366,12 +366,12 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
     private void startBarcodeReader() {
-        Intent intent = new Intent(this, BarcodeScannerActivity.class)
+        final Intent intent = new Intent(this, BarcodeScannerActivity.class)
                 .addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
     }
 
-    public void onAddNewClicked(View view) {
+    public void onAddNewClicked(final View view) {
         if (typeItems.equals(getResources().getString(R.string.bank_title))) {
             startActivity(new Intent(ItemsActivity.this, CreateBankActivity.class));
         } else if (typeItems.equals(getResources().getString(R.string.discount_title))) {
@@ -379,23 +379,23 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         } else if (typeItems.equals(getResources().getString(R.string.tickets_title))) {
             startActivity(new Intent(ItemsActivity.this, CreateTicketActivity.class));
         } else {
-            AlertNfcInput alertNfcInput = new AlertNfcInput(this);
+            final AlertNfcInput alertNfcInput = new AlertNfcInput(this);
             alertNfcInput.startDialog();
         }
     }
 
-    public void onBackSearchClicked(View view) {
+    public void onBackSearchClicked(final View view) {
         toolbarBack.setVisibility(View.VISIBLE);
         toolbarSearch.setVisibility(GONE);
         searchEdit.setText(constants.EMPTY_STRING);
         searchText = searchEdit.getText().toString();
         getSupportLoaderManager().restartLoader(LOADER_ID, null, ItemsActivity.this);
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(newCard.getWindowToken(), 0);
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+    public Loader<Cursor> onCreateLoader(final int id, final Bundle args) {
         if (typeItems.equals(getResources().getString(R.string.bank_title))) {
             return new CardsCursorLoader(this, searchText, ModelBankCards.class);
         } else if (typeItems.equals(getResources().getString(R.string.discount_title))) {
@@ -409,11 +409,11 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+    public void onLoadFinished(final Loader<Cursor> loader, final Cursor data) {
         progressBar.setVisibility(GONE);
         if (data.getCount() == 0) {
             if (!searchText.isEmpty()) {
-                Spannable text = new SpannableString(getString(R.string.no_result_for) + " '" + searchText + "'");
+                final Spannable text = new SpannableString(getString(R.string.no_result_for) + " '" + searchText + "'");
                 text.setSpan(new StyleSpan(Typeface.BOLD), text.length() - searchText.length() - 1, text.length() - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 noResultFor.setText(text);
                 noResultFor.setVisibility(View.VISIBLE);
@@ -436,29 +436,31 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         } else if (typeItems.equals(getResources().getString(R.string.nfc_title))) {
             adapter = new CursorAdapter(data, ItemsActivity.this, R.layout.item_nfc);
         }
-        recyclerItems.swapAdapter(adapter, true);
+//        recyclerItems.swapAdapter(adapter, true);
+        recyclerItems.setAdapter(adapter);
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        recyclerItems.swapAdapter(null, true);
+    public void onLoaderReset(final Loader<Cursor> loader) {
+        //        recyclerItems.swapAdapter(null, true);
+        recyclerItems.setAdapter(null);
     }
 
-    public void onToolbarBackClicked(View view) {
+    public void onToolbarBackClicked(final View view) {
         recyclerItems.smoothScrollToPosition(adapter.getItemCount() - 1);
     }
 
-    public void onSearchClicked(View view) {
+    public void onSearchClicked(final View view) {
         toolbarSearch.setVisibility(View.VISIBLE);
         toolbarBack.setVisibility(GONE);
         searchEdit.setText(constants.EMPTY_STRING);
         searchEdit.clearFocus();
         searchEdit.requestFocus();
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(searchEdit, InputMethodManager.SHOW_IMPLICIT);
     }
 
-    public void onClearSearchClicked(View view) {
+    public void onClearSearchClicked(final View view) {
         searchEdit.setText(constants.EMPTY_STRING);
     }
 }

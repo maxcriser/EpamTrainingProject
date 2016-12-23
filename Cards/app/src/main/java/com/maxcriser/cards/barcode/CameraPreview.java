@@ -11,19 +11,19 @@ import com.maxcriser.cards.R;
 import java.io.IOException;
 
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
-    public static final String DBG = "DBG";
-    private SurfaceHolder mHolder;
+
+    private final SurfaceHolder mHolder;
     @SuppressWarnings("deprecation")
-    private Camera mCamera;
+    private final Camera mCamera;
     @SuppressWarnings("deprecation")
-    private Camera.PreviewCallback previewCallback;
+    private final Camera.PreviewCallback previewCallback;
     @SuppressWarnings("deprecation")
-    private Camera.AutoFocusCallback autoFocusCallback;
+    private final Camera.AutoFocusCallback autoFocusCallback;
 
     @SuppressWarnings("deprecation")
-    public CameraPreview(Context context, Camera camera,
-                         Camera.PreviewCallback pPreviewCallback,
-                         Camera.AutoFocusCallback pAutoFocusCallback) {
+    public CameraPreview(final Context context, final Camera camera,
+                         final Camera.PreviewCallback pPreviewCallback,
+                         final Camera.AutoFocusCallback pAutoFocusCallback) {
         super(context);
         mCamera = camera;
         previewCallback = pPreviewCallback;
@@ -35,37 +35,38 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     }
 
     @Override
-    public void surfaceCreated(SurfaceHolder holder) {
+    public void surfaceCreated(final SurfaceHolder holder) {
         try {
             mCamera.setPreviewDisplay(holder);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             Log.d("DBG", "Error setting camera preview: " + e.getMessage());
         }
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+    public void surfaceChanged(final SurfaceHolder holder, final int format, final int width, final int height) {
         if (mHolder.getSurface() == null) {
             return;
         }
         try {
             mCamera.stopPreview();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Log.d("DBG", e.toString());
         }
         try {
-            mCamera.setDisplayOrientation(90);
+            final int DISPLAY_ORIENTATION = 90;
+            mCamera.setDisplayOrientation(DISPLAY_ORIENTATION);
             mCamera.setPreviewDisplay(mHolder);
             mCamera.setPreviewCallback(previewCallback);
             mCamera.startPreview();
             mCamera.autoFocus(autoFocusCallback);
-        } catch (Exception e) {
-            Log.d(DBG, getContext().getString(R.string.error_starting_camera_preview) + e.getMessage());
+        } catch (final Exception e) {
+            Log.d("DBG", getContext().getString(R.string.error_starting_camera_preview) + e.getMessage());
         }
     }
 
     @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
+    public void surfaceDestroyed(final SurfaceHolder holder) {
 
     }
 }

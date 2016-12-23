@@ -9,14 +9,14 @@
 
 package com.maxcriser.cards.barcode;
 
-
 import com.maxcriser.cards.constant.constants;
 
 public class BarcodeBuilder {
-    private String codeStringValue;
+
+    private final String codeStringValue;
     private String generatedCode;
 
-    public BarcodeBuilder(String codeString) {
+    public BarcodeBuilder(final String codeString) {
         codeStringValue = codeString;
         parse();
     }
@@ -35,30 +35,32 @@ public class BarcodeBuilder {
         }
         even *= 3;
         int controlNumber = 10 - (even + odd) % 10;
-        if (controlNumber == 10) controlNumber = 0;
+        if (controlNumber == 10) {
+            controlNumber = 0;
+        }
         codeToParse += String.valueOf(controlNumber);
         return codeToParse;
     }
 
-    private String DigitToUpperCase(String digit) {
-        String letters = "ABCDEFGHIJ";
-        int position = Integer.valueOf(digit);
+    private String DigitToUpperCase(final String digit) {
+        final String letters = "ABCDEFGHIJ";
+        final int position = Integer.valueOf(digit);
         return letters.substring(position, position + 1);
     }
 
-    private String DigitToLowerCase(String digit) {
-        String letters = "abcdefghij";
-        int position = Integer.valueOf(digit);
+    private String DigitToLowerCase(final String digit) {
+        final String letters = "abcdefghij";
+        final int position = Integer.valueOf(digit);
         return letters.substring(position, position + 1);
     }
 
-    private String createEAN13Code(String rawCode) {
-        int firstFlag = Integer.valueOf(
+    private String createEAN13Code(final String rawCode) {
+        final int firstFlag = Integer.valueOf(
                 rawCode.substring(0, 1)
         );
 
-        String leftString = rawCode.substring(1, 7);
-        String rightString = rawCode.substring(7);
+        final String leftString = rawCode.substring(1, 7);
+        final String rightString = rawCode.substring(7);
 
         String rightCode = constants.EMPTY_STRING;
         String leftCode = constants.EMPTY_STRING;
@@ -151,7 +153,7 @@ public class BarcodeBuilder {
     }
 
     private void parse() {
-        String fullString = getFullCode();
+        final String fullString = getFullCode();
         generatedCode = createEAN13Code(fullString);
     }
 }

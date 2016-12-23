@@ -8,13 +8,14 @@ import java.util.concurrent.Executors;
 
 public class OwnAsyncTask {
 
-    private ExecutorService mExecutorService;
+    private final ExecutorService mExecutorService;
 
     public OwnAsyncTask() {
-
-        //TODO why 3? should be number of cores
-        int COUNT_CORES = 3;
-        this.mExecutorService = Executors.newFixedThreadPool(COUNT_CORES);
+        int numberOfThreads = 3;
+        if (Runtime.getRuntime().availableProcessors() > 2) {
+            numberOfThreads = Runtime.getRuntime().availableProcessors();
+        }
+        this.mExecutorService = Executors.newFixedThreadPool(numberOfThreads);
     }
 
     public OwnAsyncTask(final ExecutorService mExecutorService) {
@@ -27,34 +28,41 @@ public class OwnAsyncTask {
             final OnResultCallback<Result, Progress> onResultCallback) {
 
         mExecutorService.execute(new Runnable() {
+
             android.os.Handler mHandler = new Handler(Looper.getMainLooper());
 
             @Override
             public void run() {
                 try {
                     final Result result = task.doInBackground(param, new ProgressCallback<Progress>() {
+
                         @Override
                         public void onProgressChanged(final Progress pProgress) {
                             mHandler.post(new Runnable() {
+
                                 @Override
                                 public void run() {
-                                    if (onResultCallback != null)
+                                    if (onResultCallback != null) {
                                         onResultCallback.onProgressChanged(pProgress);
+                                    }
                                 }
                             });
                         }
                     });
                     mHandler.post(new Runnable() {
+
                         @Override
                         public void run() {
-                            if (onResultCallback != null)
+                            if (onResultCallback != null) {
                                 onResultCallback.onSuccess(result);
+                            }
                         }
                     });
-                } catch (Exception pE) {
+                } catch (final Exception pE) {
                     //TODO {}
-                    if (onResultCallback != null)
+                    if (onResultCallback != null) {
                         onResultCallback.onError(pE);
+                    }
                 }
             }
         });

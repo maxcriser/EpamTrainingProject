@@ -3,6 +3,7 @@ package com.maxcriser.cards.ui.adapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.provider.SyncStateContract;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.database.models.ModelNFCItems;
 import com.maxcriser.cards.database.models.ModelTickets;
+import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.view_holder.CursorHolder;
 
 public class CursorAdapter extends RecyclerView.Adapter<CursorHolder> {
@@ -22,24 +24,25 @@ public class CursorAdapter extends RecyclerView.Adapter<CursorHolder> {
     private final Context mContext;
     private Object mView;
 
-    public CursorAdapter(Cursor pCursor, Context pContext, Object mObject) {
+    public CursorAdapter(final Cursor pCursor, final Context pContext, final Object mObject) {
         mCursor = pCursor;
         mContext = pContext;
         mView = mObject;
     }
 
     @Override
-    public CursorHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CursorHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         final View view = LayoutInflater.from(mContext).inflate((Integer) mView, parent, false);
         return new CursorHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(CursorHolder holder, int position) {
+    public void onBindViewHolder(final CursorHolder holder, final int position) {
+        String frontPhoto = constants.EMPTY_STRING;
         if (mCursor.moveToPosition(position)) {
             if (mView.equals(R.layout.item_bank)) {
-                String type = mCursor.getString(mCursor.getColumnIndex(ModelBankCards.TYPE));
-                Integer typeID;
+                final String type = mCursor.getString(mCursor.getColumnIndex(ModelBankCards.TYPE));
+                final Integer typeID;
                 if (type.equals(constants.Cards.VISA)) {
                     typeID = R.drawable.type_visa;
                 } else if (type.equals(constants.Cards.MASTERCARD)) {
@@ -66,6 +69,12 @@ public class CursorAdapter extends RecyclerView.Adapter<CursorHolder> {
                 holder.mSubhead.setText(mCursor
                         .getString(mCursor.getColumnIndex(ModelBankCards.CARDHOLDER)));
                 holder.mTitle.setTag(mCursor.getInt(mCursor.getColumnIndex(ModelBankCards.ID)));
+
+                frontPhoto = mCursor.getString(mCursor.getColumnIndex(ModelBankCards.PHOTO_FRONT));
+                if (!frontPhoto.isEmpty()) {
+                    ImageLoader.getInstance().downloadToView(frontPhoto, holder.backgroundCredit, null);
+                }
+
             } else if (mView.equals(R.layout.item_ticket)) {
                 holder.mLinearCard.setBackgroundColor(Color.parseColor(mCursor
                         .getString(mCursor.getColumnIndex(ModelTickets.BACKGROUND_COLOR))));

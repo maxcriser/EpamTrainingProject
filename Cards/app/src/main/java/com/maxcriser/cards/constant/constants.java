@@ -1,12 +1,12 @@
 package com.maxcriser.cards.constant;
 
-public class constants {
+public final class constants {
 
     public interface Requests {
+
         byte REQUEST_CAMERA = 0;
         byte REQUEST_FRONT_CAMERA = 1;
         byte REQUEST_BACK_CAMERA = 2;
-        byte REQUEST_WRITE_STORAGE = 3;
         byte REQUEST_CALENDAR = 4;
         byte REQUEST_WRITE_STORAGE_FRONT = 5;
         byte REQUEST_WRITE_STORAGE_BACK = 6;
@@ -17,6 +17,7 @@ public class constants {
     }
 
     public interface PagerTypesID {
+
         int VISA = 0;
         int MASTERCAD = 1;
         int AMEX = 2;
@@ -28,6 +29,7 @@ public class constants {
     }
 
     public interface Cards {
+
         String VISA = "visa";
         String MASTERCARD = "mastercard";
         String AMEX = "amex";
@@ -41,6 +43,7 @@ public class constants {
     }
 
     public interface Keyboard {
+
         String BUTTON_ZERO = "0";
         String BUTTON_ONE = "1";
         String BUTTON_TWO = "2";
@@ -54,11 +57,11 @@ public class constants {
     }
 
     public interface PagerIDs {
+
         int ID_BANK_CARD_ITEM = 0;
         int ID_BANK_CARD_ITEM_TYPE = 1; // visa, mastercard and etc.
         int ID_DISCOUNT_ITEM = 2;
         int ID_TICKET_ITEM = 3;
-        int ID_NFC_ITEM = 4;
     }
 
     public static final String URL_JSON_LOCATION = "http://ip-api.com/json";

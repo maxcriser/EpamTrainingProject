@@ -10,8 +10,8 @@ import java.io.File;
 public class RemovePhoto implements Task<Uri, Void, Void> {
 
     @Override
-    public Void doInBackground(Uri uri, ProgressCallback<Void> pVoidProgressCallback) throws Exception {
-        File fileToDelete = new File(uri.getPath());
+    public Void doInBackground(final Uri uri, final ProgressCallback<Void> pVoidProgressCallback) throws Exception {
+        final File fileToDelete = new File(uri.getPath());
         if (fileToDelete.exists()) {
             fileToDelete.delete();
         }

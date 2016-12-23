@@ -15,7 +15,7 @@ public class CardsCursorLoader extends CursorLoader {
     private DatabaseHelperImpl db;
     private String mQuery;
 
-    public CardsCursorLoader(Context context, String pQuery, Class modelClass) {
+    public CardsCursorLoader(final Context context, final String pQuery, final Class modelClass) {
         super(context);
         SQL_WITH_QUERY = Sql.getSqlWithQuery(modelClass);
         SQL_ALL_ITEMS = Sql.getSqlAllItems(modelClass);

@@ -22,7 +22,7 @@ public class HttpClient {
 
     private String executeRequest(final Request request) throws Exception {
         InputStream inputStream = null;
-        HttpURLConnection connection;
+        final HttpURLConnection connection;
         if (request.getUrl().contains(HTTPS)) {
             connection = (HttpsURLConnection) getConnection(request);
         } else {
@@ -89,7 +89,7 @@ public class HttpClient {
                 String response;
                 try {
                     response = executeRequest(requests[0]);
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     response = e.toString();
                 }
                 return response;

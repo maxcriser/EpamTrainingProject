@@ -7,8 +7,8 @@ import com.maxcriser.cards.barcode.BarcodeBuilder;
 public class BarcodeConverter implements Task<String, String, String> {
 
     @Override
-    public String doInBackground(String pS, ProgressCallback<String> pStringProgressCallback) throws Exception {
-        BarcodeBuilder mBarcodeBuilder = new BarcodeBuilder(pS);
+    public String doInBackground(final String pS, final ProgressCallback<String> pStringProgressCallback) throws Exception {
+        final BarcodeBuilder mBarcodeBuilder = new BarcodeBuilder(pS);
         return mBarcodeBuilder.getCode();
     }
 }
