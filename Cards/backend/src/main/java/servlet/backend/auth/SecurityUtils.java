@@ -21,5 +21,4 @@ public class SecurityUtils {
         resp.sendRedirect("/auth");
         return false;
     }
-
 }

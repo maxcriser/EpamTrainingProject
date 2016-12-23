@@ -3,12 +3,12 @@
           package="com.maxcriser.cards">
 
     <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.NFC"/>
     <uses-permission android:name="android.permission.READ_CALENDAR"/>
@@ -40,37 +40,16 @@
             android:name=".ui.MenuActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".ui.PhotoEditorActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".ui.NFCTest"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-
-        <activity
             android:name=".ui.NfcReaderActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.nfc.action.TECH_DISCOVERED"/>
-            </intent-filter>
-
-            <meta-data
-                android:name="android.nfc.action.TECH_DISCOVERED"
-                android:resource="@xml/nfc_tech_filter"/>
-
-            <intent-filter>
-                <action android:name="android.nfc.action.TECH_DISCOVERED"/>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-
-                <data android:mimeType="text/plain"/>
-            </intent-filter>
-        </activity>
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".ui.create_item.CreateBankActivity"
@@ -121,7 +100,7 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".utils.AlertImageViewer"/>
+
     </application>
 
 </manifest>
