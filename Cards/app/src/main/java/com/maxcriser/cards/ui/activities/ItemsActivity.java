@@ -52,9 +52,9 @@ import com.maxcriser.cards.ui.create_item.CreateTicketActivity;
 import com.maxcriser.cards.ui.display_item.BankCardActivity;
 import com.maxcriser.cards.ui.display_item.DiscountCardActivity;
 import com.maxcriser.cards.ui.display_item.TicketActivity;
-import com.maxcriser.cards.dialogs.NfcInputDialogBuilder;
-import com.maxcriser.cards.dialogs.NfcOutputDialogBuilder;
-import com.maxcriser.cards.utils.RecyclerItemClickListener;
+import com.maxcriser.cards.dialog.NfcInputDialogBuilder;
+import com.maxcriser.cards.dialog.NfcOutputDialogBuilder;
+import com.maxcriser.cards.listener.RecyclerItemClickListener;
 import com.maxcriser.cards.view.labels.RobotoRegular;
 
 import static android.view.View.GONE;

@@ -44,14 +44,6 @@ public class MenuActivity extends AppCompatActivity
     public static final String TYPE_LOCKED_SCREEN = "type_locked_screen";
     public static final String CREDIT_CARD = "credit_card";
 
-    private final String SHARE_BODY = "Donwload app on playmarket: ...";
-    private final String SHARE_TITLE = "CKeeper";
-    private final String SHARE_USING = "share_using";
-    private final String COUNTRY_ID = "country";
-    private final String COUNTRY_CODE_ID = "countryCode";
-    private final String ISP_ID = "isp";
-    private final String QUERY_ID = "query";
-    private final String TIMEZONE_ID = "timezone";
     private String pCountry = "#country";
     private String pCountryCode = "#country code";
     private String pIsp = "#isp";
@@ -129,13 +121,14 @@ public class MenuActivity extends AppCompatActivity
             startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY));
 
         } else if (id == R.id.nav_share) {
-            final String shareBody = SHARE_BODY;
-            final String shareSub = SHARE_TITLE;
+            final String shareBody = getString(R.string.share_body);
+            final String shareSub = getString(R.string.share_title);
 
             final Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
             sharingIntent.setType(TEXT_PLAIN);
             sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+            final String SHARE_USING = "share_using";
             startActivity(Intent.createChooser(sharingIntent, SHARE_USING));
 
         } else if (id == R.id.nav_location) {
@@ -214,10 +207,15 @@ public class MenuActivity extends AppCompatActivity
             try {
                 dataJsonObj = new JSONObject(strJson);
 
+                final String COUNTRY_ID = "country";
                 pCountry = dataJsonObj.getString(COUNTRY_ID);
+                final String COUNTRY_CODE_ID = "countryCode";
                 pCountryCode = dataJsonObj.getString(COUNTRY_CODE_ID);
+                final String ISP_ID = "isp";
                 pIsp = dataJsonObj.getString(ISP_ID);
+                final String QUERY_ID = "query";
                 pQuery = dataJsonObj.getString(QUERY_ID);
+                final String TIMEZONE_ID = "timezone";
                 pTimezone = dataJsonObj.getString(TIMEZONE_ID);
 
             } catch (final JSONException e) {

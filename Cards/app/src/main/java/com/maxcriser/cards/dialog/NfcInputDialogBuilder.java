@@ -1,4 +1,4 @@
-package com.maxcriser.cards.utils;
+package com.maxcriser.cards.dialog;
 
 import android.app.AlertDialog;
 import android.content.Context;

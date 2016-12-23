@@ -1,5 +1,4 @@
-//TODO move to dialog package
-package com.maxcriser.cards.dialogs;
+package com.maxcriser.cards.dialog;
 
 import android.app.AlertDialog;
 import android.content.Context;

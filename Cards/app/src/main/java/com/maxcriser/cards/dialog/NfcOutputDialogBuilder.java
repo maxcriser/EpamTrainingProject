@@ -1,8 +1,7 @@
-package com.maxcriser.cards.dialogs;
+package com.maxcriser.cards.dialog;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -11,48 +10,42 @@ import android.widget.ImageView;
 
 import com.maxcriser.cards.R;
 
-public class NfcInputDialogBuilder extends AlertDialog {
+public class NfcOutputDialogBuilder extends AlertDialog {
 
     private final Context context;
-    private ImageView card;
-    private final Animation animCard;
+    private ImageView longHand;
+    private final Animation animLongHand;
 
-
-    public NfcInputDialogBuilder(final Context context) {
+    public NfcOutputDialogBuilder(final Context context) {
         super(context);
         this.context = context;
-        this.animCard = AnimationUtils.loadAnimation(context, R.anim.anim_card);
+        this.animLongHand = AnimationUtils.loadAnimation(context, R.anim.anim_long_hand);
     }
 
     public void startDialog() {
         final LayoutInflater inflater = getLayoutInflater();
-        final View layout = inflater.inflate(R.layout.fragment_nfc_input, null);
+        final View layout = inflater.inflate(R.layout.fragment_nfc_output, null);
         final Builder builder = new Builder(context);
         builder.setView(layout);
         final AlertDialog aDialog = builder.create();
         aDialog.show();
-        card = (ImageView) layout.findViewById(R.id.card);
-        card.startAnimation(animCard);
-        animCard.setAnimationListener(new Animation.AnimationListener() {
+        longHand = (ImageView) layout.findViewById(R.id.long_hand);
+        longHand.startAnimation(animLongHand);
+        animLongHand.setAnimationListener(new Animation.AnimationListener() {
+
             @Override
             public void onAnimationStart(final Animation pAnimation) {
+
             }
 
             @Override
             public void onAnimationEnd(final Animation pAnimation) {
-                card.startAnimation(animCard);
+                longHand.startAnimation(animLongHand);
             }
 
             @Override
             public void onAnimationRepeat(final Animation pAnimation) {
-            }
-        });
 
-        aDialog.setOnDismissListener(new OnDismissListener() {
-            @Override
-            public void onDismiss(final DialogInterface pDialogInterface) {
-                final EnterNfcNameDialogBuilder dialog = new EnterNfcNameDialogBuilder(context);
-                dialog.startDialog();
             }
         });
     }

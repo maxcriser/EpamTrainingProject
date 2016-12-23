@@ -26,7 +26,7 @@ import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.loader.image.ImageLoader;
-import com.maxcriser.cards.dialogs.ImageViewerDialogBuilder;
+import com.maxcriser.cards.dialog.ImageViewerDialogBuilder;
 import com.maxcriser.cards.view.labels.RobotoThin;
 
 import static android.view.View.GONE;

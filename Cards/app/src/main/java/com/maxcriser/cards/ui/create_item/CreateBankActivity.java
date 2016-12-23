@@ -48,8 +48,8 @@ import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.model.CreditCard;
 import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.activities.PhotoEditorActivity;
-import com.maxcriser.cards.utils.OnTemplatePageChangeListener;
-import com.maxcriser.cards.utils.OnTypePageChangeListener;
+import com.maxcriser.cards.listener.OnTemplatePageChangeListener;
+import com.maxcriser.cards.listener.OnTypePageChangeListener;
 import com.maxcriser.cards.utils.UniqueStringGenerator;
 import com.maxcriser.cards.view.labels.RobotoRegular;
 

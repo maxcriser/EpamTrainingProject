@@ -1,4 +1,4 @@
-package com.maxcriser.cards.utils;
+package com.maxcriser.cards.listener;
 
 import android.support.v4.view.ViewPager;
 

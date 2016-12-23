@@ -137,5 +137,7 @@
     <string name="new_nfc_title">New NFC item</string>
     <string name="setup_pin">Setup PIN</string>
     <string name="use_fingerprint">Use fingerprint</string>
+    <string name="share_body">Donwload app on playmarket: ...</string>
+    <string name="share_title">CKeeper</string>
 
 </resources>

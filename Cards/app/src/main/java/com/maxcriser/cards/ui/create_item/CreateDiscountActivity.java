@@ -22,7 +22,7 @@ import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.activities.BarcodeScannerActivity;
-import com.maxcriser.cards.utils.OnTemplatePageChangeListener;
+import com.maxcriser.cards.listener.OnTemplatePageChangeListener;
 import com.maxcriser.cards.view.labels.RobotoRegular;
 
 import static android.view.View.GONE;
