@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.isseiaoki.simplecropview.CropImageView;
@@ -16,6 +17,7 @@ import com.isseiaoki.simplecropview.callback.CropCallback;
 import com.isseiaoki.simplecropview.callback.LoadCallback;
 import com.isseiaoki.simplecropview.callback.SaveCallback;
 import com.maxcriser.cards.R;
+import com.maxcriser.cards.constant.Constants;
 import com.maxcriser.cards.constant.Extras;
 
 public class PhotoEditorActivity extends AppCompatActivity {
@@ -35,17 +37,25 @@ public class PhotoEditorActivity extends AppCompatActivity {
     }
 
     void initViews() {
+        Intent intent = getIntent();
+        String statusEditor = intent.getStringExtra(Constants.STATUS_PHOTOEDITOR);
+        LinearLayout menuBar = (LinearLayout) findViewById(R.id.menu_bar);
         image = (CropImageView) findViewById(R.id.cropImageView);
         mProgressBar = (FrameLayout) findViewById(R.id.frame_progressbar);
         image.setInitialFrameScale(0.75f);
-        image.setCropMode(CropImageView.CropMode.FREE);
-//        setCustomRatio(int ratioX, int ratioY);
+        if (statusEditor.equals(Constants.STATUS_PHOTOEEDITOR_CREDIT_CARD)) {
+            image.setCustomRatio(90, 55);
+            menuBar.setVisibility(View.GONE);
+        } else {
+            image.setCropMode(CropImageView.CropMode.FREE);
+            menuBar.setVisibility(View.VISIBLE);
+        }
 //        FIT_IMAGE, RATIO_4_3, RATIO_3_4, SQUARE(default), RATIO_16_9, RATIO_9_16, FREE, CUSTOM, CIRCLE, CIRCLE_SQUARE
         image.setHandleSizeInDp(0);
         image.setFrameStrokeWeightInDp(1);
         image.setGuideStrokeWeightInDp(1);
         image.setTouchPaddingInDp(24);
-        image.setMinFrameSizeInDp(150);
+        image.setMinFrameSizeInDp(85);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {

@@ -126,5 +126,6 @@
     <string name="new_ticket_title">New ticket</string>
     <string name="new_nfc_title">New NFC item</string>
     <string name="setup_pin">Setup PIN</string>
+    <string name="use_fingerprint">Use fingerprint</string>
 
 </resources>

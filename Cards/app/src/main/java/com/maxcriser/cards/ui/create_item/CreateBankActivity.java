@@ -98,6 +98,7 @@ public class CreateBankActivity extends AppCompatActivity {
     private String myColorCode;
     private Uri editFrontUri;
     private Uri editBackUri;
+    private boolean statusScan;
     private boolean statusSave = false;
 
     @Override
@@ -126,6 +127,7 @@ public class CreateBankActivity extends AppCompatActivity {
         backPhoto = (ImageView) findViewById(R.id.back_photo);
         removeBack = (FrameLayout) findViewById(R.id.remove_back);
         removeFront = (FrameLayout) findViewById(R.id.remove_front);
+        statusScan = true;
         db = DatabaseHelperImpl.getInstance(this);
         setDateOnView();
         currentPositionColors = 0;
@@ -196,10 +198,12 @@ public class CreateBankActivity extends AppCompatActivity {
                     Uri takenPhotoUri = getUri(photoFileNameFront);
                     Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
+                    intent.putExtra(Constants.STATUS_PHOTOEDITOR, Constants.STATUS_PHOTOEEDITOR_CREDIT_CARD);
                     startActivityForResult(intent, EDIT_IMAGE_FRONT);
                 } else {
                     Uri takenPhotoUri = getUri(photoFileNameBack);
                     Intent intent = new Intent(this, PhotoEditorActivity.class);
+                    intent.putExtra(Constants.STATUS_PHOTOEDITOR, Constants.STATUS_PHOTOEEDITOR_CREDIT_CARD);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
                     startActivityForResult(intent, EDIT_IMAGE_BACK);
                 }
@@ -230,7 +234,7 @@ public class CreateBankActivity extends AppCompatActivity {
                 sync.execute(new ScanCreditCard(getAssets()), editFrontUri, new OnResultCallback<CreditCard, String>() {
                     @Override
                     public void onSuccess(CreditCard pCredit) {
-                        if (pCredit != null) {
+                        if (pCredit != null && statusScan) {
                             String creditNumber = pCredit.getNumberCreditCard();
                             String creditCardholder = pCredit.getCardholderCreditCard();
                             String creditName = pCredit.getNameCreditCard();
@@ -506,6 +510,7 @@ public class CreateBankActivity extends AppCompatActivity {
             if (editFrontUri != null)
                 sync.execute(new RemovePhoto(), editFrontUri, null);
         }
+        statusScan = false;
         super.onDestroy();
     }
 

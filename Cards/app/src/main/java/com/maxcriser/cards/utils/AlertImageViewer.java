@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.maxcriser.cards.R;
+import com.maxcriser.cards.constant.Constants;
 
 public class AlertImageViewer extends AlertDialog {
 
@@ -18,6 +19,7 @@ public class AlertImageViewer extends AlertDialog {
     private int height;
     private int bitmapHeight;
     private int bitmapWidth;
+//    private Bitmap resizedBitmap;
 
 
     public AlertImageViewer(Context context, Bitmap pBitmap, int width, int height) {
@@ -26,12 +28,13 @@ public class AlertImageViewer extends AlertDialog {
         this.mBitmap = pBitmap;
         this.width = width;
         this.height = height;
-        bitmapHeight = mBitmap.getHeight();
-        bitmapWidth = mBitmap.getHeight();
-        while (bitmapHeight - 16 >= height || bitmapWidth - 16 >= width) {
-            bitmapHeight -= 16;
-            bitmapWidth -= 16;
-        }
+//        bitmapHeight = mBitmap.getHeight();
+//        bitmapWidth = mBitmap.getHeight();
+//        while (bitmapHeight / 2 > height || bitmapWidth / 2 > width) {
+//            bitmapHeight /= 2;
+//            bitmapWidth /= 2;
+//        }
+//        resizedBitmap = Bitmap.createScaledBitmap(pBitmap, bitmapWidth, bitmapHeight, true);
     }
 
     public void startDialog() {
@@ -40,7 +43,6 @@ public class AlertImageViewer extends AlertDialog {
         Builder builder = new Builder(context);
         builder.setView(layout);
         builder.setPositiveButton("Ok", new OnClickListener() {
-
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
                 dismiss();

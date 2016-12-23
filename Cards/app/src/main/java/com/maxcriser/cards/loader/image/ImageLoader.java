@@ -27,6 +27,7 @@ import java.util.Stack;
 public class ImageLoader {
 
     private static final String FILE = "file://";
+    private static final String HTTP = "http";
     private static ImageLoader sImageLoader;
     private final HttpClient mHttpClient;
     private final ThreadManager mThreadManager;
@@ -102,7 +103,7 @@ public class ImageLoader {
                     Uri pUri = Uri.parse(pUrl);
                     bitmap = BitmapFactory.decodeFile(pUri.getPath());
                     return bitmap;
-                } else {
+                } else if (pUrl.startsWith(HTTP)){
                     HttpURLConnection connection = null;
                     InputStream inputStream = null;
                     try {
@@ -125,6 +126,7 @@ public class ImageLoader {
                     }
                     return bitmap;
                 }
+                return null;
             }
         },
                 pUrl,

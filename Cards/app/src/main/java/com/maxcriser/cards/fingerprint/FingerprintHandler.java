@@ -2,6 +2,7 @@ package com.maxcriser.cards.fingerprint;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
@@ -10,7 +11,12 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
+import com.maxcriser.cards.R;
+import com.maxcriser.cards.ui.ItemsActivity;
 import com.maxcriser.cards.ui.LockerActivity;
+import com.maxcriser.cards.ui.MenuActivity;
+
+import java.util.concurrent.locks.Lock;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
@@ -53,12 +59,23 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     @Override
     public void onAuthenticationFailed() {
-        mLockerActivity.error();
+//        mLockerActivity.error();
+        Toast.makeText(appContext,
+                "Authentication failed.",
+                Toast.LENGTH_LONG).show();
+        if(appContext instanceof LockerActivity){
+            ((LockerActivity)appContext).error();
+        }
     }
 
     @Override
-    public void onAuthenticationSucceeded(
-            FingerprintManager.AuthenticationResult result) {
-        mLockerActivity.start();
+    public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
+//        mLockerActivity.start();
+        Toast.makeText(appContext,
+                "Authentication succeeded.",
+                Toast.LENGTH_LONG).show();
+        if(appContext instanceof LockerActivity){
+            ((LockerActivity)appContext).start();
+        }
     }
 }

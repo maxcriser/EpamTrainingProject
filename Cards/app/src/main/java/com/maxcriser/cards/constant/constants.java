@@ -67,4 +67,7 @@ public class Constants {
     public static final String BEG_FILE_NAME_TICKET = "ticket-";
     public static final int PAGER_MARGIN_PREVIEW = 16;
     public static final String APP_TAG = "thecrisertakephoto";
+    public static final String STATUS_PHOTOEDITOR = "status_photoeditor";
+    public static final String STATUS_PHOTOEEDITOR_CREDIT_CARD = "status_credit_card_crop";
+    public static final String STATUS_PHOTOEEDITOR_TICKET = "status_ticket_crop";
 }

@@ -10,7 +10,7 @@
         <!--<item-->
             <!--android:id="@+id/mi_drawer_item_live_traffic"-->
             <!--android:icon="@drawable/ic_nav_night_mode"-->
-            <!--android:title="@string/night_mode"-->
+            <!--android:title="@string/use_fingerprint"-->
             <!--app:actionLayout="@layout/fragment_nav_switch"/>-->
     </group>
 

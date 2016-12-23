@@ -48,6 +48,7 @@
             card_view:scv_touch_padding="8dp"/>
 
         <LinearLayout
+            android:id="@+id/menu_bar"
             android:layout_width="match_parent"
             android:layout_height="72dp"
             android:background="#303030"

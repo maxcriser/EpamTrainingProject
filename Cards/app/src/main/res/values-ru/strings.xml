@@ -127,5 +127,6 @@
 <string name="new_ticket_title">Новый билет</string>
 <string name="new_nfc_title">Новый NFC элемент</string>
 <string name="setup_pin">Установить PIN</string>
+<string name="use_fingerprint">Отпечатки пальцев</string>
 
 </resources>

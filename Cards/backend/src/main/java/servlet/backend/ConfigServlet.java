@@ -23,8 +23,6 @@ public class ConfigServlet extends HttpServlet {
 
     private JSONObject mJSONObject;
 
-    private final Object mLock = new Object();
-
     private Entity mEntity;
 
     public ConfigServlet() {
@@ -60,7 +58,6 @@ public class ConfigServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         if (hasPermission(req, resp)) {
-            //TODO update config
             String value = req.getParameter("value");
             resp.setContentType("application/json");
             try {

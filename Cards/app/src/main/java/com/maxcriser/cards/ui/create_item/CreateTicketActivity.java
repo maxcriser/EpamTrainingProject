@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -112,11 +113,13 @@ public class CreateTicketActivity extends AppCompatActivity {
                     Uri takenPhotoUri = getUri(photoFileNameFront);
                     Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
+                    intent.putExtra(Constants.STATUS_PHOTOEDITOR, Constants.STATUS_PHOTOEEDITOR_TICKET);
                     startActivityForResult(intent, EDIT_IMAGE_FRONT);
                 } else {
                     Uri takenPhotoUri = getUri(photoFileNameBack);
                     Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
+                    intent.putExtra(Constants.STATUS_PHOTOEDITOR, Constants.STATUS_PHOTOEEDITOR_TICKET);
                     startActivityForResult(intent, EDIT_IMAGE_BACK);
                 }
             } else {

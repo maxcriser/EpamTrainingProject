@@ -52,8 +52,8 @@ public class LockerActivity extends AppCompatActivity {
     private ImageView fourthCircle;
     private Vibrator mVibrator;
     private Intent intent;
-    private String intentLockedPage;
-    private String builderPassword;
+    private String intentLockedPage = Constants.EMPTY_STRING;
+    private String builderPassword = Constants.EMPTY_STRING;
     private Integer durationVibrateError = 200;
     private Integer durationVibrateInput = 10;
     private KeyStore keyStore;
@@ -200,8 +200,10 @@ public class LockerActivity extends AppCompatActivity {
         }
     }
 
-    public void setBackgroundCircle(ImageView v) {
-        v.setBackgroundResource(R.drawable.ic_lens_black_24dp);
+    public void setBackgroundCircle(ImageView... args) {
+        for (ImageView v : args) {
+            v.setBackgroundResource(R.drawable.ic_lens_black_24dp);
+        }
     }
 
     public void inputPassword(String number) {
@@ -298,8 +300,9 @@ public class LockerActivity extends AppCompatActivity {
 
     public void start() {
         if (intentLockedPage.equals(MenuActivity.CREDIT_CARD)) {
+            setBackgroundCircle(firstCircle, secondCircle, thirdCircle, fourthCircle);
             intent = new Intent(LockerActivity.this, ItemsActivity.class);
-            MenuActivity.selectItem = getResources().getString(R.string.bank_title);;
+            MenuActivity.selectItem = getResources().getString(R.string.bank_title);
             startActivity(intent);
         } else {
             Intent intent = new Intent(LockerActivity.this, SetupPinActivity.class);
