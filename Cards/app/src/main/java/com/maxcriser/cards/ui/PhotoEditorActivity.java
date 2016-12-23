@@ -17,7 +17,7 @@ import com.isseiaoki.simplecropview.callback.CropCallback;
 import com.isseiaoki.simplecropview.callback.LoadCallback;
 import com.isseiaoki.simplecropview.callback.SaveCallback;
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.constant.Constants;
+import com.maxcriser.cards.constant.constants;
 import com.maxcriser.cards.constant.Extras;
 
 public class PhotoEditorActivity extends AppCompatActivity {
@@ -38,12 +38,12 @@ public class PhotoEditorActivity extends AppCompatActivity {
 
     void initViews() {
         Intent intent = getIntent();
-        String statusEditor = intent.getStringExtra(Constants.STATUS_PHOTOEDITOR);
+        String statusEditor = intent.getStringExtra(constants.STATUS_PHOTOEDITOR);
         LinearLayout menuBar = (LinearLayout) findViewById(R.id.menu_bar);
         image = (CropImageView) findViewById(R.id.cropImageView);
         mProgressBar = (FrameLayout) findViewById(R.id.frame_progressbar);
         image.setInitialFrameScale(0.75f);
-        if (statusEditor.equals(Constants.STATUS_PHOTOEEDITOR_CREDIT_CARD)) {
+        if (statusEditor.equals(constants.STATUS_PHOTOEEDITOR_CREDIT_CARD)) {
             image.setCustomRatio(90, 55);
             menuBar.setVisibility(View.GONE);
         } else {
@@ -54,6 +54,7 @@ public class PhotoEditorActivity extends AppCompatActivity {
         image.setHandleSizeInDp(0);
         image.setFrameStrokeWeightInDp(1);
         image.setGuideStrokeWeightInDp(1);
+        //TODO move to dimens
         image.setTouchPaddingInDp(24);
         image.setMinFrameSizeInDp(85);
 

@@ -47,7 +47,7 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".ui.NfcReaderActivity"
+            android:name=".ui.NFCReaderActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
 

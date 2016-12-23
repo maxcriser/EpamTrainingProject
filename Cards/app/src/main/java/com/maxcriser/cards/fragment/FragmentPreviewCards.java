@@ -17,6 +17,7 @@ import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 
 public class FragmentPreviewCards extends Fragment {
 
+    //TODO statics
     public static Object previewView;
     public static Object icon = R.drawable.type_visa;
     static final String ARGUMENT_PAGE_NUMBER_DISCOUNT = "arg_page_number";

@@ -18,6 +18,7 @@ public class CursorHolder extends RecyclerView.ViewHolder {
     public RobotoThin mDate;
     public TextView mTime;
 
+    //TODO rename to some card holder
     public CursorHolder(View itemView) {
         super(itemView);
         mLinearCard = (FrameLayout) itemView.findViewById(R.id.linear_card);

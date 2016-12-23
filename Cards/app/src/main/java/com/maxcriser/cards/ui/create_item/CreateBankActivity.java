@@ -1,3 +1,4 @@
+//TODO create activities
 package com.maxcriser.cards.ui.create_item;
 
 import android.Manifest;
@@ -37,7 +38,7 @@ import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.async.task.ScanCreditCard;
-import com.maxcriser.cards.constant.Constants;
+import com.maxcriser.cards.constant.constants;
 import com.maxcriser.cards.constant.Extras;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
@@ -58,14 +59,14 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import static android.view.View.GONE;
-import static com.maxcriser.cards.constant.Constants.Requests.CAPTURE_IMAGE_BACK;
-import static com.maxcriser.cards.constant.Constants.Requests.CAPTURE_IMAGE_FRONT;
-import static com.maxcriser.cards.constant.Constants.Requests.EDIT_IMAGE_BACK;
-import static com.maxcriser.cards.constant.Constants.Requests.EDIT_IMAGE_FRONT;
-import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_BACK_CAMERA;
-import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_FRONT_CAMERA;
-import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STORAGE_BACK;
-import static com.maxcriser.cards.constant.Constants.Requests.REQUEST_WRITE_STORAGE_FRONT;
+import static com.maxcriser.cards.constant.constants.Requests.CAPTURE_IMAGE_BACK;
+import static com.maxcriser.cards.constant.constants.Requests.CAPTURE_IMAGE_FRONT;
+import static com.maxcriser.cards.constant.constants.Requests.EDIT_IMAGE_BACK;
+import static com.maxcriser.cards.constant.constants.Requests.EDIT_IMAGE_FRONT;
+import static com.maxcriser.cards.constant.constants.Requests.REQUEST_BACK_CAMERA;
+import static com.maxcriser.cards.constant.constants.Requests.REQUEST_FRONT_CAMERA;
+import static com.maxcriser.cards.constant.constants.Requests.REQUEST_WRITE_STORAGE_BACK;
+import static com.maxcriser.cards.constant.constants.Requests.REQUEST_WRITE_STORAGE_FRONT;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
 import static com.maxcriser.cards.utils.Storage.isExternalStorageAvailable;
@@ -111,8 +112,8 @@ public class CreateBankActivity extends AppCompatActivity {
 
     private void initViews() {
         String uniqueString = UniqueStringGenerator.getUniqueString();
-        photoFileNameFront = Constants.BEG_FILE_NAME_BANK + uniqueString + "front_photo.jpg";
-        photoFileNameBack = Constants.BEG_FILE_NAME_BANK + uniqueString + "back_photo.jpg";
+        photoFileNameFront = constants.BEG_FILE_NAME_BANK + uniqueString + "front_photo.jpg";
+        photoFileNameBack = constants.BEG_FILE_NAME_BANK + uniqueString + "back_photo.jpg";
         verificationNumber = (EditText) findViewById(R.id.ver_number);
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
         bank = (EditText) findViewById(R.id.bank);
@@ -138,12 +139,14 @@ public class CreateBankActivity extends AppCompatActivity {
         myColorCode = listPreviewColor.getCodeColorCards();
         Log.d("BANK", myColorName + " " + myColorCode);
 
+        //TODO name convention
         int PAGE_COUNT_TEMPLATE = previewColors.size();
 
-        pagerTemplate.setPageMargin(Constants.PAGER_MARGIN_PREVIEW);
+        pagerTemplate.setPageMargin(constants.PAGER_MARGIN_PREVIEW);
+        //TODO magic number, move to dimens
         pagerTemplate.setMinimumHeight(156);
         pagerAdapterTemplate = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
-                Constants.PagerIDs.ID_BANK_CARD_ITEM,
+                constants.PagerIDs.ID_BANK_CARD_ITEM,
                 PAGE_COUNT_TEMPLATE);
         pagerTemplate.setAdapter(pagerAdapterTemplate);
 
@@ -161,7 +164,7 @@ public class CreateBankActivity extends AppCompatActivity {
         Log.d("BANK", myTypeCard);
         int PAGE_COUNT = previewTypes.size();
         PagerAdapter pagerAdapterTypes = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
-                Constants.PagerIDs.ID_BANK_CARD_ITEM_TYPE,
+                constants.PagerIDs.ID_BANK_CARD_ITEM_TYPE,
                 PAGE_COUNT);
         pagerTypes.setAdapter(pagerAdapterTypes);
         FragmentPreviewCards.icon = R.drawable.type_visa;
@@ -169,6 +172,7 @@ public class CreateBankActivity extends AppCompatActivity {
             @Override
             public void onResult(int position, Integer icon, String type) {
                 myTypeCard = type;
+                //TODO remove all statics
                 FragmentPreviewCards.icon = icon;
                 pagerTemplate.setAdapter(pagerAdapterTemplate);
                 pagerTemplate.setCurrentItem(currentPositionColors);
@@ -197,12 +201,12 @@ public class CreateBankActivity extends AppCompatActivity {
                     Uri takenPhotoUri = getUri(photoFileNameFront);
                     Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
-                    intent.putExtra(Constants.STATUS_PHOTOEDITOR, Constants.STATUS_PHOTOEEDITOR_CREDIT_CARD);
+                    intent.putExtra(constants.STATUS_PHOTOEDITOR, constants.STATUS_PHOTOEEDITOR_CREDIT_CARD);
                     startActivityForResult(intent, EDIT_IMAGE_FRONT);
                 } else {
                     Uri takenPhotoUri = getUri(photoFileNameBack);
                     Intent intent = new Intent(this, PhotoEditorActivity.class);
-                    intent.putExtra(Constants.STATUS_PHOTOEDITOR, Constants.STATUS_PHOTOEEDITOR_CREDIT_CARD);
+                    intent.putExtra(constants.STATUS_PHOTOEDITOR, constants.STATUS_PHOTOEEDITOR_CREDIT_CARD);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
                     startActivityForResult(intent, EDIT_IMAGE_BACK);
                 }
@@ -307,6 +311,7 @@ public class CreateBankActivity extends AppCompatActivity {
         if (!creditValid.isEmpty()) {
             message += "Valid through: " + creditValid + "\n\n";
         }
+        //TODO move to builders
         AlertDialog.Builder builder = new AlertDialog.Builder(CreateBankActivity.this);
         builder.setTitle(R.string.matches_found)
                 .setMessage(message)
@@ -330,7 +335,7 @@ public class CreateBankActivity extends AppCompatActivity {
 
     private void pasteRecognizeTextToViews(String creditNumber, String creditCardholder,
                                            String creditName, String creditType, String creditValid) {
-        if (!creditNumber.equals(Constants.EMPTY_STRING)) {
+        if (!creditNumber.equals(constants.EMPTY_STRING)) {
             number.setText(creditNumber);
         }
         cardholder.setText(creditCardholder);
@@ -339,29 +344,29 @@ public class CreateBankActivity extends AppCompatActivity {
         if (!creditType.isEmpty()) {
             int numberType;
             switch (creditType) {
-                case Constants.Cards.VISA:
-                    numberType = Constants.PagerTypesID.VISA;
+                case constants.Cards.VISA:
+                    numberType = constants.PagerTypesID.VISA;
                     break;
-                case Constants.Cards.MASTERCARD:
-                    numberType = Constants.PagerTypesID.MASTERCAD;
+                case constants.Cards.MASTERCARD:
+                    numberType = constants.PagerTypesID.MASTERCAD;
                     break;
-                case Constants.Cards.AMEX:
-                    numberType = Constants.PagerTypesID.AMEX;
+                case constants.Cards.AMEX:
+                    numberType = constants.PagerTypesID.AMEX;
                     break;
-                case Constants.Cards.MAESTRO:
-                    numberType = Constants.PagerTypesID.MAESTRO;
+                case constants.Cards.MAESTRO:
+                    numberType = constants.PagerTypesID.MAESTRO;
                     break;
-                case Constants.Cards.WESTERN_UNION:
-                    numberType = Constants.PagerTypesID.WESTERN_UNION;
+                case constants.Cards.WESTERN_UNION:
+                    numberType = constants.PagerTypesID.WESTERN_UNION;
                     break;
-                case Constants.Cards.JCB:
-                    numberType = Constants.PagerTypesID.JCB;
+                case constants.Cards.JCB:
+                    numberType = constants.PagerTypesID.JCB;
                     break;
-                case Constants.Cards.DINERS_CLUB:
-                    numberType = Constants.PagerTypesID.DINERS_CLUB;
+                case constants.Cards.DINERS_CLUB:
+                    numberType = constants.PagerTypesID.DINERS_CLUB;
                     break;
                 default:
-                    numberType = Constants.PagerTypesID.BELCARD;
+                    numberType = constants.PagerTypesID.BELCARD;
                     break;
             }
             pagerTypes.setCurrentItem(numberType);
@@ -371,9 +376,9 @@ public class CreateBankActivity extends AppCompatActivity {
     public Uri getUri(String fileName) {
         if (isExternalStorageAvailable()) {
             File mediaStorageDir = new File(
-                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), Constants.APP_TAG);
+                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), constants.APP_TAG);
             if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
-                Log.d(Constants.APP_TAG, getString(R.string.filed_to_create_directory));
+                Log.d(constants.APP_TAG, getString(R.string.filed_to_create_directory));
             }
             return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
         }
@@ -467,12 +472,12 @@ public class CreateBankActivity extends AppCompatActivity {
             if (removeFront.getVisibility() == View.VISIBLE) {
                 cvNewCredit.put(ModelBankCards.PHOTO_FRONT, editFrontUri.toString());
             } else {
-                cvNewCredit.put(ModelBankCards.PHOTO_FRONT, Constants.EMPTY_STRING);
+                cvNewCredit.put(ModelBankCards.PHOTO_FRONT, constants.EMPTY_STRING);
             }
             if (removeBack.getVisibility() == View.VISIBLE) {
                 cvNewCredit.put(ModelBankCards.PHOTO_BACK, editBackUri.toString());
             } else {
-                cvNewCredit.put(ModelBankCards.PHOTO_BACK, Constants.EMPTY_STRING);
+                cvNewCredit.put(ModelBankCards.PHOTO_BACK, constants.EMPTY_STRING);
             }
             cvNewCredit.put(ModelBankCards.VERIFICATION_NUMBER, verNumber);
             cvNewCredit.put(ModelBankCards.CARDHOLDER, cardholderStr);
@@ -514,7 +519,8 @@ public class CreateBankActivity extends AppCompatActivity {
     }
 
     public void onCreateCardClicked(View view) {
-//        getPermission(REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        // TODO remove comments
+//       getPermission(REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         createCard();
     }
 
@@ -522,6 +528,7 @@ public class CreateBankActivity extends AppCompatActivity {
     }
 
     void setDateOnView() {
+        //TODO move to some DateUtils class
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/yy", Locale.US);
         validDate.setText(dateFormat.format(calendar.getTime()));
     }

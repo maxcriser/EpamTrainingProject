@@ -16,6 +16,7 @@ import java.util.List;
 
 public class LaunchScreenActivity extends AppCompatActivity {
 
+    //TODO remove all statics
     public static List<PreviewColor> previewColors;
     public static List<String> previewTypes;
     public static String loadPassword;

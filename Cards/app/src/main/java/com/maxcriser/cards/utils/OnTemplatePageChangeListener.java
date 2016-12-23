@@ -1,3 +1,4 @@
+//TODO listeners
 package com.maxcriser.cards.utils;
 
 import android.support.v4.view.ViewPager;
@@ -24,6 +25,7 @@ public class OnTemplatePageChangeListener implements ViewPager.OnPageChangeListe
 
     @Override
     public void onPageSelected(int position) {
+        //TODO move array to parameter of class
         PreviewColor mListPreviewColor = previewColors.get(position);
         mListener.onResult(position, mListPreviewColor.getCodeColorCards(),
                 mListPreviewColor.getNameColorCards());

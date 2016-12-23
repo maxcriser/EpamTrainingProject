@@ -42,6 +42,7 @@ public class HttpClient {
             return stringBuilder.toString();
         } finally {
             if (inputStream != null) {
+                //TODO IOUtils.closeSafely()
                 inputStream.close();
             }
             if (connection != null) {
@@ -77,6 +78,7 @@ public class HttpClient {
             final OutputStream stream = connection.getOutputStream();
             stream.write(body);
             stream.close();
+            //TODO close not in final
         }
     }
 

@@ -2,6 +2,7 @@ package com.maxcriser.cards.utils;
 
 import android.content.Context;
 
+//TODO move to root package
 public class ContextHolder {
 
     private static ContextHolder sContextHolder;

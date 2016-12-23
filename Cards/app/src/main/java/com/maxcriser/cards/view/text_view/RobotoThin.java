@@ -1,3 +1,4 @@
+//TODO rename _, widget/labels
 package com.maxcriser.cards.view.text_view;
 
 import android.content.Context;

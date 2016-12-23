@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.ui.NfcReaderActivity;
+import com.maxcriser.cards.ui.NFCReaderActivity;
 
 import java.io.IOException;
 
@@ -47,7 +47,7 @@ public class NFCReadFragment extends DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mListener = (NfcReaderActivity)context;
+        mListener = (NFCReaderActivity)context;
         mListener.onDialogDisplayed();
     }
 
@@ -70,6 +70,8 @@ public class NFCReadFragment extends DialogFragment {
             String message = new String(ndefMessage.getRecords()[0].getPayload());
             Log.d(TAG, "readFromNFC: "+message);
             mTvMessage.setText(message);
+
+            //TODO move to final
             ndef1.close();
 
         } catch (IOException | FormatException e) {

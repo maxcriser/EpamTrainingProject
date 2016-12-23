@@ -3,7 +3,7 @@ package com.maxcriser.cards.utils;
 import android.support.v4.view.ViewPager;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.constant.Constants;
+import com.maxcriser.cards.constant.constants;
 
 import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
 
@@ -27,28 +27,28 @@ public class OnTypePageChangeListener implements ViewPager.OnPageChangeListener 
     public void onPageSelected(int position) {
         String myTypeCard = previewTypes.get(position);
         switch (myTypeCard) {
-            case Constants.Cards.VISA:
+            case constants.Cards.VISA:
                 mListener.onResult(position, R.drawable.type_visa, myTypeCard);
                 break;
-            case Constants.Cards.MAESTRO:
+            case constants.Cards.MAESTRO:
                 mListener.onResult(position, R.drawable.type_maestro, myTypeCard);
                 break;
-            case Constants.Cards.MASTERCARD:
+            case constants.Cards.MASTERCARD:
                 mListener.onResult(position, R.drawable.type_mastercard, myTypeCard);
                 break;
-            case Constants.Cards.AMEX:
+            case constants.Cards.AMEX:
                 mListener.onResult(position, R.drawable.type_amex, myTypeCard);
                 break;
-            case Constants.Cards.WESTERN_UNION:
+            case constants.Cards.WESTERN_UNION:
                 mListener.onResult(position, R.drawable.type_western_union, myTypeCard);
                 break;
-            case Constants.Cards.JCB:
+            case constants.Cards.JCB:
                 mListener.onResult(position, R.drawable.type_jcb, myTypeCard);
                 break;
-            case Constants.Cards.DINERS_CLUB:
+            case constants.Cards.DINERS_CLUB:
                 mListener.onResult(position, R.drawable.type_diners_club, myTypeCard);
                 break;
-            case Constants.Cards.BELCARD:
+            case constants.Cards.BELCARD:
                 mListener.onResult(position, R.drawable.type_belcard, myTypeCard);
                 break;
         }

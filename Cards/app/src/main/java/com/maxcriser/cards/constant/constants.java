@@ -1,6 +1,6 @@
 package com.maxcriser.cards.constant;
 
-public class Constants {
+public class constants {
 
     public interface Requests {
         byte REQUEST_CAMERA = 0;

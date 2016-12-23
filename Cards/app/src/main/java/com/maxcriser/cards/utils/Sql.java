@@ -1,3 +1,4 @@
+//TODO move to db/sql package
 package com.maxcriser.cards.utils;
 
 import com.maxcriser.cards.database.DatabaseHelperImpl;

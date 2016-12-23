@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.constant.Constants;
 
 public class AlertImageViewer extends AlertDialog {
 

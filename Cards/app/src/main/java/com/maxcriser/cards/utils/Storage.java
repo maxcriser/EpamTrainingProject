@@ -1,3 +1,4 @@
+//TODO clear the code
 package com.maxcriser.cards.utils;
 
 import android.net.Uri;
@@ -5,7 +6,7 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.maxcriser.cards.constant.Constants;
+import com.maxcriser.cards.constant.constants;
 
 import java.io.File;
 
@@ -21,9 +22,9 @@ public class Storage extends AppCompatActivity {
         if (isExternalStorageAvailable()) {
             if (file != null) {
                 File mediaStorageDir = new File(
-                        file, Constants.APP_TAG);
+                        file, constants.APP_TAG);
                 if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
-                    Log.d(Constants.APP_TAG, "Error creating directory");
+                    Log.d(constants.APP_TAG, "Error creating directory");
                 }
                 File imagePath = new File(mediaStorageDir.getPath() + File.separator + fileName);
                 if (imagePath.exists()) {
@@ -38,9 +39,9 @@ public class Storage extends AppCompatActivity {
         if (isExternalStorageAvailable()) {
             if (file != null) {
                 File mediaStorageDir = new File(
-                        file, Constants.APP_TAG);
+                        file, constants.APP_TAG);
                 if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
-                    Log.d(Constants.APP_TAG, "Error creating directory");
+                    Log.d(constants.APP_TAG, "Error creating directory");
                 }
                 File imagePath = new File(mediaStorageDir.getPath() + File.separator + fileName);
                 if (imagePath.exists()) {

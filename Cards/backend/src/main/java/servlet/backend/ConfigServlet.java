@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import static servlet.backend.auth.SecurityUtils.hasPermission;
 
+//TODO ide settings
 public class ConfigServlet extends HttpServlet {
 
     private JSONObject mJSONObject;
@@ -70,6 +71,7 @@ public class ConfigServlet extends HttpServlet {
                 try {
                     resp.getWriter().write(new JSONObject().put("error", e.toString()).toString());
                 } catch (JSONException e1) {
+                    //todo ignored exception
                     e1.printStackTrace();
                 }
             }

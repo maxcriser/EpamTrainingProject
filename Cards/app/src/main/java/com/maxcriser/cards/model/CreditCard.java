@@ -1,6 +1,6 @@
 package com.maxcriser.cards.model;
 
-import com.maxcriser.cards.constant.Constants;
+import com.maxcriser.cards.constant.constants;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,38 +19,38 @@ public class CreditCard {
         setVerificationNumberCreditCard();
     }
 
-    private String typeCreditCard = Constants.EMPTY_STRING;
-    private String nameCreditCard = Constants.EMPTY_STRING;
-    private String cardholderCreditCard = Constants.EMPTY_STRING;
-    private String numberCreditCard = Constants.EMPTY_STRING;
-    private String pinCreditCard = Constants.EMPTY_STRING;
-    private String verificationNumberCreditCard = Constants.EMPTY_STRING;
-    private String validCreditCard = Constants.EMPTY_STRING;
+    private String typeCreditCard = constants.EMPTY_STRING;
+    private String nameCreditCard = constants.EMPTY_STRING;
+    private String cardholderCreditCard = constants.EMPTY_STRING;
+    private String numberCreditCard = constants.EMPTY_STRING;
+    private String pinCreditCard = constants.EMPTY_STRING;
+    private String verificationNumberCreditCard = constants.EMPTY_STRING;
+    private String validCreditCard = constants.EMPTY_STRING;
 
     public void setTypeCreditCard() {
-        if (text.toLowerCase().contains(Constants.Cards.VISA)) {
-            typeCreditCard = Constants.Cards.VISA;
-        } else if (text.toLowerCase().contains(Constants.Cards.AMEX)
-                || text.toLowerCase().contains(Constants.Cards.AMEX2)) {
-            typeCreditCard = Constants.Cards.AMEX;
-        } else if (text.toLowerCase().contains(Constants.Cards.MASTERCARD)) {
-            typeCreditCard = Constants.Cards.MASTERCARD;
-        } else if (text.toLowerCase().contains(Constants.Cards.MAESTRO)) {
-            typeCreditCard = Constants.Cards.MAESTRO;
-        } else if (text.toLowerCase().contains(Constants.Cards.WESTERN_UNION)) {
-            typeCreditCard = Constants.Cards.WESTERN_UNION;
-        } else if (text.toLowerCase().contains(Constants.Cards.JCB)) {
-            typeCreditCard = Constants.Cards.JCB;
-        } else if (text.toLowerCase().contains(Constants.Cards.DINERS_CLUB)) {
-            typeCreditCard = Constants.Cards.DINERS_CLUB;
-        } else if (text.toLowerCase().contains(Constants.Cards.BELCARD)
-                || text.toLowerCase().contains(Constants.Cards.BELCARD2)) {
-            typeCreditCard = Constants.Cards.BELCARD;
+        if (text.toLowerCase().contains(constants.Cards.VISA)) {
+            typeCreditCard = constants.Cards.VISA;
+        } else if (text.toLowerCase().contains(constants.Cards.AMEX)
+                || text.toLowerCase().contains(constants.Cards.AMEX2)) {
+            typeCreditCard = constants.Cards.AMEX;
+        } else if (text.toLowerCase().contains(constants.Cards.MASTERCARD)) {
+            typeCreditCard = constants.Cards.MASTERCARD;
+        } else if (text.toLowerCase().contains(constants.Cards.MAESTRO)) {
+            typeCreditCard = constants.Cards.MAESTRO;
+        } else if (text.toLowerCase().contains(constants.Cards.WESTERN_UNION)) {
+            typeCreditCard = constants.Cards.WESTERN_UNION;
+        } else if (text.toLowerCase().contains(constants.Cards.JCB)) {
+            typeCreditCard = constants.Cards.JCB;
+        } else if (text.toLowerCase().contains(constants.Cards.DINERS_CLUB)) {
+            typeCreditCard = constants.Cards.DINERS_CLUB;
+        } else if (text.toLowerCase().contains(constants.Cards.BELCARD)
+                || text.toLowerCase().contains(constants.Cards.BELCARD2)) {
+            typeCreditCard = constants.Cards.BELCARD;
         }
     }
 
     private boolean isCharacterOrSpace(char ch) {
-        String chStr = ch + Constants.EMPTY_STRING;
+        String chStr = ch + constants.EMPTY_STRING;
         if ((chStr).matches("^[A-Za-z]+$") || (chStr).matches("^[А-Яа-я]+$") || ch == ' ' || ch == '.' || ch == '-' || ch == '&') {
             return true;
         }
@@ -58,6 +58,7 @@ public class CreditCard {
     }
 
     public void setNameCreditCard() {
+        //TODO hardcode
         String bank = "bank";
         String handleText = text;
         if (text.toLowerCase().contains(bank)) {
@@ -84,7 +85,7 @@ public class CreditCard {
             nameCreditCard = builder.toString();
             nameCreditCard = nameCreditCard.trim();
         } else {
-            nameCreditCard = Constants.EMPTY_STRING;
+            nameCreditCard = constants.EMPTY_STRING;
         }
     }
 
@@ -142,6 +143,6 @@ public class CreditCard {
         Pattern pattern = Pattern.compile(regexp);
         Matcher matcher = pattern.matcher(text);
 
-        return (matcher.find() ? matcher.group() : Constants.EMPTY_STRING);
+        return (matcher.find() ? matcher.group() : constants.EMPTY_STRING);
     }
 }
