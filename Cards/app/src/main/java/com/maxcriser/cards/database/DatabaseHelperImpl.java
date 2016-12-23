@@ -23,10 +23,9 @@ import com.maxcriser.cards.database.annotations.dbString;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
-import java.util.List;
 import java.util.Locale;
 
-public class DatabaseHelperImpl extends SQLiteOpenHelper {
+public final class DatabaseHelperImpl extends SQLiteOpenHelper {
 
     private static final String SQL_TABLE_CREATE_TEMPLATE = "CREATE TABLE IF NOT EXISTS %s (%s);";
     private static final String SQL_TABLE_CREATE_FIELD_TEMPLATE = "%s %s%s";
@@ -37,7 +36,7 @@ public class DatabaseHelperImpl extends SQLiteOpenHelper {
     private static final int dbVersion = 1;
     private static DatabaseHelperImpl mHelper;
 
-    private DatabaseHelperImpl(Context pContext) {
+    private DatabaseHelperImpl(final Context pContext) {
         super(pContext, mDatabaseName, null, dbVersion);
         // DELETE DATABASE
 //        ContextHolder.getInstance().getContext().deleteDatabase(mDatabaseName);
@@ -46,7 +45,7 @@ public class DatabaseHelperImpl extends SQLiteOpenHelper {
 
     // TODO move to Application
     // TODO ue interfaces (see how Vova implement that)
-    public static synchronized DatabaseHelperImpl getInstance(Context pContext) {
+    public static synchronized DatabaseHelperImpl getInstance(final Context pContext) {
         //TODO not thread safe
         if (mHelper == null) {
             mHelper = new DatabaseHelperImpl(pContext);
@@ -76,7 +75,7 @@ public class DatabaseHelperImpl extends SQLiteOpenHelper {
                     final Annotation[] annotations = fields[i].getAnnotations();
                     String type = null;
                     String additionalKeys = constants.EMPTY_STRING;
-                    for (Annotation annotation : annotations) {
+                    for (final Annotation annotation : annotations) {
                         if (annotation instanceof dbInteger) {
                             type = ((dbInteger) annotation).value();
                         } else if (annotation instanceof dbString) {
@@ -134,28 +133,29 @@ public class DatabaseHelperImpl extends SQLiteOpenHelper {
                                    final String pSqlCondition,
                                    final String... pArgs) {
         new AsyncTask<Void, Void, Cursor>() {
+
             @Override
-            protected Cursor doInBackground(Void... params) {
+            protected Cursor doInBackground(final Void... params) {
                 final SQLiteDatabase database = getReadableDatabase();
-                String sql = "SELECT " + pSqlQuery + " FROM " + getTableName(pModel) + " " + pSqlCondition;
+                final String sql = "SELECT " + pSqlQuery + " FROM " + getTableName(pModel) + " " + pSqlCondition;
                 return database.rawQuery(sql, pArgs);
             }
 
             @Override
-            protected void onPostExecute(Cursor pCursor) {
+            protected void onPostExecute(final Cursor pCursor) {
                 pCallback.onSuccess(pCursor);
             }
         }.execute();
     }
 
-
-    public synchronized void insert(final Class<?> pModel,
+    public synchronized void insert(final AnnotatedElement pModel,
                                     final ContentValues pValues,
                                     @Nullable final OnResultCallback<Long, Void> pCallback) {
         //TODO check Executors
         new AsyncTask<Void, Void, Long>() {
+
             @Override
-            protected Long doInBackground(Void... params) {
+            protected Long doInBackground(final Void... params) {
                 final String name = getTableName(pModel);
                 if (name != null) {
                     final SQLiteDatabase database = getWritableDatabase();
@@ -169,7 +169,7 @@ public class DatabaseHelperImpl extends SQLiteOpenHelper {
                     }
                     return id;
                 } else {
-                    RuntimeException exception = new RuntimeException("No such table exists");
+                    final RuntimeException exception = new RuntimeException("No such table exists");
                     if (pCallback != null) {
                         pCallback.onError(exception);
                     } else {
@@ -180,7 +180,7 @@ public class DatabaseHelperImpl extends SQLiteOpenHelper {
             }
 
             @Override
-            protected void onPostExecute(Long pLong) {
+            protected void onPostExecute(final Long pLong) {
                 if (pCallback != null) {
                     pCallback.onSuccess(pLong);
                 }
@@ -188,12 +188,13 @@ public class DatabaseHelperImpl extends SQLiteOpenHelper {
         }.execute();
     }
 
-    public synchronized void bulkInsert(final Class<?> pModel,
-                                        final List<ContentValues> pValuesList,
+    public synchronized void bulkInsert(final AnnotatedElement pModel,
+                                        final Iterable<ContentValues> pValuesList,
                                         @Nullable final OnResultCallback<Integer, Void> pCallback) {
         new AsyncTask<Void, Void, Integer>() {
+
             @Override
-            protected Integer doInBackground(Void... params) {
+            protected Integer doInBackground(final Void... params) {
                 final String name = getTableName(pModel);
                 if (name != null) {
                     final SQLiteDatabase database = getWritableDatabase();
@@ -210,7 +211,7 @@ public class DatabaseHelperImpl extends SQLiteOpenHelper {
                     }
                     return count;
                 } else {
-                    RuntimeException exception = new RuntimeException("No such table exists");
+                    final RuntimeException exception = new RuntimeException("No such table exists");
                     if (pCallback != null) {
                         pCallback.onError(exception);
                     } else {
@@ -221,7 +222,7 @@ public class DatabaseHelperImpl extends SQLiteOpenHelper {
             }
 
             @Override
-            protected void onPostExecute(Integer pInteger) {
+            protected void onPostExecute(final Integer pInteger) {
                 if (pCallback != null) {
                     pCallback.onSuccess(pInteger);
                 }
@@ -229,23 +230,24 @@ public class DatabaseHelperImpl extends SQLiteOpenHelper {
         }.execute();
     }
 
-    public synchronized void edit(final Class<?> pModel,
+    public synchronized void edit(final AnnotatedElement pModel,
                                   final String column,
                                   final String newValue,
                                   final String searchColumn,
                                   final String valueOfSearchColumn, @Nullable final OnResultCallback<Void, Void> pCallback) {
         new AsyncTask<Void, Void, Void>() {
+
             @Override
-            protected Void doInBackground(Void... params) {
+            protected Void doInBackground(final Void... params) {
                 final SQLiteDatabase database = getReadableDatabase();
-                String sql = "UPDATE " + getTableName(pModel) + " SET " + column + " = '" + newValue + "' WHERE " + searchColumn + " = " + valueOfSearchColumn;
+                final String sql = "UPDATE " + getTableName(pModel) + " SET " + column + " = '" + newValue + "' WHERE " + searchColumn + " = " + valueOfSearchColumn;
                 database.execSQL(sql);
 
                 return null;
             }
 
             @Override
-            protected void onPostExecute(Void pVoid) {
+            protected void onPostExecute(final Void pVoid) {
                 if (pCallback != null) {
                     pCallback.onSuccess(pVoid);
                 }
@@ -253,13 +255,14 @@ public class DatabaseHelperImpl extends SQLiteOpenHelper {
         }.execute();
     }
 
-    public synchronized void delete(final Class<?> pModel,
+    public synchronized void delete(final AnnotatedElement pModel,
                                     @Nullable final OnResultCallback<Integer, Void> pCallback,
                                     final String pSql,
                                     final String... pArgs) {
         new AsyncTask<Void, Void, Integer>() {
+
             @Override
-            protected Integer doInBackground(Void... params) {
+            protected Integer doInBackground(final Void... params) {
                 final String name = getTableName(pModel);
                 if (name != null) {
                     final SQLiteDatabase database = getWritableDatabase();
@@ -273,7 +276,7 @@ public class DatabaseHelperImpl extends SQLiteOpenHelper {
                     }
                     return count;
                 } else {
-                    RuntimeException exception = new RuntimeException("No such table exists");
+                    final RuntimeException exception = new RuntimeException("No such table exists");
                     if (pCallback != null) {
                         pCallback.onError(exception);
                     } else {
@@ -284,7 +287,7 @@ public class DatabaseHelperImpl extends SQLiteOpenHelper {
             }
 
             @Override
-            protected void onPostExecute(Integer pInteger) {
+            protected void onPostExecute(final Integer pInteger) {
                 if (pCallback != null) {
                     pCallback.onSuccess(pInteger);
                 }

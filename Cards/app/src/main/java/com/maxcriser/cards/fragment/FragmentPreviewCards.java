@@ -23,32 +23,32 @@ public class FragmentPreviewCards extends Fragment {
     static final String ARGUMENT_PAGE_NUMBER_DISCOUNT = "arg_page_number";
     int pageNumberDiscount;
 
-    public static FragmentPreviewCards newInstance(int pageDiscount, Object pView) {
+    public static FragmentPreviewCards newInstance(final int pageDiscount, final Object pView) {
         previewView = pView;
-        FragmentPreviewCards fragmentPreviewCards = new FragmentPreviewCards();
-        Bundle arguments = new Bundle();
+        final FragmentPreviewCards fragmentPreviewCards = new FragmentPreviewCards();
+        final Bundle arguments = new Bundle();
         arguments.putInt(ARGUMENT_PAGE_NUMBER_DISCOUNT, pageDiscount);
         fragmentPreviewCards.setArguments(arguments);
         return fragmentPreviewCards;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pageNumberDiscount = getArguments().getInt(ARGUMENT_PAGE_NUMBER_DISCOUNT);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate((Integer) previewView, null);
-        TextView tvPage = (TextView) view.findViewById(R.id.title_main_cards);
-        FrameLayout mLinearCard = (FrameLayout) view.findViewById(R.id.linear_card);
-        ImageView imageView = (ImageView) view.findViewById(R.id.icon_bank_cards);
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
+        final View view = inflater.inflate((Integer) previewView, null);
+        final TextView tvPage = (TextView) view.findViewById(R.id.title_main_cards);
+        final FrameLayout mLinearCard = (FrameLayout) view.findViewById(R.id.linear_card);
+        final ImageView imageView = (ImageView) view.findViewById(R.id.icon_bank_cards);
         if (imageView != null) {
             imageView.setImageResource((Integer) icon);
         }
-        PreviewColor color = previewColors.get(pageNumberDiscount);
+        final PreviewColor color = previewColors.get(pageNumberDiscount);
         mLinearCard.setBackgroundColor(Color.parseColor(color.getCodeColorCards()));
         tvPage.setText(color.getNameColorCards());
 

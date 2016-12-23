@@ -24,7 +24,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.util.Stack;
 
-public class ImageLoader {
+public final class ImageLoader {
 
     private static final String FILE = "file://";
     private static final String HTTP = "http";
@@ -75,7 +75,7 @@ public class ImageLoader {
             return;
         }
         pView.setTag(pUrl);
-        Bitmap cachedBitmap;
+        final Bitmap cachedBitmap;
         synchronized (mLockObj) {
             cachedBitmap = mLruCache.get(pUrl);
         }
@@ -96,16 +96,16 @@ public class ImageLoader {
         }
         final Handler handler = new Handler(Looper.getMainLooper());
         final PriorityRunnable<String, Void, Bitmap> priorityRunnable = new PriorityRunnable<>(handler, new ITask<String, Void, Bitmap>() {
+
             @Override
-            public Bitmap doInBackground(String pUrl, ProgressCallback<Void> pProgressCallback) {
+            public Bitmap doInBackground(final String pUrl, final ProgressCallback<Void> pProgressCallback) {
                 Bitmap bitmap = null;
                 Log.d("startWith file://", pUrl.startsWith(FILE) + " - ImageLoader");
                 if (pUrl.startsWith(FILE)) {
                     Log.d("pUrl", pUrl);
-                    Uri pUri = Uri.parse(pUrl);
-                    bitmap = BitmapFactory.decodeFile(pUri.getPath());
-                    return bitmap;
-                } else if (pUrl.startsWith(HTTP)){
+                    final Uri pUri = Uri.parse(pUrl);
+                    return BitmapFactory.decodeFile(pUri.getPath());
+                } else if (pUrl.startsWith(HTTP)) {
                     HttpURLConnection connection = null;
                     InputStream inputStream = null;
                     try {
@@ -137,8 +137,9 @@ public class ImageLoader {
                 new OnResultCallback<Bitmap, Void>()
 
                 {
+
                     @Override
-                    public void onProgressChanged(Void pVoid) {
+                    public void onProgressChanged(final Void pVoid) {
 
                     }
 

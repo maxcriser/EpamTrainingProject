@@ -41,7 +41,7 @@ public class CreateDiscountActivity extends AppCompatActivity {
     private String generateBarcode; // database
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_discount);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
@@ -51,45 +51,45 @@ public class CreateDiscountActivity extends AppCompatActivity {
     private void initViews() {
 //        mBarcodeEan = (BarcodeEan) findViewById(R.id.generate_barcode);
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
-        RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
+        final RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
         mEditText = (EditText) findViewById(R.id.id_edit_text_name_discount);
         pager = (ViewPager) findViewById(R.id.pager);
         db = DatabaseHelperImpl.getInstance(this);
         title.setText(getResources().getString(R.string.new_discount_title));
-        Intent barcodeIntent = getIntent();
-        String barcode = barcodeIntent.getStringExtra(BarcodeScannerActivity.TAG_BARCODE);
-        OwnAsyncTask barcodeGenerator = new OwnAsyncTask();
+        final Intent barcodeIntent = getIntent();
+        final String barcode = barcodeIntent.getStringExtra(BarcodeScannerActivity.TAG_BARCODE);
+        final OwnAsyncTask barcodeGenerator = new OwnAsyncTask();
         barcodeGenerator.execute(new BarcodeConverter(), barcode, new OnResultCallback<String, String>() {
             @Override
-            public void onSuccess(String pS) {
+            public void onSuccess(final String pS) {
                 generateBarcode = pS;
 //                mBarcodeEan.setText(generateBarcode);
             }
 
             @Override
-            public void onError(Exception pE) {
+            public void onError(final Exception pE) {
             }
 
             @Override
-            public void onProgressChanged(String pS) {
+            public void onProgressChanged(final String pS) {
             }
         });
 
-        PreviewColor listPreviewColor = previewColors.get(0);
+        final PreviewColor listPreviewColor = previewColors.get(0);
         myColorName = listPreviewColor.getNameColorCards();
         myColorCode = listPreviewColor.getCodeColorCards();
         Log.d(DISCOUNT_ID, myColorName + " " + myColorCode);
 
-        int PAGE_COUNT = previewColors.size();
+        final int PAGE_COUNT = previewColors.size();
         pager.setPageMargin(constants.PAGER_MARGIN_PREVIEW);
-        PagerAdapter pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
+        final PagerAdapter pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 constants.PagerIDs.ID_DISCOUNT_ITEM,
                 PAGE_COUNT);
 
         pager.setAdapter(pagerAdapter);
         pager.addOnPageChangeListener(new OnTemplatePageChangeListener(new OnTemplatePageChangeListener.OnPageChangeListener() {
             @Override
-            public void onResult(int position, String codeColor, String nameColor) {
+            public void onResult(final int position, final String codeColor, final String nameColor) {
                 myColorCode = codeColor;
                 myColorName = nameColor;
                 Log.d("COLOR", position + myColorName + myColorCode);
@@ -102,14 +102,14 @@ public class CreateDiscountActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public void onBackClicked(View view) {
+    public void onBackClicked(final View view) {
         super.onBackPressed();
     }
 
-    public void onCreateCardClicked(View view) {
-        String titleStr = mEditText.getText().toString();
+    public void onCreateCardClicked(final View view) {
+        final String titleStr = mEditText.getText().toString();
         if (!titleStr.isEmpty()) {
-            ContentValues cvNewDiscount = new ContentValues();
+            final ContentValues cvNewDiscount = new ContentValues();
             cvNewDiscount.put(ModelDiscountCards.TITLE, titleStr);
             cvNewDiscount.put(ModelDiscountCards.BARCODE, generateBarcode);
             cvNewDiscount.put(ModelDiscountCards.BACKGROUND_COLOR, myColorCode);
@@ -117,16 +117,16 @@ public class CreateDiscountActivity extends AppCompatActivity {
 
             db.insert(ModelDiscountCards.class, cvNewDiscount, new OnResultCallback<Long, Void>() {
                 @Override
-                public void onSuccess(Long pLong) {
+                public void onSuccess(final Long pLong) {
                     onBackClicked(null);
                 }
 
                 @Override
-                public void onError(Exception pE) {
+                public void onError(final Exception pE) {
                 }
 
                 @Override
-                public void onProgressChanged(Void pVoid) {
+                public void onProgressChanged(final Void pVoid) {
                 }
             });
         } else {
@@ -135,18 +135,18 @@ public class CreateDiscountActivity extends AppCompatActivity {
         }
     }
 
-    public void onToolbarBackClicked(View view) {
+    public void onToolbarBackClicked(final View view) {
     }
 
-    public void onCancelClicked(View view) {
+    public void onCancelClicked(final View view) {
         onBackClicked(null);
     }
 
-    public void onPrevColorPagerClicked(View view) {
+    public void onPrevColorPagerClicked(final View view) {
         pager.setCurrentItem(pager.getCurrentItem() - 1);
     }
 
-    public void onNextColorPagerClicked(View view) {
+    public void onNextColorPagerClicked(final View view) {
         pager.setCurrentItem(pager.getCurrentItem() + 1);
     }
 }

@@ -5,11 +5,11 @@ public class PreviewColor {
     private String nameColorCards;
     private String codeColorCards;
 
-    void setNameColorCards(String pNameColorCards) {
+    void setNameColorCards(final String pNameColorCards) {
         nameColorCards = pNameColorCards;
     }
 
-    void setCodeColorCards(String pCodeColorCards) {
+    void setCodeColorCards(final String pCodeColorCards) {
         codeColorCards = pCodeColorCards;
     }
 

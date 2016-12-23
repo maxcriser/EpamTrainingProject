@@ -52,8 +52,8 @@ import com.maxcriser.cards.ui.create_item.CreateTicketActivity;
 import com.maxcriser.cards.ui.display_item.BankCardActivity;
 import com.maxcriser.cards.ui.display_item.DiscountCardActivity;
 import com.maxcriser.cards.ui.display_item.TicketActivity;
-import com.maxcriser.cards.utils.AlertNfcInput;
-import com.maxcriser.cards.utils.AlertNfcOutput;
+import com.maxcriser.cards.utils.NfcInputDialogBuilder;
+import com.maxcriser.cards.utils.NfcOutputDialogBuilder;
 import com.maxcriser.cards.utils.RecyclerItemClickListener;
 import com.maxcriser.cards.view.text_view.RobotoRegular;
 
@@ -116,8 +116,8 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
 
         Log.d("showNfc", id + "\n" + nameNfc + "\n" + tagNfc + "\n" + color);
 
-        final AlertNfcOutput alertNfcOutput = new AlertNfcOutput(this);
-        alertNfcOutput.startDialog();
+        final NfcOutputDialogBuilder nfcOutputDialogBuilder = new NfcOutputDialogBuilder(this);
+        nfcOutputDialogBuilder.startDialog();
     }
 
     private void showTicket(final Cursor pCursor) {
@@ -130,7 +130,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         final String firstPhoto = pCursor.getString(pCursor.getColumnIndex(ModelTickets.PHOTO_FIRST));
         final String secondPhoto = pCursor.getString(pCursor.getColumnIndex(ModelTickets.PHOTO_SECOND));
 
-        final Intent intent = new Intent(ItemsActivity.this, TicketActivity.class);
+        final Intent intent = new Intent(this, TicketActivity.class);
         intent.putExtra(EXTRA_TICKET_ID, id);
         intent.putExtra(EXTRA_TICKET_TITLE, nameTicket);
         intent.putExtra(EXTRA_TICKET_CARDHOLDER, cardholderTicket);
@@ -149,7 +149,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         final String cardBarcode = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.BARCODE));
         final String cardColor = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.BACKGROUND_COLOR));
 
-        final Intent intent = new Intent(ItemsActivity.this, DiscountCardActivity.class);
+        final Intent intent = new Intent(this, DiscountCardActivity.class);
         intent.putExtra(EXTRA_DISCOUNT_ID, cardID);
         intent.putExtra(EXTRA_DISCOUNT_TITLE, cardTitle);
         intent.putExtra(EXTRA_DISCOUNT_BARCODE, cardBarcode);
@@ -207,6 +207,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         }
         getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
         searchEdit.addTextChangedListener(new TextWatcher() {
+
             @Override
             public void beforeTextChanged(final CharSequence pCharSequence, final int pI, final int pI1, final int pI2) {
             }
@@ -252,12 +253,14 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
                         .setMessage(R.string.are_you_sure_to_delete)
                         .setCancelable(false)
                         .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+
                             public void onClick(final DialogInterface dialog, final int id) {
                                 getSupportLoaderManager().restartLoader(LOADER_ID, null, ItemsActivity.this);
                                 dialog.cancel();
                             }
                         })
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
                             public void onClick(final DialogInterface dialog, final int id) {
                                 final TextView cardTitle = (TextView) viewHolder.itemView.findViewById(R.id.title_main_cards);
                                 final Integer idDelete = (Integer) cardTitle.getTag();
@@ -275,11 +278,13 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         itemTouchHelper.attachToRecyclerView(recyclerItems);
 
         recyclerItems.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerItems, new RecyclerItemClickListener.OnItemClickListener() {
+
             @Override
             public void onItemClick(final View view, final int position) {
                 final TextView mTitle = (TextView) view.findViewById(R.id.title_main_cards);
                 final int id = (Integer) mTitle.getTag();
                 dbHelper.query(new OnResultCallback<Cursor, Void>() {
+
                     @Override
                     public void onSuccess(final Cursor pCursor) {
                         if (pCursor.moveToFirst()) {
@@ -373,14 +378,14 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
 
     public void onAddNewClicked(final View view) {
         if (typeItems.equals(getResources().getString(R.string.bank_title))) {
-            startActivity(new Intent(ItemsActivity.this, CreateBankActivity.class));
+            startActivity(new Intent(this, CreateBankActivity.class));
         } else if (typeItems.equals(getResources().getString(R.string.discount_title))) {
             getPermission(constants.Requests.REQUEST_CAMERA, Manifest.permission.CAMERA, constants.Requests.REQUEST_CAMERA);
         } else if (typeItems.equals(getResources().getString(R.string.tickets_title))) {
-            startActivity(new Intent(ItemsActivity.this, CreateTicketActivity.class));
+            startActivity(new Intent(this, CreateTicketActivity.class));
         } else {
-            final AlertNfcInput alertNfcInput = new AlertNfcInput(this);
-            alertNfcInput.startDialog();
+            final NfcInputDialogBuilder nfcInputDialogBuilder = new NfcInputDialogBuilder(this);
+            nfcInputDialogBuilder.startDialog();
         }
     }
 
@@ -389,7 +394,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         toolbarSearch.setVisibility(GONE);
         searchEdit.setText(constants.EMPTY_STRING);
         searchText = searchEdit.getText().toString();
-        getSupportLoaderManager().restartLoader(LOADER_ID, null, ItemsActivity.this);
+        getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
         final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(newCard.getWindowToken(), 0);
     }
@@ -428,13 +433,13 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         }
 
         if (typeItems.equals(getResources().getString(R.string.bank_title))) {
-            adapter = new CursorAdapter(data, ItemsActivity.this, R.layout.item_bank);
+            adapter = new CursorAdapter(data, this, R.layout.item_bank);
         } else if (typeItems.equals(getResources().getString(R.string.discount_title))) {
-            adapter = new CursorAdapter(data, ItemsActivity.this, R.layout.item_discount);
+            adapter = new CursorAdapter(data, this, R.layout.item_discount);
         } else if (typeItems.equals(getResources().getString(R.string.tickets_title))) {
-            adapter = new CursorAdapter(data, ItemsActivity.this, R.layout.item_ticket);
+            adapter = new CursorAdapter(data, this, R.layout.item_ticket);
         } else if (typeItems.equals(getResources().getString(R.string.nfc_title))) {
-            adapter = new CursorAdapter(data, ItemsActivity.this, R.layout.item_nfc);
+            adapter = new CursorAdapter(data, this, R.layout.item_nfc);
         }
 //        recyclerItems.swapAdapter(adapter, true);
         recyclerItems.setAdapter(adapter);

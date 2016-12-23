@@ -11,46 +11,42 @@ import android.widget.Toast;
 
 import com.maxcriser.cards.R;
 
+class EnterNfcNameDialogBuilder extends AlertDialog {
 
-//TODO strings to resource
-//TODO rename to EnterNfcNameDialogBuilder
-public class AlertEnterNfcName extends AlertDialog {
-
-    private Context context;
+    private final Context context;
     private EditText titleField;
 
-    public AlertEnterNfcName(Context context) {
+    EnterNfcNameDialogBuilder(final Context context) {
         super(context);
         this.context = context;
     }
 
-    public void startDialog() {
-        LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.fragment_input_name_nfc, null);
+    void startDialog() {
+        final LayoutInflater inflater = getLayoutInflater();
+        final View layout = inflater.inflate(R.layout.fragment_input_name_nfc, null);
         titleField = (EditText) layout.findViewById(R.id.title_nfc_card);
-        Builder builder = new Builder(context);
+        final Builder builder = new Builder(context);
         builder.setView(layout);
         builder.setTitle(R.string.new_nfc_item);
         builder.setPositiveButton(R.string.save, new OnClickListener() {
+
             @Override
-            public void onClick(DialogInterface dialog, int pI) {
-                String title = titleField.getText().toString();
+            public void onClick(final DialogInterface dialog, final int pI) {
+                final String title = titleField.getText().toString();
                 if (!title.isEmpty()) {
-                    Toast.makeText(context, "TODO: Save to database nfc item", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
                 } else {
-                    Toast.makeText(context, "Please fill title of the card and try again", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, R.string.please_fill_title, Toast.LENGTH_LONG).show();
                 }
             }
         });
         builder.setNegativeButton(R.string.cancel, new OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int pI) {
-                Toast.makeText(context, "TODO: clear all variables", Toast.LENGTH_LONG).show();
+            public void onClick(final DialogInterface dialog, final int pI) {
                 dialog.dismiss();
             }
         });
-        AlertDialog aDialog = builder.create();
+        final AlertDialog aDialog = builder.create();
         aDialog.show();
     }
 }

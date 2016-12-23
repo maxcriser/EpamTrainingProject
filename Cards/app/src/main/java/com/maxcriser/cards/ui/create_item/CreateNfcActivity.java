@@ -9,7 +9,7 @@ import com.maxcriser.cards.R;
 public class CreateNfcActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_ticket);
         findViewById(R.id.search_image_toolbar).setVisibility(View.GONE);

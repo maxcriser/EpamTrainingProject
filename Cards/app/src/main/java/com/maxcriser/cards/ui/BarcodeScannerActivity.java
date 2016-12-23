@@ -37,15 +37,15 @@ public class BarcodeScannerActivity extends AppCompatActivity {
     private Camera mCamera;
     private Handler autoFocusHandler;
     private ImageScanner scanner;
-    private boolean barcodeScanned = false;
+    private boolean barcodeScanned;
     private boolean previewing = true;
     private String scanResult;
     private FrameLayout preview;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WindowManager.LayoutParams attrs = getWindow().getAttributes();
+        final WindowManager.LayoutParams attrs = getWindow().getAttributes();
         attrs.flags = WindowManager.LayoutParams.FLAG_FULLSCREEN;
         getWindow().setAttributes(attrs);
         setContentView(R.layout.activity_barcode_scanner);
@@ -73,7 +73,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         scanner.setConfig(0, Config.X_DENSITY, 3);
         scanner.setConfig(0, Config.Y_DENSITY, 3);
 
-        CameraPreview preview1 = new CameraPreview(BarcodeScannerActivity.this,
+        final CameraPreview preview1 = new CameraPreview(this,
                 mCamera, previewCb, autoFocusCB);
 
         preview.addView(preview1);
@@ -81,7 +81,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(final int keyCode, final KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             releaseCamera();
         }
@@ -93,7 +93,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         Camera c = null;
         try {
             c = Camera.open();
-        } catch (Exception e) {
+        } catch (final Exception e) {
 //            Toast.makeText(this, "Camera not available", Toast.LENGTH_SHORT).show();
         }
         return c;
@@ -108,31 +108,32 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         }
     }
 
-    private Runnable doAutoFocus = new Runnable() {
+    private final Runnable doAutoFocus = new Runnable() {
         public void run() {
-            if (previewing)
+            if (previewing) {
                 mCamera.autoFocus(autoFocusCB);
+            }
         }
     };
 
     @SuppressWarnings("deprecation")
     Camera.PreviewCallback previewCb = new Camera.PreviewCallback() {
-        public void onPreviewFrame(byte[] data, Camera camera) {
-            Camera.Parameters parameters = camera.getParameters();
-            Camera.Size size = parameters.getPreviewSize();
+        public void onPreviewFrame(final byte[] data, final Camera camera) {
+            final Camera.Parameters parameters = camera.getParameters();
+            final Camera.Size size = parameters.getPreviewSize();
 
-            Image barcode = new Image(size.width, size.height, Y_800);
+            final Image barcode = new Image(size.width, size.height, Y_800);
             barcode.setData(data);
 
-            int result = scanner.scanImage(barcode);
+            final int result = scanner.scanImage(barcode);
 
             if (result != 0) {
                 previewing = false;
                 mCamera.setPreviewCallback(null);
                 mCamera.stopPreview();
 
-                SymbolSet syms = scanner.getResults();
-                for (Symbol sym : syms) {
+                final SymbolSet syms = scanner.getResults();
+                for (final Symbol sym : syms) {
                     scanResult = sym.getData().trim();
                     showAlertDialog(scanResult);
                     barcodeScanned = true;
@@ -144,13 +145,13 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
     @SuppressWarnings("deprecation")
     Camera.AutoFocusCallback autoFocusCB = new Camera.AutoFocusCallback() {
-        public void onAutoFocus(boolean success, Camera camera) {
+        public void onAutoFocus(final boolean success, final Camera camera) {
             autoFocusHandler.postDelayed(doAutoFocus, 1000);
         }
     };
 
 
-    private void showAlertDialog(String message) {
+    private void showAlertDialog(final CharSequence message) {
 
         mBottomText.setVisibility(GONE);
         mFrameSolution.setVisibility(View.VISIBLE);
@@ -163,7 +164,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
     private class onCancelClickListener implements View.OnClickListener {
         @Override
-        public void onClick(View v) {
+        public void onClick(final View v) {
             if (barcodeScanned) {
                 mBottomText.setVisibility(View.VISIBLE);
                 mFrameSolution.setVisibility(View.GONE);
@@ -179,9 +180,9 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
     private class onOkClickListener implements View.OnClickListener {
         @Override
-        public void onClick(View v) {
+        public void onClick(final View v) {
 //            releaseCamera();
-            Intent intent = new Intent(BarcodeScannerActivity.this, CreateDiscountActivity.class);
+            final Intent intent = new Intent(BarcodeScannerActivity.this, CreateDiscountActivity.class);
             intent.putExtra(TAG_BARCODE, scanResult);
             startActivity(intent);
         }

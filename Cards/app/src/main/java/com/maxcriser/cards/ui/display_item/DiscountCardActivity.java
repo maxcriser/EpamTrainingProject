@@ -26,7 +26,6 @@ import com.maxcriser.cards.view.text_view.BarcodeEan;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_BARCODE;
-import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_COLOR;
 import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_ID;
 import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_TITLE;
 
@@ -46,8 +45,9 @@ public class DiscountCardActivity extends Activity {
     private Animation animScaleUp;
 
     Handler.Callback hc = new Handler.Callback() {
+
         @Override
-        public boolean handleMessage(Message msg) {
+        public boolean handleMessage(final Message msg) {
             materialDesignFAM.startAnimation(animScaleDown);
             materialDesignFAM.setVisibility(GONE);
             return false;
@@ -55,7 +55,7 @@ public class DiscountCardActivity extends Activity {
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_discount);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
@@ -67,27 +67,29 @@ public class DiscountCardActivity extends Activity {
         materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
         editLinear = (LinearLayout) findViewById(R.id.linear_edit_frame_title_discount);
         editName = (EditText) findViewById(R.id.rename_discount_title);
-        FloatingActionButton floatingActionButtonDelete = (FloatingActionButton) findViewById(R.id.floating_delete_button);
-        FloatingActionButton floatingActionButtonEdit = (FloatingActionButton) findViewById(R.id.floating_edit_button);
+        final FloatingActionButton floatingActionButtonDelete = (FloatingActionButton) findViewById(R.id.floating_delete_button);
+        final FloatingActionButton floatingActionButtonEdit = (FloatingActionButton) findViewById(R.id.floating_edit_button);
         titleView = (TextView) findViewById(R.id.title_show_discount);
-        BarcodeEan barcodeView = (BarcodeEan) findViewById(R.id.show_barcode);
+        final BarcodeEan barcodeView = (BarcodeEan) findViewById(R.id.show_barcode);
         linearFrameAction = (LinearLayout) findViewById(R.id.linear_frame_actions_discount);
         mHandler = new Handler(hc);
 
-        animScaleDown = AnimationUtils.loadAnimation(DiscountCardActivity.this, R.anim.scale_down_floating);
-        animScaleUp = AnimationUtils.loadAnimation(DiscountCardActivity.this, R.anim.scale_up_floating);
+        animScaleDown = AnimationUtils.loadAnimation(this, R.anim.scale_down_floating);
+        animScaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up_floating);
         registerForContextMenu(materialDesignFAM);
         dbHelper = DatabaseHelperImpl.getInstance(this);
 
         floatingActionButtonDelete.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+
+            public void onClick(final View v) {
                 dbHelper.delete(ModelDiscountCards.class, null, ModelDiscountCards.ID + " = ?", String.valueOf(id));
                 onBackClicked(null);
 
             }
         });
         floatingActionButtonEdit.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+
+            public void onClick(final View v) {
                 mScrollView.fullScroll(ScrollView.FOCUS_UP);
                 editLinear.setVisibility(VISIBLE);
                 titleView.setVisibility(GONE);
@@ -99,26 +101,25 @@ public class DiscountCardActivity extends Activity {
             }
         });
 
-        Intent barcodeIntent = getIntent();
+        final Intent barcodeIntent = getIntent();
         id = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_ID);
-        String title = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_TITLE);
-        String barcode = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_BARCODE);
-        String color = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_COLOR);
+        final String title = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_TITLE);
+        final String barcode = barcodeIntent.getStringExtra(EXTRA_DISCOUNT_BARCODE);
 
         titleView.setText(title);
 
         barcodeView.setText(barcode);
 
-        WindowManager.LayoutParams layoutParam = getWindow().getAttributes();
+        final WindowManager.LayoutParams layoutParam = getWindow().getAttributes();
         layoutParam.screenBrightness = 1.0f;
         getWindow().setAttributes(layoutParam);
     }
 
-    public void onBackClicked(View view) {
+    public void onBackClicked(final View view) {
         super.onBackPressed();
     }
 
-    public void onCancelClicked(View view) {
+    public void onCancelClicked(final View view) {
         editLinear.setVisibility(GONE);
         titleView.setVisibility(VISIBLE);
         linearFrameAction.setVisibility(GONE);
@@ -126,7 +127,7 @@ public class DiscountCardActivity extends Activity {
         materialDesignFAM.startAnimation(animScaleUp);
     }
 
-    public void onCreateCardClicked(View view) {
+    public void onCreateCardClicked(final View view) {
         editString = editName.getText().toString();
         if (!editString.isEmpty()) {
             titleView.setText(editString);
@@ -142,18 +143,19 @@ public class DiscountCardActivity extends Activity {
                     ModelDiscountCards.ID,
                     String.valueOf(id),
                     new OnResultCallback<Void, Void>() {
+
                         @Override
-                        public void onSuccess(Void pVoid) {
+                        public void onSuccess(final Void pVoid) {
 
                         }
 
                         @Override
-                        public void onError(Exception pE) {
+                        public void onError(final Exception pE) {
 
                         }
 
                         @Override
-                        public void onProgressChanged(Void pVoid) {
+                        public void onProgressChanged(final Void pVoid) {
 
                         }
                     });
@@ -163,6 +165,6 @@ public class DiscountCardActivity extends Activity {
         }
     }
 
-    public void onToolbarBackClicked(View view) {
+    public void onToolbarBackClicked(final View view) {
     }
 }

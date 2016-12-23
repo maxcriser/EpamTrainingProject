@@ -12,8 +12,8 @@ public class CardsCursorLoader extends CursorLoader {
 
     private static String SQL_WITH_QUERY;// = "SELECT * FROM " + DatabaseHelperImpl.getTableName(ModelBankCards.class) + " WHERE " + ModelBankCards.TITLE + " LIKE ? ";
     private static String SQL_ALL_ITEMS;// = "SELECT * FROM " + DatabaseHelperImpl.getTableName(ModelBankCards.class);
-    private DatabaseHelperImpl db;
-    private String mQuery;
+    private final DatabaseHelperImpl db;
+    private final String mQuery;
 
     public CardsCursorLoader(final Context context, final String pQuery, final Class modelClass) {
         super(context);

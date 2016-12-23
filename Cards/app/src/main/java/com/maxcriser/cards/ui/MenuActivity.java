@@ -32,6 +32,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import static android.view.View.GONE;
+import static com.maxcriser.cards.constant.constants.SETUP_PIN;
+import static com.maxcriser.cards.constant.constants.TEXT_PLAIN;
 import static com.maxcriser.cards.constant.constants.URL_JSON_LOCATION;
 
 public class MenuActivity extends AppCompatActivity
@@ -42,19 +44,14 @@ public class MenuActivity extends AppCompatActivity
     public static final String TYPE_LOCKED_SCREEN = "type_locked_screen";
     public static final String CREDIT_CARD = "credit_card";
 
-    //TODO move all constants to separate class
-    private final String SETUP_PIN = "setup_pin";
-    private final String TEXT_PLAIN = "text/plain";
-    private final String SHARE_BODY = "Donwloads my application on playmarket: cards_application.com";
-
-    //TODO move to resources
-    private final String SHARE_TITLE = "Cards application";
-    private final String SHARE_USING = "Share using";
-    private final String COUNTRY_ID = "country";
-    private final String COUNTRY_CODE_ID = "countryCode";
-    private final String ISP_ID = "isp";
-    private final String QUERY_ID = "query";
-    private final String TIMEZONE_ID = "timezone";
+    private final String SHARE_BODY = getString(R.string.share_message);
+    private final String SHARE_TITLE = getString(R.string.cards_application);
+    private final String SHARE_USING = getString(R.string.share_using);
+    private final String COUNTRY_ID = getString(R.string.country);
+    private final String COUNTRY_CODE_ID = getString(R.string.countryCode);
+    private final String ISP_ID = getString(R.string.isp);
+    private final String QUERY_ID = getString(R.string.query);
+    private final String TIMEZONE_ID = getString(R.string.timezone);
     private String pCountry = "#country";
     private String pCountryCode = "#country code";
     private String pIsp = "#isp";
@@ -63,22 +60,21 @@ public class MenuActivity extends AppCompatActivity
     private DrawerLayout drawer;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
     }
 
     public void initViews() {
-        CardView credit = (CardView) findViewById(R.id.main_credit_card);
-        CardView discount = (CardView) findViewById(R.id.main_discount_card);
-        CardView tickets = (CardView) findViewById(R.id.main_tickets_card);
-        CardView nfc = (CardView) findViewById(R.id.main_nfc_card);
+        final CardView credit = (CardView) findViewById(R.id.main_credit_card);
+        final CardView discount = (CardView) findViewById(R.id.main_discount_card);
+        final CardView tickets = (CardView) findViewById(R.id.main_tickets_card);
+        final CardView nfc = (CardView) findViewById(R.id.main_nfc_card);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
-
-        NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        final NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter == null) {
             nfc.setVisibility(GONE);
         }
@@ -88,7 +84,7 @@ public class MenuActivity extends AppCompatActivity
         tickets.setOnClickListener(new onClickListener());
         nfc.setOnClickListener(new onClickListener());
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, null,
+        final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, null,
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -98,13 +94,13 @@ public class MenuActivity extends AppCompatActivity
     }
 
     //TODO ConnectivityManager
-    private NetworkInfo getNetworkInfo(Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    private NetworkInfo getNetworkInfo(final Context context) {
+        final ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo();
     }
 
-    private boolean isConnected(Context context) {
-        NetworkInfo info = this.getNetworkInfo(context);
+    private boolean isConnected(final Context context) {
+        final NetworkInfo info = this.getNetworkInfo(context);
         return (info != null && info.isConnected());
     }
 
@@ -125,26 +121,26 @@ public class MenuActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
+    public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
+        final int id = item.getItemId();
         if (id == R.id.nav_pin) {
-            Intent intent = new Intent(MenuActivity.this, LockerActivity.class);
+            final Intent intent = new Intent(this, LockerActivity.class);
             intent.putExtra(TYPE_LOCKED_SCREEN, SETUP_PIN);
             startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY));
 
         } else if (id == R.id.nav_share) {
-            String shareBody = SHARE_BODY;
-            String shareSub = SHARE_TITLE;
+            final String shareBody = SHARE_BODY;
+            final String shareSub = SHARE_TITLE;
 
-            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            final Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
             sharingIntent.setType(TEXT_PLAIN);
             sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
             startActivity(Intent.createChooser(sharingIntent, SHARE_USING));
 
         } else if (id == R.id.nav_location) {
-            String title;
-            String message;
+            final String title;
+            final String message;
             if (isConnected(this)) {
                 title = getString(R.string.location);
                 message = "Country: " + pCountry + ", " + pCountryCode + "\n" +
@@ -156,17 +152,18 @@ public class MenuActivity extends AppCompatActivity
                 message = getString(R.string.looks_like_iconnection);
             }
 
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MenuActivity.this);
+            final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             alertDialogBuilder.setTitle(title);
             alertDialogBuilder
                     .setMessage(message)
                     .setCancelable(false)
                     .setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
+
+                        public void onClick(final DialogInterface dialog, final int id) {
                             dialog.cancel();
                         }
                     });
-            AlertDialog alertDialog = alertDialogBuilder.create();
+            final AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         }
 
@@ -175,23 +172,24 @@ public class MenuActivity extends AppCompatActivity
     }
 
     private class ParseLocation extends AsyncTask<Void, Void, String> {
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
+
+        HttpURLConnection urlConnection;
+        BufferedReader reader;
         String resultJson = constants.EMPTY_STRING;
 
         @Override
-        protected String doInBackground(Void... params) {
+        protected String doInBackground(final Void... params) {
             //TODO try catch final
             try {
-                URL url = new URL(URL_JSON_LOCATION);
+                final URL url = new URL(URL_JSON_LOCATION);
 
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
 
                 //TODO inputStream is not closed
-                InputStream inputStream = urlConnection.getInputStream();
-                StringBuilder buffer = new StringBuilder();
+                final InputStream inputStream = urlConnection.getInputStream();
+                final StringBuilder buffer = new StringBuilder();
 
                 reader = new BufferedReader(new InputStreamReader(inputStream));
 
@@ -202,17 +200,17 @@ public class MenuActivity extends AppCompatActivity
 
                 resultJson = buffer.toString();
 
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (final Exception e) {
+                throw new RuntimeException(e);
             }
             return resultJson;
         }
 
         @Override
-        protected void onPostExecute(String strJson) {
+        protected void onPostExecute(final String strJson) {
             super.onPostExecute(strJson);
 
-            JSONObject dataJsonObj;
+            final JSONObject dataJsonObj;
             try {
                 dataJsonObj = new JSONObject(strJson);
 
@@ -222,24 +220,25 @@ public class MenuActivity extends AppCompatActivity
                 pQuery = dataJsonObj.getString(QUERY_ID);
                 pTimezone = dataJsonObj.getString(TIMEZONE_ID);
 
-            } catch (JSONException e) {
-                e.printStackTrace();
+            } catch (final JSONException e) {
+                throw new RuntimeException(e);
             }
         }
     }
 
-    public void onMenuClicked(View view) {
+    public void onMenuClicked(final View view) {
         drawer.openDrawer(GravityCompat.START);
     }
 
-    public void onToolbarClicked(View view) {
+    public void onToolbarClicked(final View view) {
     }
 
     private class onClickListener implements View.OnClickListener {
+
         Intent intent;
 
         @Override
-        public void onClick(View v) {
+        public void onClick(final View v) {
             switch (v.getId()) {
                 case R.id.main_credit_card:
                     intent = new Intent(MenuActivity.this, LockerActivity.class);

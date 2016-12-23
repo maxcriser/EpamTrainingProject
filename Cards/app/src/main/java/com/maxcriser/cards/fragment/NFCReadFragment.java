@@ -32,20 +32,20 @@ public class NFCReadFragment extends DialogFragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_read,container,false);
+        final View view = inflater.inflate(R.layout.fragment_read,container,false);
         initViews(view);
         return view;
     }
 
-    private void initViews(View view) {
+    private void initViews(final View view) {
 
         mTvMessage = (TextView) view.findViewById(R.id.tv_message);
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(final Context context) {
         super.onAttach(context);
         mListener = (NFCReaderActivity)context;
         mListener.onDialogDisplayed();
@@ -57,17 +57,17 @@ public class NFCReadFragment extends DialogFragment {
         mListener.onDialogDismissed();
     }
 
-    public void onNfcDetected(Ndef ndef1){
+    public void onNfcDetected(final Ndef ndef1){
 
         readFromNFC(ndef1);
     }
 
-    private void readFromNFC(Ndef ndef1) {
+    private void readFromNFC(final Ndef ndef1) {
 
         try {
             ndef1.connect();
-            NdefMessage ndefMessage = ndef1.getNdefMessage();
-            String message = new String(ndefMessage.getRecords()[0].getPayload());
+            final NdefMessage ndefMessage = ndef1.getNdefMessage();
+            final String message = new String(ndefMessage.getRecords()[0].getPayload());
             Log.d(TAG, "readFromNFC: "+message);
             mTvMessage.setText(message);
 
@@ -75,8 +75,7 @@ public class NFCReadFragment extends DialogFragment {
             ndef1.close();
 
         } catch (IOException | FormatException e) {
-            e.printStackTrace();
-
+            Log.d("ERROR", e.toString());
         }
     }
 }

@@ -28,13 +28,13 @@ public class NFCReaderActivity extends AppCompatActivity implements Listener {
     private NFCWriteFragment mNfcWriteFragment;
     private NFCReadFragment mNfcReadFragment;
 
-    private boolean isDialogDisplayed = false;
-    private boolean isWrite = false;
+    private boolean isDialogDisplayed;
+    private boolean isWrite;
 
     private NfcAdapter mNfcAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc);
 
@@ -45,12 +45,12 @@ public class NFCReaderActivity extends AppCompatActivity implements Listener {
     private void initViews() {
 
         mEtMessage = (EditText) findViewById(R.id.et_message);
-        Button btWrite = (Button) findViewById(R.id.btn_write);
-        Button btRead = (Button) findViewById(R.id.btn_read);
+        final Button btWrite = (Button) findViewById(R.id.btn_write);
+        final Button btRead = (Button) findViewById(R.id.btn_read);
 
         btWrite.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View pView) {
+            public void onClick(final View pView) {
                 isWrite = true;
 
                 mNfcWriteFragment = (NFCWriteFragment) getFragmentManager().findFragmentByTag(NFCWriteFragment.TAG);
@@ -64,7 +64,7 @@ public class NFCReaderActivity extends AppCompatActivity implements Listener {
         });
         btRead.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View pView) {
+            public void onClick(final View pView) {
                 mNfcReadFragment = (NFCReadFragment) getFragmentManager().findFragmentByTag(NFCReadFragment.TAG);
 
                 if (mNfcReadFragment == null) {
@@ -98,40 +98,42 @@ public class NFCReaderActivity extends AppCompatActivity implements Listener {
     @Override
     protected void onResume() {
         super.onResume();
-        IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
-        IntentFilter ndefDetected = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
-        IntentFilter techDetected = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
-        IntentFilter[] nfcIntentFilter = new IntentFilter[]{techDetected, tagDetected, ndefDetected};
+        final IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
+        final IntentFilter ndefDetected = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
+        final IntentFilter techDetected = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
+        final IntentFilter[] nfcIntentFilter = new IntentFilter[]{techDetected, tagDetected, ndefDetected};
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(
+        final PendingIntent pendingIntent = PendingIntent.getActivity(
                 this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-        if (mNfcAdapter != null)
+        if (mNfcAdapter != null) {
             mNfcAdapter.enableForegroundDispatch(this, pendingIntent, nfcIntentFilter, null);
+        }
 
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (mNfcAdapter != null)
+        if (mNfcAdapter != null) {
             mNfcAdapter.disableForegroundDispatch(this);
+        }
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+    protected void onNewIntent(final Intent intent) {
+        final Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
         Log.d(TAG, "onNewIntent: " + intent.getAction());
 
         if (tag != null) {
             //TODO debug and Google
-            Ndef ndef = Ndef.get(tag);
+            final Ndef ndef = Ndef.get(tag);
 
             if (isDialogDisplayed) {
 
                 if (isWrite) {
 
-                    String messageToWrite = mEtMessage.getText().toString();
+                    final String messageToWrite = mEtMessage.getText().toString();
                     mNfcWriteFragment = (NFCWriteFragment) getFragmentManager().findFragmentByTag(NFCWriteFragment.TAG);
                     mNfcWriteFragment.onNfcDetected(ndef, messageToWrite);
 

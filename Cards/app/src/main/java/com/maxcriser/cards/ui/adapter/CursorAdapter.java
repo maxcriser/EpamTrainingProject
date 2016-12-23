@@ -3,7 +3,6 @@ package com.maxcriser.cards.ui.adapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.provider.SyncStateContract;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +21,7 @@ public class CursorAdapter extends RecyclerView.Adapter<CursorHolder> {
 
     private final Cursor mCursor;
     private final Context mContext;
-    private Object mView;
+    private final Object mView;
 
     public CursorAdapter(final Cursor pCursor, final Context pContext, final Object mObject) {
         mCursor = pCursor;
@@ -38,7 +37,6 @@ public class CursorAdapter extends RecyclerView.Adapter<CursorHolder> {
 
     @Override
     public void onBindViewHolder(final CursorHolder holder, final int position) {
-        String frontPhoto = constants.EMPTY_STRING;
         if (mCursor.moveToPosition(position)) {
             if (mView.equals(R.layout.item_bank)) {
                 final String type = mCursor.getString(mCursor.getColumnIndex(ModelBankCards.TYPE));
@@ -62,22 +60,20 @@ public class CursorAdapter extends RecyclerView.Adapter<CursorHolder> {
                 }
                 holder.mIcon.setBackgroundResource(typeID);
                 //TODO move to Utils method
-                holder.mLinearCard.setBackgroundColor(Color.parseColor(mCursor
-                        .getString(mCursor.getColumnIndex(ModelBankCards.BACKGROUND_COLOR))));
+                holder.mLinearCard.setBackgroundColor(getColor(mCursor, ModelBankCards.BACKGROUND_COLOR));
                 holder.mTitle.setText(mCursor
                         .getString(mCursor.getColumnIndex(ModelBankCards.TITLE)));
                 holder.mSubhead.setText(mCursor
                         .getString(mCursor.getColumnIndex(ModelBankCards.CARDHOLDER)));
                 holder.mTitle.setTag(mCursor.getInt(mCursor.getColumnIndex(ModelBankCards.ID)));
 
-                frontPhoto = mCursor.getString(mCursor.getColumnIndex(ModelBankCards.PHOTO_FRONT));
+                final String frontPhoto = mCursor.getString(mCursor.getColumnIndex(ModelBankCards.PHOTO_FRONT));
                 if (!frontPhoto.isEmpty()) {
                     ImageLoader.getInstance().downloadToView(frontPhoto, holder.backgroundCredit, null);
                 }
 
             } else if (mView.equals(R.layout.item_ticket)) {
-                holder.mLinearCard.setBackgroundColor(Color.parseColor(mCursor
-                        .getString(mCursor.getColumnIndex(ModelTickets.BACKGROUND_COLOR))));
+                holder.mLinearCard.setBackgroundColor(getColor(mCursor, ModelTickets.BACKGROUND_COLOR));
                 holder.mTitle.setText(mCursor
                         .getString(mCursor.getColumnIndex(ModelTickets.TITLE)));
                 holder.mSubhead.setText(mCursor
@@ -89,19 +85,22 @@ public class CursorAdapter extends RecyclerView.Adapter<CursorHolder> {
                 holder.mTitle.setTag(mCursor.getInt(mCursor.getColumnIndex(ModelTickets.ID)));
 
             } else if (mView.equals(R.layout.item_discount)) {
-                holder.mLinearCard.setBackgroundColor(Color.parseColor(mCursor
-                        .getString(mCursor.getColumnIndex(ModelDiscountCards.BACKGROUND_COLOR))));
+                holder.mLinearCard.setBackgroundColor(getColor(mCursor, ModelDiscountCards.BACKGROUND_COLOR));
                 holder.mTitle.setText(mCursor
                         .getString(mCursor.getColumnIndex(ModelDiscountCards.TITLE)));
                 holder.mTitle.setTag(mCursor.getInt(mCursor.getColumnIndex(ModelDiscountCards.ID)));
             } else if (mView.equals(R.layout.item_nfc)) {
-                holder.mLinearCard.setBackgroundColor(Color.parseColor(mCursor
-                        .getString(mCursor.getColumnIndex(ModelNFCItems.BACKGROUND_COLOR))));
+                holder.mLinearCard.setBackgroundColor(getColor(mCursor, ModelNFCItems.BACKGROUND_COLOR));
                 holder.mTitle.setText(mCursor
                         .getString(mCursor.getColumnIndex(ModelNFCItems.TITLE)));
                 holder.mTitle.setTag(mCursor.getInt(mCursor.getColumnIndex(ModelNFCItems.ID)));
             }
         }
+    }
+
+    private int getColor(final Cursor pCursor, final String stringColumn) {
+        return Color.parseColor(pCursor.getString(pCursor
+                .getColumnIndex(stringColumn)));
     }
 
     @Override

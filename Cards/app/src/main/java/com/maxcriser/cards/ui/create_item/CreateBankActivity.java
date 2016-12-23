@@ -38,8 +38,8 @@ import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.async.task.ScanCreditCard;
-import com.maxcriser.cards.constant.constants;
 import com.maxcriser.cards.constant.Extras;
+import com.maxcriser.cards.constant.constants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
@@ -86,7 +86,7 @@ public class CreateBankActivity extends AppCompatActivity {
     private ViewPager pagerTypes;
     private ViewPager pagerTemplate;
     private PagerAdapter pagerAdapterTemplate;
-    private Calendar calendar = Calendar.getInstance();
+    private final Calendar calendar = Calendar.getInstance();
     private EditText bank;
     private EditText cardholder;
     private MaskedEditText number;
@@ -102,7 +102,7 @@ public class CreateBankActivity extends AppCompatActivity {
     private boolean statusSave = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bank_card);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
@@ -111,7 +111,7 @@ public class CreateBankActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        String uniqueString = UniqueStringGenerator.getUniqueString();
+        final String uniqueString = UniqueStringGenerator.getUniqueString();
         photoFileNameFront = constants.BEG_FILE_NAME_BANK + uniqueString + "front_photo.jpg";
         photoFileNameBack = constants.BEG_FILE_NAME_BANK + uniqueString + "back_photo.jpg";
         verificationNumber = (EditText) findViewById(R.id.ver_number);
@@ -131,16 +131,16 @@ public class CreateBankActivity extends AppCompatActivity {
         db = DatabaseHelperImpl.getInstance(this);
         setDateOnView();
         currentPositionColors = 0;
-        RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
+        final RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
         title.setText(getResources().getString(R.string.bank_title));
 
-        PreviewColor listPreviewColor = previewColors.get(0);
+        final PreviewColor listPreviewColor = previewColors.get(0);
         myColorName = listPreviewColor.getNameColorCards();
         myColorCode = listPreviewColor.getCodeColorCards();
         Log.d("BANK", myColorName + " " + myColorCode);
 
         //TODO name convention
-        int PAGE_COUNT_TEMPLATE = previewColors.size();
+        final int PAGE_COUNT_TEMPLATE = previewColors.size();
 
         pagerTemplate.setPageMargin(constants.PAGER_MARGIN_PREVIEW);
         //TODO magic number, move to dimens
@@ -151,8 +151,9 @@ public class CreateBankActivity extends AppCompatActivity {
         pagerTemplate.setAdapter(pagerAdapterTemplate);
 
         pagerTemplate.addOnPageChangeListener(new OnTemplatePageChangeListener(new OnTemplatePageChangeListener.OnPageChangeListener() {
+
             @Override
-            public void onResult(int position, String codeColor, String nameColor) {
+            public void onResult(final int position, final String codeColor, final String nameColor) {
                 currentPositionColors = position;
                 myColorCode = codeColor;
                 myColorName = nameColor;
@@ -162,15 +163,16 @@ public class CreateBankActivity extends AppCompatActivity {
 
         myTypeCard = previewTypes.get(0);
         Log.d("BANK", myTypeCard);
-        int PAGE_COUNT = previewTypes.size();
-        PagerAdapter pagerAdapterTypes = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
+        final int PAGE_COUNT = previewTypes.size();
+        final PagerAdapter pagerAdapterTypes = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 constants.PagerIDs.ID_BANK_CARD_ITEM_TYPE,
                 PAGE_COUNT);
         pagerTypes.setAdapter(pagerAdapterTypes);
         FragmentPreviewCards.icon = R.drawable.type_visa;
         pagerTypes.addOnPageChangeListener(new OnTypePageChangeListener(new OnTypePageChangeListener.OnPageChangeListener() {
+
             @Override
-            public void onResult(int position, Integer icon, String type) {
+            public void onResult(final int position, final Integer icon, final String type) {
                 myTypeCard = type;
                 //TODO remove all statics
                 FragmentPreviewCards.icon = icon;
@@ -181,10 +183,11 @@ public class CreateBankActivity extends AppCompatActivity {
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             mScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+
                 @Override
-                public void onScrollChange(View pView, int pI, int pI1, int pI2, int pI3) {
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-                    View view = getCurrentFocus();
+                public void onScrollChange(final View pView, final int pI, final int pI1, final int pI2, final int pI3) {
+                    final InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    final View view = getCurrentFocus();
                     assert view != null;
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
@@ -193,19 +196,19 @@ public class CreateBankActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         if (requestCode == CAPTURE_IMAGE_FRONT ||
                 requestCode == CAPTURE_IMAGE_BACK) {
             if (resultCode == RESULT_OK) {
                 if (requestCode == CAPTURE_IMAGE_FRONT) {
-                    Uri takenPhotoUri = getUri(photoFileNameFront);
-                    Intent intent = new Intent(this, PhotoEditorActivity.class);
+                    final Uri takenPhotoUri = getUri(photoFileNameFront);
+                    final Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
                     intent.putExtra(constants.STATUS_PHOTOEDITOR, constants.STATUS_PHOTOEEDITOR_CREDIT_CARD);
                     startActivityForResult(intent, EDIT_IMAGE_FRONT);
                 } else {
-                    Uri takenPhotoUri = getUri(photoFileNameBack);
-                    Intent intent = new Intent(this, PhotoEditorActivity.class);
+                    final Uri takenPhotoUri = getUri(photoFileNameBack);
+                    final Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(constants.STATUS_PHOTOEDITOR, constants.STATUS_PHOTOEEDITOR_CREDIT_CARD);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
                     startActivityForResult(intent, EDIT_IMAGE_BACK);
@@ -218,31 +221,33 @@ public class CreateBankActivity extends AppCompatActivity {
             if (requestCode == EDIT_IMAGE_FRONT) {
                 editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
                 ImageLoader.getInstance().downloadToView(editFrontUri.toString(), frontPhoto, new OnResultCallback<Bitmap, Void>() {
+
                     @Override
-                    public void onSuccess(Bitmap pBitmap) {
+                    public void onSuccess(final Bitmap pBitmap) {
                         removeFront.setVisibility(View.VISIBLE);
                         frontPhoto.setClickable(false);
                     }
 
                     @Override
-                    public void onError(Exception pE) {
+                    public void onError(final Exception pE) {
 
                     }
 
                     @Override
-                    public void onProgressChanged(Void pVoid) {
+                    public void onProgressChanged(final Void pVoid) {
 
                     }
                 });
                 sync.execute(new ScanCreditCard(getAssets()), editFrontUri, new OnResultCallback<CreditCard, String>() {
+
                     @Override
-                    public void onSuccess(CreditCard pCredit) {
+                    public void onSuccess(final CreditCard pCredit) {
                         if (pCredit != null && statusScan) {
-                            String creditNumber = pCredit.getNumberCreditCard();
-                            String creditCardholder = pCredit.getCardholderCreditCard();
-                            String creditName = pCredit.getNameCreditCard();
-                            String creditType = pCredit.getTypeCreditCard();
-                            String creditValid = pCredit.getValidCreditCard();
+                            final String creditNumber = pCredit.getNumberCreditCard();
+                            final String creditCardholder = pCredit.getCardholderCreditCard();
+                            final String creditName = pCredit.getNameCreditCard();
+                            final String creditType = pCredit.getTypeCreditCard();
+                            final String creditValid = pCredit.getValidCreditCard();
 
                             if (!creditNumber.isEmpty() || !creditCardholder.isEmpty()
                                     || !creditName.isEmpty() || !creditType.isEmpty()
@@ -257,12 +262,12 @@ public class CreateBankActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError(Exception pE) {
+                    public void onError(final Exception pE) {
                         Log.d("RESULT", pE.toString());
                     }
 
                     @Override
-                    public void onProgressChanged(String pS) {
+                    public void onProgressChanged(final String pS) {
 
                     }
                 });
@@ -271,19 +276,20 @@ public class CreateBankActivity extends AppCompatActivity {
             } else if (requestCode == EDIT_IMAGE_BACK) {
                 editBackUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
                 ImageLoader.getInstance().downloadToView(editBackUri.toString(), backPhoto, new OnResultCallback<Bitmap, Void>() {
+
                     @Override
-                    public void onSuccess(Bitmap pBitmap) {
+                    public void onSuccess(final Bitmap pBitmap) {
                         removeBack.setVisibility(View.VISIBLE);
                         backPhoto.setClickable(false);
                     }
 
                     @Override
-                    public void onError(Exception pE) {
+                    public void onError(final Exception pE) {
 
                     }
 
                     @Override
-                    public void onProgressChanged(Void pVoid) {
+                    public void onProgressChanged(final Void pVoid) {
 
                     }
                 });
@@ -312,29 +318,31 @@ public class CreateBankActivity extends AppCompatActivity {
             message += "Valid through: " + creditValid + "\n\n";
         }
         //TODO move to builders
-        AlertDialog.Builder builder = new AlertDialog.Builder(CreateBankActivity.this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(CreateBankActivity.this);
         builder.setTitle(R.string.matches_found)
                 .setMessage(message)
                 .setNegativeButton(R.string.cancel,
                         new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+
+                            public void onClick(final DialogInterface dialog, final int id) {
                                 dialog.cancel();
                             }
                         })
                 .setPositiveButton(getString(R.string.apply), new DialogInterface.OnClickListener() {
+
                     @Override
-                    public void onClick(DialogInterface dialog, int pI) {
+                    public void onClick(final DialogInterface dialog, final int pI) {
                         pasteRecognizeTextToViews(creditNumber, creditCardholder, creditName,
                                 creditType, creditValid);
                         dialog.cancel();
                     }
                 });
-        AlertDialog alert = builder.create();
+        final AlertDialog alert = builder.create();
         alert.show();
     }
 
-    private void pasteRecognizeTextToViews(String creditNumber, String creditCardholder,
-                                           String creditName, String creditType, String creditValid) {
+    private void pasteRecognizeTextToViews(final CharSequence creditNumber, final CharSequence creditCardholder,
+                                           final CharSequence creditName, final String creditType, final CharSequence creditValid) {
         if (!creditNumber.equals(constants.EMPTY_STRING)) {
             number.setText(creditNumber);
         }
@@ -342,7 +350,7 @@ public class CreateBankActivity extends AppCompatActivity {
         bank.setText(creditName);
         validDate.setText(creditValid);
         if (!creditType.isEmpty()) {
-            int numberType;
+            final int numberType;
             switch (creditType) {
                 case constants.Cards.VISA:
                     numberType = constants.PagerTypesID.VISA;
@@ -373,9 +381,9 @@ public class CreateBankActivity extends AppCompatActivity {
         }
     }
 
-    public Uri getUri(String fileName) {
+    public Uri getUri(final String fileName) {
         if (isExternalStorageAvailable()) {
-            File mediaStorageDir = new File(
+            final File mediaStorageDir = new File(
                     getExternalFilesDir(Environment.DIRECTORY_PICTURES), constants.APP_TAG);
             if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
                 Log.d(constants.APP_TAG, getString(R.string.filed_to_create_directory));
@@ -385,11 +393,11 @@ public class CreateBankActivity extends AppCompatActivity {
         return null;
     }
 
-    public void onBackPhotoClicked(View view) {
+    public void onBackPhotoClicked(final View view) {
         getPermission(REQUEST_BACK_CAMERA, Manifest.permission.CAMERA);
     }
 
-    public void onFrontPhotoClicked(View view) {
+    public void onFrontPhotoClicked(final View view) {
         getPermission(REQUEST_FRONT_CAMERA, Manifest.permission.CAMERA);
     }
 
@@ -410,8 +418,8 @@ public class CreateBankActivity extends AppCompatActivity {
         }
     }
 
-    private void startCameraForPhoto(int code, String fileName) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    private void startCameraForPhoto(final int code, final String fileName) {
+        final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, getUri(fileName)); // set the image file name
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, code);
@@ -419,7 +427,7 @@ public class CreateBankActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
         if (grantResults.length == 0) {
             return;
         } else if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
@@ -436,38 +444,37 @@ public class CreateBankActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    public void onRemoveBackClicked(View view) {
+    public void onRemoveBackClicked(final View view) {
         backPhoto.setImageBitmap(null);
         backPhoto.setClickable(true);
         removeBack.setVisibility(GONE);
     }
 
-    public void onRemoveFrontClicked(View view) {
+    public void onRemoveFrontClicked(final View view) {
         frontPhoto.setImageBitmap(null);
         frontPhoto.setClickable(true);
         removeFront.setVisibility(GONE);
     }
 
-
-    public void onBackClicked(View view) {
+    public void onBackClicked(final View view) {
         super.onBackPressed();
     }
 
     private void createCard() {
-        String bankStr = bank.getText().toString();
-        String cardholderStr = cardholder.getText().toString();
-        String numberStr = number.getText().toString();
-        String pinStr = pin.getText().toString();
-        String validThru = validDate.getText().toString();
-        String type = myTypeCard;
-        String color = myColorCode;
-        String verNumber = verificationNumber.getText().toString();
+        final String bankStr = bank.getText().toString();
+        final String cardholderStr = cardholder.getText().toString();
+        final String numberStr = number.getText().toString();
+        final String pinStr = pin.getText().toString();
+        final String validThru = validDate.getText().toString();
+        final String type = myTypeCard;
+        final String color = myColorCode;
+        final String verNumber = verificationNumber.getText().toString();
         if (bankStr.isEmpty() || cardholderStr.isEmpty() || verNumber.isEmpty() || numberStr.isEmpty()
                 || validThru.isEmpty() || type.isEmpty() || color.isEmpty()) {
             Toast.makeText(this, R.string.fill_all_fields, Toast.LENGTH_LONG).show();
             mScrollView.fullScroll(ScrollView.FOCUS_UP);
         } else {
-            ContentValues cvNewCredit = new ContentValues();
+            final ContentValues cvNewCredit = new ContentValues();
             cvNewCredit.put(ModelBankCards.TITLE, bankStr);
             if (removeFront.getVisibility() == View.VISIBLE) {
                 cvNewCredit.put(ModelBankCards.PHOTO_FRONT, editFrontUri.toString());
@@ -489,18 +496,19 @@ public class CreateBankActivity extends AppCompatActivity {
             cvNewCredit.put(ModelBankCards.ID, (Integer) null);
 
             db.insert(ModelBankCards.class, cvNewCredit, new OnResultCallback<Long, Void>() {
+
                 @Override
-                public void onSuccess(Long pLong) {
+                public void onSuccess(final Long pLong) {
                     statusSave = true;
                     onBackClicked(null);
                 }
 
                 @Override
-                public void onError(Exception pE) {
+                public void onError(final Exception pE) {
                 }
 
                 @Override
-                public void onProgressChanged(Void pVoid) {
+                public void onProgressChanged(final Void pVoid) {
                 }
             });
         }
@@ -509,32 +517,33 @@ public class CreateBankActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         if (!statusSave) {
-            if (editBackUri != null)
+            if (editBackUri != null) {
                 sync.execute(new RemovePhoto(), editBackUri, null);
-            if (editFrontUri != null)
+            }
+            if (editFrontUri != null) {
                 sync.execute(new RemovePhoto(), editFrontUri, null);
+            }
         }
         statusScan = false;
         super.onDestroy();
     }
 
-    public void onCreateCardClicked(View view) {
-        // TODO remove comments
-//       getPermission(REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    public void onCreateCardClicked(final View view) {
         createCard();
     }
 
-    public void onToolbarBackClicked(View view) {
+    public void onToolbarBackClicked(final View view) {
     }
 
     void setDateOnView() {
         //TODO move to some DateUtils class
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/yy", Locale.US);
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/yy", Locale.US);
         validDate.setText(dateFormat.format(calendar.getTime()));
     }
 
     DatePickerDialog.OnDateSetListener dateCallBack = new DatePickerDialog.OnDateSetListener() {
-        public void onDateSet(DatePicker view, int year, int month, int day) {
+
+        public void onDateSet(final DatePicker view, final int year, final int month, final int day) {
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, month);
             calendar.set(Calendar.DAY_OF_MONTH, day);
@@ -542,31 +551,31 @@ public class CreateBankActivity extends AppCompatActivity {
         }
     };
 
-    public void onDateClicked(View view) {
-        DatePickerDialog tpd = new DatePickerDialog(this, dateCallBack,
+    public void onDateClicked(final View view) {
+        final DatePickerDialog tpd = new DatePickerDialog(this, dateCallBack,
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH));
         tpd.show();
     }
 
-    public void onCancelClicked(View view) {
+    public void onCancelClicked(final View view) {
         onBackClicked(null);
     }
 
-    public void onPrevTypePagerClicked(View view) {
+    public void onPrevTypePagerClicked(final View view) {
         pagerTypes.setCurrentItem(pagerTypes.getCurrentItem() - 1);
     }
 
-    public void onNextTypePagerClicked(View view) {
+    public void onNextTypePagerClicked(final View view) {
         pagerTypes.setCurrentItem(pagerTypes.getCurrentItem() + 1);
     }
 
-    public void onPrevColorPagerClicked(View view) {
+    public void onPrevColorPagerClicked(final View view) {
         pagerTemplate.setCurrentItem(pagerTemplate.getCurrentItem() - 1);
     }
 
-    public void onNextColorPagerClicked(View view) {
+    public void onNextColorPagerClicked(final View view) {
         pagerTemplate.setCurrentItem(pagerTemplate.getCurrentItem() + 1);
     }
 }

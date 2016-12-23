@@ -10,7 +10,6 @@ import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.os.Vibrator;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
@@ -28,6 +27,7 @@ import com.maxcriser.cards.fingerprint.FingerprintHandler;
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -38,14 +38,12 @@ import java.security.cert.CertificateException;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
 
 import static com.maxcriser.cards.ui.MenuActivity.TYPE_LOCKED_SCREEN;
 
 public class LockerActivity extends AppCompatActivity {
 
     private static final String KEY_NAME = "finger_key";
-    private Handler mHandler;
     private ImageView firstCircle;
     private ImageView secondCircle;
     private ImageView thirdCircle;
@@ -54,30 +52,21 @@ public class LockerActivity extends AppCompatActivity {
     private Intent intent;
     private String intentLockedPage = constants.EMPTY_STRING;
     private String builderPassword = constants.EMPTY_STRING;
-    private Integer durationVibrateError = 200;
-    private Integer durationVibrateInput = 10;
+    private final Integer durationVibrateInput = 10;
     private KeyStore keyStore;
     private Cipher cipher;
 
-    Handler.Callback hc = new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            error();
-            return false;
-        }
-    };
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin_protected);
         initViews();
 
 //        TODO FIX BUG At least finger
-        if (Build.VERSION.SDK_INT >= 23) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-            KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
-            FingerprintManager fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
+            final KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+            final FingerprintManager fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
 
             if (fingerprintManager.isHardwareDetected() && fingerprintManager.hasEnrolledFingerprints()) {
 
@@ -94,7 +83,6 @@ public class LockerActivity extends AppCompatActivity {
                     Toast.makeText(this,
                             "Fingerprint authentication permission not enabled",
                             Toast.LENGTH_LONG).show();
-
                     return;
                 }
 
@@ -107,15 +95,10 @@ public class LockerActivity extends AppCompatActivity {
 
                 generateKey();
 
-                FingerprintManager.CryptoObject cryptoObject;
-                if (cipherInit()) {
-                    cryptoObject =
-                            new FingerprintManager.CryptoObject(cipher);
-                }
-
+                final FingerprintManager.CryptoObject cryptoObject;
                 if (cipherInit()) {
                     cryptoObject = new FingerprintManager.CryptoObject(cipher);
-                    FingerprintHandler helper = new FingerprintHandler(this);
+                    final FingerprintHandler helper = new FingerprintHandler(this);
                     helper.startAuth(fingerprintManager, cryptoObject);
                 }
             }
@@ -127,7 +110,6 @@ public class LockerActivity extends AppCompatActivity {
         intent = getIntent();
         intentLockedPage = intent.getStringExtra(TYPE_LOCKED_SCREEN);
         Toast.makeText(this, LaunchScreenActivity.loadPassword, Toast.LENGTH_SHORT).show();
-        mHandler = new Handler(hc);
         builderPassword = constants.EMPTY_STRING;
         firstCircle = (ImageView) findViewById(R.id.crlcOne);
         secondCircle = (ImageView) findViewById(R.id.crlcTwo);
@@ -139,12 +121,12 @@ public class LockerActivity extends AppCompatActivity {
     protected void generateKey() {
         try {
             keyStore = KeyStore.getInstance("AndroidKeyStore");
-        } catch (Exception e) {
-            //TODO throw runtime exception
-            e.printStackTrace();
+        } catch (final Exception e) {
+            throw new RuntimeException(
+                    "Filed to getInstance AndroidKeyStore", e);
         }
 
-        KeyGenerator keyGenerator;
+        final KeyGenerator keyGenerator;
         try {
             keyGenerator = KeyGenerator.getInstance(
                     KeyProperties.KEY_ALGORITHM_AES,
@@ -188,11 +170,11 @@ public class LockerActivity extends AppCompatActivity {
 
         try {
             keyStore.load(null);
-            SecretKey key = (SecretKey) keyStore.getKey(KEY_NAME,
+            final Key key = keyStore.getKey(KEY_NAME,
                     null);
             cipher.init(Cipher.ENCRYPT_MODE, key);
             return true;
-        } catch (KeyPermanentlyInvalidatedException e) {
+        } catch (final KeyPermanentlyInvalidatedException e) {
             return false;
         } catch (KeyStoreException | CertificateException
                 | UnrecoverableKeyException | IOException
@@ -201,15 +183,15 @@ public class LockerActivity extends AppCompatActivity {
         }
     }
 
-    public void setBackgroundCircle(ImageView... args) {
-        for (ImageView v : args) {
+    public void setBackgroundCircle(final ImageView... args) {
+        for (final ImageView v : args) {
             v.setBackgroundResource(R.drawable.ic_lens_black_24dp);
         }
     }
 
-    public void inputPassword(String number) {
+    public void inputPassword(final String number) {
         builderPassword += number;
-        Integer length = builderPassword.length();
+        final Integer length = builderPassword.length();
         if (length == 1) {
             setBackgroundCircle(firstCircle);
         } else if (length == 2) {
@@ -221,73 +203,73 @@ public class LockerActivity extends AppCompatActivity {
             if (builderPassword.equals(LaunchScreenActivity.loadPassword)) {
                 start();
             } else {
+                final Integer durationVibrateError = 200;
                 mVibrator.vibrate(durationVibrateError);
                 setBackgroundCircles(false, firstCircle, secondCircle, thirdCircle, fourthCircle);
-//                TODO
-//                new Handler().postDelayed(new Runnable() {
-//
-//                    @Override
-//                    public void run() {
-//                        error();
-//                    }
-//                }, 350);
-                mHandler.sendEmptyMessageDelayed(1, 350);
+                final int DELAY_MILLIS = 350;
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        error();
+                    }
+                }, DELAY_MILLIS);
             }
         }
     }
 
-    public void zeroInput(View view) {
+    public void zeroInput(final View view) {
         inputPassword(constants.Keyboard.BUTTON_ZERO);
         mVibrator.vibrate(durationVibrateInput);
     }
 
-    public void oneInput(View view) {
+    public void oneInput(final View view) {
         inputPassword(constants.Keyboard.BUTTON_ONE);
         mVibrator.vibrate(durationVibrateInput);
     }
 
-    public void twoInput(View view) {
+    public void twoInput(final View view) {
         inputPassword(constants.Keyboard.BUTTON_TWO);
         mVibrator.vibrate(durationVibrateInput);
     }
 
-    public void threeInput(View view) {
+    public void threeInput(final View view) {
         inputPassword(constants.Keyboard.BUTTON_THREE);
         mVibrator.vibrate(durationVibrateInput);
     }
 
-    public void fourInput(View view) {
+    public void fourInput(final View view) {
         inputPassword(constants.Keyboard.BUTTON_FOUR);
         mVibrator.vibrate(durationVibrateInput);
     }
 
-    public void fiveInput(View view) {
+    public void fiveInput(final View view) {
         inputPassword(constants.Keyboard.BUTTON_FIVE);
         mVibrator.vibrate(durationVibrateInput);
     }
 
-    public void sixInput(View view) {
+    public void sixInput(final View view) {
         inputPassword(constants.Keyboard.BUTTON_SIX);
         mVibrator.vibrate(durationVibrateInput);
     }
 
-    public void sevenInput(View view) {
+    public void sevenInput(final View view) {
         inputPassword(constants.Keyboard.BUTTON_SEVEN);
         mVibrator.vibrate(durationVibrateInput);
     }
 
-    public void eightInput(View view) {
+    public void eightInput(final View view) {
         inputPassword(constants.Keyboard.BUTTON_EIGHT);
         mVibrator.vibrate(durationVibrateInput);
     }
 
-    public void nineInput(View view) {
+    public void nineInput(final View view) {
         inputPassword(constants.Keyboard.BUTTON_NINE);
         mVibrator.vibrate(durationVibrateInput);
     }
 
-    public void setBackgroundCircles(boolean flag, ImageView... args) {
-        for (ImageView v : args) {
+    public void setBackgroundCircles(final boolean flag, final ImageView... args) {
+        for (final ImageView v : args) {
             if (!flag) {
                 v.setBackgroundResource(R.drawable.ic_lens_red_24dp);
             } else {
@@ -296,8 +278,8 @@ public class LockerActivity extends AppCompatActivity {
         }
     }
 
-    public void onDeleteClicked(View view) {
-        if (builderPassword.length() != 0) {
+    public void onDeleteClicked(final View view) {
+        if (!builderPassword.isEmpty()) {
             builderPassword = constants.EMPTY_STRING;
             setBackgroundCircles(true, firstCircle, secondCircle, thirdCircle, fourthCircle);
         }
@@ -310,12 +292,12 @@ public class LockerActivity extends AppCompatActivity {
     public void start() {
         if (intentLockedPage.equals(MenuActivity.CREDIT_CARD)) {
             setBackgroundCircle(firstCircle, secondCircle, thirdCircle, fourthCircle);
-            intent = new Intent(LockerActivity.this, ItemsActivity.class);
+            intent = new Intent(this, ItemsActivity.class);
             //TODO remove magic
             MenuActivity.selectItem = getResources().getString(R.string.bank_title);
             startActivity(intent);
         } else {
-            Intent intent = new Intent(LockerActivity.this, SetupPinActivity.class);
+            final Intent intent = new Intent(this, SetupPinActivity.class);
             startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY));
         }
     }

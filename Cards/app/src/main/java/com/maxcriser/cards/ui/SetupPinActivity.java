@@ -20,7 +20,6 @@ public class SetupPinActivity extends AppCompatActivity {
     private TextView title;
     private EditText inputText;
     private Button btnContinue;
-    private Button btnCancel;
     private String password;
     private Page page;
 
@@ -30,7 +29,7 @@ public class SetupPinActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_pin);
         initViews();
@@ -39,7 +38,7 @@ public class SetupPinActivity extends AppCompatActivity {
     private void initViews() {
         title = (TextView) findViewById(R.id.title_setup_pin);
         btnContinue = (Button) findViewById(R.id.btn_continue_setup);
-        btnCancel = (Button) findViewById(R.id.btn_cancel_setup);
+        Button btnCancel = (Button) findViewById(R.id.btn_cancel_setup);
         inputText = (EditText) findViewById(R.id.setup_pin_edit_text);
         inputText.addTextChangedListener(new PinChangeListener());
         btnContinue.setOnClickListener(new ContinueClickListener());
@@ -49,12 +48,12 @@ public class SetupPinActivity extends AppCompatActivity {
 
     private class PinChangeListener implements TextWatcher {
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
 
         }
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {
             if (inputText.getText().length() == 4) {
                 btnContinue.setEnabled(true);
             } else {
@@ -63,34 +62,34 @@ public class SetupPinActivity extends AppCompatActivity {
         }
 
         @Override
-        public void afterTextChanged(Editable s) {
+        public void afterTextChanged(final Editable s) {
 
         }
     }
 
     private class ContinueClickListener implements View.OnClickListener {
         @Override
-        public void onClick(View v) {
-            if (page.equals(Page.FIRST)) {
+        public void onClick(final View v) {
+            if (page == Page.FIRST) {
                 password = inputText.getText().toString();
                 Toast.makeText(SetupPinActivity.this, "first: " + password, Toast.LENGTH_LONG).show();
                 inputText.setText(constants.EMPTY_STRING);
                 page = Page.SECOND;
                 btnContinue.setText(R.string.ok);
                 title.setText(R.string.confirm_your_pin);
-            } else if (page.equals(Page.SECOND)) {
+            } else if (page == Page.SECOND) {
                 if (password.equals(inputText.getText().toString())) {
                     //TODO statics
                     LaunchScreenActivity.loadPassword = password;
                     LaunchScreenActivity.mSharedPreferences =
                             getSharedPreferences(LaunchScreenActivity.PASSWORD_TAG, MODE_PRIVATE);
-                    SharedPreferences.Editor editSharedPassword = LaunchScreenActivity.mSharedPreferences.edit();
+                    final SharedPreferences.Editor editSharedPassword = LaunchScreenActivity.mSharedPreferences.edit();
                     editSharedPassword.putString(LaunchScreenActivity.PASSWORD_TAG, password).apply();
 
                     Toast.makeText(SetupPinActivity.this, "password: " + password + " tag: " + LaunchScreenActivity.PASSWORD_TAG, Toast.LENGTH_LONG).show();
                     Toast.makeText(SetupPinActivity.this, "save: " + LaunchScreenActivity.loadPassword, Toast.LENGTH_LONG).show();
 
-                    Intent intent = new Intent(SetupPinActivity.this, MenuActivity.class);
+                    final Intent intent = new Intent(SetupPinActivity.this, MenuActivity.class);
                     startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 } else {
                     Toast.makeText(SetupPinActivity.this, R.string.passwords_dont_match, Toast.LENGTH_LONG).show();
@@ -101,7 +100,7 @@ public class SetupPinActivity extends AppCompatActivity {
 
     private class CancelClickListener implements View.OnClickListener {
         @Override
-        public void onClick(View v) {
+        public void onClick(final View v) {
             onBackPressed();
         }
     }

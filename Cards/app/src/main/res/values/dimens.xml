@@ -18,4 +18,8 @@
     <dimen name="text_size_subhead_card_24dp">14sp</dimen>
     <dimen name="margin_crcl_PIN">8dp</dimen>
     <dimen name="barcode_scan_size">34sp</dimen>
+    <dimen name="set_custom_ratio_x">87</dimen>
+    <dimen name="set_custom_ratio_y">55</dimen>
+    <dimen name="set_touch_padding_in_dp">24</dimen>
+    <dimen name="set_min_frame_size_in_dp">85</dimen>
 </resources>

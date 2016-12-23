@@ -74,14 +74,14 @@ public class CreateTicketActivity extends AppCompatActivity {
     public String photoFileNameBack;
     private DatabaseHelperImpl db;
     private TextView date;
-    private boolean statusSave = false;
+    private boolean statusSave;
     private TextView time;
     private ImageView frontPhoto;
     private ImageView backPhoto;
     private OwnAsyncTask sync;
     private SimpleDateFormat dateFormat;
     private SimpleDateFormat timeFormat;
-    private Calendar calendar = Calendar.getInstance();
+    private final Calendar calendar = Calendar.getInstance();
     private Uri editBackUri;
     private Uri editFrontUri;
     private ViewPager pager;
@@ -95,7 +95,7 @@ public class CreateTicketActivity extends AppCompatActivity {
     private FrameLayout removeBack;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_ticket);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
@@ -104,19 +104,19 @@ public class CreateTicketActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         if (requestCode == CAPTURE_IMAGE_FRONT ||
                 requestCode == CAPTURE_IMAGE_BACK) {
             if (resultCode == RESULT_OK) {
                 if (requestCode == CAPTURE_IMAGE_FRONT) {
-                    Uri takenPhotoUri = getUri(photoFileNameFront);
-                    Intent intent = new Intent(this, PhotoEditorActivity.class);
+                    final Uri takenPhotoUri = getUri(photoFileNameFront);
+                    final Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
                     intent.putExtra(constants.STATUS_PHOTOEDITOR, constants.STATUS_PHOTOEEDITOR_TICKET);
                     startActivityForResult(intent, EDIT_IMAGE_FRONT);
                 } else {
-                    Uri takenPhotoUri = getUri(photoFileNameBack);
-                    Intent intent = new Intent(this, PhotoEditorActivity.class);
+                    final Uri takenPhotoUri = getUri(photoFileNameBack);
+                    final Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
                     intent.putExtra(constants.STATUS_PHOTOEDITOR, constants.STATUS_PHOTOEEDITOR_TICKET);
                     startActivityForResult(intent, EDIT_IMAGE_BACK);
@@ -131,18 +131,18 @@ public class CreateTicketActivity extends AppCompatActivity {
                 //TODO create simple OnResultCallback with empty methods
                 ImageLoader.getInstance().downloadToView(editFrontUri.toString(), frontPhoto, new OnResultCallback<Bitmap, Void>() {
                     @Override
-                    public void onSuccess(Bitmap pBitmap) {
+                    public void onSuccess(final Bitmap pBitmap) {
                         removeFront.setVisibility(View.VISIBLE);
                         frontPhoto.setClickable(false);
                     }
 
                     @Override
-                    public void onError(Exception pE) {
+                    public void onError(final Exception pE) {
 
                     }
 
                     @Override
-                    public void onProgressChanged(Void pVoid) {
+                    public void onProgressChanged(final Void pVoid) {
 
                     }
                 });
@@ -150,18 +150,18 @@ public class CreateTicketActivity extends AppCompatActivity {
                 editBackUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
                 ImageLoader.getInstance().downloadToView(editBackUri.toString(), backPhoto, new OnResultCallback<Bitmap, Void>() {
                     @Override
-                    public void onSuccess(Bitmap pBitmap) {
+                    public void onSuccess(final Bitmap pBitmap) {
                         removeBack.setVisibility(View.VISIBLE);
                         backPhoto.setClickable(false);
                     }
 
                     @Override
-                    public void onError(Exception pE) {
+                    public void onError(final Exception pE) {
 
                     }
 
                     @Override
-                    public void onProgressChanged(Void pVoid) {
+                    public void onProgressChanged(final Void pVoid) {
 
                     }
                 });
@@ -171,9 +171,9 @@ public class CreateTicketActivity extends AppCompatActivity {
         }
     }
 
-    public Uri getUri(String fileName) {
+    public Uri getUri(final String fileName) {
         if (isExternalStorageAvailable()) {
-            File mediaStorageDir = new File(
+            final File mediaStorageDir = new File(
                     getExternalFilesDir(Environment.DIRECTORY_PICTURES), constants.APP_TAG);
             if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
                 Log.d(constants.APP_TAG, getResources().getString(R.string.filed_to_create_directory));
@@ -186,10 +186,12 @@ public class CreateTicketActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         if (!statusSave) {
-            if (editBackUri != null)
+            if (editBackUri != null) {
                 sync.execute(new RemovePhoto(), editBackUri, null);
-            if (editFrontUri != null)
+            }
+            if (editFrontUri != null) {
                 sync.execute(new RemovePhoto(), editFrontUri, null);
+            }
         }
         super.onDestroy();
     }
@@ -203,12 +205,12 @@ public class CreateTicketActivity extends AppCompatActivity {
         checkBox = (CheckBox) findViewById(R.id.add_to_calendar);
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View pView) {
+            public void onClick(final View pView) {
                 getPermission(REQUEST_CALENDAR, Manifest.permission.WRITE_CALENDAR);
             }
         });
         ticketTitle = (EditText) findViewById(R.id.title_name_ticket);
-        RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
+        final RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
         pager = (ViewPager) findViewById(R.id.pager);
         date = (TextView) findViewById(R.id.date);
         time = (TextView) findViewById(R.id.time);
@@ -217,7 +219,7 @@ public class CreateTicketActivity extends AppCompatActivity {
         dateFormat = new SimpleDateFormat("d MMM yyyy", Locale.US);
         timeFormat = new SimpleDateFormat("h:mm a", Locale.US);
 
-        String uniqueString = UniqueStringGenerator.getUniqueString();
+        final String uniqueString = UniqueStringGenerator.getUniqueString();
         photoFileNameFront = constants.BEG_FILE_NAME_TICKET + uniqueString + "front_photo.jpg";
         photoFileNameBack = constants.BEG_FILE_NAME_TICKET + uniqueString + "back_photo.jpg";
         setDateOnView();
@@ -225,21 +227,21 @@ public class CreateTicketActivity extends AppCompatActivity {
         db = DatabaseHelperImpl.getInstance(this);
         title.setText(getResources().getString(R.string.new_ticket_title));
 
-        PreviewColor listPreviewColor = previewColors.get(0);
+        final PreviewColor listPreviewColor = previewColors.get(0);
         myColorName = listPreviewColor.getNameColorCards();
         myColorCode = listPreviewColor.getCodeColorCards();
         Log.d(TICKET, myColorName + " " + myColorCode);
-        int PAGE_COUNT = previewColors.size();
+        final int PAGE_COUNT = previewColors.size();
 
         pager.setPageMargin(constants.PAGER_MARGIN_PREVIEW);
-        PagerAdapter pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
+        final PagerAdapter pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 constants.PagerIDs.ID_TICKET_ITEM,
                 PAGE_COUNT);
 
         pager.setAdapter(pagerAdapter);
         pager.addOnPageChangeListener(new OnTemplatePageChangeListener(new OnTemplatePageChangeListener.OnPageChangeListener() {
             @Override
-            public void onResult(int position, String codeColor, String nameColor) {
+            public void onResult(final int position, final String codeColor, final String nameColor) {
                 myColorCode = codeColor;
                 myColorName = nameColor;
                 Log.d("COLOR", position + myColorName + myColorCode);
@@ -249,9 +251,9 @@ public class CreateTicketActivity extends AppCompatActivity {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             mScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
                 @Override
-                public void onScrollChange(View pView, int pI, int pI1, int pI2, int pI3) {
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-                    View view = getCurrentFocus();
+                public void onScrollChange(final View pView, final int pI, final int pI1, final int pI2, final int pI3) {
+                    final InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    final View view = getCurrentFocus();
                     assert view != null;
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
@@ -267,15 +269,15 @@ public class CreateTicketActivity extends AppCompatActivity {
         time.setText(timeFormat.format(calendar.getTime()));
     }
 
-    public void onBackClicked(View view) {
+    public void onBackClicked(final View view) {
         super.onBackPressed();
     }
 
-    public void onToolbarBackClicked(View view) {
+    public void onToolbarBackClicked(final View view) {
     }
 
     DatePickerDialog.OnDateSetListener dateCallBack = new DatePickerDialog.OnDateSetListener() {
-        public void onDateSet(DatePicker view, int year, int month, int day) {
+        public void onDateSet(final DatePicker view, final int year, final int month, final int day) {
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, month);
             calendar.set(Calendar.DAY_OF_MONTH, day);
@@ -285,23 +287,23 @@ public class CreateTicketActivity extends AppCompatActivity {
 
     TimePickerDialog.OnTimeSetListener timeCallBack = new TimePickerDialog.OnTimeSetListener() {
         @Override
-        public void onTimeSet(TimePicker pTimePicker, int hour, int min) {
+        public void onTimeSet(final TimePicker pTimePicker, final int hour, final int min) {
             calendar.set(Calendar.HOUR, hour);
             calendar.set(Calendar.MINUTE, min);
             setTimeOnView();
         }
     };
 
-    public void onDateClicked(View view) {
-        DatePickerDialog tpd = new DatePickerDialog(this, dateCallBack,
+    public void onDateClicked(final View view) {
+        final DatePickerDialog tpd = new DatePickerDialog(this, dateCallBack,
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH));
         tpd.show();
     }
 
-    public void onTimeClicked(View view) {
-        TimePickerDialog tpd = new TimePickerDialog(this, timeCallBack,
+    public void onTimeClicked(final View view) {
+        final TimePickerDialog tpd = new TimePickerDialog(this, timeCallBack,
                 calendar.get(Calendar.HOUR),
                 calendar.get(Calendar.MINUTE),
                 true);
@@ -309,7 +311,7 @@ public class CreateTicketActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
         if (grantResults.length == 0) {
             return;
         } else if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
@@ -346,27 +348,27 @@ public class CreateTicketActivity extends AppCompatActivity {
         }
     }
 
-    private void startCameraForPhoto(int code, String fileName) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    private void startCameraForPhoto(final int code, final String fileName) {
+        final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, getUri(fileName)); // set the image file name
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, code);
         }
     }
 
-    public void onFrontPhotoClicked(View view) {
+    public void onFrontPhotoClicked(final View view) {
         getPermission(REQUEST_FRONT_CAMERA, Manifest.permission.CAMERA);
     }
 
-    public void onBackPhotoClicked(View view) {
+    public void onBackPhotoClicked(final View view) {
         getPermission(REQUEST_BACK_CAMERA, Manifest.permission.CAMERA);
     }
 
     private void createCard() {
-        String cardholderStr = ticketCardholder.getText().toString();
-        String titleStr = ticketTitle.getText().toString();
-        String timeStr = timeFormat.format(calendar.getTime());
-        String dateStr = dateFormat.format(calendar.getTime());
+        final String cardholderStr = ticketCardholder.getText().toString();
+        final String titleStr = ticketTitle.getText().toString();
+        final String timeStr = timeFormat.format(calendar.getTime());
+        final String dateStr = dateFormat.format(calendar.getTime());
         if (!titleStr.isEmpty()
                 && !cardholderStr.isEmpty()
                 && !timeStr.isEmpty()
@@ -375,7 +377,7 @@ public class CreateTicketActivity extends AppCompatActivity {
                 addCalendarEvent(calendar.getTimeInMillis(), ticketTitle.getText().toString());
             }
 
-            ContentValues cvNewTicket = new ContentValues();
+            final ContentValues cvNewTicket = new ContentValues();
             cvNewTicket.put(ModelTickets.TITLE, titleStr);
             if (removeFront.getVisibility() == View.VISIBLE) {
                 cvNewTicket.put(ModelTickets.PHOTO_FIRST, editFrontUri.toString());
@@ -395,7 +397,7 @@ public class CreateTicketActivity extends AppCompatActivity {
 
             // TODO DELETE DOWN
 
-            ContentValues cv = new ContentValues();
+            final ContentValues cv = new ContentValues();
             cv.put(ModelNFCItems.TITLE, titleStr);
             cv.put(ModelNFCItems.ID, (Integer) null);
             cv.put(ModelNFCItems.TAG, "Checking TAG");
@@ -406,17 +408,17 @@ public class CreateTicketActivity extends AppCompatActivity {
 
             db.insert(ModelTickets.class, cvNewTicket, new OnResultCallback<Long, Void>() {
                 @Override
-                public void onSuccess(Long pLong) {
+                public void onSuccess(final Long pLong) {
                     statusSave = true;
                     onBackClicked(null);
                 }
 
                 @Override
-                public void onError(Exception pE) {
+                public void onError(final Exception pE) {
                 }
 
                 @Override
-                public void onProgressChanged(Void pVoid) {
+                public void onProgressChanged(final Void pVoid) {
                 }
             });
         } else {
@@ -425,8 +427,8 @@ public class CreateTicketActivity extends AppCompatActivity {
         }
     }
 
-    private void addCalendarEvent(Long timeInMillis, String title) {
-        Intent intent = new Intent(Intent.ACTION_EDIT);
+    private void addCalendarEvent(final Long timeInMillis, final String title) {
+        final Intent intent = new Intent(Intent.ACTION_EDIT);
         intent.setType("vnd.android.cursor.item/event");
         intent.putExtra("beginTime", timeInMillis);
         intent.putExtra("allDay", false);
@@ -436,32 +438,32 @@ public class CreateTicketActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onCreateCardClicked(View view) {
+    public void onCreateCardClicked(final View view) {
 //        getPermission(REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         createCard();
     }
 
-    public void onRemoveBackClicked(View view) {
+    public void onRemoveBackClicked(final View view) {
         backPhoto.setImageBitmap(null);
         backPhoto.setClickable(true);
         removeBack.setVisibility(GONE);
     }
 
-    public void onRemoveFrontClicked(View view) {
+    public void onRemoveFrontClicked(final View view) {
         frontPhoto.setImageBitmap(null);
         frontPhoto.setClickable(true);
         removeFront.setVisibility(GONE);
     }
 
-    public void onCancelClicked(View view) {
+    public void onCancelClicked(final View view) {
         super.onBackPressed();
     }
 
-    public void onPrevColorPagerClicked(View view) {
+    public void onPrevColorPagerClicked(final View view) {
         pager.setCurrentItem(pager.getCurrentItem() - 1);
     }
 
-    public void onNextColorPagerClicked(View view) {
+    public void onNextColorPagerClicked(final View view) {
         pager.setCurrentItem(pager.getCurrentItem() + 1);
     }
 }

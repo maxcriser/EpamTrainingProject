@@ -28,7 +28,7 @@ import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.ui.LaunchScreenActivity;
-import com.maxcriser.cards.utils.AlertImageViewer;
+import com.maxcriser.cards.utils.ImageViewerDialogBuilder;
 
 import static android.text.InputType.TYPE_CLASS_TEXT;
 import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
@@ -37,7 +37,6 @@ import static android.view.View.VISIBLE;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_BACK_PHOTO;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_BANK;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_CARDHOLDER;
-import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_COLOR;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_FRONT_PHOTO;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_ID;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_NUMBER;
@@ -69,7 +68,7 @@ public class BankCardActivity extends Activity {
 
     Handler.Callback hc = new Handler.Callback() {
         @Override
-        public boolean handleMessage(Message msg) {
+        public boolean handleMessage(final Message msg) {
             materialDesignFAM.startAnimation(animScaleDown);
             materialDesignFAM.setVisibility(GONE);
             return false;
@@ -77,7 +76,7 @@ public class BankCardActivity extends Activity {
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_bank);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
@@ -88,20 +87,20 @@ public class BankCardActivity extends Activity {
     private void initViews() {
         final ImageView ivFrontPhoto = (ImageView) findViewById(R.id.front_photo);
         final ImageView ivBackPhoto = (ImageView) findViewById(R.id.back_photo);
-        EditText verificationNumber = (EditText) findViewById(R.id.ver_number);
+        final EditText verificationNumber = (EditText) findViewById(R.id.ver_number);
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
         eye = (ImageView) findViewById(R.id.eye);
         editBank = (TextView) findViewById(R.id.title_show_discount);
-        EditText editCardholder = (EditText) findViewById(R.id.cardholder);
-        EditText editNumber = (EditText) findViewById(R.id.number);
+        final EditText editCardholder = (EditText) findViewById(R.id.cardholder);
+        final EditText editNumber = (EditText) findViewById(R.id.number);
         editPin = (EditText) findViewById(R.id.pin);
-        EditText editValid = (EditText) findViewById(R.id.valid);
-        ImageView editType = (ImageView) findViewById(R.id.type_card);
+        final EditText editValid = (EditText) findViewById(R.id.valid);
+        final ImageView editType = (ImageView) findViewById(R.id.type_card);
         materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
         editLinear = (LinearLayout) findViewById(R.id.linear_edit_frame_title_discount);
         editName = (EditText) findViewById(R.id.rename_discount_title);
-        FloatingActionButton floatingActionButtonDelete = (FloatingActionButton) findViewById(R.id.floating_delete_button);
-        FloatingActionButton floatingActionButtonEdit = (FloatingActionButton) findViewById(R.id.floating_edit_button);
+        final FloatingActionButton floatingActionButtonDelete = (FloatingActionButton) findViewById(R.id.floating_delete_button);
+        final FloatingActionButton floatingActionButtonEdit = (FloatingActionButton) findViewById(R.id.floating_edit_button);
         linearFrameAction = (LinearLayout) findViewById(R.id.linear_frame_actions_discount);
         mHandler = new Handler(hc);
 
@@ -112,21 +111,20 @@ public class BankCardActivity extends Activity {
 
         dbHelper = DatabaseHelperImpl.getInstance(this);
 
-        Intent creditIntent = getIntent();
+        final Intent creditIntent = getIntent();
         id = creditIntent.getStringExtra(EXTRA_BANK_ID);
-        String bank = creditIntent.getStringExtra(EXTRA_BANK_BANK);
-        String verNumber = creditIntent.getStringExtra(EXTRA_VERIFICATION_NUMBER_BANK);
-        String cardholder = creditIntent.getStringExtra(EXTRA_BANK_CARDHOLDER);
-        String number = creditIntent.getStringExtra(EXTRA_BANK_NUMBER);
-        String pin = creditIntent.getStringExtra(EXTRA_BANK_PIN);
-        String valid = creditIntent.getStringExtra(EXTRA_BANK_VALID);
-        String type = creditIntent.getStringExtra(EXTRA_BANK_TYPE);
-        String color = creditIntent.getStringExtra(EXTRA_BANK_COLOR);
+        final String bank = creditIntent.getStringExtra(EXTRA_BANK_BANK);
+        final String verNumber = creditIntent.getStringExtra(EXTRA_VERIFICATION_NUMBER_BANK);
+        final String cardholder = creditIntent.getStringExtra(EXTRA_BANK_CARDHOLDER);
+        final String number = creditIntent.getStringExtra(EXTRA_BANK_NUMBER);
+        final String pin = creditIntent.getStringExtra(EXTRA_BANK_PIN);
+        final String valid = creditIntent.getStringExtra(EXTRA_BANK_VALID);
+        final String type = creditIntent.getStringExtra(EXTRA_BANK_TYPE);
         final String firstPhoto = creditIntent.getStringExtra(EXTRA_BANK_FRONT_PHOTO);
         final String secondPhoto = creditIntent.getStringExtra(EXTRA_BANK_BACK_PHOTO);
 
         floatingActionButtonDelete.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 dbHelper.delete(ModelBankCards.class, null, ModelBankCards.ID + " = ?", String.valueOf(id));
                 sync.execute(new RemovePhoto(), Uri.parse(firstPhoto), null);
                 sync.execute(new RemovePhoto(), Uri.parse(secondPhoto), null);
@@ -135,7 +133,7 @@ public class BankCardActivity extends Activity {
             }
         });
         floatingActionButtonEdit.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 mScrollView.fullScroll(ScrollView.FOCUS_UP);
                 editLinear.setVisibility(VISIBLE);
                 editBank.setVisibility(GONE);
@@ -149,36 +147,38 @@ public class BankCardActivity extends Activity {
 
         ImageLoader.getInstance().downloadToView(firstPhoto, ivFrontPhoto, new OnResultCallback<Bitmap, Void>() {
             @Override
-            public void onSuccess(Bitmap pBitmap) {
-                if (pBitmap != null)
+            public void onSuccess(final Bitmap pBitmap) {
+                if (pBitmap != null) {
                     firstBitmap = pBitmap;
+                }
             }
 
             @Override
-            public void onError(Exception pE) {
+            public void onError(final Exception pE) {
 
             }
 
             @Override
-            public void onProgressChanged(Void pVoid) {
+            public void onProgressChanged(final Void pVoid) {
 
             }
         });
 
         ImageLoader.getInstance().downloadToView(secondPhoto, ivBackPhoto, new OnResultCallback<Bitmap, Void>() {
             @Override
-            public void onSuccess(Bitmap pBitmap) {
-                if (pBitmap != null)
+            public void onSuccess(final Bitmap pBitmap) {
+                if (pBitmap != null) {
                     secondBitmap = pBitmap;
+                }
             }
 
             @Override
-            public void onError(Exception pE) {
+            public void onError(final Exception pE) {
 
             }
 
             @Override
-            public void onProgressChanged(Void pVoid) {
+            public void onProgressChanged(final Void pVoid) {
 
             }
         });
@@ -189,32 +189,41 @@ public class BankCardActivity extends Activity {
         editPin.setText(pin);
         verificationNumber.setText(verNumber);
         editValid.setText(valid);
-        Integer typeID;
-        if (type.equals(constants.Cards.VISA)) {
-            typeID = R.drawable.type_visa;
-        } else if (type.equals(constants.Cards.MASTERCARD)) {
-            typeID = R.drawable.type_mastercard;
-        } else if (type.equals(constants.Cards.AMEX)) {
-            typeID = R.drawable.type_amex;
-        } else if (type.equals(constants.Cards.MAESTRO)) {
-            typeID = R.drawable.type_maestro;
-        } else if (type.equals(constants.Cards.WESTERN_UNION)) {
-            typeID = R.drawable.type_western_union;
-        } else if (type.equals(constants.Cards.JCB)) {
-            typeID = R.drawable.type_jcb;
-        } else if (type.equals(constants.Cards.DINERS_CLUB)) {
-            typeID = R.drawable.type_diners_club;
-        } else {
-            typeID = R.drawable.type_belcard;
+        final Integer typeID;
+        switch (type) {
+            case constants.Cards.VISA:
+                typeID = R.drawable.type_visa;
+                break;
+            case constants.Cards.MASTERCARD:
+                typeID = R.drawable.type_mastercard;
+                break;
+            case constants.Cards.AMEX:
+                typeID = R.drawable.type_amex;
+                break;
+            case constants.Cards.MAESTRO:
+                typeID = R.drawable.type_maestro;
+                break;
+            case constants.Cards.WESTERN_UNION:
+                typeID = R.drawable.type_western_union;
+                break;
+            case constants.Cards.JCB:
+                typeID = R.drawable.type_jcb;
+                break;
+            case constants.Cards.DINERS_CLUB:
+                typeID = R.drawable.type_diners_club;
+                break;
+            default:
+                typeID = R.drawable.type_belcard;
+                break;
         }
         editType.setBackgroundResource(typeID);
     }
 
-    public void onBackClicked(View view) {
+    public void onBackClicked(final View view) {
         super.onBackPressed();
     }
 
-    public void onCancelClicked(View view) {
+    public void onCancelClicked(final View view) {
         editLinear.setVisibility(GONE);
         editBank.setVisibility(VISIBLE);
         linearFrameAction.setVisibility(GONE);
@@ -222,7 +231,7 @@ public class BankCardActivity extends Activity {
         materialDesignFAM.startAnimation(animScaleUp);
     }
 
-    public void onCreateCardClicked(View view) {
+    public void onCreateCardClicked(final View view) {
         editString = editName.getText().toString();
         if (!editString.isEmpty()) {
             editBank.setText(editString);
@@ -239,17 +248,17 @@ public class BankCardActivity extends Activity {
                     String.valueOf(id),
                     new OnResultCallback<Void, Void>() {
                         @Override
-                        public void onSuccess(Void pVoid) {
+                        public void onSuccess(final Void pVoid) {
 
                         }
 
                         @Override
-                        public void onError(Exception pE) {
+                        public void onError(final Exception pE) {
 
                         }
 
                         @Override
-                        public void onProgressChanged(Void pVoid) {
+                        public void onProgressChanged(final Void pVoid) {
 
                         }
                     });
@@ -259,10 +268,10 @@ public class BankCardActivity extends Activity {
         }
     }
 
-    public void onToolbarBackClicked(View view) {
+    public void onToolbarBackClicked(final View view) {
     }
 
-    public void onShowPinClicked(View view) {
+    public void onShowPinClicked(final View view) {
         showPin = !showPin;
         if (showPin) {
             editPin.setInputType(TYPE_TEXT_VARIATION_PASSWORD);
@@ -274,18 +283,20 @@ public class BankCardActivity extends Activity {
     }
 
     void showPhoto(final Bitmap bitmap) {
-        AlertImageViewer dialog = new AlertImageViewer(BankCardActivity.this, bitmap,
+        final ImageViewerDialogBuilder dialog = new ImageViewerDialogBuilder(this, bitmap,
                 LaunchScreenActivity.SCREEN_WIDTH, LaunchScreenActivity.SCREEN_HEIGHT);
         dialog.startDialog();
     }
 
-    public void onSecondPhotoClicked(View view) {
-        if (secondBitmap != null)
+    public void onSecondPhotoClicked(final View view) {
+        if (secondBitmap != null) {
             showPhoto(secondBitmap);
+        }
     }
 
-    public void onFirstPhotoClicked(View view) {
-        if (firstBitmap != null)
+    public void onFirstPhotoClicked(final View view) {
+        if (firstBitmap != null) {
             showPhoto(firstBitmap);
+        }
     }
 }

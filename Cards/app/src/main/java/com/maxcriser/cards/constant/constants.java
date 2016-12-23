@@ -73,4 +73,7 @@ public final class constants {
     public static final String STATUS_PHOTOEDITOR = "status_photoeditor";
     public static final String STATUS_PHOTOEEDITOR_CREDIT_CARD = "status_credit_card_crop";
     public static final String STATUS_PHOTOEEDITOR_TICKET = "status_ticket_crop";
+    public static final String SETUP_PIN = "setup_pin";
+    public static final String TEXT_PLAIN = "text/plain";
+
 }

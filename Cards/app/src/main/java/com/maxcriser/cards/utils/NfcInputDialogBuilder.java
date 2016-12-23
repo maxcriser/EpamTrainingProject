@@ -11,23 +11,23 @@ import android.widget.ImageView;
 
 import com.maxcriser.cards.R;
 
-public class AlertNfcInput extends AlertDialog {
+public class NfcInputDialogBuilder extends AlertDialog {
 
-    private Context context;
+    private final Context context;
     private ImageView card;
-    private Animation animCard;
+    private final Animation animCard;
 
 
-    public AlertNfcInput(Context context) {
+    public NfcInputDialogBuilder(final Context context) {
         super(context);
         this.context = context;
         this.animCard = AnimationUtils.loadAnimation(context, R.anim.anim_card);
     }
 
     public void startDialog() {
-        LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.fragment_nfc_input, null);
-        Builder builder = new Builder(context);
+        final LayoutInflater inflater = getLayoutInflater();
+        final View layout = inflater.inflate(R.layout.fragment_nfc_input, null);
+        final Builder builder = new Builder(context);
         builder.setView(layout);
         final AlertDialog aDialog = builder.create();
         aDialog.show();
@@ -35,23 +35,23 @@ public class AlertNfcInput extends AlertDialog {
         card.startAnimation(animCard);
         animCard.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation pAnimation) {
+            public void onAnimationStart(final Animation pAnimation) {
             }
 
             @Override
-            public void onAnimationEnd(Animation pAnimation) {
+            public void onAnimationEnd(final Animation pAnimation) {
                 card.startAnimation(animCard);
             }
 
             @Override
-            public void onAnimationRepeat(Animation pAnimation) {
+            public void onAnimationRepeat(final Animation pAnimation) {
             }
         });
 
         aDialog.setOnDismissListener(new OnDismissListener() {
             @Override
-            public void onDismiss(DialogInterface pDialogInterface) {
-                AlertEnterNfcName dialog = new AlertEnterNfcName(context);
+            public void onDismiss(final DialogInterface pDialogInterface) {
+                final EnterNfcNameDialogBuilder dialog = new EnterNfcNameDialogBuilder(context);
                 dialog.startDialog();
             }
         });

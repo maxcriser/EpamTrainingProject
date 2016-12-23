@@ -7,27 +7,24 @@ import java.util.regex.Pattern;
 
 public class CreditCard {
 
-    private String text;
+    private final String text;
 
-    public CreditCard(String text) {
+    public CreditCard(final String text) {
         this.text = text;
         setCardholderCreditCard();
         setNameCreditCard();
         setNumberCreditCard();
         setTypeCreditCard();
         setValidCreditCard();
-        setVerificationNumberCreditCard();
     }
 
     private String typeCreditCard = constants.EMPTY_STRING;
     private String nameCreditCard = constants.EMPTY_STRING;
     private String cardholderCreditCard = constants.EMPTY_STRING;
     private String numberCreditCard = constants.EMPTY_STRING;
-    private String pinCreditCard = constants.EMPTY_STRING;
-    private String verificationNumberCreditCard = constants.EMPTY_STRING;
     private String validCreditCard = constants.EMPTY_STRING;
 
-    public void setTypeCreditCard() {
+    private void setTypeCreditCard() {
         if (text.toLowerCase().contains(constants.Cards.VISA)) {
             typeCreditCard = constants.Cards.VISA;
         } else if (text.toLowerCase().contains(constants.Cards.AMEX)
@@ -49,24 +46,21 @@ public class CreditCard {
         }
     }
 
-    private boolean isCharacterOrSpace(char ch) {
-        String chStr = ch + constants.EMPTY_STRING;
-        if ((chStr).matches("^[A-Za-z]+$") || (chStr).matches("^[А-Яа-я]+$") || ch == ' ' || ch == '.' || ch == '-' || ch == '&') {
-            return true;
-        }
-        return false;
+    private boolean isCharacterOrSpace(final char ch) {
+        final String chStr = ch + constants.EMPTY_STRING;
+        return (chStr).matches("^[A-Za-z]+$") || (chStr).matches("^[А-Яа-я]+$") || ch == ' ' || ch == '.' || ch == '-' || ch == '&';
     }
 
-    public void setNameCreditCard() {
+    private void setNameCreditCard() {
         //TODO hardcode
-        String bank = "bank";
-        String handleText = text;
+        final String bank = "bank";
+        final String handleText = text;
         if (text.toLowerCase().contains(bank)) {
-            StringBuilder builder = new StringBuilder();
-            int index = handleText.toLowerCase().indexOf(bank);
+            final StringBuilder builder = new StringBuilder();
+            final int index = handleText.toLowerCase().indexOf(bank);
             if (index != 0) {
                 for (int i = index - 1; i >= 0; i--) {
-                    char ch = handleText.charAt(i);
+                    final char ch = handleText.charAt(i);
                     if (isCharacterOrSpace(ch)) {
                         builder.insert(0, ch);
                     } else {
@@ -75,7 +69,7 @@ public class CreditCard {
                 }
             }
             for (int i = index; i < handleText.length(); i++) {
-                char ch = handleText.charAt(i);
+                final char ch = handleText.charAt(i);
                 if (isCharacterOrSpace(ch)) {
                     builder.append(ch);
                 } else {
@@ -89,24 +83,16 @@ public class CreditCard {
         }
     }
 
-    public void setCardholderCreditCard() {
+    private void setCardholderCreditCard() {
         cardholderCreditCard = getRegexString(text, "[A-Z]{2,50} [A-Z]{2,50}");
     }
 
-    public void setNumberCreditCard() {
+    private void setNumberCreditCard() {
         numberCreditCard = getRegexString(text,
                 "\\d\\d\\d\\d \\d\\d\\d\\d \\d\\d\\d\\d \\d\\d\\d\\d");
     }
 
-    public void setPinCreditCard() {
-//        pinCreditCard = text;
-    }
-
-    public void setVerificationNumberCreditCard() {
-//        verificationNumberCreditCard = text;
-    }
-
-    public void setValidCreditCard() {
+    private void setValidCreditCard() {
         validCreditCard = getRegexString(text, "[0-1][0-9]/\\d\\d");
     }
 
@@ -126,22 +112,13 @@ public class CreditCard {
         return numberCreditCard;
     }
 
-    public String getPinCreditCard() {
-        return pinCreditCard;
-    }
-
-    public String getVerificationNumberCreditCard() {
-        return verificationNumberCreditCard;
-    }
-
     public String getValidCreditCard() {
         return validCreditCard;
     }
 
-    private String getRegexString(String text, String regex) {
-        String regexp = regex;
-        Pattern pattern = Pattern.compile(regexp);
-        Matcher matcher = pattern.matcher(text);
+    private String getRegexString(final CharSequence text, final String regex) {
+        final Pattern pattern = Pattern.compile(regex);
+        final Matcher matcher = pattern.matcher(text);
 
         return (matcher.find() ? matcher.group() : constants.EMPTY_STRING);
     }

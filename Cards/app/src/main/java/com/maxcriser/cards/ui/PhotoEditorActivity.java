@@ -17,11 +17,12 @@ import com.isseiaoki.simplecropview.callback.CropCallback;
 import com.isseiaoki.simplecropview.callback.LoadCallback;
 import com.isseiaoki.simplecropview.callback.SaveCallback;
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.constant.constants;
 import com.maxcriser.cards.constant.Extras;
+import com.maxcriser.cards.constant.constants;
 
 public class PhotoEditorActivity extends AppCompatActivity {
 
+    private static final float INITIAL_SCALE = 0.75f;
     private CropImageView image;
     private FrameLayout mProgressBar;
     private Uri photoUri;
@@ -42,21 +43,19 @@ public class PhotoEditorActivity extends AppCompatActivity {
         final LinearLayout menuBar = (LinearLayout) findViewById(R.id.menu_bar);
         image = (CropImageView) findViewById(R.id.cropImageView);
         mProgressBar = (FrameLayout) findViewById(R.id.frame_progressbar);
-        image.setInitialFrameScale(0.75f);
+        image.setInitialFrameScale(INITIAL_SCALE);
         if (statusEditor.equals(constants.STATUS_PHOTOEEDITOR_CREDIT_CARD)) {
-            image.setCustomRatio(87, 55);
+            image.setCustomRatio(R.dimen.set_custom_ratio_x, R.dimen.set_custom_ratio_y);
             menuBar.setVisibility(View.GONE);
         } else {
             image.setCropMode(CropImageView.CropMode.FREE);
             menuBar.setVisibility(View.VISIBLE);
         }
-//        FIT_IMAGE, RATIO_4_3, RATIO_3_4, SQUARE(default), RATIO_16_9, RATIO_9_16, FREE, CUSTOM, CIRCLE, CIRCLE_SQUARE
         image.setHandleSizeInDp(0);
         image.setFrameStrokeWeightInDp(1);
         image.setGuideStrokeWeightInDp(1);
-        //TODO move to dimens
-        image.setTouchPaddingInDp(24);
-        image.setMinFrameSizeInDp(85);
+        image.setTouchPaddingInDp(R.dimen.set_touch_padding_in_dp);
+        image.setMinFrameSizeInDp(R.dimen.set_min_frame_size_in_dp);
 
         final Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -74,6 +73,7 @@ public class PhotoEditorActivity extends AppCompatActivity {
                 uri,
 
                 new LoadCallback() {
+
                     @Override
                     public void onSuccess() {
                     }
@@ -104,6 +104,7 @@ public class PhotoEditorActivity extends AppCompatActivity {
                 photoUri,
 
                 new CropCallback() {
+
                     @Override
                     public void onSuccess(final Bitmap cropped) {
 
@@ -116,6 +117,7 @@ public class PhotoEditorActivity extends AppCompatActivity {
                 },
 
                 new SaveCallback() {
+
                     @Override
                     public void onSuccess(final Uri outputUri) {
                         final Intent intent = new Intent();

@@ -12,7 +12,6 @@ public class ThreadManager {
     private final PriorityBlockingQueue<Runnable> mThreadQueue;
 
     private ThreadManager() {
-        //TODO dublication, its better
         int numberOfThreads = 3;
         if (Runtime.getRuntime().availableProcessors() > 2) {
             numberOfThreads = Runtime.getRuntime().availableProcessors();

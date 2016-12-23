@@ -18,42 +18,51 @@ public class FragmentPreviewTypeCards extends Fragment {
 
     int pageNumberType;
 
-    public static FragmentPreviewTypeCards newInstance(int page) {
-        FragmentPreviewTypeCards viewPagerPreviewCard = new FragmentPreviewTypeCards();
-        Bundle arguments = new Bundle();
+    public static FragmentPreviewTypeCards newInstance(final int page) {
+        final FragmentPreviewTypeCards viewPagerPreviewCard = new FragmentPreviewTypeCards();
+        final Bundle arguments = new Bundle();
         arguments.putInt(ARGUMENT_PAGE_NUMBER_TYPE, page);
         viewPagerPreviewCard.setArguments(arguments);
         return viewPagerPreviewCard;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pageNumberType = getArguments().getInt(ARGUMENT_PAGE_NUMBER_TYPE);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.preview_type_item, null);
-        ImageView tvPage = (ImageView) view.findViewById(R.id.icon_type_card);
-        String type = previewTypes.get(pageNumberType);
-        if (type.equals(constants.Cards.VISA)) {
-            tvPage.setImageResource(R.drawable.type_visa);
-        } else if (type.equals(constants.Cards.MASTERCARD)) {
-            tvPage.setImageResource(R.drawable.type_mastercard);
-        } else if (type.equals(constants.Cards.AMEX)) {
-            tvPage.setImageResource(R.drawable.type_amex);
-        } else if (type.equals(constants.Cards.MAESTRO)) {
-            tvPage.setImageResource(R.drawable.type_maestro);
-        } else if (type.equals(constants.Cards.WESTERN_UNION)) {
-            tvPage.setImageResource(R.drawable.type_western_union);
-        } else if (type.equals(constants.Cards.JCB)) {
-            tvPage.setImageResource(R.drawable.type_jcb);
-        } else if (type.equals(constants.Cards.DINERS_CLUB)) {
-            tvPage.setImageResource(R.drawable.type_diners_club);
-        } else if (type.equals(constants.Cards.BELCARD)) {
-            tvPage.setImageResource(R.drawable.type_belcard);
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.preview_type_item, null);
+        final ImageView tvPage = (ImageView) view.findViewById(R.id.icon_type_card);
+        final String type = previewTypes.get(pageNumberType);
+        switch (type) {
+            case constants.Cards.VISA:
+                tvPage.setImageResource(R.drawable.type_visa);
+                break;
+            case constants.Cards.MASTERCARD:
+                tvPage.setImageResource(R.drawable.type_mastercard);
+                break;
+            case constants.Cards.AMEX:
+                tvPage.setImageResource(R.drawable.type_amex);
+                break;
+            case constants.Cards.MAESTRO:
+                tvPage.setImageResource(R.drawable.type_maestro);
+                break;
+            case constants.Cards.WESTERN_UNION:
+                tvPage.setImageResource(R.drawable.type_western_union);
+                break;
+            case constants.Cards.JCB:
+                tvPage.setImageResource(R.drawable.type_jcb);
+                break;
+            case constants.Cards.DINERS_CLUB:
+                tvPage.setImageResource(R.drawable.type_diners_club);
+                break;
+            case constants.Cards.BELCARD:
+                tvPage.setImageResource(R.drawable.type_belcard);
+                break;
         }
         return view;
     }

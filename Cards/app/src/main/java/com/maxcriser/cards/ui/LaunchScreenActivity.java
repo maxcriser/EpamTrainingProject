@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -27,15 +26,11 @@ public class LaunchScreenActivity extends AppCompatActivity {
     public static int SCREEN_HEIGHT;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         loadPassword();
-
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        SCREEN_WIDTH = metrics.widthPixels;
-        SCREEN_HEIGHT = metrics.heightPixels;
 
         final PreviewListColorsSetter tcReader = PreviewListColorsSetter.getInstance();
         tcReader.setPreviewColors();
@@ -43,11 +38,11 @@ public class LaunchScreenActivity extends AppCompatActivity {
         tcReader.setTypeCard();
         previewTypes = tcReader.getTypeCard();
 
-        Intent intent;
+        final Intent intent;
         if (loadPassword.equals(UNDEFENDED)) {
-            intent = new Intent(LaunchScreenActivity.this, SetupPinActivity.class);
+            intent = new Intent(this, SetupPinActivity.class);
         } else {
-            intent = new Intent(LaunchScreenActivity.this, MenuActivity.class);
+            intent = new Intent(this, MenuActivity.class);
         }
         startActivity(intent);
         finish();
