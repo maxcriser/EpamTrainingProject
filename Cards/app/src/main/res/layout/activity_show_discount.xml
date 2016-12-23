@@ -88,7 +88,7 @@
                             android:paddingTop="16dp"
                             android:textColor="@color/black">
 
-                            <com.maxcriser.cards.view.text_view.BarcodeEan
+                            <com.maxcriser.cards.view.labels.BarcodeEan
                                 android:id="@+id/show_barcode"
                                 android:layout_width="match_parent"
                                 android:layout_height="104dp"

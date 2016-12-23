@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.constants;
 
-import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
+import static com.maxcriser.cards.ui.activities.LaunchScreenActivity.previewTypes;
 
 public class FragmentPreviewTypeCards extends Fragment {
 

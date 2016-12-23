@@ -30,7 +30,7 @@
                 android:layout_marginTop="16dp"
                 android:background="@color/gray_shadow"/>
 
-            <com.maxcriser.cards.view.text_view.NotoSans
+            <com.maxcriser.cards.view.labels.NotoSans
                 android:id="@+id/title_main_cards"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

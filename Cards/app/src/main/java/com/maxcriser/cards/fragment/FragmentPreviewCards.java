@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.model.PreviewColor;
 
-import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
+import static com.maxcriser.cards.ui.activities.LaunchScreenActivity.previewColors;
 
 public class FragmentPreviewCards extends Fragment {
 

@@ -137,14 +137,5 @@
     <string name="new_nfc_title">New NFC item</string>
     <string name="setup_pin">Setup PIN</string>
     <string name="use_fingerprint">Use fingerprint</string>
-    <string name="cards_application">Cards application</string>
-    <string name="share_using">Share using</string>
-    <string name="country">country</string>
-    <string name="countryCode">countryCode</string>
-    <string name="isp">isp</string>
-    <string name="query">query</string>
-    <string name="timezone">timezone</string>
-    <string name="share_message">Donwloads my application on playmarket: cards_application.com</string>
-    <string name="please_fill_title">Please fill title of the card and try again</string>
 
 </resources>

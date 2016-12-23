@@ -19,7 +19,7 @@
 
     </FrameLayout>
 
-    <com.maxcriser.cards.view.text_view.RobotoThin
+    <com.maxcriser.cards.view.labels.RobotoThin
         android:layout_gravity="center"
         android:gravity="center"
         android:textColor="@color/text_toolbar"

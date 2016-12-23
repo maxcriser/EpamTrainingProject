@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.maxcriser.cards.view.text_view.RobotoThin
+        <com.maxcriser.cards.view.labels.RobotoThin
             android:textAllCaps="true"
             android:id="@+id/solution_of_scan"
             android:gravity="center"
@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp">
 
-            <com.maxcriser.cards.view.text_view.RobotoThin
+            <com.maxcriser.cards.view.labels.RobotoThin
                 android:textAllCaps="true"
                 android:gravity="center"
                 android:id="@+id/button_cancel"
@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"/>
 
-            <com.maxcriser.cards.view.text_view.RobotoThin
+            <com.maxcriser.cards.view.labels.RobotoThin
                 android:textAllCaps="true"
                 android:gravity="center"
                 android:id="@+id/button_ok"
@@ -58,7 +58,7 @@
 
     </FrameLayout>
 
-    <com.maxcriser.cards.view.text_view.RobotoThin
+    <com.maxcriser.cards.view.labels.RobotoThin
         android:textAllCaps="true"
         android:id="@+id/bottom_text_barcode_scan"
         android:gravity="center"

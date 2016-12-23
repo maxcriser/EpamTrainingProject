@@ -27,8 +27,7 @@ import com.maxcriser.cards.constant.constants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.loader.image.ImageLoader;
-import com.maxcriser.cards.ui.LaunchScreenActivity;
-import com.maxcriser.cards.utils.ImageViewerDialogBuilder;
+import com.maxcriser.cards.dialogs.ImageViewerDialogBuilder;
 
 import static android.text.InputType.TYPE_CLASS_TEXT;
 import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
@@ -283,8 +282,7 @@ public class BankCardActivity extends Activity {
     }
 
     void showPhoto(final Bitmap bitmap) {
-        final ImageViewerDialogBuilder dialog = new ImageViewerDialogBuilder(this, bitmap,
-                LaunchScreenActivity.SCREEN_WIDTH, LaunchScreenActivity.SCREEN_HEIGHT);
+        final ImageViewerDialogBuilder dialog = new ImageViewerDialogBuilder(this, bitmap);
         dialog.startDialog();
     }
 

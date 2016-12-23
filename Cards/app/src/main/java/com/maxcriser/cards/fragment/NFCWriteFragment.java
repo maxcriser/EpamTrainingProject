@@ -16,7 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.ui.NFCReaderActivity;
+import com.maxcriser.cards.ui.activities.NFCReaderActivity;
 
 import java.io.IOException;
 import java.nio.charset.Charset;

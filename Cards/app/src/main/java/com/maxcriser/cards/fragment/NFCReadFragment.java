@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.ui.NFCReaderActivity;
+import com.maxcriser.cards.ui.activities.NFCReaderActivity;
 
 import java.io.IOException;
 

@@ -14,6 +14,6 @@ public class UniqueStringGenerator {
         Random random = new Random();
         Integer rand = random.nextInt(1000000000);
         String date = new SimpleDateFormat("dd-MM-yyyy", Locale.US).format(new Date());
-        return System.currentTimeMillis() + "-" + date + "-" + rand.toString() + "-" + rand.toString().length() + "-";
+        return System.currentTimeMillis() + "-" + date + "-" + rand + "-" + rand.toString().length() + "-";
     }
 }

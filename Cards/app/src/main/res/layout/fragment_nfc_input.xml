@@ -10,7 +10,7 @@
         android:background="@android:color/white"
         android:orientation="vertical">
 
-        <com.maxcriser.cards.view.text_view.RobotoThin
+        <com.maxcriser.cards.view.labels.RobotoThin
             android:layout_margin="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

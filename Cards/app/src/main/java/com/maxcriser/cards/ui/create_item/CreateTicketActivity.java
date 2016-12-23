@@ -44,10 +44,10 @@ import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.model.PreviewColor;
-import com.maxcriser.cards.ui.PhotoEditorActivity;
+import com.maxcriser.cards.ui.activities.PhotoEditorActivity;
 import com.maxcriser.cards.utils.OnTemplatePageChangeListener;
 import com.maxcriser.cards.utils.UniqueStringGenerator;
-import com.maxcriser.cards.view.text_view.RobotoRegular;
+import com.maxcriser.cards.view.labels.RobotoRegular;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -64,7 +64,7 @@ import static com.maxcriser.cards.constant.constants.Requests.REQUEST_CALENDAR;
 import static com.maxcriser.cards.constant.constants.Requests.REQUEST_FRONT_CAMERA;
 import static com.maxcriser.cards.constant.constants.Requests.REQUEST_WRITE_STORAGE_BACK;
 import static com.maxcriser.cards.constant.constants.Requests.REQUEST_WRITE_STORAGE_FRONT;
-import static com.maxcriser.cards.ui.LaunchScreenActivity.previewColors;
+import static com.maxcriser.cards.ui.activities.LaunchScreenActivity.previewColors;
 import static com.maxcriser.cards.utils.Storage.isExternalStorageAvailable;
 
 public class CreateTicketActivity extends AppCompatActivity {

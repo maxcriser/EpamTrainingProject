@@ -21,7 +21,7 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
-import com.maxcriser.cards.view.text_view.BarcodeEan;
+import com.maxcriser.cards.view.labels.BarcodeEan;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;

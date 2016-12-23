@@ -15,9 +15,9 @@ import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.database.models.ModelNFCItems;
 import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.loader.image.ImageLoader;
-import com.maxcriser.cards.view_holder.CursorHolder;
+import com.maxcriser.cards.viewHolder.CardHolder;
 
-public class CursorAdapter extends RecyclerView.Adapter<CursorHolder> {
+public class CursorAdapter extends RecyclerView.Adapter<CardHolder> {
 
     private final Cursor mCursor;
     private final Context mContext;
@@ -30,13 +30,13 @@ public class CursorAdapter extends RecyclerView.Adapter<CursorHolder> {
     }
 
     @Override
-    public CursorHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+    public CardHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         final View view = LayoutInflater.from(mContext).inflate((Integer) mView, parent, false);
-        return new CursorHolder(view);
+        return new CardHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final CursorHolder holder, final int position) {
+    public void onBindViewHolder(final CardHolder holder, final int position) {
         if (mCursor.moveToPosition(position)) {
             if (mView.equals(R.layout.item_bank)) {
                 final String type = mCursor.getString(mCursor.getColumnIndex(ModelBankCards.TYPE));

@@ -10,7 +10,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
-import com.maxcriser.cards.ui.LockerActivity;
+import com.maxcriser.cards.ui.activities.LockerActivity;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {

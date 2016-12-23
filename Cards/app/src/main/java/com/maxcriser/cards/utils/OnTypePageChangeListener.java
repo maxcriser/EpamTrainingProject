@@ -5,27 +5,27 @@ import android.support.v4.view.ViewPager;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.constants;
 
-import static com.maxcriser.cards.ui.LaunchScreenActivity.previewTypes;
+import static com.maxcriser.cards.ui.activities.LaunchScreenActivity.previewTypes;
 
 public class OnTypePageChangeListener implements ViewPager.OnPageChangeListener {
     public interface OnPageChangeListener {
         void onResult(int position, Integer icon, String type);
     }
 
-    private OnPageChangeListener mListener;
+    private final OnPageChangeListener mListener;
 
-    public OnTypePageChangeListener(OnPageChangeListener listener) {
+    public OnTypePageChangeListener(final OnPageChangeListener listener) {
         mListener = listener;
     }
 
     @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {
 
     }
 
     @Override
-    public void onPageSelected(int position) {
-        String myTypeCard = previewTypes.get(position);
+    public void onPageSelected(final int position) {
+        final String myTypeCard = previewTypes.get(position);
         switch (myTypeCard) {
             case constants.Cards.VISA:
                 mListener.onResult(position, R.drawable.type_visa, myTypeCard);
@@ -55,7 +55,7 @@ public class OnTypePageChangeListener implements ViewPager.OnPageChangeListener 
     }
 
     @Override
-    public void onPageScrollStateChanged(int state) {
+    public void onPageScrollStateChanged(final int state) {
 
     }
 }
