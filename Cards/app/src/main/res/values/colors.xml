@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="gray_secondary_text">#a3a3a3</color>
     <color name="gray_bottom_create_card">#f2f2f2</color>
     <color name="transparent">#00ffffff</color>

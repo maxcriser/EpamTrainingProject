@@ -25,7 +25,7 @@
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
                 android:paddingBottom="16dp"
-                android:paddingTop="@dimen/height_toolbar"
+                android:paddingTop="64dp"
                 android:scrollbars="vertical"/>
 
             <include layout="@layout/fragment_empty_page"/>

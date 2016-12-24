@@ -62,8 +62,6 @@ public class BankCardActivity extends Activity {
     private Handler mHandler;
     private Animation animScaleDown;
     private Animation animScaleUp;
-    private Bitmap firstBitmap;
-    private Bitmap secondBitmap;
 
     Handler.Callback hc = new Handler.Callback() {
         @Override
@@ -84,8 +82,6 @@ public class BankCardActivity extends Activity {
     }
 
     private void initViews() {
-        final ImageView ivFrontPhoto = (ImageView) findViewById(R.id.front_photo);
-        final ImageView ivBackPhoto = (ImageView) findViewById(R.id.back_photo);
         final EditText verificationNumber = (EditText) findViewById(R.id.ver_number);
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
         eye = (ImageView) findViewById(R.id.eye);
@@ -141,44 +137,6 @@ public class BankCardActivity extends Activity {
                 editName.setText(editString);
                 materialDesignFAM.close(true);
                 mHandler.sendEmptyMessageDelayed(1, 300);
-            }
-        });
-
-        ImageLoader.getInstance().downloadToView(firstPhoto, ivFrontPhoto, new OnResultCallback<Bitmap, Void>() {
-            @Override
-            public void onSuccess(final Bitmap pBitmap) {
-                if (pBitmap != null) {
-                    firstBitmap = pBitmap;
-                }
-            }
-
-            @Override
-            public void onError(final Exception pE) {
-
-            }
-
-            @Override
-            public void onProgressChanged(final Void pVoid) {
-
-            }
-        });
-
-        ImageLoader.getInstance().downloadToView(secondPhoto, ivBackPhoto, new OnResultCallback<Bitmap, Void>() {
-            @Override
-            public void onSuccess(final Bitmap pBitmap) {
-                if (pBitmap != null) {
-                    secondBitmap = pBitmap;
-                }
-            }
-
-            @Override
-            public void onError(final Exception pE) {
-
-            }
-
-            @Override
-            public void onProgressChanged(final Void pVoid) {
-
             }
         });
 
@@ -278,23 +236,6 @@ public class BankCardActivity extends Activity {
         } else {
             editPin.setInputType(TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_PASSWORD);
             eye.setImageResource(R.drawable.eye_on);
-        }
-    }
-
-    void showPhoto(final Bitmap bitmap) {
-        final ImageViewerDialogBuilder dialog = new ImageViewerDialogBuilder(this, bitmap);
-        dialog.startDialog();
-    }
-
-    public void onSecondPhotoClicked(final View view) {
-        if (secondBitmap != null) {
-            showPhoto(secondBitmap);
-        }
-    }
-
-    public void onFirstPhotoClicked(final View view) {
-        if (firstBitmap != null) {
-            showPhoto(firstBitmap);
         }
     }
 }

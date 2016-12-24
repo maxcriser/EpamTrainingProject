@@ -3,11 +3,8 @@ package com.maxcriser.cards.ui.create_item;
 
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -23,7 +20,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -42,14 +38,13 @@ import com.maxcriser.cards.constant.Extras;
 import com.maxcriser.cards.constant.constants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
+import com.maxcriser.cards.dialog.MatchesFountDialogBuilder;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
-import com.maxcriser.cards.fragment.FragmentPreviewCards;
+import com.maxcriser.cards.listener.OnTypePageChangeListener;
 import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.model.CreditCard;
 import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.activities.PhotoEditorActivity;
-import com.maxcriser.cards.listener.OnTemplatePageChangeListener;
-import com.maxcriser.cards.listener.OnTypePageChangeListener;
 import com.maxcriser.cards.utils.UniqueStringGenerator;
 import com.maxcriser.cards.view.labels.RobotoRegular;
 
@@ -75,7 +70,6 @@ public class CreateBankActivity extends AppCompatActivity {
 
     public String photoFileNameFront;
     public String photoFileNameBack;
-    private int currentPositionColors;
     private OwnAsyncTask sync;
     private ImageView frontPhoto;
     private ImageView backPhoto;
@@ -84,8 +78,6 @@ public class CreateBankActivity extends AppCompatActivity {
     private DatabaseHelperImpl db;
     private ScrollView mScrollView;
     private ViewPager pagerTypes;
-    private ViewPager pagerTemplate;
-    private PagerAdapter pagerAdapterTemplate;
     private final Calendar calendar = Calendar.getInstance();
     private EditText bank;
     private EditText cardholder;
@@ -94,7 +86,6 @@ public class CreateBankActivity extends AppCompatActivity {
     private TextView validDate;
     private EditText verificationNumber;
     private String myTypeCard;
-    private String myColorName;
     private String myColorCode;
     private Uri editFrontUri;
     private Uri editBackUri;
@@ -121,7 +112,6 @@ public class CreateBankActivity extends AppCompatActivity {
         number = (MaskedEditText) findViewById(R.id.number);
         pin = (EditText) findViewById(R.id.pin);
         validDate = (TextView) findViewById(R.id.date);
-        pagerTemplate = (ViewPager) findViewById(R.id.pager);
         pagerTypes = (ViewPager) findViewById(R.id.type_card);
         frontPhoto = (ImageView) findViewById(R.id.front_photo);
         backPhoto = (ImageView) findViewById(R.id.back_photo);
@@ -130,36 +120,14 @@ public class CreateBankActivity extends AppCompatActivity {
         statusScan = true;
         db = DatabaseHelperImpl.getInstance(this);
         setDateOnView();
-        currentPositionColors = 0;
+        int currentPositionColors = 0;
         final RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
         title.setText(getResources().getString(R.string.bank_title));
 
         final PreviewColor listPreviewColor = previewColors.get(0);
-        myColorName = listPreviewColor.getNameColorCards();
+        String myColorName = listPreviewColor.getNameColorCards();
         myColorCode = listPreviewColor.getCodeColorCards();
         Log.d("BANK", myColorName + " " + myColorCode);
-
-        //TODO name convention
-        final int PAGE_COUNT_TEMPLATE = previewColors.size();
-
-        pagerTemplate.setPageMargin(constants.PAGER_MARGIN_PREVIEW);
-        //TODO magic number, move to dimens
-        pagerTemplate.setMinimumHeight(156);
-        pagerAdapterTemplate = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
-                constants.PagerIDs.ID_BANK_CARD_ITEM,
-                PAGE_COUNT_TEMPLATE);
-        pagerTemplate.setAdapter(pagerAdapterTemplate);
-
-        pagerTemplate.addOnPageChangeListener(new OnTemplatePageChangeListener(new OnTemplatePageChangeListener.OnPageChangeListener() {
-
-            @Override
-            public void onResult(final int position, final String codeColor, final String nameColor) {
-                currentPositionColors = position;
-                myColorCode = codeColor;
-                myColorName = nameColor;
-                Log.d("COLOR", position + myColorName + myColorCode);
-            }
-        }));
 
         myTypeCard = previewTypes.get(0);
         Log.d("BANK", myTypeCard);
@@ -168,31 +136,17 @@ public class CreateBankActivity extends AppCompatActivity {
                 constants.PagerIDs.ID_BANK_CARD_ITEM_TYPE,
                 PAGE_COUNT);
         pagerTypes.setAdapter(pagerAdapterTypes);
-        FragmentPreviewCards.icon = R.drawable.type_visa;
         pagerTypes.addOnPageChangeListener(new OnTypePageChangeListener(new OnTypePageChangeListener.OnPageChangeListener() {
 
             @Override
             public void onResult(final int position, final Integer icon, final String type) {
                 myTypeCard = type;
                 //TODO remove all statics
-                FragmentPreviewCards.icon = icon;
-                pagerTemplate.setAdapter(pagerAdapterTemplate);
-                pagerTemplate.setCurrentItem(currentPositionColors);
+//                FragmentPreviewCards.icon = icon;
+//                pagerTemplate.setAdapter(pagerAdapterTemplate);
+//                pagerTemplate.setCurrentItem(currentPositionColors);
             }
         }));
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            mScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-
-                @Override
-                public void onScrollChange(final View pView, final int pI, final int pI1, final int pI2, final int pI3) {
-                    final InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-                    final View view = getCurrentFocus();
-                    assert view != null;
-                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                }
-            });
-        }
     }
 
     @Override
@@ -242,22 +196,26 @@ public class CreateBankActivity extends AppCompatActivity {
 
                     @Override
                     public void onSuccess(final CreditCard pCredit) {
-                        if (pCredit != null && statusScan) {
-                            final String creditNumber = pCredit.getNumberCreditCard();
-                            final String creditCardholder = pCredit.getCardholderCreditCard();
-                            final String creditName = pCredit.getNameCreditCard();
-                            final String creditType = pCredit.getTypeCreditCard();
-                            final String creditValid = pCredit.getValidCreditCard();
+                        try {
+                            if (pCredit != null && statusScan) {
+                                final String creditNumber = pCredit.getNumberCreditCard();
+                                final String creditCardholder = pCredit.getCardholderCreditCard();
+                                final String creditName = pCredit.getNameCreditCard();
+                                final String creditType = pCredit.getTypeCreditCard();
+                                final String creditValid = pCredit.getValidCreditCard();
 
-                            if (!creditNumber.isEmpty() || !creditCardholder.isEmpty()
-                                    || !creditName.isEmpty() || !creditType.isEmpty()
-                                    || !creditValid.isEmpty()) {
-                                showAlertDialogRecognize(creditNumber, creditCardholder, creditName,
-                                        creditType, creditValid);
-                            } else {
-                                Toast.makeText(CreateBankActivity.this, "Not found matches", Toast.LENGTH_LONG).show();
-                                Log.d("TAG", "SFDSDFS");
+                                if (!creditNumber.isEmpty() || !creditCardholder.isEmpty()
+                                        || !creditName.isEmpty() || !creditType.isEmpty()
+                                        || !creditValid.isEmpty()) {
+                                    showAlertDialogRecognize(creditNumber, creditCardholder, creditName,
+                                            creditType, creditValid);
+                                } else {
+                                    Toast.makeText(CreateBankActivity.this, "Not found matches", Toast.LENGTH_LONG).show();
+                                    Log.d("TAG", "SFDSDFS");
+                                }
                             }
+                        } catch (final Exception e) {
+                            Log.d("Error", e.toString());
                         }
                     }
 
@@ -317,38 +275,25 @@ public class CreateBankActivity extends AppCompatActivity {
         if (!creditValid.isEmpty()) {
             message += "Valid through: " + creditValid + "\n\n";
         }
-        //TODO move to builders
-        final AlertDialog.Builder builder = new AlertDialog.Builder(CreateBankActivity.this);
-        builder.setTitle(R.string.matches_found)
-                .setMessage(message)
-                .setNegativeButton(R.string.cancel,
-                        new DialogInterface.OnClickListener() {
-
-                            public void onClick(final DialogInterface dialog, final int id) {
-                                dialog.cancel();
-                            }
-                        })
-                .setPositiveButton(getString(R.string.apply), new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(final DialogInterface dialog, final int pI) {
-                        pasteRecognizeTextToViews(creditNumber, creditCardholder, creditName,
-                                creditType, creditValid);
-                        dialog.cancel();
-                    }
-                });
-        final AlertDialog alert = builder.create();
-        alert.show();
+        final MatchesFountDialogBuilder dialogMatches = new MatchesFountDialogBuilder(this, message,
+                creditNumber, creditCardholder, creditName, creditType, creditValid);
+        dialogMatches.startDialog();
     }
 
-    private void pasteRecognizeTextToViews(final CharSequence creditNumber, final CharSequence creditCardholder,
-                                           final CharSequence creditName, final String creditType, final CharSequence creditValid) {
-        if (!creditNumber.equals(constants.EMPTY_STRING)) {
+    public void pasteRecognizeTextToViews(final String creditNumber, final String creditCardholder,
+                                          final String creditName, final String creditType, final String creditValid) {
+        if (!creditNumber.isEmpty()) {
             number.setText(creditNumber);
         }
-        cardholder.setText(creditCardholder);
-        bank.setText(creditName);
-        validDate.setText(creditValid);
+        if (!creditCardholder.isEmpty()) {
+            cardholder.setText(creditCardholder);
+        }
+        if (!creditName.isEmpty()) {
+            bank.setText(creditName);
+        }
+        if (!creditValid.isEmpty()) {
+            validDate.setText(creditValid);
+        }
         if (!creditType.isEmpty()) {
             final int numberType;
             switch (creditType) {
@@ -473,19 +418,13 @@ public class CreateBankActivity extends AppCompatActivity {
                 || validThru.isEmpty() || type.isEmpty() || color.isEmpty()) {
             Toast.makeText(this, R.string.fill_all_fields, Toast.LENGTH_LONG).show();
             mScrollView.fullScroll(ScrollView.FOCUS_UP);
+        } else if (removeFront.getVisibility() == View.GONE || removeBack.getVisibility() == View.GONE) {
+            Toast.makeText(this, R.string.must_make_card_images, Toast.LENGTH_LONG).show();
         } else {
             final ContentValues cvNewCredit = new ContentValues();
             cvNewCredit.put(ModelBankCards.TITLE, bankStr);
-            if (removeFront.getVisibility() == View.VISIBLE) {
-                cvNewCredit.put(ModelBankCards.PHOTO_FRONT, editFrontUri.toString());
-            } else {
-                cvNewCredit.put(ModelBankCards.PHOTO_FRONT, constants.EMPTY_STRING);
-            }
-            if (removeBack.getVisibility() == View.VISIBLE) {
-                cvNewCredit.put(ModelBankCards.PHOTO_BACK, editBackUri.toString());
-            } else {
-                cvNewCredit.put(ModelBankCards.PHOTO_BACK, constants.EMPTY_STRING);
-            }
+            cvNewCredit.put(ModelBankCards.PHOTO_FRONT, editFrontUri.toString());
+            cvNewCredit.put(ModelBankCards.PHOTO_BACK, editBackUri.toString());
             cvNewCredit.put(ModelBankCards.VERIFICATION_NUMBER, verNumber);
             cvNewCredit.put(ModelBankCards.CARDHOLDER, cardholderStr);
             cvNewCredit.put(ModelBankCards.NUMBER, numberStr);
@@ -569,13 +508,5 @@ public class CreateBankActivity extends AppCompatActivity {
 
     public void onNextTypePagerClicked(final View view) {
         pagerTypes.setCurrentItem(pagerTypes.getCurrentItem() + 1);
-    }
-
-    public void onPrevColorPagerClicked(final View view) {
-        pagerTemplate.setCurrentItem(pagerTemplate.getCurrentItem() - 1);
-    }
-
-    public void onNextColorPagerClicked(final View view) {
-        pagerTemplate.setCurrentItem(pagerTemplate.getCurrentItem() + 1);
     }
 }

@@ -3,6 +3,7 @@ package com.maxcriser.cards.ui.activities;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -14,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -248,31 +250,31 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
 
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, final int swipeDir) {
-//                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ItemsActivity.this);
-//                alertDialogBuilder.setTitle(R.string.remove);
-//                alertDialogBuilder
-//                        .setMessage(R.string.are_you_sure_to_delete)
-//                        .setCancelable(false)
-//                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-//
-//                            public void onClick(final DialogInterface dialog, final int id) {
-//                                getSupportLoaderManager().restartLoader(LOADER_ID, null, ItemsActivity.this);
-//                                dialog.cancel();
+                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ItemsActivity.this);
+                alertDialogBuilder.setTitle(R.string.remove);
+                alertDialogBuilder
+                        .setMessage(R.string.are_you_sure_to_delete)
+                        .setCancelable(false)
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+
+                            public void onClick(final DialogInterface dialog, final int id) {
+                                getSupportLoaderManager().restartLoader(LOADER_ID, null, ItemsActivity.this);
+                                dialog.cancel();
+                            }
+                        })
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+                            public void onClick(final DialogInterface dialog, final int id) {
+                                final TextView cardTitle = (TextView) viewHolder.itemView.findViewById(R.id.title_main_cards);
+                                final Integer idDelete = (Integer) cardTitle.getTag();
+                                dbHelper.delete(ModelClass, null, ModelBankCards.ID + " = ?", String.valueOf(idDelete));
+                                getSupportLoaderManager().restartLoader(LOADER_ID, null, ItemsActivity.this);
+                                dialog.cancel();
+                            }
+                        });
+                final AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
-//                        })
-//                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-//
-//                            public void onClick(final DialogInterface dialog, final int id) {
-//                                final TextView cardTitle = (TextView) viewHolder.itemView.findViewById(R.id.title_main_cards);
-//                                final Integer idDelete = (Integer) cardTitle.getTag();
-//                                dbHelper.delete(ModelClass, null, ModelBankCards.ID + " = ?", String.valueOf(idDelete));
-//                                getSupportLoaderManager().restartLoader(LOADER_ID, null, ItemsActivity.this);
-//                                dialog.cancel();
-//                            }
-//                        });
-//                final AlertDialog alertDialog = alertDialogBuilder.create();
-//                alertDialog.show();
-//            }
         };
 
         final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
@@ -316,26 +318,16 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
             @Override
             public void onItemLongClick(final View view, final int position) {
                 final RelativeLayout relativeLayout = (RelativeLayout) view.findViewById(R.id.relative_to_flip);
-                CardView btnStart = (CardView) view.findViewById(R.id.front_cardview_to_flip);
-                CardView btnFinish = (CardView) view.findViewById(R.id.back_cardview_to_flip);
-                mFlipAnimation = new FlipAnimation(btnStart, btnFinish);
-//                btnStart.setOnClickListener(new View.OnClickListener() {
-//
-//                    @Override
-//                    public void onClick(View pView) {
-//                        mFlipAnimation.setReverse();
-//                        relativeLayout.startAnimation(mFlipAnimation);
-//                    }
-//                });
-//
-//                btnFinish.setOnClickListener(new View.OnClickListener() {
-//
-//                    @Override
-//                    public void onClick(View pView) {
+                final CardView btnStart = (CardView) view.findViewById(R.id.front_cardview_to_flip);
+                final CardView btnFinish = (CardView) view.findViewById(R.id.back_cardview_to_flip);
+                if(btnStart.getVisibility() == View.VISIBLE) {
+                    mFlipAnimation = new FlipAnimation(btnFinish, btnStart);
+                } else {
+                    mFlipAnimation = new FlipAnimation(btnStart, btnFinish);
+                }
                 mFlipAnimation.setReverse();
                 relativeLayout.startAnimation(mFlipAnimation);
-//                    }
-//                });
+
             }
         }));
     }
@@ -462,13 +454,13 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         } else if (typeItems.equals(getResources().getString(R.string.nfc_title))) {
             adapter = new CursorAdapter(data, this, R.layout.item_nfc);
         }
-//        recyclerItems.swapAdapter(adapter, true);
+//          recyclerItems.swapAdapter(adapter, false); // true
         recyclerItems.setAdapter(adapter);
     }
 
     @Override
     public void onLoaderReset(final Loader<Cursor> loader) {
-        //        recyclerItems.swapAdapter(null, true);
+//          recyclerItems.swapAdapter(null, false); // true
         recyclerItems.setAdapter(null);
     }
 

@@ -16,12 +16,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.constants;
-import com.maxcriser.cards.utils.FlipAnimation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -173,7 +173,6 @@ public class MenuActivity extends AppCompatActivity
 
         @Override
         protected String doInBackground(final Void... params) {
-            //TODO try catch final
             try {
                 final URL url = new URL(URL_JSON_LOCATION);
 
@@ -181,7 +180,6 @@ public class MenuActivity extends AppCompatActivity
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
 
-                //TODO inputStream is not closed
                 final InputStream inputStream = urlConnection.getInputStream();
                 final StringBuilder buffer = new StringBuilder();
 
@@ -193,9 +191,10 @@ public class MenuActivity extends AppCompatActivity
                 }
 
                 resultJson = buffer.toString();
+                inputStream.close();
 
             } catch (final Exception e) {
-                throw new RuntimeException(e);
+                Log.d("Connection time out", e.toString());
             }
             return resultJson;
         }

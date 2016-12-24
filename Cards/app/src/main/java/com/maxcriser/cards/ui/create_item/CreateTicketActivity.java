@@ -2,7 +2,6 @@ package com.maxcriser.cards.ui.create_item;
 
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
@@ -21,7 +20,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -36,16 +34,16 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.RemovePhoto;
-import com.maxcriser.cards.constant.constants;
 import com.maxcriser.cards.constant.Extras;
+import com.maxcriser.cards.constant.constants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelNFCItems;
 import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
+import com.maxcriser.cards.listener.OnTemplatePageChangeListener;
 import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.activities.PhotoEditorActivity;
-import com.maxcriser.cards.listener.OnTemplatePageChangeListener;
 import com.maxcriser.cards.utils.UniqueStringGenerator;
 import com.maxcriser.cards.view.labels.RobotoRegular;
 
@@ -130,6 +128,7 @@ public class CreateTicketActivity extends AppCompatActivity {
                 editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
                 //TODO create simple OnResultCallback with empty methods
                 ImageLoader.getInstance().downloadToView(editFrontUri.toString(), frontPhoto, new OnResultCallback<Bitmap, Void>() {
+
                     @Override
                     public void onSuccess(final Bitmap pBitmap) {
                         removeFront.setVisibility(View.VISIBLE);
@@ -149,6 +148,7 @@ public class CreateTicketActivity extends AppCompatActivity {
             } else if (requestCode == EDIT_IMAGE_BACK) {
                 editBackUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
                 ImageLoader.getInstance().downloadToView(editBackUri.toString(), backPhoto, new OnResultCallback<Bitmap, Void>() {
+
                     @Override
                     public void onSuccess(final Bitmap pBitmap) {
                         removeBack.setVisibility(View.VISIBLE);
@@ -196,7 +196,6 @@ public class CreateTicketActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-
     private void initViews() {
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
         ticketCardholder = (EditText) findViewById(R.id.cardholder);
@@ -204,6 +203,7 @@ public class CreateTicketActivity extends AppCompatActivity {
         backPhoto = (ImageView) findViewById(R.id.back_photo);
         checkBox = (CheckBox) findViewById(R.id.add_to_calendar);
         checkBox.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(final View pView) {
                 getPermission(REQUEST_CALENDAR, Manifest.permission.WRITE_CALENDAR);
@@ -231,8 +231,9 @@ public class CreateTicketActivity extends AppCompatActivity {
         myColorName = listPreviewColor.getNameColorCards();
         myColorCode = listPreviewColor.getCodeColorCards();
         Log.d(TICKET, myColorName + " " + myColorCode);
+        //TODO name convention
         final int PAGE_COUNT = previewColors.size();
-
+        //TODO magic number, move to dimens
         pager.setPageMargin(constants.PAGER_MARGIN_PREVIEW);
         final PagerAdapter pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 constants.PagerIDs.ID_TICKET_ITEM,
@@ -240,6 +241,7 @@ public class CreateTicketActivity extends AppCompatActivity {
 
         pager.setAdapter(pagerAdapter);
         pager.addOnPageChangeListener(new OnTemplatePageChangeListener(new OnTemplatePageChangeListener.OnPageChangeListener() {
+
             @Override
             public void onResult(final int position, final String codeColor, final String nameColor) {
                 myColorCode = codeColor;
@@ -247,18 +249,6 @@ public class CreateTicketActivity extends AppCompatActivity {
                 Log.d("COLOR", position + myColorName + myColorCode);
             }
         }));
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            mScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-                @Override
-                public void onScrollChange(final View pView, final int pI, final int pI1, final int pI2, final int pI3) {
-                    final InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-                    final View view = getCurrentFocus();
-                    assert view != null;
-                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                }
-            });
-        }
     }
 
     void setDateOnView() {
@@ -277,6 +267,7 @@ public class CreateTicketActivity extends AppCompatActivity {
     }
 
     DatePickerDialog.OnDateSetListener dateCallBack = new DatePickerDialog.OnDateSetListener() {
+
         public void onDateSet(final DatePicker view, final int year, final int month, final int day) {
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, month);
@@ -286,6 +277,7 @@ public class CreateTicketActivity extends AppCompatActivity {
     };
 
     TimePickerDialog.OnTimeSetListener timeCallBack = new TimePickerDialog.OnTimeSetListener() {
+
         @Override
         public void onTimeSet(final TimePicker pTimePicker, final int hour, final int min) {
             calendar.set(Calendar.HOUR, hour);
@@ -407,6 +399,7 @@ public class CreateTicketActivity extends AppCompatActivity {
             // TODO DELETE UP
 
             db.insert(ModelTickets.class, cvNewTicket, new OnResultCallback<Long, Void>() {
+
                 @Override
                 public void onSuccess(final Long pLong) {
                     statusSave = true;

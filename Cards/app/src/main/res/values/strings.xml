@@ -139,5 +139,6 @@
     <string name="use_fingerprint">Use fingerprint</string>
     <string name="share_body">Donwload app on playmarket: ...</string>
     <string name="share_title">CKeeper</string>
+    <string name="must_make_card_images">You must make the card images</string>
 
 </resources>
