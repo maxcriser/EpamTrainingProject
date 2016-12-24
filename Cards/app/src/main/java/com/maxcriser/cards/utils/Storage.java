@@ -1,4 +1,3 @@
-//TODO clear the code
 package com.maxcriser.cards.utils;
 
 import android.os.Environment;

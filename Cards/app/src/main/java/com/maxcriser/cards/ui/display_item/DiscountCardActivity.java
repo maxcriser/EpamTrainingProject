@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.view.labels.BarcodeEan;
@@ -31,6 +29,7 @@ import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_TITLE;
 
 public class DiscountCardActivity extends Activity {
 
+    private final int DELAY_MILLIS = 300;
     private FloatingActionMenu materialDesignFAM;
     private LinearLayout editLinear;
     private ScrollView mScrollView;
@@ -40,19 +39,8 @@ public class DiscountCardActivity extends Activity {
     private LinearLayout linearFrameAction;
     private String id;
     private DatabaseHelperImpl dbHelper;
-    private Handler mHandler;
     private Animation animScaleDown;
     private Animation animScaleUp;
-
-    Handler.Callback hc = new Handler.Callback() {
-
-        @Override
-        public boolean handleMessage(final Message msg) {
-            materialDesignFAM.startAnimation(animScaleDown);
-            materialDesignFAM.setVisibility(GONE);
-            return false;
-        }
-    };
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -72,8 +60,6 @@ public class DiscountCardActivity extends Activity {
         titleView = (TextView) findViewById(R.id.title_show_discount);
         final BarcodeEan barcodeView = (BarcodeEan) findViewById(R.id.show_barcode);
         linearFrameAction = (LinearLayout) findViewById(R.id.linear_frame_actions_discount);
-        mHandler = new Handler(hc);
-
         animScaleDown = AnimationUtils.loadAnimation(this, R.anim.scale_down_floating);
         animScaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up_floating);
         registerForContextMenu(materialDesignFAM);
@@ -97,7 +83,14 @@ public class DiscountCardActivity extends Activity {
                 editString = titleView.getText().toString();
                 editName.setText(editString);
                 materialDesignFAM.close(true);
-                mHandler.sendEmptyMessageDelayed(1, 300);
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        materialDesignFAM.startAnimation(animScaleDown);
+                        materialDesignFAM.setVisibility(GONE);
+                    }
+                }, DELAY_MILLIS);
             }
         });
 
@@ -137,28 +130,8 @@ public class DiscountCardActivity extends Activity {
             materialDesignFAM.setVisibility(VISIBLE);
             materialDesignFAM.startAnimation(animScaleUp);
 
-            dbHelper.edit(ModelDiscountCards.class,
-                    ModelDiscountCards.TITLE,
-                    editString,
-                    ModelDiscountCards.ID,
-                    String.valueOf(id),
-                    new OnResultCallback<Void, Void>() {
-
-                        @Override
-                        public void onSuccess(final Void pVoid) {
-
-                        }
-
-                        @Override
-                        public void onError(final Exception pE) {
-
-                        }
-
-                        @Override
-                        public void onProgressChanged(final Void pVoid) {
-
-                        }
-                    });
+            dbHelper.edit(ModelDiscountCards.class, ModelDiscountCards.TITLE,
+                    editString, ModelDiscountCards.ID, String.valueOf(id), null);
         } else {
             mScrollView.fullScroll(ScrollView.FOCUS_UP);
             Toast.makeText(this, R.string.empty_card_name, Toast.LENGTH_LONG).show();

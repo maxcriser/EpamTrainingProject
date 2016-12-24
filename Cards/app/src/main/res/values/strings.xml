@@ -140,5 +140,9 @@
     <string name="share_body">Donwload app on playmarket: ...</string>
     <string name="share_title">CKeeper</string>
     <string name="must_make_card_images">You must make the card images</string>
+    <string name="cannot_insert_card_to_database">Cannot insert card to database</string>
+    <string name="cannot_edit_card">Cannot edit card</string>
+    <string name="cannot_convert_barcode">Cannot convert barcode</string>
+    <string name="cannot_scanning_card">Cannot scanning card</string>
 
 </resources>

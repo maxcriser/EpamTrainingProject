@@ -10,11 +10,11 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class SecurityUtils {
+public final class SecurityUtils {
 
-    public static boolean hasPermission(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        UserService userService = UserServiceFactory.getUserService();
-        User user = userService.getCurrentUser();
+    public static boolean hasPermission(final HttpServletRequest req, final HttpServletResponse resp) throws IOException {
+        final UserService userService = UserServiceFactory.getUserService();
+        final User user = userService.getCurrentUser();
         if (user != null && user.getEmail().equals("mv.maxcriser@gmail.com")) {
             return true;
         }

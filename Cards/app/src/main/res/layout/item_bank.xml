@@ -11,12 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         card_view:cardCornerRadius="12dp"
-        card_view:cardElevation="4dp">
+        card_view:cardElevation="2dp">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -37,12 +37,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         card_view:cardCornerRadius="12dp"
-        card_view:cardElevation="4dp">
+        card_view:cardElevation="2dp">
 
         <FrameLayout
             android:id="@+id/linear_card"

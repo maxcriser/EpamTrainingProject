@@ -64,11 +64,11 @@ public class CreateDiscountActivity extends AppCompatActivity {
             @Override
             public void onSuccess(final String pS) {
                 generateBarcode = pS;
-//                mBarcodeEan.setText(generateBarcode);
             }
 
             @Override
             public void onError(final Exception pE) {
+                Toast.makeText(CreateDiscountActivity.this, R.string.cannot_convert_barcode, Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -128,6 +128,8 @@ public class CreateDiscountActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(final Exception pE) {
+                    Toast.makeText(CreateDiscountActivity.this, R.string.cannot_insert_card_to_database,
+                            Toast.LENGTH_LONG).show();
                 }
 
                 @Override

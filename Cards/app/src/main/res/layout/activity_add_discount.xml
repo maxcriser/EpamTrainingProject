@@ -63,13 +63,9 @@
 
                         <EditText
                             android:id="@+id/id_edit_text_name_discount"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
+                            style="@style/EditTextBlank"
                             android:inputType="text"
-                            android:maxLines="1"
-                            android:textSize="18sp"/>
+                            android:maxLines="1"/>
 
                         <com.maxcriser.cards.view.labels.BarcodeEan
                             android:id="@+id/generate_barcode"

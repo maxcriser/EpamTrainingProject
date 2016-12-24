@@ -44,13 +44,12 @@ import com.maxcriser.cards.listener.OnTemplatePageChangeListener;
 import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.activities.PhotoEditorActivity;
+import com.maxcriser.cards.utils.DateToView;
 import com.maxcriser.cards.utils.UniqueStringGenerator;
 import com.maxcriser.cards.view.labels.RobotoRegular;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 import static android.view.View.GONE;
 import static com.maxcriser.cards.constant.constants.Requests.CAPTURE_IMAGE_BACK;
@@ -77,8 +76,6 @@ public class CreateTicketActivity extends AppCompatActivity {
     private ImageView frontPhoto;
     private ImageView backPhoto;
     private OwnAsyncTask sync;
-    private SimpleDateFormat dateFormat;
-    private SimpleDateFormat timeFormat;
     private final Calendar calendar = Calendar.getInstance();
     private Uri editBackUri;
     private Uri editFrontUri;
@@ -126,7 +123,6 @@ public class CreateTicketActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == EDIT_IMAGE_FRONT) {
                 editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
-                //TODO create simple OnResultCallback with empty methods
                 ImageLoader.getInstance().downloadToView(editFrontUri.toString(), frontPhoto, new OnResultCallback<Bitmap, Void>() {
 
                     @Override
@@ -137,7 +133,7 @@ public class CreateTicketActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(final Exception pE) {
-
+                        Toast.makeText(CreateTicketActivity.this, R.string.cannot_load_image, Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -157,7 +153,7 @@ public class CreateTicketActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(final Exception pE) {
-
+                        Toast.makeText(CreateTicketActivity.this, R.string.cannot_load_image, Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -216,14 +212,12 @@ public class CreateTicketActivity extends AppCompatActivity {
         time = (TextView) findViewById(R.id.time);
         removeBack = (FrameLayout) findViewById(R.id.remove_back);
         removeFront = (FrameLayout) findViewById(R.id.remove_front);
-        dateFormat = new SimpleDateFormat("d MMM yyyy", Locale.US);
-        timeFormat = new SimpleDateFormat("h:mm a", Locale.US);
 
         final String uniqueString = UniqueStringGenerator.getUniqueString();
         photoFileNameFront = constants.BEG_FILE_NAME_TICKET + uniqueString + "front_photo.jpg";
         photoFileNameBack = constants.BEG_FILE_NAME_TICKET + uniqueString + "back_photo.jpg";
-        setDateOnView();
-        setTimeOnView();
+        DateToView.setDateToTicketView(date, calendar);
+        DateToView.setTimeToView(time, calendar);
         db = DatabaseHelperImpl.getInstance(this);
         title.setText(getResources().getString(R.string.new_ticket_title));
 
@@ -251,14 +245,6 @@ public class CreateTicketActivity extends AppCompatActivity {
         }));
     }
 
-    void setDateOnView() {
-        date.setText(dateFormat.format(calendar.getTime()));
-    }
-
-    void setTimeOnView() {
-        time.setText(timeFormat.format(calendar.getTime()));
-    }
-
     public void onBackClicked(final View view) {
         super.onBackPressed();
     }
@@ -272,7 +258,7 @@ public class CreateTicketActivity extends AppCompatActivity {
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, month);
             calendar.set(Calendar.DAY_OF_MONTH, day);
-            setDateOnView();
+            DateToView.setDateToTicketView(date, calendar);
         }
     };
 
@@ -282,7 +268,7 @@ public class CreateTicketActivity extends AppCompatActivity {
         public void onTimeSet(final TimePicker pTimePicker, final int hour, final int min) {
             calendar.set(Calendar.HOUR, hour);
             calendar.set(Calendar.MINUTE, min);
-            setTimeOnView();
+            DateToView.setTimeToView(time, calendar);
         }
     };
 
@@ -359,8 +345,8 @@ public class CreateTicketActivity extends AppCompatActivity {
     private void createCard() {
         final String cardholderStr = ticketCardholder.getText().toString();
         final String titleStr = ticketTitle.getText().toString();
-        final String timeStr = timeFormat.format(calendar.getTime());
-        final String dateStr = dateFormat.format(calendar.getTime());
+        final String timeStr = DateToView.getTicketTimeFormat().format(calendar.getTime());
+        final String dateStr = DateToView.getTicketDateFormat().format(calendar.getTime());
         if (!titleStr.isEmpty()
                 && !cardholderStr.isEmpty()
                 && !timeStr.isEmpty()
@@ -408,6 +394,7 @@ public class CreateTicketActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(final Exception pE) {
+                    Toast.makeText(CreateTicketActivity.this, R.string.cannot_insert_card_to_database, Toast.LENGTH_LONG).show();
                 }
 
                 @Override
@@ -426,7 +413,8 @@ public class CreateTicketActivity extends AppCompatActivity {
         intent.putExtra("beginTime", timeInMillis);
         intent.putExtra("allDay", false);
         intent.putExtra("rrule", "FREQ=YEARLY");
-        intent.putExtra("endTime", timeInMillis + 60 * 60 * 1000);
+        int INT_SEC = 60;
+        intent.putExtra("endTime", timeInMillis + INT_SEC * INT_SEC * 1000);
         intent.putExtra("title", title);
         startActivity(intent);
     }

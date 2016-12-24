@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import static servlet.backend.auth.SecurityUtils.hasPermission;
 
-//TODO ide settings
 public class ConfigServlet extends HttpServlet {
 
     private JSONObject mJSONObject;
@@ -51,7 +50,7 @@ public class ConfigServlet extends HttpServlet {
     public void doGet(final HttpServletRequest req, final HttpServletResponse resp)
             throws IOException {
         resp.setContentType("application/json");
-        resp.getWriter().print(mJSONObject.toString());
+        resp.getWriter().print(mJSONObject);
     }
 
     @Override
@@ -70,7 +69,7 @@ public class ConfigServlet extends HttpServlet {
                 try {
                     resp.getWriter().write(new JSONObject().put("error", e.toString()).toString());
                 } catch (final JSONException e1) {
-
+                    e1.printStackTrace();
                 }
             }
         }

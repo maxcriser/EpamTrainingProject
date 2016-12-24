@@ -65,6 +65,7 @@ public final class constants {
     }
 
     public static final String URL_JSON_LOCATION = "http://ip-api.com/json";
+    public static final String URL_JSON_SETTINGS = "http://10.0.2.2:8080/config";
     public static final String EMPTY_STRING = "";
     public static final String BEG_FILE_NAME_BANK = "credit-card-";
     public static final String BEG_FILE_NAME_TICKET = "ticket-";

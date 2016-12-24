@@ -2,11 +2,9 @@ package com.maxcriser.cards.ui.display_item;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -20,14 +18,11 @@ import android.widget.Toast;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.constant.constants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
-import com.maxcriser.cards.loader.image.ImageLoader;
-import com.maxcriser.cards.dialog.ImageViewerDialogBuilder;
 
 import static android.text.InputType.TYPE_CLASS_TEXT;
 import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
@@ -46,6 +41,7 @@ import static com.maxcriser.cards.constant.Extras.EXTRA_VERIFICATION_NUMBER_BANK
 
 public class BankCardActivity extends Activity {
 
+    private final int DELAY_MILLIS = 300;
     private FloatingActionMenu materialDesignFAM;
     private LinearLayout editLinear;
     private ScrollView mScrollView;
@@ -59,18 +55,8 @@ public class BankCardActivity extends Activity {
     private EditText editPin;
     private ImageView eye;
     private DatabaseHelperImpl dbHelper;
-    private Handler mHandler;
     private Animation animScaleDown;
     private Animation animScaleUp;
-
-    Handler.Callback hc = new Handler.Callback() {
-        @Override
-        public boolean handleMessage(final Message msg) {
-            materialDesignFAM.startAnimation(animScaleDown);
-            materialDesignFAM.setVisibility(GONE);
-            return false;
-        }
-    };
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -97,8 +83,6 @@ public class BankCardActivity extends Activity {
         final FloatingActionButton floatingActionButtonDelete = (FloatingActionButton) findViewById(R.id.floating_delete_button);
         final FloatingActionButton floatingActionButtonEdit = (FloatingActionButton) findViewById(R.id.floating_edit_button);
         linearFrameAction = (LinearLayout) findViewById(R.id.linear_frame_actions_discount);
-        mHandler = new Handler(hc);
-
         animScaleDown = AnimationUtils.loadAnimation(this, R.anim.scale_down_floating);
         animScaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up_floating);
 
@@ -119,6 +103,7 @@ public class BankCardActivity extends Activity {
         final String secondPhoto = creditIntent.getStringExtra(EXTRA_BANK_BACK_PHOTO);
 
         floatingActionButtonDelete.setOnClickListener(new View.OnClickListener() {
+
             public void onClick(final View v) {
                 dbHelper.delete(ModelBankCards.class, null, ModelBankCards.ID + " = ?", String.valueOf(id));
                 sync.execute(new RemovePhoto(), Uri.parse(firstPhoto), null);
@@ -128,6 +113,7 @@ public class BankCardActivity extends Activity {
             }
         });
         floatingActionButtonEdit.setOnClickListener(new View.OnClickListener() {
+
             public void onClick(final View v) {
                 mScrollView.fullScroll(ScrollView.FOCUS_UP);
                 editLinear.setVisibility(VISIBLE);
@@ -136,7 +122,14 @@ public class BankCardActivity extends Activity {
                 editString = editBank.getText().toString();
                 editName.setText(editString);
                 materialDesignFAM.close(true);
-                mHandler.sendEmptyMessageDelayed(1, 300);
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        materialDesignFAM.startAnimation(animScaleDown);
+                        materialDesignFAM.setVisibility(GONE);
+                    }
+                }, DELAY_MILLIS);
             }
         });
 
@@ -198,27 +191,8 @@ public class BankCardActivity extends Activity {
             materialDesignFAM.setVisibility(VISIBLE);
             materialDesignFAM.startAnimation(animScaleUp);
 
-            dbHelper.edit(ModelBankCards.class,
-                    ModelBankCards.TITLE,
-                    editString,
-                    ModelBankCards.ID,
-                    String.valueOf(id),
-                    new OnResultCallback<Void, Void>() {
-                        @Override
-                        public void onSuccess(final Void pVoid) {
-
-                        }
-
-                        @Override
-                        public void onError(final Exception pE) {
-
-                        }
-
-                        @Override
-                        public void onProgressChanged(final Void pVoid) {
-
-                        }
-                    });
+            dbHelper.edit(ModelBankCards.class, ModelBankCards.TITLE,
+                    editString, ModelBankCards.ID, String.valueOf(id), null);
         } else {
             mScrollView.fullScroll(ScrollView.FOCUS_UP);
             Toast.makeText(this, R.string.empty_card_name, Toast.LENGTH_LONG).show();

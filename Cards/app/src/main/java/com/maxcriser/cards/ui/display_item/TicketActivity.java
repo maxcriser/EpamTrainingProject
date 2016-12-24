@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -25,8 +24,8 @@ import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelTickets;
-import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.dialog.ImageViewerDialogBuilder;
+import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.view.labels.RobotoThin;
 
 import static android.view.View.GONE;
@@ -41,6 +40,7 @@ import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_TITLE;
 
 public class TicketActivity extends Activity {
 
+    private final int DELAY_MILLIS = 300;
     private FloatingActionMenu materialDesignFAM;
     private LinearLayout editLinear;
     private ScrollView mScrollView;
@@ -50,21 +50,11 @@ public class TicketActivity extends Activity {
     private LinearLayout linearFrameAction;
     private String id;
     private DatabaseHelperImpl dbHelper;
-    private Handler mHandler;
     private Animation animScaleDown;
     private Animation animScaleUp;
     private Bitmap firstBitmap;
     private Bitmap secondBitmap;
     private OwnAsyncTask sync;
-
-    Handler.Callback hc = new Handler.Callback() {
-        @Override
-        public boolean handleMessage(final Message msg) {
-            materialDesignFAM.startAnimation(animScaleDown);
-            materialDesignFAM.setVisibility(GONE);
-            return false;
-        }
-    };
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -89,7 +79,6 @@ public class TicketActivity extends Activity {
         final FloatingActionButton floatingActionButtonDelete = (FloatingActionButton) findViewById(R.id.floating_delete_button);
         final FloatingActionButton floatingActionButtonEdit = (FloatingActionButton) findViewById(R.id.floating_edit_button);
         linearFrameAction = (LinearLayout) findViewById(R.id.linear_frame_actions_discount);
-        mHandler = new Handler(hc);
 
         animScaleDown = AnimationUtils.loadAnimation(this, R.anim.scale_down_floating);
         animScaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up_floating);
@@ -108,6 +97,7 @@ public class TicketActivity extends Activity {
         final String secondPhoto = creditIntent.getStringExtra(EXTRA_TICKET_SECOND_PHOTO);
 
         floatingActionButtonDelete.setOnClickListener(new View.OnClickListener() {
+
             public void onClick(final View v) {
                 dbHelper.delete(ModelTickets.class, null, ModelTickets.ID + " = ?", String.valueOf(id));
                 sync.execute(new RemovePhoto(), Uri.parse(firstPhoto), null);
@@ -117,6 +107,7 @@ public class TicketActivity extends Activity {
             }
         });
         floatingActionButtonEdit.setOnClickListener(new View.OnClickListener() {
+
             public void onClick(final View v) {
                 mScrollView.fullScroll(ScrollView.FOCUS_UP);
                 editLinear.setVisibility(VISIBLE);
@@ -125,11 +116,19 @@ public class TicketActivity extends Activity {
                 editTitleStr = editTitle.getText().toString();
                 editName.setText(editTitleStr);
                 materialDesignFAM.close(true);
-                mHandler.sendEmptyMessageDelayed(1, 300);
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        materialDesignFAM.startAnimation(animScaleDown);
+                        materialDesignFAM.setVisibility(GONE);
+                    }
+                }, DELAY_MILLIS);
             }
         });
 
         ImageLoader.getInstance().downloadToView(firstPhoto, ivFrontPhoto, new OnResultCallback<Bitmap, Void>() {
+
             @Override
             public void onSuccess(final Bitmap pBitmap) {
                 firstBitmap = pBitmap;
@@ -137,6 +136,7 @@ public class TicketActivity extends Activity {
 
             @Override
             public void onError(final Exception pE) {
+                Toast.makeText(TicketActivity.this, R.string.cannot_load_image, Toast.LENGTH_LONG).show();
 
             }
 
@@ -147,6 +147,7 @@ public class TicketActivity extends Activity {
         });
 
         ImageLoader.getInstance().downloadToView(secondPhoto, ivBackPhoto, new OnResultCallback<Bitmap, Void>() {
+
             @Override
             public void onSuccess(final Bitmap pBitmap) {
                 secondBitmap = pBitmap;
@@ -154,7 +155,7 @@ public class TicketActivity extends Activity {
 
             @Override
             public void onError(final Exception pE) {
-
+                Toast.makeText(TicketActivity.this, R.string.cannot_load_image, Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -191,27 +192,8 @@ public class TicketActivity extends Activity {
             materialDesignFAM.setVisibility(VISIBLE);
             materialDesignFAM.startAnimation(animScaleUp);
 
-            dbHelper.edit(ModelTickets.class,
-                    ModelTickets.TITLE,
-                    editTitleStr,
-                    ModelTickets.ID,
-                    String.valueOf(id),
-                    new OnResultCallback<Void, Void>() {
-                        @Override
-                        public void onSuccess(final Void pVoid) {
-
-                        }
-
-                        @Override
-                        public void onError(final Exception pE) {
-
-                        }
-
-                        @Override
-                        public void onProgressChanged(final Void pVoid) {
-
-                        }
-                    });
+            dbHelper.edit(ModelTickets.class, ModelTickets.TITLE, editTitleStr,
+                    ModelTickets.ID, String.valueOf(id), null);
         } else {
             mScrollView.fullScroll(ScrollView.FOCUS_UP);
             Toast.makeText(this, R.string.empty_card_name, Toast.LENGTH_LONG).show();

@@ -38,7 +38,7 @@ public class SetupPinActivity extends AppCompatActivity {
     private void initViews() {
         title = (TextView) findViewById(R.id.title_setup_pin);
         btnContinue = (Button) findViewById(R.id.btn_continue_setup);
-        Button btnCancel = (Button) findViewById(R.id.btn_cancel_setup);
+        final Button btnCancel = (Button) findViewById(R.id.btn_cancel_setup);
         inputText = (EditText) findViewById(R.id.setup_pin_edit_text);
         inputText.addTextChangedListener(new PinChangeListener());
         btnContinue.setOnClickListener(new ContinueClickListener());
@@ -47,6 +47,7 @@ public class SetupPinActivity extends AppCompatActivity {
     }
 
     private class PinChangeListener implements TextWatcher {
+
         @Override
         public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
 
@@ -68,6 +69,7 @@ public class SetupPinActivity extends AppCompatActivity {
     }
 
     private class ContinueClickListener implements View.OnClickListener {
+
         @Override
         public void onClick(final View v) {
             if (page == Page.FIRST) {
@@ -99,6 +101,7 @@ public class SetupPinActivity extends AppCompatActivity {
     }
 
     private class CancelClickListener implements View.OnClickListener {
+
         @Override
         public void onClick(final View v) {
             onBackPressed();

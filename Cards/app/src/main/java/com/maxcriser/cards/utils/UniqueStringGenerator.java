@@ -11,9 +11,9 @@ public class UniqueStringGenerator {
         //TODO md5?
         //TODO sha256
         //TODO some magic
-        Random random = new Random();
-        Integer rand = random.nextInt(1000000000);
-        String date = new SimpleDateFormat("dd-MM-yyyy", Locale.US).format(new Date());
+        final Random random = new Random();
+        final Integer rand = random.nextInt(1000000000);
+        final String date = new SimpleDateFormat("dd-MM-yyyy", Locale.US).format(new Date());
         return System.currentTimeMillis() + "-" + date + "-" + rand + "-" + rand.toString().length() + "-";
     }
 }

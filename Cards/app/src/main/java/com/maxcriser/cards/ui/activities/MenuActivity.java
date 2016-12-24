@@ -22,6 +22,7 @@ import android.view.View;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.constants;
+import com.maxcriser.cards.utils.SettingsParser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,6 +58,7 @@ public class MenuActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
+        new SettingsParser().execute();
     }
 
     public void initViews() {

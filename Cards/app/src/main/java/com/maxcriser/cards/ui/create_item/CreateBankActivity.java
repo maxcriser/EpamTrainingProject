@@ -1,4 +1,3 @@
-//TODO create activities
 package com.maxcriser.cards.ui.create_item;
 
 import android.Manifest;
@@ -45,13 +44,12 @@ import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.model.CreditCard;
 import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.activities.PhotoEditorActivity;
+import com.maxcriser.cards.utils.DateToView;
 import com.maxcriser.cards.utils.UniqueStringGenerator;
 import com.maxcriser.cards.view.labels.RobotoRegular;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 import static android.view.View.GONE;
 import static com.maxcriser.cards.constant.constants.Requests.CAPTURE_IMAGE_BACK;
@@ -119,13 +117,12 @@ public class CreateBankActivity extends AppCompatActivity {
         removeFront = (FrameLayout) findViewById(R.id.remove_front);
         statusScan = true;
         db = DatabaseHelperImpl.getInstance(this);
-        setDateOnView();
-        int currentPositionColors = 0;
+        DateToView.setDateToCreditView(validDate, calendar);
         final RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
         title.setText(getResources().getString(R.string.bank_title));
 
         final PreviewColor listPreviewColor = previewColors.get(0);
-        String myColorName = listPreviewColor.getNameColorCards();
+        final String myColorName = listPreviewColor.getNameColorCards();
         myColorCode = listPreviewColor.getCodeColorCards();
         Log.d("BANK", myColorName + " " + myColorCode);
 
@@ -184,7 +181,7 @@ public class CreateBankActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(final Exception pE) {
-
+                        Toast.makeText(CreateBankActivity.this, R.string.cannot_load_image, Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -221,7 +218,7 @@ public class CreateBankActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(final Exception pE) {
-                        Log.d("RESULT", pE.toString());
+                        Toast.makeText(CreateBankActivity.this, R.string.cannot_scanning_card, Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -474,19 +471,13 @@ public class CreateBankActivity extends AppCompatActivity {
     public void onToolbarBackClicked(final View view) {
     }
 
-    void setDateOnView() {
-        //TODO move to some DateUtils class
-        final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/yy", Locale.US);
-        validDate.setText(dateFormat.format(calendar.getTime()));
-    }
-
     DatePickerDialog.OnDateSetListener dateCallBack = new DatePickerDialog.OnDateSetListener() {
 
         public void onDateSet(final DatePicker view, final int year, final int month, final int day) {
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, month);
             calendar.set(Calendar.DAY_OF_MONTH, day);
-            setDateOnView();
+            DateToView.setDateToCreditView(validDate, calendar);
         }
     };
 

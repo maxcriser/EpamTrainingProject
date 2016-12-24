@@ -66,12 +66,8 @@
 
                         <EditText
                             android:id="@+id/title_name_ticket"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
+                            style="@style/EditTextBlank"
                             android:inputType="text"
-                            android:textSize="18sp"
                             tools:text="New York"/>
 
                         <TextView
@@ -85,12 +81,8 @@
 
                         <EditText
                             android:id="@+id/cardholder"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginStart="16dp"
+                            style="@style/EditTextBlank"
                             android:inputType="text"
-                            android:textSize="18sp"
                             tools:text="Will Smith"/>
 
                         <LinearLayout
