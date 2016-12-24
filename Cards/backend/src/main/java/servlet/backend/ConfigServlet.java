@@ -5,7 +5,6 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
-import com.google.appengine.repackaged.com.google.api.client.util.SecurityUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,20 +23,20 @@ public class ConfigServlet extends HttpServlet {
 
     private JSONObject mJSONObject;
 
-    private Entity mEntity;
+    private final Entity mEntity;
 
     public ConfigServlet() {
         super();
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        final DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         final Query query = new Query("config");
-        PreparedQuery pq = datastore.prepare(query);
-        Iterable<Entity> entities = pq.asIterable();
-        Iterator<Entity> iterator = entities.iterator();
+        final PreparedQuery pq = datastore.prepare(query);
+        final Iterable<Entity> entities = pq.asIterable();
+        final Iterator<Entity> iterator = entities.iterator();
         if (iterator.hasNext()) {
             mEntity = iterator.next();
             try {
                 mJSONObject = new JSONObject((String) (mEntity.getProperties().get("value")));
-            } catch (JSONException e) {
+            } catch (final JSONException e) {
                 e.printStackTrace();
             }
         } else {
@@ -49,30 +48,29 @@ public class ConfigServlet extends HttpServlet {
     }
 
     @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse resp)
+    public void doGet(final HttpServletRequest req, final HttpServletResponse resp)
             throws IOException {
         resp.setContentType("application/json");
         resp.getWriter().print(mJSONObject.toString());
     }
 
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp)
+    public void doPost(final HttpServletRequest req, final HttpServletResponse resp)
             throws IOException {
         if (hasPermission(req, resp)) {
-            String value = req.getParameter("value");
+            final String value = req.getParameter("value");
             resp.setContentType("application/json");
             try {
                 mJSONObject = new JSONObject(value);
                 mEntity.setProperty("value", mJSONObject.toString());
-                DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+                final DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
                 datastore.put(mEntity);
                 resp.getWriter().write(new JSONObject().put("success", true).toString());
-            } catch (JSONException e) {
+            } catch (final JSONException e) {
                 try {
                     resp.getWriter().write(new JSONObject().put("error", e.toString()).toString());
-                } catch (JSONException e1) {
-                    //todo ignored exception
-                    e1.printStackTrace();
+                } catch (final JSONException e1) {
+
                 }
             }
         }

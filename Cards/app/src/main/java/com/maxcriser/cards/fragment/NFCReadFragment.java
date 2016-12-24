@@ -34,7 +34,7 @@ public class NFCReadFragment extends DialogFragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.fragment_read,container,false);
+        final View view = inflater.inflate(R.layout.fragment_read, container, false);
         initViews(view);
         return view;
     }
@@ -47,7 +47,7 @@ public class NFCReadFragment extends DialogFragment {
     @Override
     public void onAttach(final Context context) {
         super.onAttach(context);
-        mListener = (NFCReaderActivity)context;
+        mListener = (NFCReaderActivity) context;
         mListener.onDialogDisplayed();
     }
 
@@ -57,7 +57,7 @@ public class NFCReadFragment extends DialogFragment {
         mListener.onDialogDismissed();
     }
 
-    public void onNfcDetected(final Ndef ndef1){
+    public void onNfcDetected(final Ndef ndef1) {
 
         readFromNFC(ndef1);
     }
@@ -68,14 +68,17 @@ public class NFCReadFragment extends DialogFragment {
             ndef1.connect();
             final NdefMessage ndefMessage = ndef1.getNdefMessage();
             final String message = new String(ndefMessage.getRecords()[0].getPayload());
-            Log.d(TAG, "readFromNFC: "+message);
+            Log.d(TAG, "readFromNFC: " + message);
             mTvMessage.setText(message);
-
-            //TODO move to final
-            ndef1.close();
 
         } catch (IOException | FormatException e) {
             Log.d("ERROR", e.toString());
+        } finally {
+            try {
+                ndef1.close();
+            } catch (final IOException pE) {
+                Log.d("Error", pE.toString());
+            }
         }
     }
 }

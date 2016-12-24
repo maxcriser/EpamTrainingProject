@@ -1,21 +1,23 @@
-//TODO listeners
 package com.maxcriser.cards.listener;
 
 import android.support.v4.view.ViewPager;
 
 import com.maxcriser.cards.model.PreviewColor;
+import com.maxcriser.cards.model.PreviewListColorsSetter;
 
-import static com.maxcriser.cards.ui.activities.LaunchScreenActivity.previewColors;
+import java.util.List;
 
 public class OnTemplatePageChangeListener implements ViewPager.OnPageChangeListener {
+
     public interface OnPageChangeListener {
+
         void onResult(int position, String codeColor, String nameColor);
     }
 
     private final OnPageChangeListener mListener;
 
     public OnTemplatePageChangeListener(final OnPageChangeListener listener) {
-        mListener = listener;
+        this.mListener = listener;
     }
 
     @Override
@@ -25,8 +27,7 @@ public class OnTemplatePageChangeListener implements ViewPager.OnPageChangeListe
 
     @Override
     public void onPageSelected(final int position) {
-        //TODO move array to parameter of class
-        final PreviewColor mListPreviewColor = previewColors.get(position);
+        final PreviewColor mListPreviewColor = PreviewListColorsSetter.getInstance().getPreviewColorSetters().get(position);
         mListener.onResult(position, mListPreviewColor.getCodeColorCards(),
                 mListPreviewColor.getNameColorCards());
     }

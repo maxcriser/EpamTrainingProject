@@ -318,16 +318,17 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
             @Override
             public void onItemLongClick(final View view, final int position) {
                 final RelativeLayout relativeLayout = (RelativeLayout) view.findViewById(R.id.relative_to_flip);
-                final CardView btnStart = (CardView) view.findViewById(R.id.front_cardview_to_flip);
-                final CardView btnFinish = (CardView) view.findViewById(R.id.back_cardview_to_flip);
-                if(btnStart.getVisibility() == View.VISIBLE) {
-                    mFlipAnimation = new FlipAnimation(btnFinish, btnStart);
-                } else {
-                    mFlipAnimation = new FlipAnimation(btnStart, btnFinish);
+                if (relativeLayout != null) {
+                    final CardView btnStart = (CardView) view.findViewById(R.id.front_cardview_to_flip);
+                    final CardView btnFinish = (CardView) view.findViewById(R.id.back_cardview_to_flip);
+                    if (btnStart.getVisibility() == View.VISIBLE) {
+                        mFlipAnimation = new FlipAnimation(btnFinish, btnStart);
+                    } else {
+                        mFlipAnimation = new FlipAnimation(btnStart, btnFinish);
+                    }
+                    mFlipAnimation.setReverse();
+                    relativeLayout.startAnimation(mFlipAnimation);
                 }
-                mFlipAnimation.setReverse();
-                relativeLayout.startAnimation(mFlipAnimation);
-
             }
         }));
     }

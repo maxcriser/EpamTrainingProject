@@ -20,9 +20,9 @@ import com.maxcriser.cards.constant.constants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
+import com.maxcriser.cards.listener.OnTemplatePageChangeListener;
 import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.activities.BarcodeScannerActivity;
-import com.maxcriser.cards.listener.OnTemplatePageChangeListener;
 import com.maxcriser.cards.view.labels.RobotoRegular;
 
 import static android.view.View.GONE;
@@ -60,6 +60,7 @@ public class CreateDiscountActivity extends AppCompatActivity {
         final String barcode = barcodeIntent.getStringExtra(BarcodeScannerActivity.TAG_BARCODE);
         final OwnAsyncTask barcodeGenerator = new OwnAsyncTask();
         barcodeGenerator.execute(new BarcodeConverter(), barcode, new OnResultCallback<String, String>() {
+
             @Override
             public void onSuccess(final String pS) {
                 generateBarcode = pS;
@@ -88,6 +89,7 @@ public class CreateDiscountActivity extends AppCompatActivity {
 
         pager.setAdapter(pagerAdapter);
         pager.addOnPageChangeListener(new OnTemplatePageChangeListener(new OnTemplatePageChangeListener.OnPageChangeListener() {
+
             @Override
             public void onResult(final int position, final String codeColor, final String nameColor) {
                 myColorCode = codeColor;
@@ -108,7 +110,9 @@ public class CreateDiscountActivity extends AppCompatActivity {
 
     public void onCreateCardClicked(final View view) {
         final String titleStr = mEditText.getText().toString();
+        Log.d("titleStr", titleStr);
         if (!titleStr.isEmpty()) {
+            Log.d("titleStr", titleStr);
             final ContentValues cvNewDiscount = new ContentValues();
             cvNewDiscount.put(ModelDiscountCards.TITLE, titleStr);
             cvNewDiscount.put(ModelDiscountCards.BARCODE, generateBarcode);
@@ -116,6 +120,7 @@ public class CreateDiscountActivity extends AppCompatActivity {
             cvNewDiscount.put(ModelDiscountCards.ID, (Integer) null);
 
             db.insert(ModelDiscountCards.class, cvNewDiscount, new OnResultCallback<Long, Void>() {
+
                 @Override
                 public void onSuccess(final Long pLong) {
                     onBackClicked(null);

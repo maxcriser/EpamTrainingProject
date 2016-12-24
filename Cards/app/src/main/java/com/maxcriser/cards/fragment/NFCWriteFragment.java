@@ -76,9 +76,6 @@ public class NFCWriteFragment extends DialogFragment {
                 ndef1.connect();
                 final NdefRecord mimeRecord = NdefRecord.createMime("text/plain", message.getBytes(Charset.forName("US-ASCII")));
                 ndef1.writeNdefMessage(new NdefMessage(mimeRecord));
-                //TODO move to final
-//                ndef1.close();
-                //Write Successful
                 mTvMessage.setText(getString(R.string.message_write_success));
 
             } catch (IOException | FormatException e) {
@@ -89,7 +86,7 @@ public class NFCWriteFragment extends DialogFragment {
                 mProgress.setVisibility(View.GONE);
                 try {
                     ndef1.close();
-                } catch (IOException pE) {
+                } catch (final IOException pE) {
                     Log.d("ERROR", pE.toString());
                 }
             }

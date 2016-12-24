@@ -59,7 +59,6 @@ public class OwnAsyncTask {
                         }
                     });
                 } catch (final Exception pE) {
-                    //TODO {}
                     if (onResultCallback != null) {
                         onResultCallback.onError(pE);
                     }

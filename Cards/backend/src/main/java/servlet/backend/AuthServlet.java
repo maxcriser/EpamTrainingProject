@@ -20,11 +20,11 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthServlet extends HttpServlet {
 
     @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse resp)
+    public void doGet(final HttpServletRequest req, final HttpServletResponse resp)
             throws IOException {
-        UserService userService = UserServiceFactory.getUserService();
-        User user = userService.getCurrentUser();
-        PrintWriter writer = resp.getWriter();
+        final UserService userService = UserServiceFactory.getUserService();
+        final User user = userService.getCurrentUser();
+        final PrintWriter writer = resp.getWriter();
         if (user != null) {
             resp.sendRedirect("/index.html");
         } else {
@@ -38,7 +38,7 @@ public class AuthServlet extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp)
+    public void doPost(final HttpServletRequest req, final HttpServletResponse resp)
             throws IOException {
         throw new UnsupportedOperationException("doPost is not supported");
     }
