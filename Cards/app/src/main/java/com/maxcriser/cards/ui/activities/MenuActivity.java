@@ -21,6 +21,7 @@ import android.view.View;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.constants;
+import com.maxcriser.cards.utils.FlipAnimation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -250,7 +251,8 @@ public class MenuActivity extends AppCompatActivity
                     startActivity(intent);
                     break;
                 case R.id.main_nfc_card:
-                    startActivity(new Intent(MenuActivity.this, NFCReaderActivity.class));
+                    // TODO: 24.12.2016 NFCREADERACTIVITY
+                    startActivity(new Intent(MenuActivity.this, TestFlipAnimation.class));
 //                    intent = new Intent(MenuActivity.this, ItemsActivity.class);
 //                    selectItem = getResources().getString(R.string.nfc_title);
 //                    startActivity(intent);

@@ -80,7 +80,6 @@ public final class ImageLoader {
             cachedBitmap = mLruCache.get(pUrl);
         }
         Log.d(TAG, "downloadToView: CACHED: " + (cachedBitmap == null ? "NO" : "YES") + " " + pUrl);
-        //TODO need to be someString.equals(anotherString)
         if (cachedBitmap != null && pView.getTag().equals(pUrl)) {
             Log.d(TAG, "downloadToView: FROM LRU CACHE " + pUrl);
             if (pArgs.length != 0) {
@@ -104,7 +103,12 @@ public final class ImageLoader {
                 if (pUrl.startsWith(FILE)) {
                     Log.d("pUrl", pUrl);
                     final Uri pUri = Uri.parse(pUrl);
-                    return BitmapFactory.decodeFile(pUri.getPath());
+                    Bitmap decodeFile = BitmapFactory.decodeFile(pUri.getPath());
+                    if (pArgs.length != 0) {
+                        return Bitmap.createScaledBitmap(decodeFile, pArgs[0], pArgs[1], true);
+                    } else {
+                        return decodeFile;
+                    }
                 } else if (pUrl.startsWith(HTTP)) {
                     HttpURLConnection connection = null;
                     InputStream inputStream = null;
