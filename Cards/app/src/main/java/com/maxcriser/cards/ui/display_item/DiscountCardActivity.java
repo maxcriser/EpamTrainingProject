@@ -16,8 +16,10 @@ import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.maxcriser.cards.CoreApplication;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.database.DatabaseHelper;
+import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.view.labels.BarcodeEan;
 
@@ -63,7 +65,7 @@ public class DiscountCardActivity extends Activity {
         animScaleDown = AnimationUtils.loadAnimation(this, R.anim.scale_down_floating);
         animScaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up_floating);
         registerForContextMenu(materialDesignFAM);
-        dbHelper = DatabaseHelper.getInstance(this);
+        dbHelper = ((CoreApplication) getApplication()).getDatabaseHelper(this);
 
         floatingActionButtonDelete.setOnClickListener(new View.OnClickListener() {
 

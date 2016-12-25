@@ -38,7 +38,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.maxcriser.cards.CoreApplication;
 import com.maxcriser.cards.R;
+import com.maxcriser.cards.anim.FlipAnimation;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.database.DatabaseHelper;
@@ -56,7 +58,6 @@ import com.maxcriser.cards.ui.create_item.CreateTicketActivity;
 import com.maxcriser.cards.ui.display_item.BankCardActivity;
 import com.maxcriser.cards.ui.display_item.DiscountCardActivity;
 import com.maxcriser.cards.ui.display_item.TicketActivity;
-import com.maxcriser.cards.anim.FlipAnimation;
 import com.maxcriser.cards.view.labels.RobotoRegular;
 
 import static android.view.View.GONE;
@@ -243,7 +244,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         });
         title.setText(typeItems);
 
-        dbHelper = DatabaseHelper.getInstance(this);
+        dbHelper = ((CoreApplication) getApplication()).getDatabaseHelper(this);
 
         recyclerItems.setHasFixedSize(true);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -435,16 +436,22 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
 
     @Override
     public Loader<Cursor> onCreateLoader(final int id, final Bundle args) {
+        final Class clazz;
         switch (typeItems) {
             case EXTRA_BANK_TITLE_TO_ITEMS:
-                return new CardsCursorLoader(this, searchText, ModelBankCards.class);
+                clazz = ModelBankCards.class;
+                break;
             case EXTRA_DISCOUNT_TITLE_TO_ITEMS:
-                return new CardsCursorLoader(this, searchText, ModelDiscountCards.class);
+                clazz = ModelDiscountCards.class;
+                break;
             case EXTRA_TICKETS_TITLE_TO_ITEMS:
-                return new CardsCursorLoader(this, searchText, ModelTickets.class);
+                clazz = ModelTickets.class;
+                break;
             default:
-                return new CardsCursorLoader(this, searchText, ModelNFCItems.class);
+                clazz = ModelNFCItems.class;
+                break;
         }
+        return new CardsCursorLoader(this, searchText, clazz, getApplication());
     }
 
     @Override
@@ -466,20 +473,22 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
             recyclerItems.setVisibility(View.VISIBLE);
         }
 
+        Object layout = R.layout.item_bank;
         switch (typeItems) {
             case EXTRA_BANK_TITLE_TO_ITEMS:
-                adapter = new CardCursorAdapter(data, this, R.layout.item_bank);
+                layout = R.layout.item_bank;
                 break;
             case EXTRA_DISCOUNT_TITLE_TO_ITEMS:
-                adapter = new CardCursorAdapter(data, this, R.layout.item_discount);
+                layout = R.layout.item_discount;
                 break;
             case EXTRA_TICKETS_TITLE_TO_ITEMS:
-                adapter = new CardCursorAdapter(data, this, R.layout.item_ticket);
+                layout = R.layout.item_ticket;
                 break;
             case EXTRA_NFC_TITLE_TO_ITEMS:
-                adapter = new CardCursorAdapter(data, this, R.layout.item_nfc);
+                layout = R.layout.item_nfc;
                 break;
         }
+        adapter = new CardCursorAdapter(data, this, layout, getApplication());
 //          recyclerItems.swapAdapter(adapter, false); // true
         recyclerItems.setAdapter(adapter);
     }

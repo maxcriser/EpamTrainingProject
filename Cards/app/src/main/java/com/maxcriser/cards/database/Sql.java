@@ -7,11 +7,11 @@ import java.lang.reflect.AnnotatedElement;
 public final class Sql {
 
     public static String getSqlWithQuery(final AnnotatedElement model) {
-        return "SELECT * FROM " + DatabaseHelper.getTableName(model) + " WHERE " + ModelBankCards.TITLE + " LIKE ? ";
+        return "SELECT * FROM " + DatabaseHelperImpl.getTableName(model) + " WHERE " + ModelBankCards.TITLE + " LIKE ? ";
     }
 
     public static String getSqlAllItems(final AnnotatedElement model) {
-        return "SELECT * FROM " + DatabaseHelper.getTableName(model);
+        return "SELECT * FROM " + DatabaseHelperImpl.getTableName(model);
     }
 
 }

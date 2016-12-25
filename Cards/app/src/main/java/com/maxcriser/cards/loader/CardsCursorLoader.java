@@ -1,11 +1,14 @@
 package com.maxcriser.cards.loader;
 
+import android.app.Application;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.content.CursorLoader;
 
+import com.maxcriser.cards.CoreApplication;
 import com.maxcriser.cards.database.DatabaseHelper;
+import com.maxcriser.cards.database.DatabaseHelperImpl;
 
 import java.lang.reflect.AnnotatedElement;
 
@@ -14,17 +17,17 @@ import static com.maxcriser.cards.database.Sql.getSqlWithQuery;
 
 public class CardsCursorLoader extends CursorLoader {
 
-    private final String SQL_WITH_QUERY;// = "SELECT * FROM " + DatabaseHelper.getTableName(ModelBankCards.class) + " WHERE " + ModelBankCards.TITLE + " LIKE ? ";
-    private final String SQL_ALL_ITEMS;// = "SELECT * FROM " + DatabaseHelper.getTableName(ModelBankCards.class);
-    private final DatabaseHelper db;
+    private final String SQL_WITH_QUERY;// = "SELECT * FROM " + DatabaseHelperImpl.getTableName(ModelBankCards.class) + " WHERE " + ModelBankCards.TITLE + " LIKE ? ";
+    private final String SQL_ALL_ITEMS;// = "SELECT * FROM " + DatabaseHelperImpl.getTableName(ModelBankCards.class);
     private final String mQuery;
+    private DatabaseHelper db;
 
-    public CardsCursorLoader(final Context context, final String pQuery, final AnnotatedElement modelClass) {
+    public CardsCursorLoader(final Context context, final String pQuery, final AnnotatedElement modelClass, final Application app) {
         super(context);
-        SQL_WITH_QUERY = getSqlWithQuery(modelClass);
-        SQL_ALL_ITEMS = getSqlAllItems(modelClass);
-        this.db = DatabaseHelper.getInstance(context);
-        mQuery = pQuery;
+        this.SQL_WITH_QUERY = getSqlWithQuery(modelClass);
+        this.SQL_ALL_ITEMS = getSqlAllItems(modelClass);
+        this.mQuery = pQuery;
+        this.db = ((CoreApplication) app).getDatabaseHelper(context);
     }
 
     @Override

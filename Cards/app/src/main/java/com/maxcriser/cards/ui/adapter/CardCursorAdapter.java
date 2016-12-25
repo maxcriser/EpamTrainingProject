@@ -1,5 +1,6 @@
 package com.maxcriser.cards.ui.adapter;
 
+import android.app.Application;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import com.maxcriser.cards.CoreApplication;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.database.models.ModelBankCards;
@@ -29,8 +31,10 @@ public class CardCursorAdapter extends RecyclerView.Adapter<CardHolder> {
     private final Object mView;
     private double viewWidth;
     private double viewHeight;
+    private final ImageLoader mImageLoader;
 
-    public CardCursorAdapter(final Cursor pCursor, final Context pContext, final Object mObject) {
+    public CardCursorAdapter(final Cursor pCursor, final Context pContext, final Object mObject, final Application pApplication) {
+        mImageLoader = ((CoreApplication) pApplication).getImageLoader();
         mCursor = pCursor;
         mContext = pContext;
         mView = mObject;
@@ -85,11 +89,11 @@ public class CardCursorAdapter extends RecyclerView.Adapter<CardHolder> {
                 final String frontPhoto = mCursor.getString(mCursor.getColumnIndex(ModelBankCards.PHOTO_FRONT));
                 final String backPhoto = mCursor.getString(mCursor.getColumnIndex(ModelBankCards.PHOTO_BACK));
                 if (!frontPhoto.isEmpty()) {
-                    ImageLoader.getInstance().downloadToView(frontPhoto, holder.backgroundCredit,
+                    mImageLoader.downloadToView(frontPhoto, holder.backgroundCredit,
                             null, (int) viewWidth, (int) viewHeight);
                 }
                 if (!backPhoto.isEmpty()) {
-                    ImageLoader.getInstance().downloadToView(backPhoto, holder.backgroundCreditBack,
+                    mImageLoader.downloadToView(backPhoto, holder.backgroundCreditBack,
                             null, (int) viewWidth, (int) viewHeight);
                 }
             } else if (mView.equals(R.layout.item_ticket)) {

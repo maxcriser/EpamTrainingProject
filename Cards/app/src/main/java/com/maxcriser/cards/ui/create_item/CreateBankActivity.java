@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.pinball83.maskededittext.MaskedEditText;
+import com.maxcriser.cards.CoreApplication;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
@@ -37,6 +38,7 @@ import com.maxcriser.cards.constant.Extras;
 import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.constant.ListPreview;
 import com.maxcriser.cards.database.DatabaseHelper;
+import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.dialog.MatchesFountDialogBuilder;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
@@ -88,6 +90,7 @@ public class CreateBankActivity extends AppCompatActivity {
     private Uri editBackUri;
     private boolean statusScan;
     private boolean statusSave;
+    private ImageLoader mImageLoader;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -95,6 +98,7 @@ public class CreateBankActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_bank_card);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
         sync = new OwnAsyncTask();
+        mImageLoader = ((CoreApplication) getApplication()).getImageLoader();
         initViews();
     }
 
@@ -115,7 +119,7 @@ public class CreateBankActivity extends AppCompatActivity {
         removeBack = (FrameLayout) findViewById(R.id.remove_back);
         removeFront = (FrameLayout) findViewById(R.id.remove_front);
         statusScan = true;
-        db = DatabaseHelper.getInstance(this);
+        db = ((CoreApplication) getApplication()).getDatabaseHelper(this);
         DateToView.setDateToCreditView(validDate, calendar);
         final RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
         title.setText(getResources().getString(R.string.bank_title));
@@ -166,7 +170,7 @@ public class CreateBankActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == EDIT_IMAGE_FRONT) {
                 editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
-                ImageLoader.getInstance().downloadToView(editFrontUri.toString(), frontPhoto, new OnResultCallback<Bitmap, Void>() {
+                mImageLoader.downloadToView(editFrontUri.toString(), frontPhoto, new OnResultCallback<Bitmap, Void>() {
 
                     @Override
                     public void onSuccess(final Bitmap pBitmap) {
@@ -225,7 +229,7 @@ public class CreateBankActivity extends AppCompatActivity {
                 frontPhoto.setClickable(false);
             } else if (requestCode == EDIT_IMAGE_BACK) {
                 editBackUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
-                ImageLoader.getInstance().downloadToView(editBackUri.toString(), backPhoto, new OnResultCallback<Bitmap, Void>() {
+                mImageLoader.downloadToView(editBackUri.toString(), backPhoto, new OnResultCallback<Bitmap, Void>() {
 
                     @Override
                     public void onSuccess(final Bitmap pBitmap) {

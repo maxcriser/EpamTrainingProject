@@ -18,11 +18,13 @@ import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.maxcriser.cards.CoreApplication;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.database.DatabaseHelper;
+import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.dialog.ImageViewerDialogBuilder;
 import com.maxcriser.cards.loader.image.ImageLoader;
@@ -55,6 +57,7 @@ public class TicketActivity extends Activity {
     private Bitmap firstBitmap;
     private Bitmap secondBitmap;
     private OwnAsyncTask sync;
+    private ImageLoader mImageLoader;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -62,6 +65,7 @@ public class TicketActivity extends Activity {
         setContentView(R.layout.activity_show_ticket);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
         sync = new OwnAsyncTask();
+        mImageLoader = ((CoreApplication) getApplication()).getImageLoader();
         initViews();
     }
 
@@ -85,7 +89,7 @@ public class TicketActivity extends Activity {
 
         registerForContextMenu(materialDesignFAM);
 
-        dbHelper = DatabaseHelper.getInstance(this);
+        dbHelper = ((CoreApplication) getApplication()).getDatabaseHelper(this);
 
         final Intent creditIntent = getIntent();
         id = creditIntent.getStringExtra(EXTRA_TICKET_ID);
@@ -127,7 +131,7 @@ public class TicketActivity extends Activity {
             }
         });
 
-        ImageLoader.getInstance().downloadToView(firstPhoto, ivFrontPhoto, new OnResultCallback<Bitmap, Void>() {
+        mImageLoader.downloadToView(firstPhoto, ivFrontPhoto, new OnResultCallback<Bitmap, Void>() {
 
             @Override
             public void onSuccess(final Bitmap pBitmap) {
@@ -146,7 +150,7 @@ public class TicketActivity extends Activity {
             }
         });
 
-        ImageLoader.getInstance().downloadToView(secondPhoto, ivBackPhoto, new OnResultCallback<Bitmap, Void>() {
+        mImageLoader.downloadToView(secondPhoto, ivBackPhoto, new OnResultCallback<Bitmap, Void>() {
 
             @Override
             public void onSuccess(final Bitmap pBitmap) {

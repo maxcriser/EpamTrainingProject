@@ -17,12 +17,13 @@ import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.github.pinball83.maskededittext.MaskedEditText;
+import com.maxcriser.cards.CoreApplication;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.database.DatabaseHelper;
+import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
 
 import static android.text.InputType.TYPE_CLASS_TEXT;
@@ -89,7 +90,7 @@ public class BankCardActivity extends Activity {
 
         registerForContextMenu(materialDesignFAM);
 
-        dbHelper = DatabaseHelper.getInstance(this);
+        dbHelper = ((CoreApplication) getApplication()).getDatabaseHelper(this);
 
         final Intent creditIntent = getIntent();
         id = creditIntent.getStringExtra(EXTRA_BANK_ID);

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.maxcriser.cards.CoreApplication;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
@@ -19,11 +20,11 @@ import com.maxcriser.cards.async.task.BarcodeConverter;
 import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.constant.ListPreview;
 import com.maxcriser.cards.database.DatabaseHelper;
+import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.listener.OnTemplatePageChangeListener;
 import com.maxcriser.cards.model.PreviewColor;
-import com.maxcriser.cards.ui.activities.BarcodeScannerActivity;
 import com.maxcriser.cards.view.labels.RobotoRegular;
 
 import static android.view.View.GONE;
@@ -53,7 +54,7 @@ public class CreateDiscountActivity extends AppCompatActivity {
         final RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
         mEditText = (EditText) findViewById(R.id.id_edit_text_name_discount);
         pager = (ViewPager) findViewById(R.id.pager);
-        db = DatabaseHelper.getInstance(this);
+        db = ((CoreApplication) getApplication()).getDatabaseHelper(this);
         title.setText(getResources().getString(R.string.new_discount_title));
         final Intent barcodeIntent = getIntent();
         final String barcode = barcodeIntent.getStringExtra(TAG_BARCODE);
