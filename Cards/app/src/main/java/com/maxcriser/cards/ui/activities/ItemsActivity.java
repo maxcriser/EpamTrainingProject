@@ -68,12 +68,17 @@ import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_FRONT_PHOTO;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_ID;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_NUMBER;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_PIN;
+import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_TITLE_TO_ITEMS;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_TYPE;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_VALID;
+import static com.maxcriser.cards.constant.Extras.EXTRA_CHECK_ITEMS;
 import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_BARCODE;
 import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_COLOR;
 import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_ID;
 import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_TITLE;
+import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_TITLE_TO_ITEMS;
+import static com.maxcriser.cards.constant.Extras.EXTRA_NFC_TITLE_TO_ITEMS;
+import static com.maxcriser.cards.constant.Extras.EXTRA_TICKETS_TITLE_TO_ITEMS;
 import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_CARDHOLDER;
 import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_COLOR;
 import static com.maxcriser.cards.constant.Extras.EXTRA_TICKET_DATE;
@@ -107,7 +112,8 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_items);
-        typeItems = MenuActivity.selectItem;
+        final Intent intent = getIntent();
+        typeItems = intent.getStringExtra(EXTRA_CHECK_ITEMS);
         initViews();
     }
 
@@ -199,14 +205,19 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         toolbarSearch = (CardView) findViewById(R.id.card_view_toolbar_search);
         final RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
         recyclerItems = (RecyclerView) findViewById(R.id.recycler_view_items);
-        if (typeItems.equals(getResources().getString(R.string.bank_title))) {
-            ModelClass = ModelBankCards.class;
-        } else if (typeItems.equals(getResources().getString(R.string.discount_title))) {
-            ModelClass = ModelDiscountCards.class;
-        } else if (typeItems.equals(getResources().getString(R.string.tickets_title))) {
-            ModelClass = ModelTickets.class;
-        } else {
-            ModelClass = ModelNFCItems.class;
+        switch (typeItems) {
+            case EXTRA_BANK_TITLE_TO_ITEMS:
+                ModelClass = ModelBankCards.class;
+                break;
+            case EXTRA_DISCOUNT_TITLE_TO_ITEMS:
+                ModelClass = ModelDiscountCards.class;
+                break;
+            case EXTRA_TICKETS_TITLE_TO_ITEMS:
+                ModelClass = ModelTickets.class;
+                break;
+            default:
+                ModelClass = ModelNFCItems.class;
+                break;
         }
         getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
         searchEdit.addTextChangedListener(new TextWatcher() {
@@ -291,14 +302,19 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
                     @Override
                     public void onSuccess(final Cursor pCursor) {
                         if (pCursor.moveToFirst()) {
-                            if (typeItems.equals(getResources().getString(R.string.bank_title))) {
-                                showBank(pCursor);
-                            } else if (typeItems.equals(getResources().getString(R.string.discount_title))) {
-                                showDiscount(pCursor);
-                            } else if (typeItems.equals(getResources().getString(R.string.tickets_title))) {
-                                showTicket(pCursor);
-                            } else {
-                                showNfc(pCursor);
+                            switch (typeItems) {
+                                case EXTRA_BANK_TITLE_TO_ITEMS:
+                                    showBank(pCursor);
+                                    break;
+                                case EXTRA_DISCOUNT_TITLE_TO_ITEMS:
+                                    showDiscount(pCursor);
+                                    break;
+                                case EXTRA_TICKETS_TITLE_TO_ITEMS:
+                                    showTicket(pCursor);
+                                    break;
+                                default:
+                                    showNfc(pCursor);
+                                    break;
                             }
                         }
                     }
@@ -391,15 +407,20 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
     public void onAddNewClicked(final View view) {
-        if (typeItems.equals(getResources().getString(R.string.bank_title))) {
-            startActivity(new Intent(this, CreateBankActivity.class));
-        } else if (typeItems.equals(getResources().getString(R.string.discount_title))) {
-            getPermission(ListConstants.Requests.REQUEST_CAMERA, Manifest.permission.CAMERA, ListConstants.Requests.REQUEST_CAMERA);
-        } else if (typeItems.equals(getResources().getString(R.string.tickets_title))) {
-            startActivity(new Intent(this, CreateTicketActivity.class));
-        } else {
-            final NfcInputDialogBuilder nfcInputDialogBuilder = new NfcInputDialogBuilder(this);
-            nfcInputDialogBuilder.startDialog();
+        switch (typeItems) {
+            case EXTRA_BANK_TITLE_TO_ITEMS:
+                startActivity(new Intent(this, CreateBankActivity.class));
+                break;
+            case EXTRA_DISCOUNT_TITLE_TO_ITEMS:
+                getPermission(ListConstants.Requests.REQUEST_CAMERA, Manifest.permission.CAMERA, ListConstants.Requests.REQUEST_CAMERA);
+                break;
+            case EXTRA_TICKETS_TITLE_TO_ITEMS:
+                startActivity(new Intent(this, CreateTicketActivity.class));
+                break;
+            default:
+                final NfcInputDialogBuilder nfcInputDialogBuilder = new NfcInputDialogBuilder(this);
+                nfcInputDialogBuilder.startDialog();
+                break;
         }
     }
 
@@ -415,14 +436,15 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
 
     @Override
     public Loader<Cursor> onCreateLoader(final int id, final Bundle args) {
-        if (typeItems.equals(getResources().getString(R.string.bank_title))) {
-            return new CardsCursorLoader(this, searchText, ModelBankCards.class);
-        } else if (typeItems.equals(getResources().getString(R.string.discount_title))) {
-            return new CardsCursorLoader(this, searchText, ModelDiscountCards.class);
-        } else if (typeItems.equals(getResources().getString(R.string.tickets_title))) {
-            return new CardsCursorLoader(this, searchText, ModelTickets.class);
-        } else {
-            return new CardsCursorLoader(this, searchText, ModelNFCItems.class);
+        switch (typeItems) {
+            case EXTRA_BANK_TITLE_TO_ITEMS:
+                return new CardsCursorLoader(this, searchText, ModelBankCards.class);
+            case EXTRA_DISCOUNT_TITLE_TO_ITEMS:
+                return new CardsCursorLoader(this, searchText, ModelDiscountCards.class);
+            case EXTRA_TICKETS_TITLE_TO_ITEMS:
+                return new CardsCursorLoader(this, searchText, ModelTickets.class);
+            default:
+                return new CardsCursorLoader(this, searchText, ModelNFCItems.class);
         }
     }
 
@@ -445,14 +467,19 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
             recyclerItems.setVisibility(View.VISIBLE);
         }
 
-        if (typeItems.equals(getResources().getString(R.string.bank_title))) {
-            adapter = new CursorAdapter(data, this, R.layout.item_bank);
-        } else if (typeItems.equals(getResources().getString(R.string.discount_title))) {
-            adapter = new CursorAdapter(data, this, R.layout.item_discount);
-        } else if (typeItems.equals(getResources().getString(R.string.tickets_title))) {
-            adapter = new CursorAdapter(data, this, R.layout.item_ticket);
-        } else if (typeItems.equals(getResources().getString(R.string.nfc_title))) {
-            adapter = new CursorAdapter(data, this, R.layout.item_nfc);
+        switch (typeItems) {
+            case EXTRA_BANK_TITLE_TO_ITEMS:
+                adapter = new CursorAdapter(data, this, R.layout.item_bank);
+                break;
+            case EXTRA_DISCOUNT_TITLE_TO_ITEMS:
+                adapter = new CursorAdapter(data, this, R.layout.item_discount);
+                break;
+            case EXTRA_TICKETS_TITLE_TO_ITEMS:
+                adapter = new CursorAdapter(data, this, R.layout.item_ticket);
+                break;
+            case EXTRA_NFC_TITLE_TO_ITEMS:
+                adapter = new CursorAdapter(data, this, R.layout.item_nfc);
+                break;
         }
 //          recyclerItems.swapAdapter(adapter, false); // true
         recyclerItems.setAdapter(adapter);

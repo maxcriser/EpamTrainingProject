@@ -40,6 +40,9 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 
+import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_TITLE_TO_ITEMS;
+import static com.maxcriser.cards.constant.Extras.EXTRA_CHECK_ITEMS;
+import static com.maxcriser.cards.constant.ListConstants.CREDIT_CARD;
 import static com.maxcriser.cards.constant.ListConstants.PASSWORD_TAG;
 import static com.maxcriser.cards.constant.ListConstants.UNDEFENDED;
 
@@ -293,11 +296,10 @@ public class LockerActivity extends AppCompatActivity {
     }
 
     public void start() {
-        if (intentLockedPage.equals(MenuActivity.CREDIT_CARD)) {
+        if (intentLockedPage.equals(CREDIT_CARD)) {
             setBackgroundCircle(firstCircle, secondCircle, thirdCircle, fourthCircle);
             intent = new Intent(this, ItemsActivity.class);
-            //TODO remove magic
-            MenuActivity.selectItem = getResources().getString(R.string.bank_title);
+            intent.putExtra(EXTRA_CHECK_ITEMS, EXTRA_BANK_TITLE_TO_ITEMS);
             startActivity(intent);
         } else {
             final Intent intent = new Intent(this, SetupPinActivity.class);

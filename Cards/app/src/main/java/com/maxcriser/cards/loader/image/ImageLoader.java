@@ -97,13 +97,13 @@ public final class ImageLoader {
         final PriorityRunnable<String, Void, Bitmap> priorityRunnable = new PriorityRunnable<>(handler, new ITask<String, Void, Bitmap>() {
 
             @Override
-            public Bitmap doInBackground(final String pUrl, final ProgressCallback<Void> pProgressCallback) {
+            public Bitmap doInBackground(final String pUrl, final ProgressCallback<Void> pProgressCallback) throws Exception {
                 Bitmap bitmap = null;
                 Log.d("startWith file://", pUrl.startsWith(FILE) + " - ImageLoader");
                 if (pUrl.startsWith(FILE)) {
                     Log.d("pUrl", pUrl);
                     final Uri pUri = Uri.parse(pUrl);
-                    Bitmap decodeFile = BitmapFactory.decodeFile(pUri.getPath());
+                    final Bitmap decodeFile = BitmapFactory.decodeFile(pUri.getPath());
                     if (pArgs.length != 0) {
                         return Bitmap.createScaledBitmap(decodeFile, pArgs[0], pArgs[1], true);
                     } else {
@@ -117,8 +117,7 @@ public final class ImageLoader {
                         inputStream = connection.getInputStream();
                         bitmap = BitmapFactory.decodeStream(inputStream);
                     } catch (final Exception e) {
-                        //TODO rethrow to next level
-                        Log.e(TAG, "download: ", e);
+                        throw new Exception(e);
                     } finally {
                         if (inputStream != null) {
                             try {

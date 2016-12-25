@@ -63,8 +63,16 @@ public final class ListConstants {
         int ID_TICKET_ITEM = 3;
     }
 
+    public interface Database {
+        String SQL_TABLE_CREATE_TEMPLATE = "CREATE TABLE IF NOT EXISTS %s (%s);";
+        String SQL_TABLE_CREATE_FIELD_TEMPLATE = "%s %s%s";
+        String mDatabaseName = "database.cards.thecriser";
+        int dbVersion = 1;
+    }
+
     public static final String URL_JSON_LOCATION = "http://ip-api.com/json";
-    public static final String URL_JSON_SETTINGS = "http://10.0.2.2:8080/config";
+    public static final String URL_JSON_SETTINGS = "http://ckeeperservletbackend.appspot.com/";
+    public static final String CONFIG = "config";
     public static final String EMPTY_STRING = "";
     public static final String BEG_FILE_NAME_BANK = "credit-card-";
     public static final String BEG_FILE_NAME_TICKET = "ticket-";
@@ -79,5 +87,6 @@ public final class ListConstants {
     public static final String PASSWORD_TAG = "shared_password";
     public static final String BANK = "bank";
     public static final String ARGUMENT_PAGE_NUMBER_DISCOUNT = "arg_page_number";
+    public static final String CREDIT_CARD = "credit_card";
 
 }

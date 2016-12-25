@@ -1,67 +1,123 @@
 package com.maxcriser.cards.ui.activities;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.nfc.NfcAdapter;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.constant.ListConstants;
-import com.maxcriser.cards.utils.SettingsParser;
+import com.maxcriser.cards.async.OnResultCallback;
+import com.maxcriser.cards.async.OwnAsyncTask;
+import com.maxcriser.cards.async.task.JsonParser;
+import com.maxcriser.cards.dialog.NotificationDialogBuilder;
+import com.maxcriser.cards.model.SettingsJson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import static android.view.View.GONE;
+import static com.maxcriser.cards.constant.Extras.EXTRA_CHECK_ITEMS;
+import static com.maxcriser.cards.constant.Extras.EXTRA_DISCOUNT_TITLE_TO_ITEMS;
+import static com.maxcriser.cards.constant.Extras.EXTRA_NFC_TITLE_TO_ITEMS;
+import static com.maxcriser.cards.constant.Extras.EXTRA_TICKETS_TITLE_TO_ITEMS;
+import static com.maxcriser.cards.constant.ListConstants.CONFIG;
+import static com.maxcriser.cards.constant.ListConstants.CREDIT_CARD;
 import static com.maxcriser.cards.constant.ListConstants.SETUP_PIN;
 import static com.maxcriser.cards.constant.ListConstants.TEXT_PLAIN;
 import static com.maxcriser.cards.constant.ListConstants.URL_JSON_LOCATION;
+import static com.maxcriser.cards.constant.ListConstants.URL_JSON_SETTINGS;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     //TODO remove static
-    public static String selectItem;
     public static final String TYPE_LOCKED_SCREEN = "type_locked_screen";
-    public static final String CREDIT_CARD = "credit_card";
-
     private String pCountry = "#country";
     private String pCountryCode = "#country code";
     private String pIsp = "#isp";
     private String pQuery = "#query";
     private String pTimezone = "#timezone";
     private DrawerLayout drawer;
+    private OwnAsyncTask sync;
+    private SettingsJson mSettingsJson;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sync = new OwnAsyncTask();
         initViews();
-        new SettingsParser().execute();
     }
 
     public void initViews() {
+        sync.execute(new JsonParser(), URL_JSON_LOCATION, new OnResultCallback<String, Void>() {
+
+            @Override
+            public void onSuccess(final String pS) {
+                final JSONObject dataJsonObj;
+                try {
+                    dataJsonObj = new JSONObject(pS);
+
+                    final String COUNTRY_ID = "country";
+                    pCountry = dataJsonObj.getString(COUNTRY_ID);
+                    final String COUNTRY_CODE_ID = "countryCode";
+                    pCountryCode = dataJsonObj.getString(COUNTRY_CODE_ID);
+                    final String ISP_ID = "isp";
+                    pIsp = dataJsonObj.getString(ISP_ID);
+                    final String QUERY_ID = "query";
+                    pQuery = dataJsonObj.getString(QUERY_ID);
+                    final String TIMEZONE_ID = "timezone";
+                    pTimezone = dataJsonObj.getString(TIMEZONE_ID);
+
+                } catch (final JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            @Override
+            public void onError(final Exception pE) {
+                Toast.makeText(MenuActivity.this, getString(R.string.cannot_parese_location), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onProgressChanged(final Void pVoid) {
+            }
+        });
+
+        sync.execute(new JsonParser(), URL_JSON_SETTINGS + CONFIG, new OnResultCallback<String, Void>() {
+
+            @Override
+            public void onSuccess(final String pS) {
+                mSettingsJson = new SettingsJson(pS);
+                if (mSettingsJson.isFlagMessage()) {
+                    final NotificationDialogBuilder notificationDialogBuilder = new NotificationDialogBuilder(
+                            MenuActivity.this, getString(R.string.notification), mSettingsJson.getMessage(), mSettingsJson.getGooglePlayUrl(), true, true);
+                    notificationDialogBuilder.startDialog();
+                }
+            }
+
+            @Override
+            public void onError(final Exception pE) {
+                Toast.makeText(MenuActivity.this, "Cannot parse settings", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onProgressChanged(final Void pVoid) {
+
+            }
+        });
         final CardView credit = (CardView) findViewById(R.id.main_credit_card);
         final CardView discount = (CardView) findViewById(R.id.main_discount_card);
         final CardView tickets = (CardView) findViewById(R.id.main_tickets_card);
@@ -102,7 +158,6 @@ public class MenuActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        new ParseLocation().execute();
     }
 
     @Override
@@ -123,107 +178,42 @@ public class MenuActivity extends AppCompatActivity
             intent.putExtra(TYPE_LOCKED_SCREEN, SETUP_PIN);
             startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY));
 
+        } else if (id == R.id.nav_about) {
+            if (mSettingsJson != null) {
+                final NotificationDialogBuilder notificationDialogBuilder = new NotificationDialogBuilder(this,
+                        getString(R.string.about), mSettingsJson.getAbout(), null, false, false);
+                notificationDialogBuilder.startDialog();
+            }
         } else if (id == R.id.nav_share) {
-            final String shareBody = getString(R.string.share_body);
-            final String shareSub = getString(R.string.share_title);
-
-            final Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-            sharingIntent.setType(TEXT_PLAIN);
-            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
-            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-            final String SHARE_USING = "share_using";
-            startActivity(Intent.createChooser(sharingIntent, SHARE_USING));
-
+            if (mSettingsJson != null) {
+                final Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType(TEXT_PLAIN);
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, mSettingsJson.getTitleShare());
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, mSettingsJson.getBodyShare());
+                final String SHARE_USING = "share_using";
+                startActivity(Intent.createChooser(sharingIntent, SHARE_USING));
+            }
         } else if (id == R.id.nav_location) {
             final String title;
             final String message;
             if (isConnected(this)) {
                 title = getString(R.string.location);
-                message = "Country: " + pCountry + ", " + pCountryCode + "\n" +
-                        "Timezone: " + pTimezone + "\n" +
-                        "Query: " + pQuery + "\n\n" +
+                message = getString(R.string.country_) + pCountry + ", " + pCountryCode + "\n" +
+                        getString(R.string.timezone_) + pTimezone + "\n" +
+                        getString(R.string.query_) + pQuery + "\n\n" +
                         pIsp;
             } else {
                 title = getString(R.string.no_internet_connection);
                 message = getString(R.string.looks_like_iconnection);
             }
 
-            final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle(title);
-            alertDialogBuilder
-                    .setMessage(message)
-                    .setCancelable(false)
-                    .setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
-
-                        public void onClick(final DialogInterface dialog, final int id) {
-                            dialog.cancel();
-                        }
-                    });
-            final AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
+            final NotificationDialogBuilder notificationDialogBuilder =
+                    new NotificationDialogBuilder(this, title, message, null, true, false);
+            notificationDialogBuilder.startDialog();
         }
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    private class ParseLocation extends AsyncTask<Void, Void, String> {
-
-        HttpURLConnection urlConnection;
-        BufferedReader reader;
-        String resultJson = ListConstants.EMPTY_STRING;
-
-        @Override
-        protected String doInBackground(final Void... params) {
-            try {
-                final URL url = new URL(URL_JSON_LOCATION);
-
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-
-                final InputStream inputStream = urlConnection.getInputStream();
-                final StringBuilder buffer = new StringBuilder();
-
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line);
-                }
-
-                resultJson = buffer.toString();
-                inputStream.close();
-
-            } catch (final Exception e) {
-                Log.d("Connection time out", e.toString());
-            }
-            return resultJson;
-        }
-
-        @Override
-        protected void onPostExecute(final String strJson) {
-            super.onPostExecute(strJson);
-
-            final JSONObject dataJsonObj;
-            try {
-                dataJsonObj = new JSONObject(strJson);
-
-                final String COUNTRY_ID = "country";
-                pCountry = dataJsonObj.getString(COUNTRY_ID);
-                final String COUNTRY_CODE_ID = "countryCode";
-                pCountryCode = dataJsonObj.getString(COUNTRY_CODE_ID);
-                final String ISP_ID = "isp";
-                pIsp = dataJsonObj.getString(ISP_ID);
-                final String QUERY_ID = "query";
-                pQuery = dataJsonObj.getString(QUERY_ID);
-                final String TIMEZONE_ID = "timezone";
-                pTimezone = dataJsonObj.getString(TIMEZONE_ID);
-
-            } catch (final JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
     }
 
     public void onMenuClicked(final View view) {
@@ -247,21 +237,18 @@ public class MenuActivity extends AppCompatActivity
                     break;
                 case R.id.main_discount_card:
                     intent = new Intent(MenuActivity.this, ItemsActivity.class);
-                    //TODO magic
-                    selectItem = getResources().getString(R.string.discount_title);
+                    intent.putExtra(EXTRA_CHECK_ITEMS, EXTRA_DISCOUNT_TITLE_TO_ITEMS);
                     startActivity(intent);
                     break;
                 case R.id.main_nfc_card:
-                    // TODO: 24.12.2016 NFCREADERACTIVITY
-                    startActivity(new Intent(MenuActivity.this, NFCReaderActivity.class));
-//                    intent = new Intent(MenuActivity.this, ItemsActivity.class);
-//                    selectItem = getResources().getString(R.string.nfc_title);
-//                    startActivity(intent);
+//                    startActivity(new Intent(MenuActivity.this, NFCReaderActivity.class));
+                    intent = new Intent(MenuActivity.this, ItemsActivity.class);
+                    intent.putExtra(EXTRA_CHECK_ITEMS, EXTRA_NFC_TITLE_TO_ITEMS);
+                    startActivity(intent);
                     break;
                 case R.id.main_tickets_card:
                     intent = new Intent(MenuActivity.this, ItemsActivity.class);
-                    //TODO magic
-                    selectItem = getResources().getString(R.string.tickets_title);
+                    intent.putExtra(EXTRA_CHECK_ITEMS, EXTRA_TICKETS_TITLE_TO_ITEMS);
                     startActivity(intent);
                     break;
             }

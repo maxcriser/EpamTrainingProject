@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.maxcriser.cards.ContextHolder;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.database.annotations.Table;
@@ -25,16 +24,15 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.util.Locale;
+import java.util.concurrent.Executors;
+
+import static com.maxcriser.cards.constant.ListConstants.Database.SQL_TABLE_CREATE_FIELD_TEMPLATE;
+import static com.maxcriser.cards.constant.ListConstants.Database.SQL_TABLE_CREATE_TEMPLATE;
+import static com.maxcriser.cards.constant.ListConstants.Database.dbVersion;
+import static com.maxcriser.cards.constant.ListConstants.Database.mDatabaseName;
 
 public final class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String SQL_TABLE_CREATE_TEMPLATE = "CREATE TABLE IF NOT EXISTS %s (%s);";
-    private static final String SQL_TABLE_CREATE_FIELD_TEMPLATE = "%s %s%s";
-    private static final String mDatabaseName = "database.cards.thecriser";
-    private static final String DATABASE_HELPER = "DatabaseHelper";
-    private static final String ON_CREATE_DB = "onCreate db: ";
-    private static final String CLASS = " class: ";
-    private static final int dbVersion = 1;
     private static DatabaseHelper mHelper;
 
     private DatabaseHelper(final Context pContext) {
@@ -55,7 +53,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Nullable
-    public static String getTableName(final AnnotatedElement pModel) {
+    static String getTableName(final AnnotatedElement pModel) {
         final Table table = pModel.getAnnotation(Table.class);
         if (table != null) {
             return table.name();
@@ -114,6 +112,9 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(final SQLiteDatabase pDatabase) {
         for (final Class<?> clazz : ModelList.MODELS) {
             final String sql = getTableCreateQuery(clazz);
+            final String DATABASE_HELPER = "DatabaseHelper";
+            final String CLASS = " class: ";
+            final String ON_CREATE_DB = "onCreate db: ";
             Log.d(DATABASE_HELPER, ON_CREATE_DB + sql + CLASS + clazz);
             if (sql != null) {
                 pDatabase.execSQL(sql);

@@ -144,5 +144,12 @@
     <string name="cannot_edit_card">Cannot edit card</string>
     <string name="cannot_convert_barcode">Cannot convert barcode</string>
     <string name="cannot_scanning_card">Cannot scanning card</string>
+    <string name="go">GO</string>
+    <string name="cannot_parese_location">Cannot parse location</string>
+    <string name="country_">"Country: "</string>
+    <string name="timezone_">"Timezone: "</string>
+    <string name="query_">"Query: "</string>
+    <string name="notification">Notification</string>
+    <string name="about">About</string>
 
 </resources>

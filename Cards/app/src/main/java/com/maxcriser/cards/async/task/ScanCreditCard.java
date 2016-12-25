@@ -20,11 +20,9 @@ import java.io.OutputStream;
 
 public class ScanCreditCard implements Task<Uri, String, CreditCard> {
 
-    private static final String TAG = "TAG";
+    private final String TAG = "TAG";
     private TessBaseAPI tessBaseApi;
-    private static final String lang = "eng";
-    private static final String DATA_PATH = Environment.getExternalStorageDirectory() + "/TesseractSample/";
-    private static final String TESSDATA = "tessdata";
+    private final String DATA_PATH = Environment.getExternalStorageDirectory() + "/TesseractSample/";
     private final AssetManager mAssetManager;
 
     public ScanCreditCard(final AssetManager pAssetManager) {
@@ -79,6 +77,7 @@ public class ScanCreditCard implements Task<Uri, String, CreditCard> {
     }
 
     private void prepareTesseract() {
+        final String TESSDATA = "tessdata";
         try {
             prepareDirectory(DATA_PATH + TESSDATA);
             Log.d("DATA_PATH + PATH", DATA_PATH + TESSDATA);
@@ -109,6 +108,7 @@ public class ScanCreditCard implements Task<Uri, String, CreditCard> {
                 Log.e(TAG, "TessBaseAPI is null. TessFactory not returning tess object.");
             }
         }
+        final String lang = "eng";
         tessBaseApi.init(DATA_PATH, lang);
 //        For example if we only want to detect numbers
         tessBaseApi.setVariable(TessBaseAPI.VAR_CHAR_WHITELIST,

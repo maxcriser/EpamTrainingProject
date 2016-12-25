@@ -7,6 +7,8 @@ import android.support.v4.content.CursorLoader;
 
 import com.maxcriser.cards.database.DatabaseHelper;
 
+import java.lang.reflect.AnnotatedElement;
+
 import static com.maxcriser.cards.database.Sql.getSqlAllItems;
 import static com.maxcriser.cards.database.Sql.getSqlWithQuery;
 
@@ -17,7 +19,7 @@ public class CardsCursorLoader extends CursorLoader {
     private final DatabaseHelper db;
     private final String mQuery;
 
-    public CardsCursorLoader(final Context context, final String pQuery, final Class modelClass) {
+    public CardsCursorLoader(final Context context, final String pQuery, final AnnotatedElement modelClass) {
         super(context);
         SQL_WITH_QUERY = getSqlWithQuery(modelClass);
         SQL_ALL_ITEMS = getSqlAllItems(modelClass);

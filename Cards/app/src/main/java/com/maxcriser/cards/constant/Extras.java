@@ -2,8 +2,13 @@ package com.maxcriser.cards.constant;
 
 public final class Extras {
 
-    public static final String EXTRA_DISCOUNT_ID = "discount_id_extra";
+    public static final String EXTRA_BANK_TITLE_TO_ITEMS = "Credit cards";
+    public static final String EXTRA_NFC_TITLE_TO_ITEMS = "NFC items";
+    public static final String EXTRA_DISCOUNT_TITLE_TO_ITEMS = "Discount cards";
+    public static final String EXTRA_TICKETS_TITLE_TO_ITEMS = "Tickets";
+
     public static final String EXTRA_DISCOUNT_TITLE = "discount_title_extra";
+    public static final String EXTRA_DISCOUNT_ID = "discount_id_extra";
     public static final String EXTRA_DISCOUNT_BARCODE = "discount_barcode_extra";
     public static final String EXTRA_DISCOUNT_COLOR = "discount_color_extra";
 
@@ -29,4 +34,6 @@ public final class Extras {
     public static final String EXTRA_TICKET_SECOND_PHOTO = "extra_ticket_second_photo";
 
     public static final String EXTRA_URI = "uri";
+
+    public static final String EXTRA_CHECK_ITEMS = "extra_check_items";
 }

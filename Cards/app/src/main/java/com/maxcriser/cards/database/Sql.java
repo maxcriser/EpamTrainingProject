@@ -2,13 +2,15 @@ package com.maxcriser.cards.database;
 
 import com.maxcriser.cards.database.models.ModelBankCards;
 
-public class Sql {
+import java.lang.reflect.AnnotatedElement;
 
-    public static String getSqlWithQuery(final Class model) {
+public final class Sql {
+
+    public static String getSqlWithQuery(final AnnotatedElement model) {
         return "SELECT * FROM " + DatabaseHelper.getTableName(model) + " WHERE " + ModelBankCards.TITLE + " LIKE ? ";
     }
 
-    public static String getSqlAllItems(final Class model) {
+    public static String getSqlAllItems(final AnnotatedElement model) {
         return "SELECT * FROM " + DatabaseHelper.getTableName(model);
     }
 
