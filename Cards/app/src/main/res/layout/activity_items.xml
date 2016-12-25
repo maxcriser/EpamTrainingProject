@@ -1,5 +1,5 @@
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-       android:id="@+id/drawer_layout"
+<merge android:id="@+id/drawer_layout"
+       xmlns:android="http://schemas.android.com/apk/res/android"
        android:layout_width="match_parent"
        android:layout_height="match_parent">
 
@@ -23,9 +23,10 @@
                 android:id="@+id/recycler_view_items"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/height_toolbar"
                 android:clipToPadding="false"
                 android:paddingBottom="16dp"
-                android:paddingTop="64dp"
+                android:paddingTop="8dp"
                 android:scrollbars="vertical"/>
 
             <include layout="@layout/fragment_empty_page"/>
@@ -37,14 +38,14 @@
 
     <FrameLayout
         android:id="@+id/frame_progressbar"
-        android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
 
         <ProgressBar
-            android:layout_gravity="center"
             android:layout_width="56dp"
-            android:layout_height="56dp"/>
+            android:layout_height="56dp"
+            android:layout_gravity="center"/>
 
     </FrameLayout>
 

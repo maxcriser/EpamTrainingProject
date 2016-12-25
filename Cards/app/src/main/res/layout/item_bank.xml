@@ -62,13 +62,13 @@
 
                 <TextView
                     android:id="@+id/title_main_cards"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center|start"
                     android:maxLines="3"
-                    android:text="Name"
+                    android:text="@string/name"
                     android:textAppearance="?attr/textAppearanceListItem"
                     android:textColor="@color/text_white"
                     android:textSize="20sp"/>

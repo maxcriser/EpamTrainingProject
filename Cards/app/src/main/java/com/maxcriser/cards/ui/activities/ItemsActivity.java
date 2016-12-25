@@ -361,7 +361,6 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     @Override
     protected void onResume() {
         super.onResume();
-        //TODO find answer why here loaders but in another place tasks and in one more place Executors
         final LoaderManager supportLoaderManager = getSupportLoaderManager();
         if (supportLoaderManager.getLoader(LOADER_ID) != null) {
             supportLoaderManager.getLoader(LOADER_ID).forceLoad();

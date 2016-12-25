@@ -4,26 +4,25 @@
        android:layout_height="match_parent">
 
     <LinearLayout
-        android:paddingStart="36dp"
-        android:paddingEnd="36dp"
         android:layout_width="match_parent"
-        android:gravity="center"
         android:layout_height="360dp"
-        android:background="@color/card_view"
-        android:orientation="vertical">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingEnd="36dp"
+        android:paddingStart="36dp">
 
         <LinearLayout
-            android:layout_marginTop="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:gravity="center">
 
             <LinearLayout
-                android:onClick="oneInput"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_width="56dp"
                 android:layout_height="68dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="oneInput"
                 android:orientation="vertical">
 
                 <com.maxcriser.cards.view.labels.RobotoThin
@@ -37,19 +36,19 @@
                     android:textSize="@dimen/keyboard_number_size"/>
 
                 <com.maxcriser.cards.view.labels.RobotoThin
-                    android:layout_marginTop="-6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="-6dp"
                     android:textColor="@color/gray_shadow"/>
             </LinearLayout>
 
             <LinearLayout
-                android:onClick="twoInput"
-                android:layout_weight="1"
                 android:layout_width="56dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_height="68dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="twoInput"
                 android:orientation="vertical">
 
                 <com.maxcriser.cards.view.labels.RobotoThin
@@ -63,21 +62,21 @@
                     android:textSize="@dimen/keyboard_number_size"/>
 
                 <com.maxcriser.cards.view.labels.RobotoThin
-                    android:layout_marginTop="-6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="-6dp"
                     android:text="@string/abc"
                     android:textColor="@color/gray_shadow"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:onClick="threeInput"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_width="56dp"
                 android:layout_height="68dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="threeInput"
                 android:orientation="vertical">
 
                 <com.maxcriser.cards.view.labels.RobotoThin
@@ -91,10 +90,10 @@
                     android:textSize="@dimen/keyboard_number_size"/>
 
                 <com.maxcriser.cards.view.labels.RobotoThin
-                    android:layout_marginTop="-6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="-6dp"
                     android:text="@string/def"
                     android:textColor="@color/gray_shadow"/>
 
@@ -109,11 +108,11 @@
             android:gravity="center">
 
             <LinearLayout
-                android:onClick="fourInput"
-                android:layout_weight="1"
                 android:layout_width="56dp"
                 android:layout_height="68dp"
+                android:layout_weight="1"
                 android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="fourInput"
                 android:orientation="vertical">
 
                 <com.maxcriser.cards.view.labels.RobotoThin
@@ -127,21 +126,21 @@
                     android:textSize="@dimen/keyboard_number_size"/>
 
                 <com.maxcriser.cards.view.labels.RobotoThin
-                    android:layout_marginTop="-6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="-6dp"
                     android:text="@string/ghi"
                     android:textColor="@color/gray_shadow"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:onClick="fiveInput"
-                android:layout_weight="1"
                 android:layout_width="56dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_height="68dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="fiveInput"
                 android:orientation="vertical">
 
                 <com.maxcriser.cards.view.labels.RobotoThin
@@ -155,21 +154,21 @@
                     android:textSize="@dimen/keyboard_number_size"/>
 
                 <com.maxcriser.cards.view.labels.RobotoThin
-                    android:layout_marginTop="-6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="-6dp"
                     android:text="@string/jkl"
                     android:textColor="@color/gray_shadow"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:onClick="sixInput"
-                android:layout_weight="1"
                 android:layout_width="56dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_height="68dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="sixInput"
                 android:orientation="vertical">
 
                 <com.maxcriser.cards.view.labels.RobotoThin
@@ -183,10 +182,10 @@
                     android:textSize="@dimen/keyboard_number_size"/>
 
                 <com.maxcriser.cards.view.labels.RobotoThin
-                    android:layout_marginTop="-6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="-6dp"
                     android:text="@string/mno"
                     android:textColor="@color/gray_shadow"/>
 
@@ -201,11 +200,11 @@
             android:gravity="center">
 
             <LinearLayout
-                android:onClick="sevenInput"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_width="56dp"
                 android:layout_height="68dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="sevenInput"
                 android:orientation="vertical">
 
                 <com.maxcriser.cards.view.labels.RobotoThin
@@ -219,21 +218,21 @@
                     android:textSize="@dimen/keyboard_number_size"/>
 
                 <com.maxcriser.cards.view.labels.RobotoThin
-                    android:layout_marginTop="-6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="-6dp"
                     android:text="@string/pqrs"
                     android:textColor="@color/gray_shadow"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:onClick="eightInput"
-                android:layout_weight="1"
                 android:layout_width="56dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_height="68dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="eightInput"
                 android:orientation="vertical">
 
                 <com.maxcriser.cards.view.labels.RobotoThin
@@ -247,21 +246,21 @@
                     android:textSize="@dimen/keyboard_number_size"/>
 
                 <com.maxcriser.cards.view.labels.RobotoThin
-                    android:layout_marginTop="-6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="-6dp"
                     android:text="@string/tuv"
                     android:textColor="@color/gray_shadow"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:onClick="nineInput"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:layout_weight="1"
                 android:layout_width="56dp"
                 android:layout_height="68dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="nineInput"
                 android:orientation="vertical">
 
                 <com.maxcriser.cards.view.labels.RobotoThin
@@ -275,10 +274,10 @@
                     android:textSize="@dimen/keyboard_number_size"/>
 
                 <com.maxcriser.cards.view.labels.RobotoThin
-                    android:layout_marginTop="-6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="-6dp"
                     android:text="@string/wxyz"
                     android:textColor="@color/gray_shadow"/>
 
@@ -289,25 +288,25 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
             android:layout_marginEnd="2dp"
+            android:layout_marginStart="2dp"
             android:layout_marginTop="12dp"
             android:gravity="center">
 
             <LinearLayout
-                android:layout_weight="1"
                 android:layout_width="56dp"
                 android:layout_height="68dp"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
             </LinearLayout>
 
             <LinearLayout
-                android:onClick="zeroInput"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_width="56dp"
                 android:layout_height="68dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="zeroInput"
                 android:orientation="vertical">
 
                 <com.maxcriser.cards.view.labels.RobotoThin
@@ -322,18 +321,18 @@
             </LinearLayout>
 
             <LinearLayout
-                android:onClick="onDeleteClicked"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_width="56dp"
                 android:layout_height="68dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="onDeleteClicked"
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_marginTop="12dp"
-                    android:layout_gravity="center"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
                     android:src="@drawable/ic_backspace_black_24dp"/>
 
             </LinearLayout>

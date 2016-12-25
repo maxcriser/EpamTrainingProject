@@ -26,8 +26,8 @@
     <string name="enter_pin">Enter PIN</string>
     <string name="add_a_new">add a new</string>
     <string name="card_color">Card color</string>
-    <string name="enter_name_of_card">Enter name of card...</string>
-    <string name="enter_name_of_the_card">Enter name of the card...</string>
+    <string name="enter_name_of_card">Enter name of card…</string>
+    <string name="enter_name_of_the_card">Enter name of the card…</string>
     <string name="search_your_cards">Search your cards</string>
     <string name="nfc">NFC</string>
     <string name="now_all_contactless_cards_in_your_mobile_phone">Now all contactless cards in your mobile phone</string>
@@ -155,5 +155,7 @@
     <string name="notification_update_second">Please click OK to update</string>
     <string name="update">UPDATE</string>
     <string name="cannot_parse_settings">Cannot parse settings</string>
+    <string name="crop">CROP</string>
+    <string name="ckeeper_the_cards_keeper">CKeeper - the cards keeper</string>
 
 </resources>

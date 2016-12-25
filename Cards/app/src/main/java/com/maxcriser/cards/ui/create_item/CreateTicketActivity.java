@@ -374,17 +374,6 @@ public class CreateTicketActivity extends AppCompatActivity {
             cvNewTicket.put(ModelTickets.BACKGROUND_COLOR, myColorCode);
             cvNewTicket.put(ModelTickets.ID, (Integer) null);
 
-            // TODO DELETE DOWN
-
-            final ContentValues cv = new ContentValues();
-            cv.put(ModelNFCItems.TITLE, titleStr);
-            cv.put(ModelNFCItems.ID, (Integer) null);
-            cv.put(ModelNFCItems.TAG, "Checking TAG");
-            cv.put(ModelNFCItems.BACKGROUND_COLOR, myColorCode);
-
-            db.insert(ModelNFCItems.class, cv, null);
-            // TODO DELETE UP
-
             db.insert(ModelTickets.class, cvNewTicket, new OnResultCallback<Long, Void>() {
 
                 @Override

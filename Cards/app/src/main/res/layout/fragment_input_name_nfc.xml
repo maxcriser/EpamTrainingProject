@@ -22,13 +22,4 @@
         android:inputType="text"
         android:textSize="18sp"/>
 
-    <!--<FrameLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="148dp">-->
-<!---->
-        <!--<include layout="@layout/fragment_viewpager_preview_colors"/>-->
-    <!--</FrameLayout>-->
-<!---->
-    <!--<include layout="@layout/fragment_choose_color"/>-->
-
 </LinearLayout>

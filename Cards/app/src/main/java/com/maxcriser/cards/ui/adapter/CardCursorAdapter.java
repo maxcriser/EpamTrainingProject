@@ -82,7 +82,6 @@ public class CardCursorAdapter extends RecyclerView.Adapter<CardHolder> {
                 holder.mSubhead.setText(mCursor
                         .getString(mCursor.getColumnIndex(ModelBankCards.CARDHOLDER)));
                 holder.mTitle.setTag(mCursor.getInt(mCursor.getColumnIndex(ModelBankCards.ID)));
-
                 final String frontPhoto = mCursor.getString(mCursor.getColumnIndex(ModelBankCards.PHOTO_FRONT));
                 final String backPhoto = mCursor.getString(mCursor.getColumnIndex(ModelBankCards.PHOTO_BACK));
                 if (!frontPhoto.isEmpty()) {

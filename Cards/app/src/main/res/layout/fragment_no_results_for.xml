@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:orientation="vertical">
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical">
 
     <TextView
-        android:layout_marginTop="56dp"
-        android:visibility="gone"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="4dp"
-        android:textSize="16sp"
-        android:textColor="@color/no_result_for_color"
-        android:gravity="center"
         android:id="@+id/frame_no_results_for"
-        android:hint="@string/say_what_no_results_for_test"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:gravity="center"
+        android:hint="@string/say_what_no_results_for_test"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="4dp"
+        android:textColor="@color/no_result_for_color"
+        android:textSize="16sp"
+        android:visibility="gone"/>
 
 </merge>

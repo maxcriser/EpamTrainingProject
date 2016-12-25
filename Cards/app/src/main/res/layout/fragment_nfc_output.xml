@@ -38,8 +38,8 @@
                 android:layout_width="220dp"
                 android:layout_height="220dp"
                 android:layout_gravity="end"
-                android:layout_marginEnd="-24dp"
                 android:layout_marginBottom="-30dp"
+                android:layout_marginEnd="-24dp"
                 android:src="@drawable/long_hand"/>
 
         </FrameLayout>

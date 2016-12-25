@@ -1,8 +1,8 @@
 <FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_marginBottom="8dp">
 
     <FrameLayout
         android:layout_width="48dp"
@@ -20,13 +20,13 @@
     </FrameLayout>
 
     <com.maxcriser.cards.view.labels.RobotoThin
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textColor="@color/text_toolbar"
-        android:textSize="16sp"
         android:text="@string/select_color"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:textColor="@color/text_toolbar"
+        android:textSize="16sp"/>
 
     <FrameLayout
         android:layout_width="48dp"

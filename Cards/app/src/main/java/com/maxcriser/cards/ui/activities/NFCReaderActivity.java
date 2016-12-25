@@ -24,7 +24,6 @@ public class NFCReaderActivity extends AppCompatActivity implements Listener {
 
     private EditText mEtMessage;
 
-    //TODO almost the same, need to be common abstraction
     //it's test activity
     private NFCWriteFragment mNfcWriteFragment;
     private NFCReadFragment mNfcReadFragment;

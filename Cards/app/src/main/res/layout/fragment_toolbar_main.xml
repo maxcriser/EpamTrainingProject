@@ -5,31 +5,32 @@
        android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
-        android:onClick="onToolbarClicked"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_toolbar"
-        card_view:cardElevation="2dp"
-        card_view:cardBackgroundColor="@color/white_shadow">
+        android:onClick="onToolbarClicked"
+        card_view:cardBackgroundColor="@color/white_shadow"
+        card_view:cardElevation="4dp">
 
         <com.maxcriser.cards.view.labels.RobotoRegular
-            android:textStyle="bold"
-            android:layout_gravity="bottom"
-            android:textColor="@color/text_toolbar"
             android:id="@+id/title_toolbar"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/height_toolbar"
-            android:layout_marginLeft="@dimen/margin_left_title_toolbar"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="@dimen/margin_left_title_toolbar"
             android:gravity="center"
             android:text="@string/app_name"
-            android:textSize="18sp"/>
+            android:textColor="@color/text_toolbar"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
 
         <ImageButton
-            android:layout_gravity="bottom"
+            android:id="@+id/imageButton"
             android:layout_width="@dimen/height_toolbar"
             android:layout_height="@dimen/height_toolbar"
+            android:layout_gravity="bottom"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:onClick="onMenuClicked"
-            android:src="@drawable/ic_menu_black_24dp" android:id="@+id/imageButton"/>
+            android:src="@drawable/ic_menu_black_24dp"/>
 
     </android.support.v7.widget.CardView>
 

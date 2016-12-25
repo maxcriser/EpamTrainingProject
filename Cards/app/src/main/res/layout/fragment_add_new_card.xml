@@ -6,13 +6,13 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/new_card"
-        android:onClick="onAddNewClicked"
-        android:background="?attr/selectableItemBackgroundBorderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        app:backgroundTint="#FFDA4336"
-        android:src="@drawable/ic_add_black_24dp"/>
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:onClick="onAddNewClicked"
+        android:src="@drawable/ic_add_black_24dp"
+        app:backgroundTint="#FFDA4336"/>
 
 </merge>

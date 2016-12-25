@@ -169,11 +169,13 @@
                             android:textColor="@color/text_toolbar"
                             android:textSize="16sp"/>
 
-                        <EditText
+                        <com.github.pinball83.maskededittext.MaskedEditText
                             android:id="@+id/ver_number"
                             style="@style/EditTextBlank"
                             android:imeOptions="actionDone"
-                            android:inputType="number"/>
+                            android:inputType="number"
+                            app:mask="**** ***"
+                            app:notMaskedSymbol="*"/>
 
                         <ImageView
                             android:id="@+id/scannerBar"

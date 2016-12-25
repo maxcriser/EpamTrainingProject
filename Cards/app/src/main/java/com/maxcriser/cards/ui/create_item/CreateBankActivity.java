@@ -81,7 +81,7 @@ public class CreateBankActivity extends AppCompatActivity {
     private MaskedEditText number;
     private EditText pin;
     private TextView validDate;
-    private EditText verificationNumber;
+    private MaskedEditText verificationNumber;
     private String myTypeCard;
     private String myColorCode;
     private Uri editFrontUri;
@@ -102,7 +102,7 @@ public class CreateBankActivity extends AppCompatActivity {
         final String uniqueString = UniqueStringGenerator.getUniqueString();
         photoFileNameFront = ListConstants.BEG_FILE_NAME_BANK + uniqueString + "front_photo.jpg";
         photoFileNameBack = ListConstants.BEG_FILE_NAME_BANK + uniqueString + "back_photo.jpg";
-        verificationNumber = (EditText) findViewById(R.id.ver_number);
+        verificationNumber = (MaskedEditText) findViewById(R.id.ver_number);
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
         bank = (EditText) findViewById(R.id.bank);
         cardholder = (EditText) findViewById(R.id.cardholder);

@@ -24,13 +24,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
-        android:text="Максим Захаренко"
+        android:text="@string/ckeeper_the_cards_keeper"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="mv.maxcriser@gmail.com"/>
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

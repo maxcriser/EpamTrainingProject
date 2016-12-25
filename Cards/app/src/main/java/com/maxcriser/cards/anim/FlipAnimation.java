@@ -44,12 +44,12 @@ public class FlipAnimation extends Animation {
         if (interpolatedTime >= FLOAT_HALF) {
             if (isReverse) {
                 degrees -= DEGREES_MATH;
-                btnFinish.setVisibility(View.GONE);
                 btnStart.setVisibility(View.VISIBLE);
+                btnFinish.setVisibility(View.GONE);
             } else {
                 degrees -= DEGREES_MATH;
-                btnFinish.setVisibility(View.VISIBLE);
                 btnStart.setVisibility(View.GONE);
+                btnFinish.setVisibility(View.VISIBLE);
             }
         }
 

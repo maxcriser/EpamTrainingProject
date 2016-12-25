@@ -11,9 +11,9 @@
         android:orientation="vertical">
 
         <com.maxcriser.cards.view.labels.RobotoThin
-            android:layout_margin="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:gravity="center"
             android:text="@string/hold_nfc_item_to_your_phone"
             android:textAllCaps="true"
