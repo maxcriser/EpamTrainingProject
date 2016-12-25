@@ -4,7 +4,7 @@ import android.support.v4.view.ViewPager;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.ListConstants;
-import com.maxcriser.cards.model.PreviewListColorsSetter;
+import com.maxcriser.cards.constant.ListPreview;
 
 public class OnTypePageChangeListener implements ViewPager.OnPageChangeListener {
 
@@ -26,7 +26,7 @@ public class OnTypePageChangeListener implements ViewPager.OnPageChangeListener 
 
     @Override
     public void onPageSelected(final int position) {
-        final String myTypeCard = PreviewListColorsSetter.getInstance().getTypeCard().get(position);
+        final String myTypeCard = ListPreview.types.get(position);
         switch (myTypeCard) {
             case ListConstants.Cards.VISA:
                 mListener.onResult(position, R.drawable.type_visa, myTypeCard);

@@ -36,7 +36,8 @@ import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.constant.Extras;
 import com.maxcriser.cards.constant.ListConstants;
-import com.maxcriser.cards.database.DatabaseHelperImpl;
+import com.maxcriser.cards.constant.ListPreview;
+import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelNFCItems;
 import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
@@ -50,6 +51,7 @@ import com.maxcriser.cards.view.labels.RobotoRegular;
 
 import java.io.File;
 import java.util.Calendar;
+import java.util.List;
 
 import static android.view.View.GONE;
 import static com.maxcriser.cards.constant.ListConstants.Requests.CAPTURE_IMAGE_BACK;
@@ -61,7 +63,6 @@ import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_CALEND
 import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_FRONT_CAMERA;
 import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_WRITE_STORAGE_BACK;
 import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_WRITE_STORAGE_FRONT;
-import static com.maxcriser.cards.ui.activities.LaunchScreenActivity.previewColors;
 import static com.maxcriser.cards.utils.Storage.isExternalStorageAvailable;
 
 public class CreateTicketActivity extends AppCompatActivity {
@@ -69,7 +70,7 @@ public class CreateTicketActivity extends AppCompatActivity {
     public static final String TICKET = "CreateTicketActivity";
     public String photoFileNameFront;
     public String photoFileNameBack;
-    private DatabaseHelperImpl db;
+    private DatabaseHelper db;
     private TextView date;
     private boolean statusSave;
     private TextView time;
@@ -218,14 +219,16 @@ public class CreateTicketActivity extends AppCompatActivity {
         photoFileNameBack = ListConstants.BEG_FILE_NAME_TICKET + uniqueString + "back_photo.jpg";
         DateToView.setDateToTicketView(date, calendar);
         DateToView.setTimeToView(time, calendar);
-        db = DatabaseHelperImpl.getInstance(this);
+        db = DatabaseHelper.getInstance(this);
         title.setText(getResources().getString(R.string.new_ticket_title));
 
-        final PreviewColor listPreviewColor = previewColors.get(0);
+        List<PreviewColor> ds = ListPreview.colors;
+
+        final PreviewColor listPreviewColor = ListPreview.colors.get(0);
         myColorName = listPreviewColor.getNameColorCards();
         myColorCode = listPreviewColor.getCodeColorCards();
         Log.d(TICKET, myColorName + " " + myColorCode);
-        final int pageCount = previewColors.size();
+        final int pageCount = ListPreview.colors.size();
         pager.setPageMargin(ListConstants.PAGER_MARGIN_PREVIEW);
         final PagerAdapter pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 ListConstants.PagerIDs.ID_TICKET_ITEM,
@@ -411,14 +414,13 @@ public class CreateTicketActivity extends AppCompatActivity {
         intent.putExtra("beginTime", timeInMillis);
         intent.putExtra("allDay", false);
         intent.putExtra("rrule", "FREQ=YEARLY");
-        int INT_SEC = 60;
+        final int INT_SEC = 60;
         intent.putExtra("endTime", timeInMillis + INT_SEC * INT_SEC * 1000);
         intent.putExtra("title", title);
         startActivity(intent);
     }
 
     public void onCreateCardClicked(final View view) {
-//        getPermission(REQUEST_WRITE_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         createCard();
     }
 

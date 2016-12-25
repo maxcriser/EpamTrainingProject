@@ -35,7 +35,8 @@ import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.async.task.ScanCreditCard;
 import com.maxcriser.cards.constant.Extras;
 import com.maxcriser.cards.constant.ListConstants;
-import com.maxcriser.cards.database.DatabaseHelperImpl;
+import com.maxcriser.cards.constant.ListPreview;
+import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.dialog.MatchesFountDialogBuilder;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
@@ -60,8 +61,6 @@ import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_BACK_C
 import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_FRONT_CAMERA;
 import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_WRITE_STORAGE_BACK;
 import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_WRITE_STORAGE_FRONT;
-import static com.maxcriser.cards.ui.activities.LaunchScreenActivity.previewColors;
-import static com.maxcriser.cards.ui.activities.LaunchScreenActivity.previewTypes;
 import static com.maxcriser.cards.utils.Storage.isExternalStorageAvailable;
 
 public class CreateBankActivity extends AppCompatActivity {
@@ -73,7 +72,7 @@ public class CreateBankActivity extends AppCompatActivity {
     private ImageView backPhoto;
     private FrameLayout removeFront;
     private FrameLayout removeBack;
-    private DatabaseHelperImpl db;
+    private DatabaseHelper db;
     private ScrollView mScrollView;
     private ViewPager pagerTypes;
     private final Calendar calendar = Calendar.getInstance();
@@ -116,19 +115,19 @@ public class CreateBankActivity extends AppCompatActivity {
         removeBack = (FrameLayout) findViewById(R.id.remove_back);
         removeFront = (FrameLayout) findViewById(R.id.remove_front);
         statusScan = true;
-        db = DatabaseHelperImpl.getInstance(this);
+        db = DatabaseHelper.getInstance(this);
         DateToView.setDateToCreditView(validDate, calendar);
         final RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
         title.setText(getResources().getString(R.string.bank_title));
 
-        final PreviewColor listPreviewColor = previewColors.get(0);
+        final PreviewColor listPreviewColor = ListPreview.colors.get(0);
         final String myColorName = listPreviewColor.getNameColorCards();
         myColorCode = listPreviewColor.getCodeColorCards();
         Log.d("BANK", myColorName + " " + myColorCode);
 
-        myTypeCard = previewTypes.get(0);
+        myTypeCard = ListPreview.types.get(0);
         Log.d("BANK", myTypeCard);
-        final int pageCount = previewTypes.size();
+        final int pageCount = ListPreview.types.size();
         final PagerAdapter pagerAdapterTypes = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 ListConstants.PagerIDs.ID_BANK_CARD_ITEM_TYPE,
                 pageCount);

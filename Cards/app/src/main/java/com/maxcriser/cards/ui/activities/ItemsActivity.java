@@ -41,7 +41,7 @@ import android.widget.Toast;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.constant.ListConstants;
-import com.maxcriser.cards.database.DatabaseHelperImpl;
+import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.database.models.ModelNFCItems;
@@ -91,7 +91,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     private FrameLayout progressBar;
     private FloatingActionButton newCard;
     private TextView noResultFor;
-    private DatabaseHelperImpl dbHelper;
+    private DatabaseHelper dbHelper;
     private CursorAdapter adapter;
     private RecyclerView recyclerItems;
     private CardView toolbarBack;
@@ -232,7 +232,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         });
         title.setText(typeItems);
 
-        dbHelper = DatabaseHelperImpl.getInstance(this);
+        dbHelper = DatabaseHelper.getInstance(this);
 
         recyclerItems.setHasFixedSize(true);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -422,7 +422,6 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         } else if (typeItems.equals(getResources().getString(R.string.tickets_title))) {
             return new CardsCursorLoader(this, searchText, ModelTickets.class);
         } else {
-            // TODO: 12.12.2016 CreateNfcActivity
             return new CardsCursorLoader(this, searchText, ModelNFCItems.class);
         }
     }

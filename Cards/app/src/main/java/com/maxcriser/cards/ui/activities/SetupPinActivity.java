@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.ListConstants;
 
+import static com.maxcriser.cards.constant.ListConstants.PASSWORD_TAG;
+
 public class SetupPinActivity extends AppCompatActivity {
 
     private TextView title;
@@ -81,15 +83,10 @@ public class SetupPinActivity extends AppCompatActivity {
                 title.setText(R.string.confirm_your_pin);
             } else if (page == Page.SECOND) {
                 if (password.equals(inputText.getText().toString())) {
-                    //TODO statics
-                    LaunchScreenActivity.loadPassword = password;
-                    LaunchScreenActivity.mSharedPreferences =
-                            getSharedPreferences(LaunchScreenActivity.PASSWORD_TAG, MODE_PRIVATE);
-                    final SharedPreferences.Editor editSharedPassword = LaunchScreenActivity.mSharedPreferences.edit();
-                    editSharedPassword.putString(LaunchScreenActivity.PASSWORD_TAG, password).apply();
-
-                    Toast.makeText(SetupPinActivity.this, "password: " + password + " tag: " + LaunchScreenActivity.PASSWORD_TAG, Toast.LENGTH_LONG).show();
-                    Toast.makeText(SetupPinActivity.this, "save: " + LaunchScreenActivity.loadPassword, Toast.LENGTH_LONG).show();
+                    final SharedPreferences sharedPreferences =
+                            getSharedPreferences(PASSWORD_TAG, MODE_PRIVATE);
+                    final SharedPreferences.Editor editSharedPassword = sharedPreferences.edit();
+                    editSharedPassword.putString(PASSWORD_TAG, password).apply();
 
                     final Intent intent = new Intent(SetupPinActivity.this, MenuActivity.class);
                     startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));

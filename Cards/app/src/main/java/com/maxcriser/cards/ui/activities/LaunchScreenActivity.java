@@ -8,20 +8,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.maxcriser.cards.model.PreviewColor;
-import com.maxcriser.cards.model.PreviewListColorsSetter;
-
-import java.util.List;
+import static com.maxcriser.cards.constant.ListConstants.PASSWORD_TAG;
+import static com.maxcriser.cards.constant.ListConstants.UNDEFENDED;
 
 public class LaunchScreenActivity extends AppCompatActivity {
 
-    //TODO remove all statics
-    public static List<PreviewColor> previewColors;
-    public static List<String> previewTypes;
-    public static String loadPassword;
-    public static SharedPreferences mSharedPreferences;
-    public static int SCREEN_WIDTH;
-    public static int SCREEN_HEIGHT;
+    public String loadPassword;
+    public SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -29,12 +22,6 @@ public class LaunchScreenActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         loadPassword();
-
-        final PreviewListColorsSetter tcReader = PreviewListColorsSetter.getInstance();
-        tcReader.setPreviewColors();
-        previewColors = tcReader.getPreviewColorSetters();
-        tcReader.setTypeCard();
-        previewTypes = tcReader.getTypeCard();
 
         final Intent intent;
         if (loadPassword.equals(UNDEFENDED)) {

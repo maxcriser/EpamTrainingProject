@@ -253,7 +253,7 @@ public class MenuActivity extends AppCompatActivity
                     break;
                 case R.id.main_nfc_card:
                     // TODO: 24.12.2016 NFCREADERACTIVITY
-                    startActivity(new Intent(MenuActivity.this, TestFlipAnimation.class));
+                    startActivity(new Intent(MenuActivity.this, NFCReaderActivity.class));
 //                    intent = new Intent(MenuActivity.this, ItemsActivity.class);
 //                    selectItem = getResources().getString(R.string.nfc_title);
 //                    startActivity(intent);

@@ -2,15 +2,12 @@ package com.maxcriser.cards.model;
 
 public class PreviewColor {
 
-    private String nameColorCards;
-    private String codeColorCards;
+    private final String nameColorCards;
+    private final String codeColorCards;
 
-    void setNameColorCards(final String pNameColorCards) {
-        nameColorCards = pNameColorCards;
-    }
-
-    void setCodeColorCards(final String pCodeColorCards) {
-        codeColorCards = pCodeColorCards;
+    public PreviewColor(final String name, final String code) {
+        this.nameColorCards = name;
+        this.codeColorCards = code;
     }
 
     public String getNameColorCards() {

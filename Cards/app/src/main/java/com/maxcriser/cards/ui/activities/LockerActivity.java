@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
@@ -39,6 +40,9 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 
+import static com.maxcriser.cards.constant.ListConstants.PASSWORD_TAG;
+import static com.maxcriser.cards.constant.ListConstants.UNDEFENDED;
+
 public class LockerActivity extends AppCompatActivity {
 
     private static final String KEY_NAME = "finger_key";
@@ -53,14 +57,16 @@ public class LockerActivity extends AppCompatActivity {
     private final Integer durationVibrateInput = 10;
     private KeyStore keyStore;
     private Cipher cipher;
+    private String loadPassword;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin_protected);
+        final SharedPreferences sharedPreferences = getSharedPreferences(PASSWORD_TAG, MODE_PRIVATE);
+        loadPassword = sharedPreferences.getString(PASSWORD_TAG, UNDEFENDED);
         initViews();
 
-//        TODO FIX BUG At least finger
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
             final KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
@@ -107,7 +113,6 @@ public class LockerActivity extends AppCompatActivity {
         mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         intent = getIntent();
         intentLockedPage = intent.getStringExtra(MenuActivity.TYPE_LOCKED_SCREEN);
-        Toast.makeText(this, LaunchScreenActivity.loadPassword, Toast.LENGTH_SHORT).show();
         builderPassword = ListConstants.EMPTY_STRING;
         firstCircle = (ImageView) findViewById(R.id.crlcOne);
         secondCircle = (ImageView) findViewById(R.id.crlcTwo);
@@ -198,7 +203,7 @@ public class LockerActivity extends AppCompatActivity {
             setBackgroundCircle(thirdCircle);
         } else if (length == 4) {
             setBackgroundCircle(fourthCircle);
-            if (builderPassword.equals(LaunchScreenActivity.loadPassword)) {
+            if (builderPassword.equals(loadPassword)) {
                 start();
             } else {
                 final Integer durationVibrateError = 200;

@@ -6,6 +6,7 @@ import android.os.StrictMode;
 public class CoreApplication extends Application {
 
     CoreApplication() {
+
         if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads()

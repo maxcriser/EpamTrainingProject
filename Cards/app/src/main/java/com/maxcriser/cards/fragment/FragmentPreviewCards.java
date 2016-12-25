@@ -10,10 +10,10 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.maxcriser.cards.R;
+import com.maxcriser.cards.constant.ListPreview;
 import com.maxcriser.cards.model.PreviewColor;
 
 import static com.maxcriser.cards.constant.ListConstants.ARGUMENT_PAGE_NUMBER_DISCOUNT;
-import static com.maxcriser.cards.ui.activities.LaunchScreenActivity.previewColors;
 
 public class FragmentPreviewCards extends Fragment {
 
@@ -41,7 +41,7 @@ public class FragmentPreviewCards extends Fragment {
         final View view = inflater.inflate((Integer) previewView, null);
         final TextView tvPage = (TextView) view.findViewById(R.id.title_main_cards);
         final FrameLayout mLinearCard = (FrameLayout) view.findViewById(R.id.linear_card);
-        final PreviewColor color = previewColors.get(pageNumberDiscount);
+        final PreviewColor color = ListPreview.colors.get(pageNumberDiscount);
         mLinearCard.setBackgroundColor(Color.parseColor(color.getCodeColorCards()));
         tvPage.setText(color.getNameColorCards());
         return view;

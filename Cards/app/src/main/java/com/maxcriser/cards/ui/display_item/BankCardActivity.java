@@ -21,7 +21,7 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.constant.ListConstants;
-import com.maxcriser.cards.database.DatabaseHelperImpl;
+import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelBankCards;
 
 import static android.text.InputType.TYPE_CLASS_TEXT;
@@ -54,7 +54,7 @@ public class BankCardActivity extends Activity {
     private String id;
     private EditText editPin;
     private ImageView eye;
-    private DatabaseHelperImpl dbHelper;
+    private DatabaseHelper dbHelper;
     private Animation animScaleDown;
     private Animation animScaleUp;
 
@@ -88,7 +88,7 @@ public class BankCardActivity extends Activity {
 
         registerForContextMenu(materialDesignFAM);
 
-        dbHelper = DatabaseHelperImpl.getInstance(this);
+        dbHelper = DatabaseHelper.getInstance(this);
 
         final Intent creditIntent = getIntent();
         id = creditIntent.getStringExtra(EXTRA_BANK_ID);

@@ -22,7 +22,7 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.RemovePhoto;
-import com.maxcriser.cards.database.DatabaseHelperImpl;
+import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.dialog.ImageViewerDialogBuilder;
 import com.maxcriser.cards.loader.image.ImageLoader;
@@ -49,7 +49,7 @@ public class TicketActivity extends Activity {
     private String editTitleStr;
     private LinearLayout linearFrameAction;
     private String id;
-    private DatabaseHelperImpl dbHelper;
+    private DatabaseHelper dbHelper;
     private Animation animScaleDown;
     private Animation animScaleUp;
     private Bitmap firstBitmap;
@@ -85,7 +85,7 @@ public class TicketActivity extends Activity {
 
         registerForContextMenu(materialDesignFAM);
 
-        dbHelper = DatabaseHelperImpl.getInstance(this);
+        dbHelper = DatabaseHelper.getInstance(this);
 
         final Intent creditIntent = getIntent();
         id = creditIntent.getStringExtra(EXTRA_TICKET_ID);

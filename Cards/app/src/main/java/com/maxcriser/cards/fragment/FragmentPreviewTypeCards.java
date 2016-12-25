@@ -9,8 +9,7 @@ import android.widget.ImageView;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.ListConstants;
-
-import static com.maxcriser.cards.ui.activities.LaunchScreenActivity.previewTypes;
+import com.maxcriser.cards.constant.ListPreview;
 
 public class FragmentPreviewTypeCards extends Fragment {
 
@@ -37,7 +36,7 @@ public class FragmentPreviewTypeCards extends Fragment {
                              final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.preview_type_item, null);
         final ImageView tvPage = (ImageView) view.findViewById(R.id.icon_type_card);
-        final String type = previewTypes.get(pageNumberType);
+        final String type = ListPreview.types.get(pageNumberType);
         switch (type) {
             case ListConstants.Cards.VISA:
                 tvPage.setImageResource(R.drawable.type_visa);
