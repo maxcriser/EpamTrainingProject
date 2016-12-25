@@ -50,13 +50,13 @@ import com.maxcriser.cards.dialog.NfcInputDialogBuilder;
 import com.maxcriser.cards.dialog.NfcOutputDialogBuilder;
 import com.maxcriser.cards.listener.RecyclerItemClickListener;
 import com.maxcriser.cards.loader.CardsCursorLoader;
-import com.maxcriser.cards.ui.adapter.CursorAdapter;
+import com.maxcriser.cards.ui.adapter.CardCursorAdapter;
 import com.maxcriser.cards.ui.create_item.CreateBankActivity;
 import com.maxcriser.cards.ui.create_item.CreateTicketActivity;
 import com.maxcriser.cards.ui.display_item.BankCardActivity;
 import com.maxcriser.cards.ui.display_item.DiscountCardActivity;
 import com.maxcriser.cards.ui.display_item.TicketActivity;
-import com.maxcriser.cards.utils.FlipAnimation;
+import com.maxcriser.cards.anim.FlipAnimation;
 import com.maxcriser.cards.view.labels.RobotoRegular;
 
 import static android.view.View.GONE;
@@ -97,7 +97,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     private FloatingActionButton newCard;
     private TextView noResultFor;
     private DatabaseHelper dbHelper;
-    private CursorAdapter adapter;
+    private CardCursorAdapter adapter;
     private RecyclerView recyclerItems;
     private CardView toolbarBack;
     private CardView toolbarSearch;
@@ -469,16 +469,16 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
 
         switch (typeItems) {
             case EXTRA_BANK_TITLE_TO_ITEMS:
-                adapter = new CursorAdapter(data, this, R.layout.item_bank);
+                adapter = new CardCursorAdapter(data, this, R.layout.item_bank);
                 break;
             case EXTRA_DISCOUNT_TITLE_TO_ITEMS:
-                adapter = new CursorAdapter(data, this, R.layout.item_discount);
+                adapter = new CardCursorAdapter(data, this, R.layout.item_discount);
                 break;
             case EXTRA_TICKETS_TITLE_TO_ITEMS:
-                adapter = new CursorAdapter(data, this, R.layout.item_ticket);
+                adapter = new CardCursorAdapter(data, this, R.layout.item_ticket);
                 break;
             case EXTRA_NFC_TITLE_TO_ITEMS:
-                adapter = new CursorAdapter(data, this, R.layout.item_nfc);
+                adapter = new CardCursorAdapter(data, this, R.layout.item_nfc);
                 break;
         }
 //          recyclerItems.swapAdapter(adapter, false); // true

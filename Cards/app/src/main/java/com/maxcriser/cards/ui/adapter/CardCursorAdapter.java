@@ -20,16 +20,17 @@ import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.viewHolder.CardHolder;
 
-public class CursorAdapter extends RecyclerView.Adapter<CardHolder> {
+import static com.maxcriser.cards.constant.ListConstants.RATIO_CREDIT_CARD;
 
-    private static final double RATIO_CREDIT_CARD = 1.5818181818181818181818181818182;
+public class CardCursorAdapter extends RecyclerView.Adapter<CardHolder> {
+
     private final Cursor mCursor;
     private final Context mContext;
     private final Object mView;
     private double viewWidth;
     private double viewHeight;
 
-    public CursorAdapter(final Cursor pCursor, final Context pContext, final Object mObject) {
+    public CardCursorAdapter(final Cursor pCursor, final Context pContext, final Object mObject) {
         mCursor = pCursor;
         mContext = pContext;
         mView = mObject;

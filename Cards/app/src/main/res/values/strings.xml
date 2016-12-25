@@ -151,5 +151,9 @@
     <string name="query_">"Query: "</string>
     <string name="notification">Notification</string>
     <string name="about">About</string>
+    <string name="notification_update_first">A new version of the application is available (</string>
+    <string name="notification_update_second">Please click OK to update</string>
+    <string name="update">UPDATE</string>
+    <string name="cannot_parse_settings">Cannot parse settings</string>
 
 </resources>

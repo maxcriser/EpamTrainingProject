@@ -7,16 +7,16 @@ import java.util.List;
 
 public final class ListPreview {
 
-    public static final String COLOR_TEAL = "#009688";
-    public static final String TEAL = "TEAL";
-    public static final String COLOR_CYAN = "#00BCD4";
-    public static final String CYAN = "CYAN";
-    public static final String COLOR_BLUE = "#4f81b6";
-    public static final String BLUE = "BLUE";
-    public static final String COLOR_GRAY = "#78909c";
-    public static final String GRAY = "GRAY";
-    public static final String COLOR_RED = "#da513f";
-    public static final String RED = "RED";
+    private static final String COLOR_TEAL = "#009688";
+    private static final String TEAL = "TEAL";
+    private static final String COLOR_CYAN = "#00BCD4";
+    private static final String CYAN = "CYAN";
+    private static final String COLOR_BLUE = "#4f81b6";
+    private static final String BLUE = "BLUE";
+    private static final String COLOR_GRAY = "#78909c";
+    private static final String GRAY = "GRAY";
+    private static final String COLOR_RED = "#da513f";
+    private static final String RED = "RED";
 
     public static final List<PreviewColor> colors = new ArrayList<PreviewColor>() {
 

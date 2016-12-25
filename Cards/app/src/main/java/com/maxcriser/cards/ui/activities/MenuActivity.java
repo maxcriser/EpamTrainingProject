@@ -1,9 +1,6 @@
 package com.maxcriser.cards.ui.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.maxcriser.cards.BuildConfig;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
@@ -36,14 +34,14 @@ import static com.maxcriser.cards.constant.ListConstants.CONFIG;
 import static com.maxcriser.cards.constant.ListConstants.CREDIT_CARD;
 import static com.maxcriser.cards.constant.ListConstants.SETUP_PIN;
 import static com.maxcriser.cards.constant.ListConstants.TEXT_PLAIN;
+import static com.maxcriser.cards.constant.ListConstants.TYPE_LOCKED_SCREEN;
 import static com.maxcriser.cards.constant.ListConstants.URL_JSON_LOCATION;
 import static com.maxcriser.cards.constant.ListConstants.URL_JSON_SETTINGS;
+import static com.maxcriser.cards.utils.ConnectivityManager.isConnected;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    //TODO remove static
-    public static final String TYPE_LOCKED_SCREEN = "type_locked_screen";
     private String pCountry = "#country";
     private String pCountryCode = "#country code";
     private String pIsp = "#isp";
@@ -102,15 +100,20 @@ public class MenuActivity extends AppCompatActivity
             public void onSuccess(final String pS) {
                 mSettingsJson = new SettingsJson(pS);
                 if (mSettingsJson.isFlagMessage()) {
-                    final NotificationDialogBuilder notificationDialogBuilder = new NotificationDialogBuilder(
-                            MenuActivity.this, getString(R.string.notification), mSettingsJson.getMessage(), mSettingsJson.getGooglePlayUrl(), true, true);
-                    notificationDialogBuilder.startDialog();
+                    if (!mSettingsJson.getAppVersion().equals(BuildConfig.VERSION_NAME)) {
+
+                        final NotificationDialogBuilder notificationDialogBuilder = new NotificationDialogBuilder(
+                                MenuActivity.this, getString(R.string.notification),
+                                getString(R.string.notification_update_first) + mSettingsJson.getAppVersion() + ")",
+                                mSettingsJson.getGooglePlayUrl(), true, false, getString(R.string.update), null);
+                        notificationDialogBuilder.startDialog();
+                    }
                 }
             }
 
             @Override
             public void onError(final Exception pE) {
-                Toast.makeText(MenuActivity.this, "Cannot parse settings", Toast.LENGTH_LONG).show();
+                Toast.makeText(MenuActivity.this, R.string.cannot_parse_settings, Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -144,17 +147,6 @@ public class MenuActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    //TODO ConnectivityManager
-    private NetworkInfo getNetworkInfo(final Context context) {
-        final ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo();
-    }
-
-    private boolean isConnected(final Context context) {
-        final NetworkInfo info = this.getNetworkInfo(context);
-        return (info != null && info.isConnected());
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -181,7 +173,7 @@ public class MenuActivity extends AppCompatActivity
         } else if (id == R.id.nav_about) {
             if (mSettingsJson != null) {
                 final NotificationDialogBuilder notificationDialogBuilder = new NotificationDialogBuilder(this,
-                        getString(R.string.about), mSettingsJson.getAbout(), null, false, false);
+                        getString(R.string.about), mSettingsJson.getAbout(), null, false, false, null, null);
                 notificationDialogBuilder.startDialog();
             }
         } else if (id == R.id.nav_share) {
@@ -208,7 +200,7 @@ public class MenuActivity extends AppCompatActivity
             }
 
             final NotificationDialogBuilder notificationDialogBuilder =
-                    new NotificationDialogBuilder(this, title, message, null, true, false);
+                    new NotificationDialogBuilder(this, title, message, null, true, false, null, null);
             notificationDialogBuilder.startDialog();
         }
 

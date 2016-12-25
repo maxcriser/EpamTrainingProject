@@ -17,17 +17,17 @@ import com.maxcriser.cards.model.Priority;
 import com.maxcriser.cards.model.Request;
 import com.maxcriser.cards.thread.ITask;
 import com.maxcriser.cards.thread.PriorityRunnable;
-import com.maxcriser.cards.thread.ThreadManager;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.util.Stack;
 
+import static com.maxcriser.cards.constant.ListConstants.FILE;
+import static com.maxcriser.cards.constant.ListConstants.HTTP;
+
 public final class ImageLoader {
 
-    private static final String FILE = "file://";
-    private static final String HTTP = "http";
     private static ImageLoader sImageLoader;
     private final HttpClient mHttpClient;
     private final ThreadManager mThreadManager;

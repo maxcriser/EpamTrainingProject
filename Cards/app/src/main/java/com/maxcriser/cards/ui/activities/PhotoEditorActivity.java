@@ -22,14 +22,6 @@ import com.maxcriser.cards.constant.ListConstants;
 
 public class PhotoEditorActivity extends AppCompatActivity {
 
-    private static final float INITIAL_SCALE = 0.75f;
-    private static final int PADDING_DP = 24;
-    private static final int MIN_DP = 85;
-    private static final int WEIGHT_DP = 1;
-    private static final int WEIGHT_DP1 = 1;
-    private static final int HANDLE_DP = 0;
-    private static final int RATIO_X = 87;
-    private static final int RATIO_Y = 55;
     private CropImageView image;
     private FrameLayout mProgressBar;
     private Uri photoUri;
@@ -50,19 +42,27 @@ public class PhotoEditorActivity extends AppCompatActivity {
         final LinearLayout menuBar = (LinearLayout) findViewById(R.id.menu_bar);
         image = (CropImageView) findViewById(R.id.cropImageView);
         mProgressBar = (FrameLayout) findViewById(R.id.frame_progressbar);
-        image.setInitialFrameScale(INITIAL_SCALE);
+        final float initialScane = 0.75f;
+        image.setInitialFrameScale(initialScane);
         if (statusEditor.equals(ListConstants.STATUS_PHOTOEEDITOR_CREDIT_CARD)) {
-            image.setCustomRatio(RATIO_X, RATIO_Y);
+            final int ratioY = 55;
+            final int ratioX = 87;
+            image.setCustomRatio(ratioX, ratioY);
             menuBar.setVisibility(View.GONE);
         } else {
             image.setCropMode(CropImageView.CropMode.FREE);
             menuBar.setVisibility(View.VISIBLE);
         }
-        image.setHandleSizeInDp(HANDLE_DP);
-        image.setFrameStrokeWeightInDp(WEIGHT_DP);
-        image.setGuideStrokeWeightInDp(WEIGHT_DP1);
-        image.setTouchPaddingInDp(PADDING_DP);
-        image.setMinFrameSizeInDp(MIN_DP);
+        final int handleDp = 0;
+        image.setHandleSizeInDp(handleDp);
+        final int weightDp = 1;
+        image.setFrameStrokeWeightInDp(weightDp);
+        final int weightDpFirst = 1;
+        image.setGuideStrokeWeightInDp(weightDpFirst);
+        final int paddingDp = 24;
+        image.setTouchPaddingInDp(paddingDp);
+        final int minDp = 85;
+        image.setMinFrameSizeInDp(minDp);
 
         final Bundle bundle = getIntent().getExtras();
         if (bundle != null) {

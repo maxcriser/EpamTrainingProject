@@ -11,9 +11,9 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.constant.ListPreview;
 
-public class FragmentPreviewTypeCards extends Fragment {
+import static com.maxcriser.cards.constant.ListConstants.ARGUMENT_PAGE_NUMBER_TYPE;
 
-    static final String ARGUMENT_PAGE_NUMBER_TYPE = "arg_page_number_type";
+public class FragmentPreviewTypeCards extends Fragment {
 
     int pageNumberType;
 

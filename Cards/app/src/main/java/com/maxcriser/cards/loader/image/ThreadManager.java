@@ -1,4 +1,6 @@
-package com.maxcriser.cards.thread;
+package com.maxcriser.cards.loader.image;
+
+import com.maxcriser.cards.thread.PriorityRunnable;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.PriorityBlockingQueue;

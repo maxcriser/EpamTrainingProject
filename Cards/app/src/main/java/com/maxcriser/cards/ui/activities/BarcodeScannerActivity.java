@@ -23,11 +23,11 @@ import net.sourceforge.zbar.Symbol;
 import net.sourceforge.zbar.SymbolSet;
 
 import static android.view.View.GONE;
+import static com.maxcriser.cards.constant.ListConstants.TAG_BARCODE;
+import static com.maxcriser.cards.constant.ListConstants.Y_800;
 
 public class BarcodeScannerActivity extends AppCompatActivity {
 
-    public static final String TAG_BARCODE = "barcode";
-    private static final String Y_800 = "Y800";
     private RobotoThin mCancel;
     private RobotoThin mOk;
     private RobotoThin mSolution;
@@ -181,7 +181,6 @@ public class BarcodeScannerActivity extends AppCompatActivity {
     private class onOkClickListener implements View.OnClickListener {
         @Override
         public void onClick(final View v) {
-//            releaseCamera();
             final Intent intent = new Intent(BarcodeScannerActivity.this, CreateDiscountActivity.class);
             intent.putExtra(TAG_BARCODE, scanResult);
             startActivity(intent);

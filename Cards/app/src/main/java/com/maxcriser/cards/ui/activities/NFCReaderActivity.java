@@ -20,11 +20,12 @@ import com.maxcriser.cards.fragment.NFCWriteFragment;
 
 public class NFCReaderActivity extends AppCompatActivity implements Listener {
 
-    public static final String TAG = NFCReaderActivity.class.getSimpleName();
+    public final String TAG = NFCReaderActivity.class.getSimpleName();
 
     private EditText mEtMessage;
 
     //TODO almost the same, need to be common abstraction
+    //it's test activity
     private NFCWriteFragment mNfcWriteFragment;
     private NFCReadFragment mNfcReadFragment;
 

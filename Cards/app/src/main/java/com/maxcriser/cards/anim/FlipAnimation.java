@@ -1,4 +1,4 @@
-package com.maxcriser.cards.utils;
+package com.maxcriser.cards.anim;
 
 import android.graphics.Camera;
 import android.graphics.Matrix;

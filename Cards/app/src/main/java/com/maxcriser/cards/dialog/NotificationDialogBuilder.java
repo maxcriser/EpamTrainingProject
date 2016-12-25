@@ -14,11 +14,14 @@ public class NotificationDialogBuilder extends AlertDialog {
     private final String message;
     private final String title;
     private final String url;
-    private boolean showPositiveButton;
-    private boolean showNegativaButton;
+    private final String titleNeg;
+    private final String titlePos;
+    private final boolean showPositiveButton;
+    private final boolean showNegativaButton;
 
     public NotificationDialogBuilder(final Context context, final String title, final String message,
-                                     final String url, final boolean pShowPositiveButton, final boolean pShowNegativaButton) {
+                                     final String url, final boolean pShowPositiveButton, final boolean pShowNegativaButton,
+                                     final String pTitlePos, final String pTitleNeg) {
         super(context);
         this.context = context;
         this.message = message;
@@ -26,12 +29,18 @@ public class NotificationDialogBuilder extends AlertDialog {
         this.url = url;
         this.showNegativaButton = pShowNegativaButton;
         this.showPositiveButton = pShowPositiveButton;
+        this.titleNeg = pTitleNeg;
+        this.titlePos = pTitlePos;
     }
 
     public void startDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         if (showNegativaButton) {
-            builder.setNegativeButton(R.string.cancel,
+            String btnNeg = context.getString(R.string.cancel);
+            if (titlePos != null) {
+                btnNeg = titleNeg;
+            }
+            builder.setNegativeButton(btnNeg,
                     new OnClickListener() {
 
                         public void onClick(final DialogInterface dialog, final int id) {
@@ -40,7 +49,11 @@ public class NotificationDialogBuilder extends AlertDialog {
                     });
         }
         if (showPositiveButton) {
-            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            String btnPos = context.getString(R.string.ok);
+            if (titlePos != null) {
+                btnPos = titlePos;
+            }
+            builder.setPositiveButton(btnPos, new DialogInterface.OnClickListener() {
 
                 @Override
                 public void onClick(final DialogInterface dialog, final int pI) {

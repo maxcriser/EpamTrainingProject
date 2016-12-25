@@ -67,7 +67,7 @@ import static com.maxcriser.cards.utils.Storage.isExternalStorageAvailable;
 
 public class CreateTicketActivity extends AppCompatActivity {
 
-    public static final String TICKET = "CreateTicketActivity";
+    public final String TICKET = "CreateTicketActivity";
     public String photoFileNameFront;
     public String photoFileNameBack;
     private DatabaseHelper db;

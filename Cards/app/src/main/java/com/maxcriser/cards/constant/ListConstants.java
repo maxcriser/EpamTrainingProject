@@ -72,6 +72,7 @@ public final class ListConstants {
 
     public static final String URL_JSON_LOCATION = "http://ip-api.com/json";
     public static final String URL_JSON_SETTINGS = "http://ckeeperservletbackend.appspot.com/";
+    public static final double RATIO_CREDIT_CARD = 1.5818181818181818181818181818182;
     public static final String CONFIG = "config";
     public static final String EMPTY_STRING = "";
     public static final String BEG_FILE_NAME_BANK = "credit-card-";
@@ -86,7 +87,15 @@ public final class ListConstants {
     public static final String UNDEFENDED = "undefended";
     public static final String PASSWORD_TAG = "shared_password";
     public static final String BANK = "bank";
+    public static final String HTTPS = "https";
+    public static final String FILE = "file://";
+    public static final String HTTP = "http";
     public static final String ARGUMENT_PAGE_NUMBER_DISCOUNT = "arg_page_number";
     public static final String CREDIT_CARD = "credit_card";
+    public static final String KEY_NAME = "finger_key";
+    public static final String TAG_BARCODE = "barcode";
+    public static final String Y_800 = "Y800";
+    public static final String TYPE_LOCKED_SCREEN = "type_locked_screen";
+    public static final String ARGUMENT_PAGE_NUMBER_TYPE = "arg_page_number_type";
 
 }

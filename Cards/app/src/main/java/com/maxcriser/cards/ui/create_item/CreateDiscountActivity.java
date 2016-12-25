@@ -27,10 +27,11 @@ import com.maxcriser.cards.ui.activities.BarcodeScannerActivity;
 import com.maxcriser.cards.view.labels.RobotoRegular;
 
 import static android.view.View.GONE;
+import static com.maxcriser.cards.constant.ListConstants.TAG_BARCODE;
 
 public class CreateDiscountActivity extends AppCompatActivity {
 
-    public static final String DISCOUNT_ID = "CreateDiscountActivity";
+    public final String DISCOUNT_ID = "CreateDiscountActivity";
     private DatabaseHelper db;
     private ScrollView mScrollView;
     private ViewPager pager;
@@ -55,7 +56,7 @@ public class CreateDiscountActivity extends AppCompatActivity {
         db = DatabaseHelper.getInstance(this);
         title.setText(getResources().getString(R.string.new_discount_title));
         final Intent barcodeIntent = getIntent();
-        final String barcode = barcodeIntent.getStringExtra(BarcodeScannerActivity.TAG_BARCODE);
+        final String barcode = barcodeIntent.getStringExtra(TAG_BARCODE);
         final OwnAsyncTask barcodeGenerator = new OwnAsyncTask();
         barcodeGenerator.execute(new BarcodeConverter(), barcode, new OnResultCallback<String, String>() {
 

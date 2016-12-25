@@ -17,9 +17,9 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class HttpClient {
+import static com.maxcriser.cards.constant.ListConstants.HTTPS;
 
-    private static final String HTTPS = "https";
+public class HttpClient {
 
     private String executeRequest(final Request request) throws Exception {
         InputStream inputStream = null;

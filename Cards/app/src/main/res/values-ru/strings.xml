@@ -138,5 +138,22 @@
     <string name="new_nfc_title">Новый NFC элемент</string>
     <string name="setup_pin">Установить PIN</string>
     <string name="use_fingerprint">Отпечатки пальцев</string>
+    <string name="share_body">Скачивайте на playmarket</string>
+    <string name="share_title">CKeeper</string>
+    <string name="must_make_card_images">Необходимо сделать скнимки карты</string>
+    <string name="cannot_insert_card_to_database">Неудаётся добавить карту в базу данных</string>
+    <string name="cannot_edit_card">Неудаётся изменить карту</string>
+    <string name="cannot_convert_barcode">Неудаётся конвертироват баркод</string>
+    <string name="cannot_scanning_card">Неудаётся отсканировать карту</string>
+    <string name="go">ОК</string>
+    <string name="cannot_parese_location">Неудаётся считать локацию</string>
+    <string name="country_">"Country: "</string>
+    <string name="timezone_">"Timezone: "</string>
+    <string name="query_">"Query: "</string>
+    <string name="notification">Оповещение</string>
+    <string name="about">О приложении</string>
+    <string name="notification_update_first">Доступна новая версия приложения (</string>
+    <string name="notification_update_second">Пожалуйста, нажмите обновить</string>
+    <string name="update">ОБНОВИТЬ</string>
 
 </resources>

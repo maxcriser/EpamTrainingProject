@@ -37,7 +37,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     private DatabaseHelper(final Context pContext) {
         super(pContext, mDatabaseName, null, dbVersion);
-        // DELETE DATABASE
 //        ContextHolder.getInstance().getContext().deleteDatabase(mDatabaseName);
         getWritableDatabase();
     }

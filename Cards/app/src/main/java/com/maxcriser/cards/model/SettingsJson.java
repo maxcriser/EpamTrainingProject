@@ -8,6 +8,7 @@ import org.json.JSONObject;
 public class SettingsJson {
 
     private String bodyShare = ListConstants.EMPTY_STRING;
+    private String appVersion = ListConstants.EMPTY_STRING;
     private String titleShare = ListConstants.EMPTY_STRING;
     private String about = ListConstants.EMPTY_STRING;
     private String googlePlayUrl = ListConstants.EMPTY_STRING;
@@ -24,6 +25,7 @@ public class SettingsJson {
             final String about = "about";
             final String google_play_url = "google_play_url";
             final String message = "message";
+            final String appVersion = "app_version";
             final String flag_message = "flag_message";
 
             setBodyShare(dataJsonObj.getString(body_share));
@@ -32,6 +34,7 @@ public class SettingsJson {
             setGooglePlayUrl(dataJsonObj.getString(google_play_url));
             setMessage(dataJsonObj.getString(message));
             setFlagMessage(dataJsonObj.getBoolean(flag_message));
+            setAppVersion(dataJsonObj.getString(appVersion));
 
         } catch (final JSONException e) {
             throw new RuntimeException(e);
@@ -62,19 +65,27 @@ public class SettingsJson {
         return flagMessage;
     }
 
-    public void setBodyShare(final String pBodyShare) {
+    private void setAppVersion(final String pAppVersion) {
+        appVersion = pAppVersion;
+    }
+
+    public String getAppVersion() {
+        return appVersion;
+    }
+
+    private void setBodyShare(final String pBodyShare) {
         bodyShare = pBodyShare;
     }
 
-    public void setTitleShare(final String pTitleShare) {
+    private void setTitleShare(final String pTitleShare) {
         titleShare = pTitleShare;
     }
 
-    public void setAbout(final String pAbout) {
+    private void setAbout(final String pAbout) {
         about = pAbout;
     }
 
-    public void setGooglePlayUrl(final String pGooglePlayUrl) {
+    private void setGooglePlayUrl(final String pGooglePlayUrl) {
         googlePlayUrl = pGooglePlayUrl;
     }
 
@@ -82,7 +93,7 @@ public class SettingsJson {
         message = pMessage;
     }
 
-    public void setFlagMessage(final boolean pFlagMessage) {
+    private void setFlagMessage(final boolean pFlagMessage) {
         flagMessage = pFlagMessage;
     }
 }

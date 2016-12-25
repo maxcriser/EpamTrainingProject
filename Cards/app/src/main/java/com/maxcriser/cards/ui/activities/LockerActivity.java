@@ -43,12 +43,13 @@ import javax.crypto.NoSuchPaddingException;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_TITLE_TO_ITEMS;
 import static com.maxcriser.cards.constant.Extras.EXTRA_CHECK_ITEMS;
 import static com.maxcriser.cards.constant.ListConstants.CREDIT_CARD;
+import static com.maxcriser.cards.constant.ListConstants.KEY_NAME;
 import static com.maxcriser.cards.constant.ListConstants.PASSWORD_TAG;
+import static com.maxcriser.cards.constant.ListConstants.TYPE_LOCKED_SCREEN;
 import static com.maxcriser.cards.constant.ListConstants.UNDEFENDED;
 
 public class LockerActivity extends AppCompatActivity {
 
-    private static final String KEY_NAME = "finger_key";
     private ImageView firstCircle;
     private ImageView secondCircle;
     private ImageView thirdCircle;
@@ -115,7 +116,7 @@ public class LockerActivity extends AppCompatActivity {
     private void initViews() {
         mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         intent = getIntent();
-        intentLockedPage = intent.getStringExtra(MenuActivity.TYPE_LOCKED_SCREEN);
+        intentLockedPage = intent.getStringExtra(TYPE_LOCKED_SCREEN);
         builderPassword = ListConstants.EMPTY_STRING;
         firstCircle = (ImageView) findViewById(R.id.crlcOne);
         secondCircle = (ImageView) findViewById(R.id.crlcTwo);
