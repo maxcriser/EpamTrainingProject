@@ -34,7 +34,7 @@ import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.async.task.ScanCreditCard;
 import com.maxcriser.cards.constant.Extras;
-import com.maxcriser.cards.constant.constants;
+import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.dialog.MatchesFountDialogBuilder;
@@ -52,14 +52,14 @@ import java.io.File;
 import java.util.Calendar;
 
 import static android.view.View.GONE;
-import static com.maxcriser.cards.constant.constants.Requests.CAPTURE_IMAGE_BACK;
-import static com.maxcriser.cards.constant.constants.Requests.CAPTURE_IMAGE_FRONT;
-import static com.maxcriser.cards.constant.constants.Requests.EDIT_IMAGE_BACK;
-import static com.maxcriser.cards.constant.constants.Requests.EDIT_IMAGE_FRONT;
-import static com.maxcriser.cards.constant.constants.Requests.REQUEST_BACK_CAMERA;
-import static com.maxcriser.cards.constant.constants.Requests.REQUEST_FRONT_CAMERA;
-import static com.maxcriser.cards.constant.constants.Requests.REQUEST_WRITE_STORAGE_BACK;
-import static com.maxcriser.cards.constant.constants.Requests.REQUEST_WRITE_STORAGE_FRONT;
+import static com.maxcriser.cards.constant.ListConstants.Requests.CAPTURE_IMAGE_BACK;
+import static com.maxcriser.cards.constant.ListConstants.Requests.CAPTURE_IMAGE_FRONT;
+import static com.maxcriser.cards.constant.ListConstants.Requests.EDIT_IMAGE_BACK;
+import static com.maxcriser.cards.constant.ListConstants.Requests.EDIT_IMAGE_FRONT;
+import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_BACK_CAMERA;
+import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_FRONT_CAMERA;
+import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_WRITE_STORAGE_BACK;
+import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_WRITE_STORAGE_FRONT;
 import static com.maxcriser.cards.ui.activities.LaunchScreenActivity.previewColors;
 import static com.maxcriser.cards.ui.activities.LaunchScreenActivity.previewTypes;
 import static com.maxcriser.cards.utils.Storage.isExternalStorageAvailable;
@@ -88,7 +88,7 @@ public class CreateBankActivity extends AppCompatActivity {
     private Uri editFrontUri;
     private Uri editBackUri;
     private boolean statusScan;
-    private boolean statusSave = false;
+    private boolean statusSave;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -101,8 +101,8 @@ public class CreateBankActivity extends AppCompatActivity {
 
     private void initViews() {
         final String uniqueString = UniqueStringGenerator.getUniqueString();
-        photoFileNameFront = constants.BEG_FILE_NAME_BANK + uniqueString + "front_photo.jpg";
-        photoFileNameBack = constants.BEG_FILE_NAME_BANK + uniqueString + "back_photo.jpg";
+        photoFileNameFront = ListConstants.BEG_FILE_NAME_BANK + uniqueString + "front_photo.jpg";
+        photoFileNameBack = ListConstants.BEG_FILE_NAME_BANK + uniqueString + "back_photo.jpg";
         verificationNumber = (EditText) findViewById(R.id.ver_number);
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
         bank = (EditText) findViewById(R.id.bank);
@@ -128,20 +128,16 @@ public class CreateBankActivity extends AppCompatActivity {
 
         myTypeCard = previewTypes.get(0);
         Log.d("BANK", myTypeCard);
-        final int PAGE_COUNT = previewTypes.size();
+        final int pageCount = previewTypes.size();
         final PagerAdapter pagerAdapterTypes = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
-                constants.PagerIDs.ID_BANK_CARD_ITEM_TYPE,
-                PAGE_COUNT);
+                ListConstants.PagerIDs.ID_BANK_CARD_ITEM_TYPE,
+                pageCount);
         pagerTypes.setAdapter(pagerAdapterTypes);
         pagerTypes.addOnPageChangeListener(new OnTypePageChangeListener(new OnTypePageChangeListener.OnPageChangeListener() {
 
             @Override
             public void onResult(final int position, final Integer icon, final String type) {
                 myTypeCard = type;
-                //TODO remove all statics
-//                FragmentPreviewCards.icon = icon;
-//                pagerTemplate.setAdapter(pagerAdapterTemplate);
-//                pagerTemplate.setCurrentItem(currentPositionColors);
             }
         }));
     }
@@ -155,12 +151,12 @@ public class CreateBankActivity extends AppCompatActivity {
                     final Uri takenPhotoUri = getUri(photoFileNameFront);
                     final Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
-                    intent.putExtra(constants.STATUS_PHOTOEDITOR, constants.STATUS_PHOTOEEDITOR_CREDIT_CARD);
+                    intent.putExtra(ListConstants.STATUS_PHOTOEDITOR, ListConstants.STATUS_PHOTOEEDITOR_CREDIT_CARD);
                     startActivityForResult(intent, EDIT_IMAGE_FRONT);
                 } else {
                     final Uri takenPhotoUri = getUri(photoFileNameBack);
                     final Intent intent = new Intent(this, PhotoEditorActivity.class);
-                    intent.putExtra(constants.STATUS_PHOTOEDITOR, constants.STATUS_PHOTOEEDITOR_CREDIT_CARD);
+                    intent.putExtra(ListConstants.STATUS_PHOTOEDITOR, ListConstants.STATUS_PHOTOEEDITOR_CREDIT_CARD);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
                     startActivityForResult(intent, EDIT_IMAGE_BACK);
                 }
@@ -294,29 +290,29 @@ public class CreateBankActivity extends AppCompatActivity {
         if (!creditType.isEmpty()) {
             final int numberType;
             switch (creditType) {
-                case constants.Cards.VISA:
-                    numberType = constants.PagerTypesID.VISA;
+                case ListConstants.Cards.VISA:
+                    numberType = ListConstants.PagerTypesID.VISA;
                     break;
-                case constants.Cards.MASTERCARD:
-                    numberType = constants.PagerTypesID.MASTERCAD;
+                case ListConstants.Cards.MASTERCARD:
+                    numberType = ListConstants.PagerTypesID.MASTERCAD;
                     break;
-                case constants.Cards.AMEX:
-                    numberType = constants.PagerTypesID.AMEX;
+                case ListConstants.Cards.AMEX:
+                    numberType = ListConstants.PagerTypesID.AMEX;
                     break;
-                case constants.Cards.MAESTRO:
-                    numberType = constants.PagerTypesID.MAESTRO;
+                case ListConstants.Cards.MAESTRO:
+                    numberType = ListConstants.PagerTypesID.MAESTRO;
                     break;
-                case constants.Cards.WESTERN_UNION:
-                    numberType = constants.PagerTypesID.WESTERN_UNION;
+                case ListConstants.Cards.WESTERN_UNION:
+                    numberType = ListConstants.PagerTypesID.WESTERN_UNION;
                     break;
-                case constants.Cards.JCB:
-                    numberType = constants.PagerTypesID.JCB;
+                case ListConstants.Cards.JCB:
+                    numberType = ListConstants.PagerTypesID.JCB;
                     break;
-                case constants.Cards.DINERS_CLUB:
-                    numberType = constants.PagerTypesID.DINERS_CLUB;
+                case ListConstants.Cards.DINERS_CLUB:
+                    numberType = ListConstants.PagerTypesID.DINERS_CLUB;
                     break;
                 default:
-                    numberType = constants.PagerTypesID.BELCARD;
+                    numberType = ListConstants.PagerTypesID.BELCARD;
                     break;
             }
             pagerTypes.setCurrentItem(numberType);
@@ -326,9 +322,9 @@ public class CreateBankActivity extends AppCompatActivity {
     public Uri getUri(final String fileName) {
         if (isExternalStorageAvailable()) {
             final File mediaStorageDir = new File(
-                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), constants.APP_TAG);
+                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), ListConstants.APP_TAG);
             if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
-                Log.d(constants.APP_TAG, getString(R.string.filed_to_create_directory));
+                Log.d(ListConstants.APP_TAG, getString(R.string.filed_to_create_directory));
             }
             return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
         }

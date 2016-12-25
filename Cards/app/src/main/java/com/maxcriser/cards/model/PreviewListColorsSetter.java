@@ -1,6 +1,6 @@
 package com.maxcriser.cards.model;
 
-import com.maxcriser.cards.constant.constants;
+import com.maxcriser.cards.constant.ListConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,14 +28,14 @@ public final class PreviewListColorsSetter {
 
     public void setTypeCard() {
         typeCard = new ArrayList<>();
-        typeCard.add(constants.Cards.VISA);
-        typeCard.add(constants.Cards.MASTERCARD);
-        typeCard.add(constants.Cards.AMEX);
-        typeCard.add(constants.Cards.MAESTRO);
-        typeCard.add(constants.Cards.WESTERN_UNION);
-        typeCard.add(constants.Cards.JCB);
-        typeCard.add(constants.Cards.DINERS_CLUB);
-        typeCard.add(constants.Cards.BELCARD);
+        typeCard.add(ListConstants.Cards.VISA);
+        typeCard.add(ListConstants.Cards.MASTERCARD);
+        typeCard.add(ListConstants.Cards.AMEX);
+        typeCard.add(ListConstants.Cards.MAESTRO);
+        typeCard.add(ListConstants.Cards.WESTERN_UNION);
+        typeCard.add(ListConstants.Cards.JCB);
+        typeCard.add(ListConstants.Cards.DINERS_CLUB);
+        typeCard.add(ListConstants.Cards.BELCARD);
     }
 
     private void addPreviewColors(final String name, final String color) {

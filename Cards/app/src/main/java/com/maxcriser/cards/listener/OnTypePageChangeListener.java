@@ -3,7 +3,7 @@ package com.maxcriser.cards.listener;
 import android.support.v4.view.ViewPager;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.constant.constants;
+import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.model.PreviewListColorsSetter;
 
 public class OnTypePageChangeListener implements ViewPager.OnPageChangeListener {
@@ -28,28 +28,28 @@ public class OnTypePageChangeListener implements ViewPager.OnPageChangeListener 
     public void onPageSelected(final int position) {
         final String myTypeCard = PreviewListColorsSetter.getInstance().getTypeCard().get(position);
         switch (myTypeCard) {
-            case constants.Cards.VISA:
+            case ListConstants.Cards.VISA:
                 mListener.onResult(position, R.drawable.type_visa, myTypeCard);
                 break;
-            case constants.Cards.MAESTRO:
+            case ListConstants.Cards.MAESTRO:
                 mListener.onResult(position, R.drawable.type_maestro, myTypeCard);
                 break;
-            case constants.Cards.MASTERCARD:
+            case ListConstants.Cards.MASTERCARD:
                 mListener.onResult(position, R.drawable.type_mastercard, myTypeCard);
                 break;
-            case constants.Cards.AMEX:
+            case ListConstants.Cards.AMEX:
                 mListener.onResult(position, R.drawable.type_amex, myTypeCard);
                 break;
-            case constants.Cards.WESTERN_UNION:
+            case ListConstants.Cards.WESTERN_UNION:
                 mListener.onResult(position, R.drawable.type_western_union, myTypeCard);
                 break;
-            case constants.Cards.JCB:
+            case ListConstants.Cards.JCB:
                 mListener.onResult(position, R.drawable.type_jcb, myTypeCard);
                 break;
-            case constants.Cards.DINERS_CLUB:
+            case ListConstants.Cards.DINERS_CLUB:
                 mListener.onResult(position, R.drawable.type_diners_club, myTypeCard);
                 break;
-            case constants.Cards.BELCARD:
+            case ListConstants.Cards.BELCARD:
                 mListener.onResult(position, R.drawable.type_belcard, myTypeCard);
                 break;
         }

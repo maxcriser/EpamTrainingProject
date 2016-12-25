@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.constant.constants;
+import com.maxcriser.cards.constant.ListConstants;
 
 public class SetupPinActivity extends AppCompatActivity {
 
@@ -75,7 +75,7 @@ public class SetupPinActivity extends AppCompatActivity {
             if (page == Page.FIRST) {
                 password = inputText.getText().toString();
                 Toast.makeText(SetupPinActivity.this, "first: " + password, Toast.LENGTH_LONG).show();
-                inputText.setText(constants.EMPTY_STRING);
+                inputText.setText(ListConstants.EMPTY_STRING);
                 page = Page.SECOND;
                 btnContinue.setText(R.string.ok);
                 title.setText(R.string.confirm_your_pin);

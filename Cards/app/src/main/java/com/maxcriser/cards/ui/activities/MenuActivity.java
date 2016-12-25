@@ -21,7 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.constant.constants;
+import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.utils.SettingsParser;
 
 import org.json.JSONException;
@@ -34,9 +34,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import static android.view.View.GONE;
-import static com.maxcriser.cards.constant.constants.SETUP_PIN;
-import static com.maxcriser.cards.constant.constants.TEXT_PLAIN;
-import static com.maxcriser.cards.constant.constants.URL_JSON_LOCATION;
+import static com.maxcriser.cards.constant.ListConstants.SETUP_PIN;
+import static com.maxcriser.cards.constant.ListConstants.TEXT_PLAIN;
+import static com.maxcriser.cards.constant.ListConstants.URL_JSON_LOCATION;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -171,7 +171,7 @@ public class MenuActivity extends AppCompatActivity
 
         HttpURLConnection urlConnection;
         BufferedReader reader;
-        String resultJson = constants.EMPTY_STRING;
+        String resultJson = ListConstants.EMPTY_STRING;
 
         @Override
         protected String doInBackground(final Void... params) {

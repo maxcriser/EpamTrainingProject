@@ -1,6 +1,6 @@
 package com.maxcriser.cards.model;
 
-import com.maxcriser.cards.constant.constants;
+import com.maxcriser.cards.constant.ListConstants;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,42 +18,41 @@ public class CreditCard {
         setValidCreditCard();
     }
 
-    private String typeCreditCard = constants.EMPTY_STRING;
-    private String nameCreditCard = constants.EMPTY_STRING;
-    private String cardholderCreditCard = constants.EMPTY_STRING;
-    private String numberCreditCard = constants.EMPTY_STRING;
-    private String validCreditCard = constants.EMPTY_STRING;
+    private String typeCreditCard = ListConstants.EMPTY_STRING;
+    private String nameCreditCard = ListConstants.EMPTY_STRING;
+    private String cardholderCreditCard = ListConstants.EMPTY_STRING;
+    private String numberCreditCard = ListConstants.EMPTY_STRING;
+    private String validCreditCard = ListConstants.EMPTY_STRING;
 
     private void setTypeCreditCard() {
-        if (text.toLowerCase().contains(constants.Cards.VISA)) {
-            typeCreditCard = constants.Cards.VISA;
-        } else if (text.toLowerCase().contains(constants.Cards.AMEX)
-                || text.toLowerCase().contains(constants.Cards.AMEX2)) {
-            typeCreditCard = constants.Cards.AMEX;
-        } else if (text.toLowerCase().contains(constants.Cards.MASTERCARD)) {
-            typeCreditCard = constants.Cards.MASTERCARD;
-        } else if (text.toLowerCase().contains(constants.Cards.MAESTRO)) {
-            typeCreditCard = constants.Cards.MAESTRO;
-        } else if (text.toLowerCase().contains(constants.Cards.WESTERN_UNION)) {
-            typeCreditCard = constants.Cards.WESTERN_UNION;
-        } else if (text.toLowerCase().contains(constants.Cards.JCB)) {
-            typeCreditCard = constants.Cards.JCB;
-        } else if (text.toLowerCase().contains(constants.Cards.DINERS_CLUB)) {
-            typeCreditCard = constants.Cards.DINERS_CLUB;
-        } else if (text.toLowerCase().contains(constants.Cards.BELCARD)
-                || text.toLowerCase().contains(constants.Cards.BELCARD2)) {
-            typeCreditCard = constants.Cards.BELCARD;
+        if (text.toLowerCase().contains(ListConstants.Cards.VISA)) {
+            typeCreditCard = ListConstants.Cards.VISA;
+        } else if (text.toLowerCase().contains(ListConstants.Cards.AMEX)
+                || text.toLowerCase().contains(ListConstants.Cards.AMEX2)) {
+            typeCreditCard = ListConstants.Cards.AMEX;
+        } else if (text.toLowerCase().contains(ListConstants.Cards.MASTERCARD)) {
+            typeCreditCard = ListConstants.Cards.MASTERCARD;
+        } else if (text.toLowerCase().contains(ListConstants.Cards.MAESTRO)) {
+            typeCreditCard = ListConstants.Cards.MAESTRO;
+        } else if (text.toLowerCase().contains(ListConstants.Cards.WESTERN_UNION)) {
+            typeCreditCard = ListConstants.Cards.WESTERN_UNION;
+        } else if (text.toLowerCase().contains(ListConstants.Cards.JCB)) {
+            typeCreditCard = ListConstants.Cards.JCB;
+        } else if (text.toLowerCase().contains(ListConstants.Cards.DINERS_CLUB)) {
+            typeCreditCard = ListConstants.Cards.DINERS_CLUB;
+        } else if (text.toLowerCase().contains(ListConstants.Cards.BELCARD)
+                || text.toLowerCase().contains(ListConstants.Cards.BELCARD2)) {
+            typeCreditCard = ListConstants.Cards.BELCARD;
         }
     }
 
     private boolean isCharacterOrSpace(final char ch) {
-        final String chStr = ch + constants.EMPTY_STRING;
+        final String chStr = ch + ListConstants.EMPTY_STRING;
         return (chStr).matches("^[A-Za-z]+$") || (chStr).matches("^[А-Яа-я]+$") || ch == ' ' || ch == '.' || ch == '-' || ch == '&';
     }
 
     private void setNameCreditCard() {
-        //TODO hardcode
-        final String bank = "bank";
+        final String bank = ListConstants.BANK;
         final String handleText = text;
         if (text.toLowerCase().contains(bank)) {
             final StringBuilder builder = new StringBuilder();
@@ -79,7 +78,7 @@ public class CreditCard {
             nameCreditCard = builder.toString();
             nameCreditCard = nameCreditCard.trim();
         } else {
-            nameCreditCard = constants.EMPTY_STRING;
+            nameCreditCard = ListConstants.EMPTY_STRING;
         }
     }
 
@@ -120,6 +119,6 @@ public class CreditCard {
         final Pattern pattern = Pattern.compile(regex);
         final Matcher matcher = pattern.matcher(text);
 
-        return (matcher.find() ? matcher.group() : constants.EMPTY_STRING);
+        return (matcher.find() ? matcher.group() : ListConstants.EMPTY_STRING);
     }
 }

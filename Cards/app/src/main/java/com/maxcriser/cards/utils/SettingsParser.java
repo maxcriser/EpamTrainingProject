@@ -3,7 +3,7 @@ package com.maxcriser.cards.utils;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.maxcriser.cards.constant.constants;
+import com.maxcriser.cards.constant.ListConstants;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -11,11 +11,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import static com.maxcriser.cards.constant.constants.URL_JSON_LOCATION;
+import static com.maxcriser.cards.constant.ListConstants.URL_JSON_LOCATION;
 
 public class SettingsParser extends AsyncTask<Void, Void, String> {
 
-    private String resultJson = constants.EMPTY_STRING;
+    private String resultJson = ListConstants.EMPTY_STRING;
 
     @Override
     protected String doInBackground(final Void... params) {

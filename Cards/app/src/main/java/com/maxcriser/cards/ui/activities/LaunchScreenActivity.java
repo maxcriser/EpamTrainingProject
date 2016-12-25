@@ -19,8 +19,6 @@ public class LaunchScreenActivity extends AppCompatActivity {
     public static List<PreviewColor> previewColors;
     public static List<String> previewTypes;
     public static String loadPassword;
-    public static final String UNDEFENDED = "undefended";
-    public static final String PASSWORD_TAG = "shared_password";
     public static SharedPreferences mSharedPreferences;
     public static int SCREEN_WIDTH;
     public static int SCREEN_HEIGHT;

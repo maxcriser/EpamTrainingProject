@@ -16,7 +16,7 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.BarcodeConverter;
-import com.maxcriser.cards.constant.constants;
+import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
@@ -82,9 +82,9 @@ public class CreateDiscountActivity extends AppCompatActivity {
         Log.d(DISCOUNT_ID, myColorName + " " + myColorCode);
 
         final int PAGE_COUNT = previewColors.size();
-        pager.setPageMargin(constants.PAGER_MARGIN_PREVIEW);
+        pager.setPageMargin(ListConstants.PAGER_MARGIN_PREVIEW);
         final PagerAdapter pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
-                constants.PagerIDs.ID_DISCOUNT_ITEM,
+                ListConstants.PagerIDs.ID_DISCOUNT_ITEM,
                 PAGE_COUNT);
 
         pager.setAdapter(pagerAdapter);

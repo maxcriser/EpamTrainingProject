@@ -9,7 +9,7 @@
 
 package com.maxcriser.cards.barcode;
 
-import com.maxcriser.cards.constant.constants;
+import com.maxcriser.cards.constant.ListConstants;
 
 public class BarcodeBuilder {
 
@@ -62,8 +62,8 @@ public class BarcodeBuilder {
         final String leftString = rawCode.substring(1, 7);
         final String rightString = rawCode.substring(7);
 
-        String rightCode = constants.EMPTY_STRING;
-        String leftCode = constants.EMPTY_STRING;
+        String rightCode = ListConstants.EMPTY_STRING;
+        String leftCode = ListConstants.EMPTY_STRING;
 
         for (int i = 0; i < 6; i++) {
             rightCode += DigitToLowerCase(rightString.substring(i, i + 1));

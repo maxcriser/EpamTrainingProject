@@ -21,7 +21,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.constant.constants;
+import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.fingerprint.FingerprintHandler;
 
 import java.io.IOException;
@@ -48,8 +48,8 @@ public class LockerActivity extends AppCompatActivity {
     private ImageView fourthCircle;
     private Vibrator mVibrator;
     private Intent intent;
-    private String intentLockedPage = constants.EMPTY_STRING;
-    private String builderPassword = constants.EMPTY_STRING;
+    private String intentLockedPage = ListConstants.EMPTY_STRING;
+    private String builderPassword = ListConstants.EMPTY_STRING;
     private final Integer durationVibrateInput = 10;
     private KeyStore keyStore;
     private Cipher cipher;
@@ -108,7 +108,7 @@ public class LockerActivity extends AppCompatActivity {
         intent = getIntent();
         intentLockedPage = intent.getStringExtra(MenuActivity.TYPE_LOCKED_SCREEN);
         Toast.makeText(this, LaunchScreenActivity.loadPassword, Toast.LENGTH_SHORT).show();
-        builderPassword = constants.EMPTY_STRING;
+        builderPassword = ListConstants.EMPTY_STRING;
         firstCircle = (ImageView) findViewById(R.id.crlcOne);
         secondCircle = (ImageView) findViewById(R.id.crlcTwo);
         thirdCircle = (ImageView) findViewById(R.id.crlcThree);
@@ -217,52 +217,52 @@ public class LockerActivity extends AppCompatActivity {
     }
 
     public void zeroInput(final View view) {
-        inputPassword(constants.Keyboard.BUTTON_ZERO);
+        inputPassword(ListConstants.Keyboard.BUTTON_ZERO);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void oneInput(final View view) {
-        inputPassword(constants.Keyboard.BUTTON_ONE);
+        inputPassword(ListConstants.Keyboard.BUTTON_ONE);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void twoInput(final View view) {
-        inputPassword(constants.Keyboard.BUTTON_TWO);
+        inputPassword(ListConstants.Keyboard.BUTTON_TWO);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void threeInput(final View view) {
-        inputPassword(constants.Keyboard.BUTTON_THREE);
+        inputPassword(ListConstants.Keyboard.BUTTON_THREE);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void fourInput(final View view) {
-        inputPassword(constants.Keyboard.BUTTON_FOUR);
+        inputPassword(ListConstants.Keyboard.BUTTON_FOUR);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void fiveInput(final View view) {
-        inputPassword(constants.Keyboard.BUTTON_FIVE);
+        inputPassword(ListConstants.Keyboard.BUTTON_FIVE);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void sixInput(final View view) {
-        inputPassword(constants.Keyboard.BUTTON_SIX);
+        inputPassword(ListConstants.Keyboard.BUTTON_SIX);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void sevenInput(final View view) {
-        inputPassword(constants.Keyboard.BUTTON_SEVEN);
+        inputPassword(ListConstants.Keyboard.BUTTON_SEVEN);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void eightInput(final View view) {
-        inputPassword(constants.Keyboard.BUTTON_EIGHT);
+        inputPassword(ListConstants.Keyboard.BUTTON_EIGHT);
         mVibrator.vibrate(durationVibrateInput);
     }
 
     public void nineInput(final View view) {
-        inputPassword(constants.Keyboard.BUTTON_NINE);
+        inputPassword(ListConstants.Keyboard.BUTTON_NINE);
         mVibrator.vibrate(durationVibrateInput);
     }
 
@@ -278,7 +278,7 @@ public class LockerActivity extends AppCompatActivity {
 
     public void onDeleteClicked(final View view) {
         if (!builderPassword.isEmpty()) {
-            builderPassword = constants.EMPTY_STRING;
+            builderPassword = ListConstants.EMPTY_STRING;
             setBackgroundCircles(true, firstCircle, secondCircle, thirdCircle, fourthCircle);
         }
     }

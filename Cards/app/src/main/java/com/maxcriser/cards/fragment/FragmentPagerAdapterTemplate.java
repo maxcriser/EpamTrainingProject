@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.constant.constants;
+import com.maxcriser.cards.constant.ListConstants;
 
 public class FragmentPagerAdapterTemplate extends FragmentPagerAdapter {
 
@@ -20,11 +20,11 @@ public class FragmentPagerAdapterTemplate extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(final int position) {
-        if (adapter == constants.PagerIDs.ID_BANK_CARD_ITEM_TYPE) {
+        if (adapter == ListConstants.PagerIDs.ID_BANK_CARD_ITEM_TYPE) {
             return FragmentPreviewTypeCards.newInstance(position);
-        } else if (adapter == constants.PagerIDs.ID_DISCOUNT_ITEM) {
+        } else if (adapter == ListConstants.PagerIDs.ID_DISCOUNT_ITEM) {
             return FragmentPreviewCards.newInstance(position, R.layout.item_discount);
-        } else if (adapter == constants.PagerIDs.ID_TICKET_ITEM) {
+        } else if (adapter == ListConstants.PagerIDs.ID_TICKET_ITEM) {
             return FragmentPreviewCards.newInstance(position, R.layout.item_ticket);
         } else {
             return FragmentPreviewCards.newInstance(position, R.layout.item_list_bank);

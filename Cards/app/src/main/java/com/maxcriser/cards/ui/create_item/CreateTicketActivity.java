@@ -35,7 +35,7 @@ import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.constant.Extras;
-import com.maxcriser.cards.constant.constants;
+import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelNFCItems;
 import com.maxcriser.cards.database.models.ModelTickets;
@@ -52,15 +52,15 @@ import java.io.File;
 import java.util.Calendar;
 
 import static android.view.View.GONE;
-import static com.maxcriser.cards.constant.constants.Requests.CAPTURE_IMAGE_BACK;
-import static com.maxcriser.cards.constant.constants.Requests.CAPTURE_IMAGE_FRONT;
-import static com.maxcriser.cards.constant.constants.Requests.EDIT_IMAGE_BACK;
-import static com.maxcriser.cards.constant.constants.Requests.EDIT_IMAGE_FRONT;
-import static com.maxcriser.cards.constant.constants.Requests.REQUEST_BACK_CAMERA;
-import static com.maxcriser.cards.constant.constants.Requests.REQUEST_CALENDAR;
-import static com.maxcriser.cards.constant.constants.Requests.REQUEST_FRONT_CAMERA;
-import static com.maxcriser.cards.constant.constants.Requests.REQUEST_WRITE_STORAGE_BACK;
-import static com.maxcriser.cards.constant.constants.Requests.REQUEST_WRITE_STORAGE_FRONT;
+import static com.maxcriser.cards.constant.ListConstants.Requests.CAPTURE_IMAGE_BACK;
+import static com.maxcriser.cards.constant.ListConstants.Requests.CAPTURE_IMAGE_FRONT;
+import static com.maxcriser.cards.constant.ListConstants.Requests.EDIT_IMAGE_BACK;
+import static com.maxcriser.cards.constant.ListConstants.Requests.EDIT_IMAGE_FRONT;
+import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_BACK_CAMERA;
+import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_CALENDAR;
+import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_FRONT_CAMERA;
+import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_WRITE_STORAGE_BACK;
+import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_WRITE_STORAGE_FRONT;
 import static com.maxcriser.cards.ui.activities.LaunchScreenActivity.previewColors;
 import static com.maxcriser.cards.utils.Storage.isExternalStorageAvailable;
 
@@ -107,13 +107,13 @@ public class CreateTicketActivity extends AppCompatActivity {
                     final Uri takenPhotoUri = getUri(photoFileNameFront);
                     final Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
-                    intent.putExtra(constants.STATUS_PHOTOEDITOR, constants.STATUS_PHOTOEEDITOR_TICKET);
+                    intent.putExtra(ListConstants.STATUS_PHOTOEDITOR, ListConstants.STATUS_PHOTOEEDITOR_TICKET);
                     startActivityForResult(intent, EDIT_IMAGE_FRONT);
                 } else {
                     final Uri takenPhotoUri = getUri(photoFileNameBack);
                     final Intent intent = new Intent(this, PhotoEditorActivity.class);
                     intent.putExtra(Extras.EXTRA_URI, takenPhotoUri.toString());
-                    intent.putExtra(constants.STATUS_PHOTOEDITOR, constants.STATUS_PHOTOEEDITOR_TICKET);
+                    intent.putExtra(ListConstants.STATUS_PHOTOEDITOR, ListConstants.STATUS_PHOTOEEDITOR_TICKET);
                     startActivityForResult(intent, EDIT_IMAGE_BACK);
                 }
             } else {
@@ -170,9 +170,9 @@ public class CreateTicketActivity extends AppCompatActivity {
     public Uri getUri(final String fileName) {
         if (isExternalStorageAvailable()) {
             final File mediaStorageDir = new File(
-                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), constants.APP_TAG);
+                    getExternalFilesDir(Environment.DIRECTORY_PICTURES), ListConstants.APP_TAG);
             if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
-                Log.d(constants.APP_TAG, getResources().getString(R.string.filed_to_create_directory));
+                Log.d(ListConstants.APP_TAG, getResources().getString(R.string.filed_to_create_directory));
             }
             return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
         }
@@ -214,8 +214,8 @@ public class CreateTicketActivity extends AppCompatActivity {
         removeFront = (FrameLayout) findViewById(R.id.remove_front);
 
         final String uniqueString = UniqueStringGenerator.getUniqueString();
-        photoFileNameFront = constants.BEG_FILE_NAME_TICKET + uniqueString + "front_photo.jpg";
-        photoFileNameBack = constants.BEG_FILE_NAME_TICKET + uniqueString + "back_photo.jpg";
+        photoFileNameFront = ListConstants.BEG_FILE_NAME_TICKET + uniqueString + "front_photo.jpg";
+        photoFileNameBack = ListConstants.BEG_FILE_NAME_TICKET + uniqueString + "back_photo.jpg";
         DateToView.setDateToTicketView(date, calendar);
         DateToView.setTimeToView(time, calendar);
         db = DatabaseHelperImpl.getInstance(this);
@@ -225,13 +225,11 @@ public class CreateTicketActivity extends AppCompatActivity {
         myColorName = listPreviewColor.getNameColorCards();
         myColorCode = listPreviewColor.getCodeColorCards();
         Log.d(TICKET, myColorName + " " + myColorCode);
-        //TODO name convention
-        final int PAGE_COUNT = previewColors.size();
-        //TODO magic number, move to dimens
-        pager.setPageMargin(constants.PAGER_MARGIN_PREVIEW);
+        final int pageCount = previewColors.size();
+        pager.setPageMargin(ListConstants.PAGER_MARGIN_PREVIEW);
         final PagerAdapter pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
-                constants.PagerIDs.ID_TICKET_ITEM,
-                PAGE_COUNT);
+                ListConstants.PagerIDs.ID_TICKET_ITEM,
+                pageCount);
 
         pager.setAdapter(pagerAdapter);
         pager.addOnPageChangeListener(new OnTemplatePageChangeListener(new OnTemplatePageChangeListener.OnPageChangeListener() {
@@ -360,12 +358,12 @@ public class CreateTicketActivity extends AppCompatActivity {
             if (removeFront.getVisibility() == View.VISIBLE) {
                 cvNewTicket.put(ModelTickets.PHOTO_FIRST, editFrontUri.toString());
             } else {
-                cvNewTicket.put(ModelTickets.PHOTO_FIRST, constants.EMPTY_STRING);
+                cvNewTicket.put(ModelTickets.PHOTO_FIRST, ListConstants.EMPTY_STRING);
             }
             if (removeBack.getVisibility() == View.VISIBLE) {
                 cvNewTicket.put(ModelTickets.PHOTO_SECOND, editBackUri.toString());
             } else {
-                cvNewTicket.put(ModelTickets.PHOTO_SECOND, constants.EMPTY_STRING);
+                cvNewTicket.put(ModelTickets.PHOTO_SECOND, ListConstants.EMPTY_STRING);
             }
             cvNewTicket.put(ModelTickets.CARDHOLDER, cardholderStr);
             cvNewTicket.put(ModelTickets.DATE, dateStr);

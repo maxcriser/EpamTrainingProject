@@ -1,6 +1,6 @@
 package com.maxcriser.cards.constant;
 
-public final class constants {
+public final class ListConstants {
 
     public interface Requests {
 
@@ -58,8 +58,7 @@ public final class constants {
 
     public interface PagerIDs {
 
-        int ID_BANK_CARD_ITEM = 0;
-        int ID_BANK_CARD_ITEM_TYPE = 1; // visa, mastercard and etc.
+        int ID_BANK_CARD_ITEM_TYPE = 1;
         int ID_DISCOUNT_ITEM = 2;
         int ID_TICKET_ITEM = 3;
     }
@@ -76,5 +75,9 @@ public final class constants {
     public static final String STATUS_PHOTOEEDITOR_TICKET = "status_ticket_crop";
     public static final String SETUP_PIN = "setup_pin";
     public static final String TEXT_PLAIN = "text/plain";
+    public static final String UNDEFENDED = "undefended";
+    public static final String PASSWORD_TAG = "shared_password";
+    public static final String BANK = "bank";
+    public static final String ARGUMENT_PAGE_NUMBER_DISCOUNT = "arg_page_number";
 
 }

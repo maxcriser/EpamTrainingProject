@@ -8,9 +8,6 @@ import java.util.Random;
 public class UniqueStringGenerator {
 
     public static String getUniqueString() {
-        //TODO md5?
-        //TODO sha256
-        //TODO some magic
         final Random random = new Random();
         final Integer rand = random.nextInt(1000000000);
         final String date = new SimpleDateFormat("dd-MM-yyyy", Locale.US).format(new Date());

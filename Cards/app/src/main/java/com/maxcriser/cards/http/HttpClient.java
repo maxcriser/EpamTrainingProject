@@ -6,6 +6,7 @@ import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.model.Request;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -75,15 +76,25 @@ public class HttpClient {
         }
         if (bodyString != null) {
             final byte[] body = bodyString.getBytes("UTF-8");
-            final OutputStream stream = connection.getOutputStream();
-            stream.write(body);
-            stream.close();
-            //TODO close not in final
+            OutputStream stream = null;
+            try {
+                stream = connection.getOutputStream();
+                stream.write(body);
+            } catch (final IOException e) {
+                if (stream != null) {
+                    stream.close();
+                }
+            } finally {
+                if (stream != null) {
+                    stream.close();
+                }
+            }
         }
     }
 
     public void makeAsyncRequest(final Request pRequest, final OnResultCallback<String, Void> pCallback) {
         new AsyncTask<Request, Void, String>() {
+
             @Override
             protected String doInBackground(final Request... requests) {
                 String response;

@@ -20,7 +20,7 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.RemovePhoto;
-import com.maxcriser.cards.constant.constants;
+import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
 
@@ -141,25 +141,25 @@ public class BankCardActivity extends Activity {
         editValid.setText(valid);
         final Integer typeID;
         switch (type) {
-            case constants.Cards.VISA:
+            case ListConstants.Cards.VISA:
                 typeID = R.drawable.type_visa;
                 break;
-            case constants.Cards.MASTERCARD:
+            case ListConstants.Cards.MASTERCARD:
                 typeID = R.drawable.type_mastercard;
                 break;
-            case constants.Cards.AMEX:
+            case ListConstants.Cards.AMEX:
                 typeID = R.drawable.type_amex;
                 break;
-            case constants.Cards.MAESTRO:
+            case ListConstants.Cards.MAESTRO:
                 typeID = R.drawable.type_maestro;
                 break;
-            case constants.Cards.WESTERN_UNION:
+            case ListConstants.Cards.WESTERN_UNION:
                 typeID = R.drawable.type_western_union;
                 break;
-            case constants.Cards.JCB:
+            case ListConstants.Cards.JCB:
                 typeID = R.drawable.type_jcb;
                 break;
-            case constants.Cards.DINERS_CLUB:
+            case ListConstants.Cards.DINERS_CLUB:
                 typeID = R.drawable.type_diners_club;
                 break;
             default:

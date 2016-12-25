@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.constant.constants;
+import com.maxcriser.cards.constant.ListConstants;
 
 import static com.maxcriser.cards.ui.activities.LaunchScreenActivity.previewTypes;
 
@@ -39,28 +39,28 @@ public class FragmentPreviewTypeCards extends Fragment {
         final ImageView tvPage = (ImageView) view.findViewById(R.id.icon_type_card);
         final String type = previewTypes.get(pageNumberType);
         switch (type) {
-            case constants.Cards.VISA:
+            case ListConstants.Cards.VISA:
                 tvPage.setImageResource(R.drawable.type_visa);
                 break;
-            case constants.Cards.MASTERCARD:
+            case ListConstants.Cards.MASTERCARD:
                 tvPage.setImageResource(R.drawable.type_mastercard);
                 break;
-            case constants.Cards.AMEX:
+            case ListConstants.Cards.AMEX:
                 tvPage.setImageResource(R.drawable.type_amex);
                 break;
-            case constants.Cards.MAESTRO:
+            case ListConstants.Cards.MAESTRO:
                 tvPage.setImageResource(R.drawable.type_maestro);
                 break;
-            case constants.Cards.WESTERN_UNION:
+            case ListConstants.Cards.WESTERN_UNION:
                 tvPage.setImageResource(R.drawable.type_western_union);
                 break;
-            case constants.Cards.JCB:
+            case ListConstants.Cards.JCB:
                 tvPage.setImageResource(R.drawable.type_jcb);
                 break;
-            case constants.Cards.DINERS_CLUB:
+            case ListConstants.Cards.DINERS_CLUB:
                 tvPage.setImageResource(R.drawable.type_diners_club);
                 break;
-            case constants.Cards.BELCARD:
+            case ListConstants.Cards.BELCARD:
                 tvPage.setImageResource(R.drawable.type_belcard);
                 break;
         }

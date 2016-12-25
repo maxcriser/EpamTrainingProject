@@ -11,7 +11,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.maxcriser.cards.async.OnResultCallback;
-import com.maxcriser.cards.constant.constants;
+import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.database.annotations.Table;
 import com.maxcriser.cards.database.annotations.dbBlob;
 import com.maxcriser.cards.database.annotations.dbBoolean;
@@ -74,7 +74,7 @@ public final class DatabaseHelperImpl extends SQLiteOpenHelper {
                 for (int i = 0; i < fields.length; i++) {
                     final Annotation[] annotations = fields[i].getAnnotations();
                     String type = null;
-                    String additionalKeys = constants.EMPTY_STRING;
+                    String additionalKeys = ListConstants.EMPTY_STRING;
                     for (final Annotation annotation : annotations) {
                         if (annotation instanceof dbInteger) {
                             type = ((dbInteger) annotation).value();

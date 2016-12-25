@@ -40,7 +40,7 @@ import android.widget.Toast;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
-import com.maxcriser.cards.constant.constants;
+import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
@@ -99,7 +99,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     private LinearLayout linearEmpty;
     private ImageView clearSearch;
     private EditText searchEdit;
-    private String searchText = constants.EMPTY_STRING;
+    private String searchText = ListConstants.EMPTY_STRING;
     private Class ModelClass;
     private FlipAnimation mFlipAnimation;
 
@@ -366,7 +366,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         if (ContextCompat.checkSelfPermission(this, PERMISSION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{PERMISSION}, CODE);
         } else {
-            if (INTENT == constants.Requests.REQUEST_CAMERA) {
+            if (INTENT == ListConstants.Requests.REQUEST_CAMERA) {
                 startBarcodeReader();
             }
         }
@@ -378,7 +378,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
             return;
         } else if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, R.string.permission_has_not_been_granted, Toast.LENGTH_SHORT).show();
-        } else if (requestCode == constants.Requests.REQUEST_CAMERA) {
+        } else if (requestCode == ListConstants.Requests.REQUEST_CAMERA) {
             startBarcodeReader();
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -394,7 +394,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         if (typeItems.equals(getResources().getString(R.string.bank_title))) {
             startActivity(new Intent(this, CreateBankActivity.class));
         } else if (typeItems.equals(getResources().getString(R.string.discount_title))) {
-            getPermission(constants.Requests.REQUEST_CAMERA, Manifest.permission.CAMERA, constants.Requests.REQUEST_CAMERA);
+            getPermission(ListConstants.Requests.REQUEST_CAMERA, Manifest.permission.CAMERA, ListConstants.Requests.REQUEST_CAMERA);
         } else if (typeItems.equals(getResources().getString(R.string.tickets_title))) {
             startActivity(new Intent(this, CreateTicketActivity.class));
         } else {
@@ -406,7 +406,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     public void onBackSearchClicked(final View view) {
         toolbarBack.setVisibility(View.VISIBLE);
         toolbarSearch.setVisibility(GONE);
-        searchEdit.setText(constants.EMPTY_STRING);
+        searchEdit.setText(ListConstants.EMPTY_STRING);
         searchText = searchEdit.getText().toString();
         getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
         final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -472,7 +472,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     public void onSearchClicked(final View view) {
         toolbarSearch.setVisibility(View.VISIBLE);
         toolbarBack.setVisibility(GONE);
-        searchEdit.setText(constants.EMPTY_STRING);
+        searchEdit.setText(ListConstants.EMPTY_STRING);
         searchEdit.clearFocus();
         searchEdit.requestFocus();
         final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -480,6 +480,6 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
     public void onClearSearchClicked(final View view) {
-        searchEdit.setText(constants.EMPTY_STRING);
+        searchEdit.setText(ListConstants.EMPTY_STRING);
     }
 }

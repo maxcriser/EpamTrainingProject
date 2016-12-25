@@ -18,7 +18,7 @@ import com.isseiaoki.simplecropview.callback.LoadCallback;
 import com.isseiaoki.simplecropview.callback.SaveCallback;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.Extras;
-import com.maxcriser.cards.constant.constants;
+import com.maxcriser.cards.constant.ListConstants;
 
 public class PhotoEditorActivity extends AppCompatActivity {
 
@@ -46,12 +46,12 @@ public class PhotoEditorActivity extends AppCompatActivity {
 
     void initViews() {
         final Intent intent = getIntent();
-        final String statusEditor = intent.getStringExtra(constants.STATUS_PHOTOEDITOR);
+        final String statusEditor = intent.getStringExtra(ListConstants.STATUS_PHOTOEDITOR);
         final LinearLayout menuBar = (LinearLayout) findViewById(R.id.menu_bar);
         image = (CropImageView) findViewById(R.id.cropImageView);
         mProgressBar = (FrameLayout) findViewById(R.id.frame_progressbar);
         image.setInitialFrameScale(INITIAL_SCALE);
-        if (statusEditor.equals(constants.STATUS_PHOTOEEDITOR_CREDIT_CARD)) {
+        if (statusEditor.equals(ListConstants.STATUS_PHOTOEEDITOR_CREDIT_CARD)) {
             image.setCustomRatio(RATIO_X, RATIO_Y);
             menuBar.setVisibility(View.GONE);
         } else {
