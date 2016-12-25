@@ -6,10 +6,12 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.barcode.CameraPreview;
@@ -94,7 +96,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         try {
             c = Camera.open();
         } catch (final Exception e) {
-//            Toast.makeText(this, "Camera not available", Toast.LENGTH_SHORT).show();
+            Log.d("Camera", "Camera not available " + e.getMessage());
         }
         return c;
     }

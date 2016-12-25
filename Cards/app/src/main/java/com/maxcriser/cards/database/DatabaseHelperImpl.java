@@ -100,10 +100,10 @@ public final class DatabaseHelperImpl extends SQLiteOpenHelper implements Databa
     public void onCreate(final SQLiteDatabase pDatabase) {
         for (final Class<?> clazz : ModelList.MODELS) {
             final String sql = getTableCreateQuery(clazz);
-            final String DATABASE_HELPER = "DatabaseHelperImpl";
-            final String CLASS = " class: ";
-            final String ON_CREATE_DB = "onCreate db: ";
-            Log.d(DATABASE_HELPER, ON_CREATE_DB + sql + CLASS + clazz);
+            final String dbHelperStr = "DatabaseHelperImpl";
+            final String classStr = " class: ";
+            final String onCreateDb = "onCreate db: ";
+            Log.d(dbHelperStr, onCreateDb + sql + classStr + clazz);
             if (sql != null) {
                 pDatabase.execSQL(sql);
             }

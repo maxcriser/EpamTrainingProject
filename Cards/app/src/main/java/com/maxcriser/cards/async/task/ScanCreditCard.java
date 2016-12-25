@@ -77,14 +77,14 @@ public class ScanCreditCard implements Task<Uri, String, CreditCard> {
     }
 
     private void prepareTesseract() {
-        final String TESSDATA = "tessdata";
+        final String tessdata = "tessdata";
         try {
-            prepareDirectory(DATA_PATH + TESSDATA);
-            Log.d("DATA_PATH + PATH", DATA_PATH + TESSDATA);
+            prepareDirectory(DATA_PATH + tessdata);
+            Log.d("DATA_PATH + PATH", DATA_PATH + tessdata);
         } catch (final Exception e) {
             Log.d("TAG", e.toString());
         }
-        copyTessDataFiles(TESSDATA);
+        copyTessDataFiles(tessdata);
     }
 
     private void prepareDirectory(final String path) {

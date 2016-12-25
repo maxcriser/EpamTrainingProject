@@ -213,14 +213,14 @@ public class LockerActivity extends AppCompatActivity {
                 final Integer durationVibrateError = 200;
                 mVibrator.vibrate(durationVibrateError);
                 setBackgroundCircles(false, firstCircle, secondCircle, thirdCircle, fourthCircle);
-                final int DELAY_MILLIS = 350;
+                final int delayMillis = 350;
                 new Handler().postDelayed(new Runnable() {
 
                     @Override
                     public void run() {
                         error();
                     }
-                }, DELAY_MILLIS);
+                }, delayMillis);
             }
         }
     }

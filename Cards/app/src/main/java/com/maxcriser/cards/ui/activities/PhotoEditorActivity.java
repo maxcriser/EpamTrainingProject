@@ -42,8 +42,8 @@ public class PhotoEditorActivity extends AppCompatActivity {
         final LinearLayout menuBar = (LinearLayout) findViewById(R.id.menu_bar);
         image = (CropImageView) findViewById(R.id.cropImageView);
         mProgressBar = (FrameLayout) findViewById(R.id.frame_progressbar);
-        final float initialScane = 0.75f;
-        image.setInitialFrameScale(initialScane);
+        final float initialScale = 0.75f;
+        image.setInitialFrameScale(initialScale);
         if (statusEditor.equals(ListConstants.STATUS_PHOTOEEDITOR_CREDIT_CARD)) {
             final int ratioY = 55;
             final int ratioX = 87;

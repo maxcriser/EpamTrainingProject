@@ -21,8 +21,8 @@ public class FlipAnimation extends Animation {
         this.btnStart = btnStart;
         this.btnFinish = btnFinish;
 
-        final int DURATION_MILLIS_FLIP = 700;
-        setDuration(DURATION_MILLIS_FLIP);
+        final int durationMillisFlip = 700;
+        setDuration(durationMillisFlip);
         setFillAfter(false);
         setInterpolator(new AccelerateDecelerateInterpolator());
     }
@@ -37,17 +37,17 @@ public class FlipAnimation extends Animation {
 
     @Override
     protected void applyTransformation(final float interpolatedTime, final Transformation t) {
-        final double DEGREES_MATH = 180.0;
-        float degrees = (float) (DEGREES_MATH * Math.PI * interpolatedTime / Math.PI);
+        final double degreesMath = 180.0;
+        float degrees = (float) (degreesMath * Math.PI * interpolatedTime / Math.PI);
 
-        final float FLOAT_HALF = 0.5f;
-        if (interpolatedTime >= FLOAT_HALF) {
+        final float floatHalf = 0.5f;
+        if (interpolatedTime >= floatHalf) {
             if (isReverse) {
-                degrees -= DEGREES_MATH;
-                btnStart.setVisibility(View.VISIBLE);
+                degrees -= degreesMath;
                 btnFinish.setVisibility(View.GONE);
+                btnStart.setVisibility(View.VISIBLE);
             } else {
-                degrees -= DEGREES_MATH;
+                degrees -= degreesMath;
                 btnStart.setVisibility(View.GONE);
                 btnFinish.setVisibility(View.VISIBLE);
             }

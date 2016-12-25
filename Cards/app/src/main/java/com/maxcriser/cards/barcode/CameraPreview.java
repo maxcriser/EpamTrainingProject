@@ -54,8 +54,8 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             Log.d("DBG", e.toString());
         }
         try {
-            final int DISPLAY_ORIENTATION = 90;
-            mCamera.setDisplayOrientation(DISPLAY_ORIENTATION);
+            final int displayOrientation = 90;
+            mCamera.setDisplayOrientation(displayOrientation);
             mCamera.setPreviewDisplay(mHolder);
             mCamera.setPreviewCallback(previewCallback);
             mCamera.startPreview();

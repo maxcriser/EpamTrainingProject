@@ -406,8 +406,8 @@ public class CreateTicketActivity extends AppCompatActivity {
         intent.putExtra("beginTime", timeInMillis);
         intent.putExtra("allDay", false);
         intent.putExtra("rrule", "FREQ=YEARLY");
-        final int INT_SEC = 60;
-        intent.putExtra("endTime", timeInMillis + INT_SEC * INT_SEC * 1000);
+        final int intSec = 60;
+        intent.putExtra("endTime", timeInMillis + intSec * intSec * 1000);
         intent.putExtra("title", title);
         startActivity(intent);
     }

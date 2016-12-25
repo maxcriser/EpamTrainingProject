@@ -43,8 +43,8 @@ public class CardCursorAdapter extends RecyclerView.Adapter<CardHolder> {
         final Display display = wm.getDefaultDisplay();
         final Point size = new Point();
         display.getSize(size);
-        final int INT_DOUBLE_PADDING = 32;
-        viewWidth = size.x - INT_DOUBLE_PADDING;
+        final int intDoublePadding = 32;
+        viewWidth = size.x - intDoublePadding;
         viewHeight = viewWidth / RATIO_CREDIT_CARD;
         viewWidth /= 2;
         viewHeight /= 2;
