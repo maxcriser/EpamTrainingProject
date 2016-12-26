@@ -10,17 +10,17 @@ import android.widget.Toast;
 
 import com.maxcriser.cards.R;
 
-class EnterNfcNameDialogBuilder extends AlertDialog {
+public class EnterNfcNameDialogBuilder extends AlertDialog {
 
     private final Context context;
-    private EditText titleField;
+    public EditText titleField;
 
-    EnterNfcNameDialogBuilder(final Context context) {
+    public EnterNfcNameDialogBuilder(final Context context) {
         super(context);
         this.context = context;
     }
 
-    void startDialog() {
+    public void startDialog() {
         final LayoutInflater inflater = getLayoutInflater();
         final View layout = inflater.inflate(R.layout.fragment_input_name_nfc, null);
         titleField = (EditText) layout.findViewById(R.id.title_nfc_card);

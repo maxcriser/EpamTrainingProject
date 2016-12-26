@@ -15,6 +15,7 @@ public class NfcOutputDialogBuilder extends AlertDialog {
     private final Context context;
     private ImageView longHand;
     private final Animation animLongHand;
+    private AlertDialog aDialog;
 
     public NfcOutputDialogBuilder(final Context context) {
         super(context);
@@ -22,12 +23,18 @@ public class NfcOutputDialogBuilder extends AlertDialog {
         this.animLongHand = AnimationUtils.loadAnimation(context, R.anim.anim_long_hand);
     }
 
+    public void cancelDialog(){
+        if(aDialog!=null){
+            aDialog.dismiss();
+        }
+    }
+
     public void startDialog() {
         final LayoutInflater inflater = getLayoutInflater();
         final View layout = inflater.inflate(R.layout.fragment_nfc_output, null);
         final Builder builder = new Builder(context);
         builder.setView(layout);
-        final AlertDialog aDialog = builder.create();
+        aDialog = builder.create();
         aDialog.show();
         longHand = (ImageView) layout.findViewById(R.id.long_hand);
         longHand.startAnimation(animLongHand);

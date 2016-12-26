@@ -2,12 +2,21 @@ package com.maxcriser.cards.ui.activities;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Typeface;
+import android.nfc.FormatException;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
+import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -43,15 +52,18 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.anim.FlipAnimation;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.constant.ListConstants;
+import com.maxcriser.cards.constant.ListPreview;
 import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.database.models.ModelNFCItems;
 import com.maxcriser.cards.database.models.ModelTickets;
+import com.maxcriser.cards.dialog.EnterNfcNameDialogBuilder;
 import com.maxcriser.cards.dialog.NfcInputDialogBuilder;
 import com.maxcriser.cards.dialog.NfcOutputDialogBuilder;
 import com.maxcriser.cards.listener.RecyclerItemClickListener;
 import com.maxcriser.cards.loader.CardsCursorLoader;
+import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.adapter.CardCursorAdapter;
 import com.maxcriser.cards.ui.create_item.CreateBankActivity;
 import com.maxcriser.cards.ui.create_item.CreateTicketActivity;
@@ -59,6 +71,9 @@ import com.maxcriser.cards.ui.display_item.BankCardActivity;
 import com.maxcriser.cards.ui.display_item.DiscountCardActivity;
 import com.maxcriser.cards.ui.display_item.TicketActivity;
 import com.maxcriser.cards.view.labels.RobotoRegular;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
 
 import static android.view.View.GONE;
 import static com.maxcriser.cards.constant.Extras.EXTRA_BANK_BACK_PHOTO;
@@ -108,6 +123,11 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     private String searchText = ListConstants.EMPTY_STRING;
     private Class ModelClass;
     private FlipAnimation mFlipAnimation;
+    private NfcInputDialogBuilder nfcInputDialogBuilder;
+    private NfcOutputDialogBuilder nfcOutputDialogBuilder;
+    private EnterNfcNameDialogBuilder dialog;
+    private NfcAdapter mNfcAdapter;
+    private String writeNfcTag;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -116,18 +136,17 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         final Intent intent = getIntent();
         typeItems = intent.getStringExtra(EXTRA_CHECK_ITEMS);
         initViews();
+        initNFC();
+    }
+
+    private void initNFC() {
+        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
     }
 
     private void showNfc(final Cursor pCursor) {
-        final String id = pCursor.getString(pCursor.getColumnIndex(ModelNFCItems.ID));
-        final String nameNfc = pCursor.getString(pCursor.getColumnIndex(ModelNFCItems.TITLE));
-        final String tagNfc = pCursor.getString(pCursor.getColumnIndex(ModelNFCItems.TAG));
-        final String color = pCursor.getString(pCursor.getColumnIndex(ModelNFCItems.BACKGROUND_COLOR));
-
-        Log.d("showNfc", id + "\n" + nameNfc + "\n" + tagNfc + "\n" + color);
-
-        final NfcOutputDialogBuilder nfcOutputDialogBuilder = new NfcOutputDialogBuilder(this);
+        nfcOutputDialogBuilder = new NfcOutputDialogBuilder(this);
         nfcOutputDialogBuilder.startDialog();
+        writeNfcTag = pCursor.getString(pCursor.getColumnIndex(ModelNFCItems.TAG));
     }
 
     private void showTicket(final Cursor pCursor) {
@@ -371,6 +390,17 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
                 onBackSearchClicked(null);
             }
         }
+
+        final IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
+        final IntentFilter ndefDetected = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
+        final IntentFilter techDetected = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
+        final IntentFilter[] nfcIntentFilter = new IntentFilter[]{techDetected, tagDetected, ndefDetected};
+
+        final PendingIntent pendingIntent = PendingIntent.getActivity(
+                this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+        if (mNfcAdapter != null) {
+            mNfcAdapter.enableForegroundDispatch(this, pendingIntent, nfcIntentFilter, null);
+        }
     }
 
     public void onBackClicked(final View view) {
@@ -418,7 +448,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
                 startActivity(new Intent(this, CreateTicketActivity.class));
                 break;
             default:
-                final NfcInputDialogBuilder nfcInputDialogBuilder = new NfcInputDialogBuilder(this);
+                nfcInputDialogBuilder = new NfcInputDialogBuilder(this);
                 nfcInputDialogBuilder.startDialog();
                 break;
         }
@@ -489,13 +519,11 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
                 break;
         }
         adapter = new CardCursorAdapter(data, this, layout, getApplication());
-//          recyclerItems.swapAdapter(adapter, false); // true
         recyclerItems.setAdapter(adapter);
     }
 
     @Override
     public void onLoaderReset(final Loader<Cursor> loader) {
-//          recyclerItems.swapAdapter(null, false); // true
         recyclerItems.setAdapter(null);
     }
 
@@ -515,5 +543,148 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
 
     public void onClearSearchClicked(final View view) {
         searchEdit.setText(ListConstants.EMPTY_STRING);
+    }
+
+    @Override
+    protected void onNewIntent(final Intent intent) {
+        final Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+        if (tag != null) {
+            Toast.makeText(this, "New intent", Toast.LENGTH_LONG).show();
+            final Ndef ndef = Ndef.get(tag);
+
+            if (ndef != null) {
+                if (nfcInputDialogBuilder.isShowing()) {
+                    if (nfcInputDialogBuilder != null) {
+                        nfcInputDialogBuilder.cancelDialog();
+                    }
+                    dialog = new EnterNfcNameDialogBuilder(this);
+                    dialog.startDialog();
+                    try {
+                        writeNfcToDatabase(ndef);
+                    } catch (final IOException pE) {
+
+                    }
+                } else {
+                    if (nfcOutputDialogBuilder.isShowing()) {
+                        if (nfcOutputDialogBuilder != null) {
+                            nfcOutputDialogBuilder.cancelDialog();
+                        }
+                        writeNfc(ndef, writeNfcTag);
+                    }
+                }
+            } else {
+                final ContentValues cv = new ContentValues();
+                final PreviewColor listPreviewColor = ListPreview.colors.get(0);
+                cv.put(ModelNFCItems.BACKGROUND_COLOR, listPreviewColor.getCodeColorCards());
+                cv.put(ModelNFCItems.TITLE, "NFC CANNOT SAVE");
+                cv.put(ModelNFCItems.ID, (Integer) null);
+                cv.put(ModelNFCItems.TAG, "NFC CANNOT SAVE");
+
+                dbHelper.insert(ModelNFCItems.class, cv, new OnResultCallback<Long, Void>() {
+
+                    @Override
+                    public void onSuccess(final Long pLong) {
+                        getSupportLoaderManager().restartLoader(LOADER_ID, null, ItemsActivity.this);
+                    }
+
+                    @Override
+                    public void onError(final Exception pE) {
+                        Toast.makeText(ItemsActivity.this, R.string.cannot_insert_card_to_database, Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onProgressChanged(final Void pVoid) {
+                    }
+                });
+                if (nfcInputDialogBuilder != null) {
+                    nfcInputDialogBuilder.cancelDialog();
+                }
+                if (nfcOutputDialogBuilder != null) {
+                    nfcOutputDialogBuilder.cancelDialog();
+                }
+                Toast.makeText(this, getString(R.string.cannot_scanning_type_nfc), Toast.LENGTH_LONG).show();
+            }
+        }
+
+    }
+
+    private void writeNfc(final Ndef ndef1, final String message) {
+        if (ndef1 != null) {
+            try {
+                ndef1.connect();
+                final NdefRecord mimeRecord = NdefRecord.createMime("text/plain", message.getBytes(Charset.forName("US-ASCII")));
+                ndef1.writeNdefMessage(new NdefMessage(mimeRecord));
+            } catch (IOException | FormatException e) {
+                Log.d("ERROR", e.toString());
+            } finally {
+                try {
+                    ndef1.close();
+                    if (nfcOutputDialogBuilder != null) {
+                        nfcOutputDialogBuilder.cancelDialog();
+                    }
+                } catch (final IOException pE) {
+                    Log.d("ERROR", pE.toString());
+                }
+            }
+        } else {
+            Toast.makeText(this, "Ndef == null", Toast.LENGTH_LONG).show();
+            if (nfcOutputDialogBuilder != null) {
+                nfcOutputDialogBuilder.cancelDialog();
+            }
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mNfcAdapter != null) {
+            mNfcAdapter.disableForegroundDispatch(this);
+        }
+    }
+
+    private void writeNfcToDatabase(final Ndef ndef1) throws IOException {
+        final String message;
+        final String title = dialog.titleField.getText().toString();
+        Toast.makeText(this, "Title dialog: " + title, Toast.LENGTH_LONG).show();
+        if (!title.isEmpty()) {
+            try {
+                ndef1.connect();
+                final NdefMessage ndefMessage = ndef1.getNdefMessage();
+                message = new String(ndefMessage.getRecords()[0].getPayload());
+                final PreviewColor listPreviewColor = ListPreview.colors.get(0);
+                final ContentValues cv = new ContentValues();
+                cv.put(ModelNFCItems.BACKGROUND_COLOR, listPreviewColor.getCodeColorCards());
+                cv.put(ModelNFCItems.TITLE, title);
+                cv.put(ModelNFCItems.ID, (Integer) null);
+                cv.put(ModelNFCItems.TAG, message);
+
+                dbHelper.insert(ModelNFCItems.class, cv, new OnResultCallback<Long, Void>() {
+
+                    @Override
+                    public void onSuccess(final Long pLong) {
+                        getSupportLoaderManager().restartLoader(LOADER_ID, null, ItemsActivity.this);
+                    }
+
+                    @Override
+                    public void onError(final Exception pE) {
+                        Toast.makeText(ItemsActivity.this, R.string.cannot_insert_card_to_database, Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onProgressChanged(final Void pVoid) {
+                    }
+                });
+
+            } catch (IOException | FormatException e) {
+                Toast.makeText(this, R.string.cannot_save_nfc_item, Toast.LENGTH_LONG).show();
+            } finally {
+                if (nfcInputDialogBuilder != null) {
+                    nfcInputDialogBuilder.cancelDialog();
+                }
+                ndef1.close();
+            }
+        } else {
+            Toast.makeText(this, R.string.cannot_save_nfc_title_isempty, Toast.LENGTH_LONG).show();
+        }
     }
 }

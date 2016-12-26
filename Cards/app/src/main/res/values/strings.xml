@@ -158,5 +158,8 @@
     <string name="crop">CROP</string>
     <string name="ckeeper_the_cards_keeper">CKeeper - the cards keeper</string>
     <string name="not_fount_matches">Not found matches</string>
+    <string name="cannot_save_nfc_item">Cannot save NFC item</string>
+    <string name="cannot_save_nfc_title_isempty">Cannot saved\nTitle of NFC is empty</string>
+    <string name="cannot_scanning_type_nfc">Cannot scanning this type of NFC item</string>
 
 </resources>

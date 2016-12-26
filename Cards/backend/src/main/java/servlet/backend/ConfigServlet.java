@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import sun.rmi.runtime.Log;
+
 import static servlet.backend.auth.SecurityUtils.hasPermission;
 
 public class ConfigServlet extends HttpServlet {
@@ -24,7 +26,7 @@ public class ConfigServlet extends HttpServlet {
 
     private final Entity mEntity;
 
-    public ConfigServlet() {
+    public ConfigServlet() throws JSONException {
         super();
         final DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         final Query query = new Query("config");
@@ -36,7 +38,7 @@ public class ConfigServlet extends HttpServlet {
             try {
                 mJSONObject = new JSONObject((String) (mEntity.getProperties().get("value")));
             } catch (final JSONException e) {
-                e.printStackTrace();
+                throw new JSONException(e);
             }
         } else {
             mJSONObject = new JSONObject();

@@ -3,27 +3,27 @@ package com.maxcriser.cards.ui.activities;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.Loader;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
+import android.nfc.tech.MifareClassic;
 import android.nfc.tech.Ndef;
-import android.os.AsyncTask;
+import android.nfc.tech.NdefFormatable;
+import android.nfc.tech.NfcA;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.maxcriser.cards.R;
+import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.fragment.Listener;
 import com.maxcriser.cards.fragment.NFCReadFragment;
 import com.maxcriser.cards.fragment.NFCWriteFragment;
 
+import java.util.Arrays;
+
 public class NFCReaderActivity extends AppCompatActivity implements Listener {
-
-    public final String TAG = NFCReaderActivity.class.getSimpleName();
-
     private EditText mEtMessage;
 
     //TODO it's test activity
@@ -51,6 +51,7 @@ public class NFCReaderActivity extends AppCompatActivity implements Listener {
         final Button btRead = (Button) findViewById(R.id.btn_read);
 
         btWrite.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(final View pView) {
                 isWrite = true;
@@ -65,6 +66,7 @@ public class NFCReaderActivity extends AppCompatActivity implements Listener {
             }
         });
         btRead.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(final View pView) {
                 mNfcReadFragment = (NFCReadFragment) getFragmentManager().findFragmentByTag(NFCReadFragment.TAG);
@@ -80,7 +82,6 @@ public class NFCReaderActivity extends AppCompatActivity implements Listener {
     }
 
     private void initNFC() {
-
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
     }
 
@@ -125,7 +126,7 @@ public class NFCReaderActivity extends AppCompatActivity implements Listener {
     protected void onNewIntent(final Intent intent) {
         final Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
         if (tag != null) {
-            //TODO debug and Google
+
             final Ndef ndef = Ndef.get(tag);
 
             if (isDialogDisplayed) {

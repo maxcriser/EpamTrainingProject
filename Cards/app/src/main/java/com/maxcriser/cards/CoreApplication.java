@@ -25,7 +25,7 @@ public class CoreApplication extends Application {
         return mImageLoader;
     }
 
-    CoreApplication() {
+    public CoreApplication() {
 
         ContextHolder.set(this);
 
@@ -43,5 +43,4 @@ public class CoreApplication extends Application {
 //                    .penaltyDeath()
 //                    .build());
     }
-}
 }

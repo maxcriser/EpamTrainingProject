@@ -4,6 +4,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.nfc.FormatException;
 import android.nfc.NdefMessage;
+import android.nfc.tech.MifareClassic;
 import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -58,7 +59,6 @@ public class NFCReadFragment extends DialogFragment {
     }
 
     public void onNfcDetected(final Ndef ndef1) {
-
         readFromNFC(ndef1);
     }
 
@@ -69,8 +69,6 @@ public class NFCReadFragment extends DialogFragment {
             final NdefMessage ndefMessage = ndef1.getNdefMessage();
             final String message = new String(ndefMessage.getRecords()[0].getPayload());
             Log.d(TAG, "readFromNFC: " + message);
-            mTvMessage.setText(message);
-
         } catch (IOException | FormatException e) {
             Log.d("ERROR", e.toString());
         } finally {

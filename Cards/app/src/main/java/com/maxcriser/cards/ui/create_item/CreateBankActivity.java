@@ -124,7 +124,6 @@ public class CreateBankActivity extends AppCompatActivity {
         title.setText(getResources().getString(R.string.bank_title));
 
         final PreviewColor listPreviewColor = ListPreview.colors.get(0);
-        final String myColorName = listPreviewColor.getNameColorCards();
         myColorCode = listPreviewColor.getCodeColorCards();
         myTypeCard = ListPreview.types.get(0);
         final int pageCount = ListPreview.types.size();
