@@ -46,7 +46,7 @@ import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.model.CreditCard;
 import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.activities.PhotoEditorActivity;
-import com.maxcriser.cards.utils.DateToView;
+import com.maxcriser.cards.date.DateToView;
 import com.maxcriser.cards.utils.UniqueStringGenerator;
 import com.maxcriser.cards.view.labels.RobotoRegular;
 
@@ -62,7 +62,7 @@ import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_BACK_C
 import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_FRONT_CAMERA;
 import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_WRITE_STORAGE_BACK;
 import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_WRITE_STORAGE_FRONT;
-import static com.maxcriser.cards.utils.Storage.isExternalStorageAvailable;
+import static com.maxcriser.cards.utils.manager.StorageManager.isExternalStorageAvailable;
 
 public class CreateBankActivity extends AppCompatActivity {
 

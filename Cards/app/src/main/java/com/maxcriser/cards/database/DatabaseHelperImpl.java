@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.maxcriser.cards.ContextHolder;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.database.annotations.Table;
@@ -34,7 +35,7 @@ public final class DatabaseHelperImpl extends SQLiteOpenHelper implements Databa
 
     DatabaseHelperImpl(final Context pContext) {
         super(pContext, mDatabaseName, null, dbVersion);
-//        ContextHolder.getInstance().getContext().deleteDatabase(mDatabaseName);
+//        ContextHolder.get().deleteDatabase(mDatabaseName);
         getWritableDatabase();
     }
 

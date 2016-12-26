@@ -3,12 +3,10 @@ package com.maxcriser.cards.dialog;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 
 import com.maxcriser.cards.R;
 
-import static com.maxcriser.cards.utils.NetworkManager.goToUrl;
+import static com.maxcriser.cards.utils.manager.NetworkManager.goToUrl;
 
 public class NotificationDialogBuilder extends AlertDialog {
 

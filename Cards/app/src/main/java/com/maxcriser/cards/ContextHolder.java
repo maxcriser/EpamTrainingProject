@@ -2,20 +2,11 @@ package com.maxcriser.cards;
 
 import android.content.Context;
 
-public final class ContextHolder {
+public enum ContextHolder {
 
-    private static ContextHolder sContextHolder;
+    INSTANCE;
+
     private Context mContext;
-
-    private ContextHolder() {
-    }
-
-    public static ContextHolder getInstance() {
-        if (sContextHolder == null) {
-            sContextHolder = new ContextHolder();
-        }
-        return sContextHolder;
-    }
 
     public Context getContext() {
         return mContext;
@@ -23,6 +14,14 @@ public final class ContextHolder {
 
     public void setContext(final Context pContext) {
         mContext = pContext;
+    }
+
+    public static Context get() {
+        return INSTANCE.mContext;
+    }
+
+    public static void set(final Context pContext) {
+        INSTANCE.mContext = pContext;
     }
 
 }

@@ -25,8 +25,10 @@ public class CoreApplication extends Application {
         return mImageLoader;
     }
 
-//    CoreApplication() {
-//
+    CoreApplication() {
+
+        ContextHolder.set(this);
+
 //        if (BuildConfig.DEBUG) {
 //            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
 //                    .detectDiskReads()
@@ -40,6 +42,6 @@ public class CoreApplication extends Application {
 //                    .penaltyLog()
 //                    .penaltyDeath()
 //                    .build());
-//        }
-//    }
+    }
+}
 }

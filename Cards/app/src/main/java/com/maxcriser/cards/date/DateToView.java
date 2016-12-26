@@ -1,4 +1,4 @@
-package com.maxcriser.cards.utils;
+package com.maxcriser.cards.date;
 
 import android.widget.TextView;
 
@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class DateToView {
+public final class DateToView {
 
     public static void setDateToCreditView(final TextView pView, final Calendar pCalendar) {
         final SimpleDateFormat dateFormat = getCreditDateFormat();

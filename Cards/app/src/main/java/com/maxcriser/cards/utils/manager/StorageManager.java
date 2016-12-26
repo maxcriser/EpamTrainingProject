@@ -1,9 +1,9 @@
-package com.maxcriser.cards.utils;
+package com.maxcriser.cards.utils.manager;
 
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 
-public class Storage extends AppCompatActivity {
+public class StorageManager extends AppCompatActivity {
 
     public static boolean isExternalStorageAvailable() {
         final String state = Environment.getExternalStorageState();

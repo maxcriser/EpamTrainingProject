@@ -1,4 +1,4 @@
-package com.maxcriser.cards.utils;
+package com.maxcriser.cards.utils.manager;
 
 import android.content.Context;
 import android.content.Intent;
