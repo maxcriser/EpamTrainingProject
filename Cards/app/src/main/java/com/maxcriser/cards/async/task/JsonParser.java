@@ -1,10 +1,7 @@
 package com.maxcriser.cards.async.task;
 
-import android.util.Log;
-
 import com.maxcriser.cards.async.ProgressCallback;
 import com.maxcriser.cards.async.Task;
-import com.maxcriser.cards.constant.ListConstants;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -16,7 +13,7 @@ public class JsonParser implements Task<String, Void, String> {
 
     @Override
     public String doInBackground(final String pUrl, final ProgressCallback<Void> pVoidProgressCallback) throws Exception {
-        String resultJson = ListConstants.EMPTY_STRING;
+        final String resultJson;
         try {
             final URL url = new URL(pUrl);
 
@@ -38,7 +35,7 @@ public class JsonParser implements Task<String, Void, String> {
             inputStream.close();
 
         } catch (final Exception e) {
-            Log.d("Connection time out", e.toString());
+            throw new Exception(e);
         }
         return resultJson;
     }

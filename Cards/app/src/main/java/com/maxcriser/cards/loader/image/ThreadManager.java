@@ -7,7 +7,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public class ThreadManager {
+final class ThreadManager {
 
     private static ThreadManager sThreadManager;
     private final ExecutorService mExecutorService;
@@ -23,7 +23,7 @@ public class ThreadManager {
                 Long.MAX_VALUE, TimeUnit.NANOSECONDS, mThreadQueue);
     }
 
-    public static ThreadManager getInstance() {
+    static ThreadManager getInstance() {
         if (sThreadManager == null) {
             sThreadManager = new ThreadManager();
         }

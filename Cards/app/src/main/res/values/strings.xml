@@ -157,5 +157,6 @@
     <string name="cannot_parse_settings">Cannot parse settings</string>
     <string name="crop">CROP</string>
     <string name="ckeeper_the_cards_keeper">CKeeper - the cards keeper</string>
+    <string name="not_fount_matches">Not found matches</string>
 
 </resources>

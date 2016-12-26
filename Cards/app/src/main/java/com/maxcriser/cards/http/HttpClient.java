@@ -41,9 +41,10 @@ public class HttpClient {
                 stringBuilder.append(line);
             }
             return stringBuilder.toString();
+        } catch (final IOException e) {
+            throw new Exception(e);
         } finally {
             if (inputStream != null) {
-                //TODO IOUtils.closeSafely()
                 inputStream.close();
             }
             if (connection != null) {
@@ -92,7 +93,7 @@ public class HttpClient {
         }
     }
 
-    public void makeAsyncRequest(final Request pRequest, final OnResultCallback<String, Void> pCallback) {
+    public void asyncRequest(final Request pRequest, final OnResultCallback<String, Void> pCallback) {
         new AsyncTask<Request, Void, String>() {
 
             @Override

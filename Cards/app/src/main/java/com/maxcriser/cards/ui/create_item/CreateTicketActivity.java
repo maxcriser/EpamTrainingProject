@@ -230,7 +230,6 @@ public class CreateTicketActivity extends AppCompatActivity {
         final PreviewColor listPreviewColor = ListPreview.colors.get(0);
         myColorName = listPreviewColor.getNameColorCards();
         myColorCode = listPreviewColor.getCodeColorCards();
-        Log.d(TICKET, myColorName + " " + myColorCode);
         final int pageCount = ListPreview.colors.size();
         pager.setPageMargin(ListConstants.PAGER_MARGIN_PREVIEW);
         final PagerAdapter pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
@@ -244,7 +243,6 @@ public class CreateTicketActivity extends AppCompatActivity {
             public void onResult(final int position, final String codeColor, final String nameColor) {
                 myColorCode = codeColor;
                 myColorName = nameColor;
-                Log.d("COLOR", position + myColorName + myColorCode);
             }
         }));
     }
@@ -332,7 +330,7 @@ public class CreateTicketActivity extends AppCompatActivity {
 
     private void startCameraForPhoto(final int code, final String fileName) {
         final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, getUri(fileName)); // set the image file name
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, getUri(fileName));
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, code);
         }

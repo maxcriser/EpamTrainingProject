@@ -8,6 +8,8 @@ import android.net.Uri;
 
 import com.maxcriser.cards.R;
 
+import static com.maxcriser.cards.utils.NetworkManager.goToUrl;
+
 public class NotificationDialogBuilder extends AlertDialog {
 
     private final Context context;
@@ -58,7 +60,7 @@ public class NotificationDialogBuilder extends AlertDialog {
                 @Override
                 public void onClick(final DialogInterface dialog, final int pI) {
                     if (url != null) {
-                        goToUrl(url);
+                        goToUrl(context, url);
                     }
                     dialog.cancel();
                 }
@@ -67,11 +69,5 @@ public class NotificationDialogBuilder extends AlertDialog {
         builder.setTitle(title).setMessage(message);
         final AlertDialog alert = builder.create();
         alert.show();
-    }
-
-    private void goToUrl(final String url) {
-        final Uri uriUrl = Uri.parse(url);
-        final Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-        context.startActivity(launchBrowser);
     }
 }

@@ -38,7 +38,6 @@ import com.maxcriser.cards.constant.Extras;
 import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.constant.ListPreview;
 import com.maxcriser.cards.database.DatabaseHelper;
-import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.dialog.MatchesFountDialogBuilder;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
@@ -127,10 +126,7 @@ public class CreateBankActivity extends AppCompatActivity {
         final PreviewColor listPreviewColor = ListPreview.colors.get(0);
         final String myColorName = listPreviewColor.getNameColorCards();
         myColorCode = listPreviewColor.getCodeColorCards();
-        Log.d("BANK", myColorName + " " + myColorCode);
-
         myTypeCard = ListPreview.types.get(0);
-        Log.d("BANK", myTypeCard);
         final int pageCount = ListPreview.types.size();
         final PagerAdapter pagerAdapterTypes = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
                 ListConstants.PagerIDs.ID_BANK_CARD_ITEM_TYPE,
@@ -206,8 +202,7 @@ public class CreateBankActivity extends AppCompatActivity {
                                     showAlertDialogRecognize(creditNumber, creditCardholder, creditName,
                                             creditType, creditValid);
                                 } else {
-                                    Toast.makeText(CreateBankActivity.this, "Not found matches", Toast.LENGTH_LONG).show();
-                                    Log.d("TAG", "SFDSDFS");
+                                    Toast.makeText(CreateBankActivity.this, R.string.not_fount_matches, Toast.LENGTH_LONG).show();
                                 }
                             }
                         } catch (final Exception e) {
@@ -327,7 +322,8 @@ public class CreateBankActivity extends AppCompatActivity {
             final File mediaStorageDir = new File(
                     getExternalFilesDir(Environment.DIRECTORY_PICTURES), ListConstants.APP_TAG);
             if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
-                Log.d(ListConstants.APP_TAG, getString(R.string.filed_to_create_directory));
+                Toast.makeText(this, ListConstants.APP_TAG + getString(R.string.filed_to_create_directory),
+                        Toast.LENGTH_LONG).show();
             }
             return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
         }
@@ -361,7 +357,7 @@ public class CreateBankActivity extends AppCompatActivity {
 
     private void startCameraForPhoto(final int code, final String fileName) {
         final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, getUri(fileName)); // set the image file name
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, getUri(fileName));
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, code);
         }

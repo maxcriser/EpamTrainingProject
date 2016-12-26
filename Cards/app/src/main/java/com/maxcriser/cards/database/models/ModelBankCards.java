@@ -13,7 +13,7 @@ public final class ModelBankCards {
     public static final String ID = "_id";
 
     @dbString
-    public static final String TYPE = "type"; // VISA / MASTERCARD and e.t.c.
+    public static final String TYPE = "type";
 
     @dbString
     public static final String TITLE = "title";

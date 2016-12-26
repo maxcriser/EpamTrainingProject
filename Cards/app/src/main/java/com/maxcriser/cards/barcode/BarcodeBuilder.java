@@ -1,12 +1,3 @@
-/*
- * (C) 2011 Slava Archibasov
- * http://plaincodesource.blogspot.com
- * slava.archibasov@gmail.com 
- * 
- * This code is licensed under The Code Project Open License (CPOL) 
- * http://www.codeproject.com/info/cpol10.aspx  
- */
-
 package com.maxcriser.cards.barcode;
 
 import com.maxcriser.cards.constant.ListConstants;

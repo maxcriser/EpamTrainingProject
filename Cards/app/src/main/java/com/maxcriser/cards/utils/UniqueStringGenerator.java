@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
-public class UniqueStringGenerator {
+public final class UniqueStringGenerator {
 
     public static String getUniqueString() {
         final Random random = new Random();

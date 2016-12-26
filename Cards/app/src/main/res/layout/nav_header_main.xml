@@ -15,8 +15,9 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_gravity="center|start"
         android:paddingTop="16dp"
         app:srcCompat="@drawable/ck_logo"/>
 
@@ -24,12 +25,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
+        android:textSize="14sp"
         android:text="@string/ckeeper_the_cards_keeper"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="0dp"/>
 
 </LinearLayout>

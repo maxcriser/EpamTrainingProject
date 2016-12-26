@@ -41,10 +41,8 @@ public class ScanCreditCard implements Task<Uri, String, CreditCard> {
             options.inSampleSize = 4; // 1 - means max size. 4 - means maxsize/4 size. Don't use value <4, because you need more memory in the heap to store your data.
             final Bitmap bitmap = BitmapFactory.decodeFile(imgUri.getPath(), options);
             final String result = extractText(bitmap);
-            Log.d("Result OCR", result);
             return new CreditCard(result);
         } catch (final Exception e) {
-            Log.e(TAG, e.getMessage());
             return null;
         }
     }
@@ -53,13 +51,9 @@ public class ScanCreditCard implements Task<Uri, String, CreditCard> {
         try {
             final String[] fileList = mAssetManager.list(path);
             for (final String fileName : fileList) {
-                Log.d("fileName", fileName);
                 final String pathToDataFile = DATA_PATH + path + "/" + fileName;
-                Log.d("pathToDataFile", DATA_PATH + path + "/" + fileName);
-
                 if (!(new File(pathToDataFile)).exists()) {
                     final InputStream in = mAssetManager.open(path + "/" + fileName);
-                    Log.d("path + / + fileName", path + "/" + fileName);
                     final OutputStream out = new FileOutputStream(pathToDataFile);
                     final byte[] buf = new byte[1024];
                     int len;
@@ -68,7 +62,6 @@ public class ScanCreditCard implements Task<Uri, String, CreditCard> {
                     }
                     in.close();
                     out.close();
-                    Log.d(TAG, "Copied " + fileName + "to tessdata");
                 }
             }
         } catch (final IOException e) {
@@ -110,11 +103,8 @@ public class ScanCreditCard implements Task<Uri, String, CreditCard> {
         }
         final String lang = "eng";
         tessBaseApi.init(DATA_PATH, lang);
-//        For example if we only want to detect numbers
         tessBaseApi.setVariable(TessBaseAPI.VAR_CHAR_WHITELIST,
                 "0123456789" + "AaBbCcDdEeFfGgHhIiJiKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz /&,.-");
-
-        Log.d(TAG, "Training file loaded");
         tessBaseApi.setImage(bitmap);
         String extractedText = "empty result";
         try {

@@ -33,7 +33,6 @@ class ImageLoaderImpl implements ImageLoader {
     private final LruCache<String, Bitmap> mLruCache;
     private final Stack<Priority> mDownloadPriorities;
     private final Object mLockObj = new Object();
-    private final String TAG = "ImageLoaderImpl";
 
     ImageLoaderImpl() {
         mThreadManager = ThreadManager.getInstance();
@@ -46,7 +45,6 @@ class ImageLoaderImpl implements ImageLoader {
         } else {
             size = Runtime.getRuntime().maxMemory() / 4;
         }
-        Log.d(TAG, "ImageLoaderImpl: MEMORY ALLOCATED FOR LRU CACHE: " + size);
         mLruCache = new LruCache<String, Bitmap>(((int) size)) {
 
             @Override
@@ -62,7 +60,7 @@ class ImageLoaderImpl implements ImageLoader {
         if (findModel(pUrl) != -1) {
             risePriority(pUrl);
             recalculatePriorities();
-            Log.d(TAG, "downloadToView: UP PRIORITY FOR " + pUrl);
+            Log.d("ImageLoader", "downloadToView: UP PRIORITY FOR " + pUrl);
             return;
         }
         pView.setTag(pUrl);
@@ -70,9 +68,7 @@ class ImageLoaderImpl implements ImageLoader {
         synchronized (mLockObj) {
             cachedBitmap = mLruCache.get(pUrl);
         }
-        Log.d(TAG, "downloadToView: CACHED: " + (cachedBitmap == null ? "NO" : "YES") + " " + pUrl);
         if (cachedBitmap != null && pView.getTag().equals(pUrl)) {
-            Log.d(TAG, "downloadToView: FROM LRU CACHE " + pUrl);
             if (pArgs.length != 0) {
                 final Bitmap resizedBitmap = Bitmap.createScaledBitmap(cachedBitmap, pArgs[0], pArgs[1], true);
                 pView.setImageBitmap(resizedBitmap);
@@ -114,7 +110,7 @@ class ImageLoaderImpl implements ImageLoader {
                             try {
                                 inputStream.close();
                             } catch (final IOException e) {
-                                Log.e(TAG, "download: inputStream did not closed: ", e);
+                                Log.e("ImageLoader", "download: inputStream did not closed: ", e);
                             }
                         }
                         if (connection != null) {
@@ -172,7 +168,6 @@ class ImageLoaderImpl implements ImageLoader {
                     @Override
                     public void onError(final Exception e) {
                         cleanStack();
-                        Log.e(TAG, "onError: ", e);
                     }
                 });
         final Priority model = new Priority(priorityRunnable);

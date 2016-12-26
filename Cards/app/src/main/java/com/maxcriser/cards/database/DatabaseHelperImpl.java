@@ -32,8 +32,6 @@ import static com.maxcriser.cards.constant.ListConstants.Database.mDatabaseName;
 
 public final class DatabaseHelperImpl extends SQLiteOpenHelper implements DatabaseHelper {
 
-    private static DatabaseHelperImpl mHelper;
-
     DatabaseHelperImpl(final Context pContext) {
         super(pContext, mDatabaseName, null, dbVersion);
 //        ContextHolder.getInstance().getContext().deleteDatabase(mDatabaseName);
@@ -141,7 +139,6 @@ public final class DatabaseHelperImpl extends SQLiteOpenHelper implements Databa
     public synchronized void insert(final AnnotatedElement pModel,
                                     final ContentValues pValues,
                                     @Nullable final OnResultCallback<Long, Void> pCallback) {
-        //TODO check Executors
         new AsyncTask<Void, Void, Long>() {
 
             @Override

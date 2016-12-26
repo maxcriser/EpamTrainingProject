@@ -79,7 +79,6 @@ public class CreateDiscountActivity extends AppCompatActivity {
         final PreviewColor listPreviewColor = ListPreview.colors.get(0);
         myColorName = listPreviewColor.getNameColorCards();
         myColorCode = listPreviewColor.getCodeColorCards();
-        Log.d(DISCOUNT_ID, myColorName + " " + myColorCode);
 
         final int pageCount = ListPreview.colors.size();
         pager.setPageMargin(ListConstants.PAGER_MARGIN_PREVIEW);
@@ -94,7 +93,6 @@ public class CreateDiscountActivity extends AppCompatActivity {
             public void onResult(final int position, final String codeColor, final String nameColor) {
                 myColorCode = codeColor;
                 myColorName = nameColor;
-                Log.d("COLOR", position + myColorName + myColorCode);
             }
         }));
     }
@@ -110,9 +108,7 @@ public class CreateDiscountActivity extends AppCompatActivity {
 
     public void onCreateCardClicked(final View view) {
         final String titleStr = mEditText.getText().toString();
-        Log.d("titleStr", titleStr);
         if (!titleStr.isEmpty()) {
-            Log.d("titleStr", titleStr);
             final ContentValues cvNewDiscount = new ContentValues();
             cvNewDiscount.put(ModelDiscountCards.TITLE, titleStr);
             cvNewDiscount.put(ModelDiscountCards.BARCODE, generateBarcode);
