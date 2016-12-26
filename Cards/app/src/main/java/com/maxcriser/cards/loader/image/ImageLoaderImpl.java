@@ -86,7 +86,6 @@ class ImageLoaderImpl implements ImageLoader {
             @Override
             public Bitmap doInBackground(final String pUrl, final ProgressCallback<Void> pProgressCallback) throws Exception {
                 Bitmap bitmap = null;
-                Log.d("startWith file://", pUrl.startsWith(FILE) + " - ImageLoaderImpl");
                 if (pUrl.startsWith(FILE)) {
                     Log.d("pUrl", pUrl);
                     final Uri pUri = Uri.parse(pUrl);

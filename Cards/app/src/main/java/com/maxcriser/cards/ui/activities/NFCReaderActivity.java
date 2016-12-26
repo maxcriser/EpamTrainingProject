@@ -124,9 +124,6 @@ public class NFCReaderActivity extends AppCompatActivity implements Listener {
     @Override
     protected void onNewIntent(final Intent intent) {
         final Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-
-        Log.d(TAG, "onNewIntent: " + intent.getAction());
-
         if (tag != null) {
             //TODO debug and Google
             final Ndef ndef = Ndef.get(tag);
