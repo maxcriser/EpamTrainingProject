@@ -57,8 +57,8 @@ class ImageLoaderImpl implements ImageLoader {
     public void downloadToView(final String pUrl, final ImageView pView,
                                @Nullable final OnResultCallback<Bitmap, Void> pCallback, final int... pArgs) {
         if (findModel(pUrl) != -1) {
-            risePriority(pUrl);
-            recalculatePriorities();
+            upPriority(pUrl);
+            countingPriorities();
             return;
         }
         pView.setTag(pUrl);
@@ -129,13 +129,13 @@ class ImageLoaderImpl implements ImageLoader {
 
                     }
 
-                    private void cleanStack() {
+                    private void removeUrlFromStack() {
                         synchronized (mLockSynchronized) {
                             if (findModel(pUrl) != -1) {
                                 mStackPriorities.remove(findModel(pUrl));
                             }
                         }
-                        recalculatePriorities();
+                        countingPriorities();
                     }
 
                     @Override
@@ -158,12 +158,12 @@ class ImageLoaderImpl implements ImageLoader {
                                 }
                             }
                         }
-                        cleanStack();
+                        removeUrlFromStack();
                     }
 
                     @Override
                     public void onError(final Exception e) {
-                        cleanStack();
+                        removeUrlFromStack();
                     }
                 });
         final PriorityModel model = new PriorityModel(priorityRunnable);
@@ -172,7 +172,7 @@ class ImageLoaderImpl implements ImageLoader {
         synchronized (mLockSynchronized) {
             mStackPriorities.push(model);
         }
-        recalculatePriorities();
+        countingPriorities();
         mThreadManager.execute(priorityRunnable);
     }
 
@@ -187,19 +187,19 @@ class ImageLoaderImpl implements ImageLoader {
         return -1;
     }
 
-    private synchronized void risePriority(final String pUrl) {
+    private synchronized void upPriority(final String pUrl) {
         final PriorityModel modelToRise = mStackPriorities.remove(findModel(pUrl));
         modelToRise.setPriority(Thread.MAX_PRIORITY);
         mStackPriorities.push(modelToRise);
     }
 
-    private synchronized void recalculatePriorities() {
-        for (final PriorityModel priorityModelModel : mStackPriorities) {
-            int priority = Math.round((float) mStackPriorities.indexOf(priorityModelModel) * 10 / mStackPriorities.size());
+    private synchronized void countingPriorities() {
+        for (final PriorityModel priorityModel : mStackPriorities) {
+            int priority = Math.round((float) mStackPriorities.indexOf(priorityModel) * 10 / mStackPriorities.size());
             if (priority == 0) {
                 priority = Thread.MIN_PRIORITY;
             }
-            priorityModelModel.setPriority(priority);
+            priorityModel.setPriority(priority);
         }
     }
 }

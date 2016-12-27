@@ -49,6 +49,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
                         android:gravity="center|start"
                         android:text="@string/keep_your_credit_cards_for_quick_access"
@@ -88,6 +89,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
                         android:gravity="center|start"
                         android:text="@string/to_use_the_discount_cards_are_now_much_easier"
@@ -128,6 +130,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
                         android:gravity="center|start"
                         android:text="@string/keep_your_tickets_on_the_same_device"
@@ -146,6 +149,14 @@
                 app:cardBackgroundColor="@color/card_view"
                 card_view:cardCornerRadius="2dp"
                 card_view:cardElevation="2dp">
+
+                <TextView
+                    android:layout_gravity="end|top"
+                    android:layout_width="wrap_content"
+                    android:text="@string/beta"
+                    android:textColor="@android:color/white"
+                    android:layout_margin="16dp"
+                    android:layout_height="wrap_content"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -169,6 +180,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
                         android:gravity="center|start"
                         android:text="@string/now_all_contactless_cards_in_your_mobile_phone"
                         android:textAppearance="?attr/textAppearanceListItem"

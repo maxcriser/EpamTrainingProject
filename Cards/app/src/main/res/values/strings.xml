@@ -172,5 +172,6 @@
     <string name="filed_to_get_cipher">Failed to get Cipher</string>
     <string name="filed_to_init_cipher">Failed to init Cipher</string>
     <string name="error_to_past_matches">Error to paste matches</string>
+    <string name="beta">[BETA]</string>
 
 </resources>

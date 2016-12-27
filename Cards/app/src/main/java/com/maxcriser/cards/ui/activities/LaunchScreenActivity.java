@@ -36,6 +36,5 @@ public class LaunchScreenActivity extends AppCompatActivity {
     void loadPassword() {
         mSharedPreferences = getSharedPreferences(PASSWORD_TAG, MODE_PRIVATE);
         loadPassword = mSharedPreferences.getString(PASSWORD_TAG, UNDEFENDED);
-        Toast.makeText(this, loadPassword, Toast.LENGTH_SHORT).show();
     }
 }
