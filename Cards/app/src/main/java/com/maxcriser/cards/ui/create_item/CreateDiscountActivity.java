@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ScrollView;
@@ -20,7 +19,6 @@ import com.maxcriser.cards.async.task.BarcodeConverter;
 import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.constant.ListPreview;
 import com.maxcriser.cards.database.DatabaseHelper;
-import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.listener.OnTemplatePageChangeListener;
@@ -32,12 +30,10 @@ import static com.maxcriser.cards.constant.ListConstants.TAG_BARCODE;
 
 public class CreateDiscountActivity extends AppCompatActivity {
 
-    public final String DISCOUNT_ID = "CreateDiscountActivity";
     private DatabaseHelper db;
     private ScrollView mScrollView;
     private ViewPager pager;
     private EditText mEditText;
-    private String myColorName;
     private String myColorCode;
     private String generateBarcode;
 
@@ -77,7 +73,6 @@ public class CreateDiscountActivity extends AppCompatActivity {
         });
 
         final PreviewColor listPreviewColor = ListPreview.colors.get(0);
-        myColorName = listPreviewColor.getNameColorCards();
         myColorCode = listPreviewColor.getCodeColorCards();
 
         final int pageCount = ListPreview.colors.size();
@@ -92,7 +87,6 @@ public class CreateDiscountActivity extends AppCompatActivity {
             @Override
             public void onResult(final int position, final String codeColor, final String nameColor) {
                 myColorCode = codeColor;
-                myColorName = nameColor;
             }
         }));
     }

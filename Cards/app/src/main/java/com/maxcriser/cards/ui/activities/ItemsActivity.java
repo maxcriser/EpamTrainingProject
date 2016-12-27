@@ -36,7 +36,6 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.StyleSpan;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -528,7 +527,9 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
     public void onToolbarBackClicked(final View view) {
-        recyclerItems.smoothScrollToPosition(adapter.getItemCount() - 1);
+        if (adapter.getItemCount() != 0) {
+            recyclerItems.smoothScrollToPosition(adapter.getItemCount() - 1);
+        }
     }
 
     public void onSearchClicked(final View view) {
@@ -549,9 +550,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     protected void onNewIntent(final Intent intent) {
         final Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
         if (tag != null) {
-            Toast.makeText(this, "New intent", Toast.LENGTH_LONG).show();
             final Ndef ndef = Ndef.get(tag);
-
             if (ndef != null) {
                 if (nfcInputDialogBuilder.isShowing()) {
                     if (nfcInputDialogBuilder != null) {
@@ -562,40 +561,21 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
                     try {
                         writeNfcToDatabase(ndef);
                     } catch (final IOException pE) {
-
+                        Toast.makeText(this, R.string.cannot_write_nfc_tag_to_db, Toast.LENGTH_LONG).show();
                     }
                 } else {
                     if (nfcOutputDialogBuilder.isShowing()) {
                         if (nfcOutputDialogBuilder != null) {
                             nfcOutputDialogBuilder.cancelDialog();
                         }
-                        writeNfc(ndef, writeNfcTag);
+                        try {
+                            writeNfc(ndef, writeNfcTag);
+                        } catch (final Exception pE) {
+                            Toast.makeText(this, R.string.cannot_write_nfc, Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             } else {
-                final ContentValues cv = new ContentValues();
-                final PreviewColor listPreviewColor = ListPreview.colors.get(0);
-                cv.put(ModelNFCItems.BACKGROUND_COLOR, listPreviewColor.getCodeColorCards());
-                cv.put(ModelNFCItems.TITLE, "NFC CANNOT SAVE");
-                cv.put(ModelNFCItems.ID, (Integer) null);
-                cv.put(ModelNFCItems.TAG, "NFC CANNOT SAVE");
-
-                dbHelper.insert(ModelNFCItems.class, cv, new OnResultCallback<Long, Void>() {
-
-                    @Override
-                    public void onSuccess(final Long pLong) {
-                        getSupportLoaderManager().restartLoader(LOADER_ID, null, ItemsActivity.this);
-                    }
-
-                    @Override
-                    public void onError(final Exception pE) {
-                        Toast.makeText(ItemsActivity.this, R.string.cannot_insert_card_to_database, Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onProgressChanged(final Void pVoid) {
-                    }
-                });
                 if (nfcInputDialogBuilder != null) {
                     nfcInputDialogBuilder.cancelDialog();
                 }
@@ -608,14 +588,14 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
 
     }
 
-    private void writeNfc(final Ndef ndef1, final String message) {
+    private void writeNfc(final Ndef ndef1, final String message) throws Exception {
         if (ndef1 != null) {
             try {
                 ndef1.connect();
                 final NdefRecord mimeRecord = NdefRecord.createMime("text/plain", message.getBytes(Charset.forName("US-ASCII")));
                 ndef1.writeNdefMessage(new NdefMessage(mimeRecord));
             } catch (IOException | FormatException e) {
-                Log.d("ERROR", e.toString());
+                Toast.makeText(this, R.string.cannot_connet_to_ndef, Toast.LENGTH_LONG).show();
             } finally {
                 try {
                     ndef1.close();
@@ -623,11 +603,11 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
                         nfcOutputDialogBuilder.cancelDialog();
                     }
                 } catch (final IOException pE) {
-                    Log.d("ERROR", pE.toString());
+                    throw new Exception(pE);
                 }
             }
         } else {
-            Toast.makeText(this, "Ndef == null", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.ndef_not_available, Toast.LENGTH_LONG).show();
             if (nfcOutputDialogBuilder != null) {
                 nfcOutputDialogBuilder.cancelDialog();
             }
@@ -645,7 +625,6 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
     private void writeNfcToDatabase(final Ndef ndef1) throws IOException {
         final String message;
         final String title = dialog.titleField.getText().toString();
-        Toast.makeText(this, "Title dialog: " + title, Toast.LENGTH_LONG).show();
         if (!title.isEmpty()) {
             try {
                 ndef1.connect();

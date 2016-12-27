@@ -1,44 +1,44 @@
 package com.maxcriser.cards.database.models;
 
 import com.maxcriser.cards.database.annotations.Table;
-import com.maxcriser.cards.database.annotations.dbInteger;
-import com.maxcriser.cards.database.annotations.dbPrimaryKey;
-import com.maxcriser.cards.database.annotations.dbString;
+import com.maxcriser.cards.database.annotations.typeInteger;
+import com.maxcriser.cards.database.annotations.typePrimaryKey;
+import com.maxcriser.cards.database.annotations.typeString;
 
 @Table(name = "bankTable")
 public final class ModelBankCards {
 
-    @dbPrimaryKey
-    @dbInteger
+    @typePrimaryKey
+    @typeInteger
     public static final String ID = "_id";
 
-    @dbString
+    @typeString
     public static final String TYPE = "type";
 
-    @dbString
+    @typeString
     public static final String TITLE = "title";
 
-    @dbString
+    @typeString
     public static final String VERIFICATION_NUMBER = "verification_number";
 
-    @dbString
+    @typeString
     public static final String CARDHOLDER = "cardholder";
 
-    @dbString
+    @typeString
     public static final String PHOTO_FRONT = "frontPhoto";
 
-    @dbString
+    @typeString
     public static final String PHOTO_BACK = "backPhoto";
 
-    @dbString
+    @typeString
     public static final String NUMBER = "number";
 
-    @dbString
+    @typeString
     public static final String VALID = "valid";
 
-    @dbString
+    @typeString
     public static final String BACKGROUND_COLOR = "backgroundColor";
 
-    @dbInteger
+    @typeInteger
     public static final String PIN = "pin";
 }

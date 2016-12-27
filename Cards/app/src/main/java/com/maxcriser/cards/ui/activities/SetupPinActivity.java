@@ -76,7 +76,6 @@ public class SetupPinActivity extends AppCompatActivity {
         public void onClick(final View v) {
             if (page == Page.FIRST) {
                 password = inputText.getText().toString();
-                Toast.makeText(SetupPinActivity.this, "first: " + password, Toast.LENGTH_LONG).show();
                 inputText.setText(ListConstants.EMPTY_STRING);
                 page = Page.SECOND;
                 btnContinue.setText(R.string.ok);

@@ -40,6 +40,7 @@ public class EnterNfcNameDialogBuilder extends AlertDialog {
             }
         });
         builder.setNegativeButton(R.string.cancel, new OnClickListener() {
+
             @Override
             public void onClick(final DialogInterface dialog, final int pI) {
                 dialog.dismiss();

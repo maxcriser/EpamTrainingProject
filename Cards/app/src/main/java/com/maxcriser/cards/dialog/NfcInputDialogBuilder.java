@@ -2,7 +2,6 @@ package com.maxcriser.cards.dialog;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -24,8 +23,8 @@ public class NfcInputDialogBuilder extends AlertDialog {
         this.animCard = AnimationUtils.loadAnimation(context, R.anim.anim_card);
     }
 
-    public void cancelDialog(){
-        if(aDialog!=null){
+    public void cancelDialog() {
+        if (aDialog != null) {
             aDialog.dismiss();
         }
     }

@@ -1,4 +1,4 @@
-package com.maxcriser.cards.utils.manager;
+package com.maxcriser.cards.manager;
 
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;

@@ -19,7 +19,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.ListConstants;
@@ -79,25 +78,16 @@ public class LockerActivity extends AppCompatActivity {
             if (fingerprintManager.isHardwareDetected() && fingerprintManager.hasEnrolledFingerprints()) {
 
                 if (!keyguardManager.isKeyguardSecure()) {
-                    Toast.makeText(this,
-                            "Lock screen security not enabled in Settings",
-                            Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 if (ActivityCompat.checkSelfPermission(this,
                         Manifest.permission.USE_FINGERPRINT) !=
                         PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this,
-                            "Fingerprint authentication permission not enabled",
-                            Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 if (!fingerprintManager.hasEnrolledFingerprints()) {
-                    Toast.makeText(this,
-                            "Register at least one fingerprint in Settings",
-                            Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -126,26 +116,26 @@ public class LockerActivity extends AppCompatActivity {
 
     @TargetApi(23)
     protected void generateKey() {
+        final String keyStore = "AndroidKeyStore";
         try {
-            keyStore = KeyStore.getInstance("AndroidKeyStore");
+            this.keyStore = KeyStore.getInstance(keyStore);
         } catch (final Exception e) {
             throw new RuntimeException(
-                    "Filed to getInstance AndroidKeyStore", e);
+                    getString(R.string.filed_to_getInstance_androidKeyStore), e);
         }
 
         final KeyGenerator keyGenerator;
         try {
             keyGenerator = KeyGenerator.getInstance(
-                    KeyProperties.KEY_ALGORITHM_AES,
-                    "AndroidKeyStore");
+                    KeyProperties.KEY_ALGORITHM_AES, keyStore);
         } catch (NoSuchAlgorithmException |
                 NoSuchProviderException e) {
             throw new RuntimeException(
-                    "Failed to get KeyGenerator instance", e);
+                    getString(R.string.filed_to_get_keygenerator_instance), e);
         }
 
         try {
-            keyStore.load(null);
+            this.keyStore.load(null);
             keyGenerator.init(new
                     KeyGenParameterSpec.Builder(KEY_NAME,
                     KeyProperties.PURPOSE_ENCRYPT |
@@ -172,7 +162,7 @@ public class LockerActivity extends AppCompatActivity {
                             + KeyProperties.ENCRYPTION_PADDING_PKCS7);
         } catch (NoSuchAlgorithmException |
                 NoSuchPaddingException e) {
-            throw new RuntimeException("Failed to get Cipher", e);
+            throw new RuntimeException(getString(R.string.filed_to_get_cipher), e);
         }
 
         try {
@@ -186,7 +176,7 @@ public class LockerActivity extends AppCompatActivity {
         } catch (KeyStoreException | CertificateException
                 | UnrecoverableKeyException | IOException
                 | NoSuchAlgorithmException | InvalidKeyException e) {
-            throw new RuntimeException("Failed to init Cipher", e);
+            throw new RuntimeException(getString(R.string.filed_to_init_cipher), e);
         }
     }
 

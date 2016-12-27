@@ -1,35 +1,35 @@
 package com.maxcriser.cards.database.models;
 
 import com.maxcriser.cards.database.annotations.Table;
-import com.maxcriser.cards.database.annotations.dbInteger;
-import com.maxcriser.cards.database.annotations.dbPrimaryKey;
-import com.maxcriser.cards.database.annotations.dbString;
+import com.maxcriser.cards.database.annotations.typeInteger;
+import com.maxcriser.cards.database.annotations.typePrimaryKey;
+import com.maxcriser.cards.database.annotations.typeString;
 
 @Table(name = "ticketsTable")
 public final class ModelTickets {
 
-    @dbPrimaryKey
-    @dbInteger
+    @typePrimaryKey
+    @typeInteger
     public static final String ID = "_id";
 
-    @dbString
+    @typeString
     public static final String TITLE = "title";
 
-    @dbString
+    @typeString
     public static final String CARDHOLDER = "cardholder";
 
-    @dbString
+    @typeString
     public static final String DATE = "date";
 
-    @dbString
+    @typeString
     public static final String TIME = "time";
 
-    @dbString
+    @typeString
     public static final String PHOTO_FIRST = "firstPhoto";
 
-    @dbString
+    @typeString
     public static final String PHOTO_SECOND = "secondPhoto";
 
-    @dbString
+    @typeString
     public static final String BACKGROUND_COLOR = "backgroundColor";
 }

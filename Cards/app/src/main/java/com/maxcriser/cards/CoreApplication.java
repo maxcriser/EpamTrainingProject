@@ -42,5 +42,6 @@ public class CoreApplication extends Application {
 //                    .penaltyLog()
 //                    .penaltyDeath()
 //                    .build());
+//        }
     }
 }

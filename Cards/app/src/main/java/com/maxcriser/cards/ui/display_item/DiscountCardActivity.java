@@ -19,7 +19,6 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.maxcriser.cards.CoreApplication;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.database.DatabaseHelper;
-import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.view.labels.BarcodeEan;
 

@@ -7,8 +7,8 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface dbPrimaryKey {
+public @interface typeInteger {
 
-    String value() default "PRIMARY KEY";
+    String value() default "INTEGER";
 
 }

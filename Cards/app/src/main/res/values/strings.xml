@@ -161,5 +161,16 @@
     <string name="cannot_save_nfc_item">Cannot save NFC item</string>
     <string name="cannot_save_nfc_title_isempty">Cannot saved\nTitle of NFC is empty</string>
     <string name="cannot_scanning_type_nfc">Cannot scanning this type of NFC item</string>
+    <string name="cannot_write_nfc_tag_to_db">Cannot write NFC tag to Database</string>
+    <string name="cannot_connet_to_ndef">Cannot connect to NDEF</string>
+    <string name="cannot_write_nfc">Cannot write NFC tag</string>
+    <string name="ndef_not_available">NDEF not available</string>
+    <string name="error_setting_camera_preview">Error setting camera preview</string>
+    <string name="camera_not_available">Camera not available</string>
+    <string name="filed_to_getInstance_androidKeyStore">Filed to getInstance AndroidKeyStore</string>
+    <string name="filed_to_get_keygenerator_instance">Failed to get KeyGenerator instance</string>
+    <string name="filed_to_get_cipher">Failed to get Cipher</string>
+    <string name="filed_to_init_cipher">Failed to init Cipher</string>
+    <string name="error_to_past_matches">Error to paste matches</string>
 
 </resources>

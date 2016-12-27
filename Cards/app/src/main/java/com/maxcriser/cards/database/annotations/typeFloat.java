@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface dbFloat {
+public @interface typeFloat {
 
     String value() default "REAL";
 

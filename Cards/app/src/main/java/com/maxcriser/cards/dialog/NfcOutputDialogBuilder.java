@@ -23,8 +23,8 @@ public class NfcOutputDialogBuilder extends AlertDialog {
         this.animLongHand = AnimationUtils.loadAnimation(context, R.anim.anim_long_hand);
     }
 
-    public void cancelDialog(){
-        if(aDialog!=null){
+    public void cancelDialog() {
+        if (aDialog != null) {
             aDialog.dismiss();
         }
     }

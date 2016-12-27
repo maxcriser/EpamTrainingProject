@@ -2,9 +2,9 @@ package com.maxcriser.cards.barcode;
 
 import android.content.Context;
 import android.hardware.Camera;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Toast;
 
 import com.maxcriser.cards.R;
 
@@ -12,6 +12,7 @@ import java.io.IOException;
 
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
 
+    private final Context mContext;
     private final SurfaceHolder mHolder;
     @SuppressWarnings("deprecation")
     private final Camera mCamera;
@@ -26,6 +27,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
                          final Camera.AutoFocusCallback pAutoFocusCallback) {
         super(context);
         mCamera = camera;
+        mContext = context;
         previewCallback = pPreviewCallback;
         autoFocusCallback = pAutoFocusCallback;
 
@@ -39,7 +41,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         try {
             mCamera.setPreviewDisplay(holder);
         } catch (final IOException e) {
-            Log.d("DBG", "Error setting camera preview: " + e.getMessage());
+            Toast.makeText(mContext, R.string.error_setting_camera_preview, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -51,7 +53,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         try {
             mCamera.stopPreview();
         } catch (final Exception e) {
-            Log.d("DBG", e.toString());
+            Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_LONG).show();
         }
         try {
             final int displayOrientation = 90;
@@ -61,7 +63,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             mCamera.startPreview();
             mCamera.autoFocus(autoFocusCallback);
         } catch (final Exception e) {
-            Log.d("DBG", getContext().getString(R.string.error_starting_camera_preview) + e.getMessage());
+            Toast.makeText(mContext, R.string.error_starting_camera_preview, Toast.LENGTH_LONG).show();
         }
     }
 

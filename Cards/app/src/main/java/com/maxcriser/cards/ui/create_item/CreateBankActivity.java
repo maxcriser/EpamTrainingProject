@@ -17,7 +17,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -39,6 +38,7 @@ import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.constant.ListPreview;
 import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelBankCards;
+import com.maxcriser.cards.date.DateToView;
 import com.maxcriser.cards.dialog.MatchesFountDialogBuilder;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.listener.OnTypePageChangeListener;
@@ -46,7 +46,6 @@ import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.model.CreditCard;
 import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.activities.PhotoEditorActivity;
-import com.maxcriser.cards.date.DateToView;
 import com.maxcriser.cards.utils.UniqueStringGenerator;
 import com.maxcriser.cards.view.labels.RobotoRegular;
 
@@ -62,7 +61,7 @@ import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_BACK_C
 import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_FRONT_CAMERA;
 import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_WRITE_STORAGE_BACK;
 import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_WRITE_STORAGE_FRONT;
-import static com.maxcriser.cards.utils.manager.StorageManager.isExternalStorageAvailable;
+import static com.maxcriser.cards.manager.StorageManager.isExternalStorageAvailable;
 
 public class CreateBankActivity extends AppCompatActivity {
 
@@ -183,7 +182,7 @@ public class CreateBankActivity extends AppCompatActivity {
 
                     }
                 });
-                sync.execute(new ScanCreditCard(getAssets()), editFrontUri, new OnResultCallback<CreditCard, String>() {
+                sync.execute(new ScanCreditCard(getAssets(), this), editFrontUri, new OnResultCallback<CreditCard, String>() {
 
                     @Override
                     public void onSuccess(final CreditCard pCredit) {
@@ -205,7 +204,7 @@ public class CreateBankActivity extends AppCompatActivity {
                                 }
                             }
                         } catch (final Exception e) {
-                            Log.d("Error", e.toString());
+                            Toast.makeText(CreateBankActivity.this, R.string.error_to_past_matches, Toast.LENGTH_LONG).show();
                         }
                     }
 

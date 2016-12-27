@@ -13,30 +13,30 @@ import java.lang.reflect.AnnotatedElement;
 
 public interface DatabaseHelper {
 
-     void query(@NonNull final OnResultCallback<Cursor, Void> pCallback,
+    void query(@NonNull final OnResultCallback<Cursor, Void> pCallback,
                final String pSqlQuery,
                final AnnotatedElement pModel,
                final String pSqlCondition,
                final String... pArgs);
 
     void insert(final AnnotatedElement pModel,
-                                    final ContentValues pValues,
-                                    @Nullable final OnResultCallback<Long, Void> pCallback);
+                final ContentValues pValues,
+                @Nullable final OnResultCallback<Long, Void> pCallback);
 
     void bulkInsert(final AnnotatedElement pModel,
-                                        final Iterable<ContentValues> pValuesList,
-                                        @Nullable final OnResultCallback<Integer, Void> pCallback);
+                    final Iterable<ContentValues> pValuesList,
+                    @Nullable final OnResultCallback<Integer, Void> pCallback);
 
     void edit(final AnnotatedElement pModel,
-                                  final String column,
-                                  final String newValue,
-                                  final String searchColumn,
-                                  final String valueOfSearchColumn, @Nullable final OnResultCallback<Void, Void> pCallback);
+              final String column,
+              final String newValue,
+              final String searchColumn,
+              final String valueOfSearchColumn, @Nullable final OnResultCallback<Void, Void> pCallback);
 
     void delete(final AnnotatedElement pModel,
-                                    @Nullable final OnResultCallback<Integer, Void> pCallback,
-                                    final String pSql,
-                                    final String... pArgs);
+                @Nullable final OnResultCallback<Integer, Void> pCallback,
+                final String pSql,
+                final String... pArgs);
 
     SQLiteDatabase getReadableDatabase();
 

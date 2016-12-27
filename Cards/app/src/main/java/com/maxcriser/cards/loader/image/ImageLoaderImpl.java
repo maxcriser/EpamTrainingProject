@@ -6,14 +6,13 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.util.LruCache;
 import android.widget.ImageView;
 
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.ProgressCallback;
 import com.maxcriser.cards.http.HttpClient;
-import com.maxcriser.cards.model.Priority;
+import com.maxcriser.cards.model.PriorityModel;
 import com.maxcriser.cards.model.Request;
 import com.maxcriser.cards.thread.ITask;
 import com.maxcriser.cards.thread.PriorityRunnable;
@@ -29,14 +28,14 @@ import static com.maxcriser.cards.constant.ListConstants.HTTP;
 class ImageLoaderImpl implements ImageLoader {
 
     private final HttpClient mHttpClient;
+    private final Object mLockSynchronized = new Object();
     private final ThreadManager mThreadManager;
     private final LruCache<String, Bitmap> mLruCache;
-    private final Stack<Priority> mDownloadPriorities;
-    private final Object mLockObj = new Object();
+    private final Stack<PriorityModel> mStackPriorities;
 
     ImageLoaderImpl() {
         mThreadManager = ThreadManager.getInstance();
-        mDownloadPriorities = new Stack<>();
+        mStackPriorities = new Stack<>();
         mHttpClient = new HttpClient();
         final long size;
         final int defaultCacheSize = 12 * 1024 * 1024;
@@ -60,12 +59,11 @@ class ImageLoaderImpl implements ImageLoader {
         if (findModel(pUrl) != -1) {
             risePriority(pUrl);
             recalculatePriorities();
-            Log.d("ImageLoader", "downloadToView: UP PRIORITY FOR " + pUrl);
             return;
         }
         pView.setTag(pUrl);
         final Bitmap cachedBitmap;
-        synchronized (mLockObj) {
+        synchronized (mLockSynchronized) {
             cachedBitmap = mLruCache.get(pUrl);
         }
         if (cachedBitmap != null && pView.getTag().equals(pUrl)) {
@@ -87,7 +85,6 @@ class ImageLoaderImpl implements ImageLoader {
             public Bitmap doInBackground(final String pUrl, final ProgressCallback<Void> pProgressCallback) throws Exception {
                 Bitmap bitmap = null;
                 if (pUrl.startsWith(FILE)) {
-                    Log.d("pUrl", pUrl);
                     final Uri pUri = Uri.parse(pUrl);
                     final Bitmap decodeFile = BitmapFactory.decodeFile(pUri.getPath());
                     if (pArgs.length != 0) {
@@ -109,7 +106,7 @@ class ImageLoaderImpl implements ImageLoader {
                             try {
                                 inputStream.close();
                             } catch (final IOException e) {
-                                Log.e("ImageLoader", "download: inputStream did not closed: ", e);
+                                throw new Exception(e);
                             }
                         }
                         if (connection != null) {
@@ -133,9 +130,9 @@ class ImageLoaderImpl implements ImageLoader {
                     }
 
                     private void cleanStack() {
-                        synchronized (mLockObj) {
+                        synchronized (mLockSynchronized) {
                             if (findModel(pUrl) != -1) {
-                                mDownloadPriorities.remove(findModel(pUrl));
+                                mStackPriorities.remove(findModel(pUrl));
                             }
                         }
                         recalculatePriorities();
@@ -144,7 +141,7 @@ class ImageLoaderImpl implements ImageLoader {
                     @Override
                     public void onSuccess(final Bitmap pBitmap) {
                         if (pBitmap != null) {
-                            synchronized (mLockObj) {
+                            synchronized (mLockSynchronized) {
                                 if (!mLruCache.snapshot().containsKey(pUrl)) {
                                     mLruCache.put(pUrl, pBitmap);
                                 }
@@ -169,11 +166,11 @@ class ImageLoaderImpl implements ImageLoader {
                         cleanStack();
                     }
                 });
-        final Priority model = new Priority(priorityRunnable);
+        final PriorityModel model = new PriorityModel(priorityRunnable);
         model.setUrl(pUrl);
         model.setPriority(Thread.MAX_PRIORITY);
-        synchronized (mLockObj) {
-            mDownloadPriorities.push(model);
+        synchronized (mLockSynchronized) {
+            mStackPriorities.push(model);
         }
         recalculatePriorities();
         mThreadManager.execute(priorityRunnable);
@@ -181,8 +178,8 @@ class ImageLoaderImpl implements ImageLoader {
 
     private synchronized int findModel(final String pUrl) {
         int index = 0;
-        for (final Priority priority : mDownloadPriorities) {
-            if (priority.getUrl().equalsIgnoreCase(pUrl)) {
+        for (final PriorityModel priorityModel : mStackPriorities) {
+            if (priorityModel.getUrl().equalsIgnoreCase(pUrl)) {
                 return index;
             }
             index++;
@@ -191,18 +188,18 @@ class ImageLoaderImpl implements ImageLoader {
     }
 
     private synchronized void risePriority(final String pUrl) {
-        final Priority modelToRise = mDownloadPriorities.remove(findModel(pUrl));
+        final PriorityModel modelToRise = mStackPriorities.remove(findModel(pUrl));
         modelToRise.setPriority(Thread.MAX_PRIORITY);
-        mDownloadPriorities.push(modelToRise);
+        mStackPriorities.push(modelToRise);
     }
 
     private synchronized void recalculatePriorities() {
-        for (final Priority priorityModel : mDownloadPriorities) {
-            int priority = Math.round((float) mDownloadPriorities.indexOf(priorityModel) * 10 / mDownloadPriorities.size());
+        for (final PriorityModel priorityModelModel : mStackPriorities) {
+            int priority = Math.round((float) mStackPriorities.indexOf(priorityModelModel) * 10 / mStackPriorities.size());
             if (priority == 0) {
                 priority = Thread.MIN_PRIORITY;
             }
-            priorityModel.setPriority(priority);
+            priorityModelModel.setPriority(priority);
         }
     }
 }

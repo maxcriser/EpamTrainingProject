@@ -8,18 +8,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
-import com.maxcriser.cards.ContextHolder;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.database.annotations.Table;
-import com.maxcriser.cards.database.annotations.dbBlob;
-import com.maxcriser.cards.database.annotations.dbBoolean;
-import com.maxcriser.cards.database.annotations.dbFloat;
-import com.maxcriser.cards.database.annotations.dbInteger;
-import com.maxcriser.cards.database.annotations.dbPrimaryKey;
-import com.maxcriser.cards.database.annotations.dbString;
+import com.maxcriser.cards.database.annotations.typeBlob;
+import com.maxcriser.cards.database.annotations.typeBoolean;
+import com.maxcriser.cards.database.annotations.typeFloat;
+import com.maxcriser.cards.database.annotations.typeInteger;
+import com.maxcriser.cards.database.annotations.typePrimaryKey;
+import com.maxcriser.cards.database.annotations.typeString;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
@@ -62,18 +60,18 @@ public final class DatabaseHelperImpl extends SQLiteOpenHelper implements Databa
                     String type = null;
                     String additionalKeys = ListConstants.EMPTY_STRING;
                     for (final Annotation annotation : annotations) {
-                        if (annotation instanceof dbInteger) {
-                            type = ((dbInteger) annotation).value();
-                        } else if (annotation instanceof dbString) {
-                            type = ((dbString) annotation).value();
-                        } else if (annotation instanceof dbFloat) {
-                            type = ((dbFloat) annotation).value();
-                        } else if (annotation instanceof dbBoolean) {
-                            type = ((dbBoolean) annotation).value();
-                        } else if (annotation instanceof dbBlob) {
-                            type = ((dbBlob) annotation).value();
-                        } else if (annotation instanceof dbPrimaryKey) {
-                            additionalKeys = " " + ((dbPrimaryKey) annotation).value();
+                        if (annotation instanceof typeInteger) {
+                            type = ((typeInteger) annotation).value();
+                        } else if (annotation instanceof typeString) {
+                            type = ((typeString) annotation).value();
+                        } else if (annotation instanceof typeFloat) {
+                            type = ((typeFloat) annotation).value();
+                        } else if (annotation instanceof typeBoolean) {
+                            type = ((typeBoolean) annotation).value();
+                        } else if (annotation instanceof typeBlob) {
+                            type = ((typeBlob) annotation).value();
+                        } else if (annotation instanceof typePrimaryKey) {
+                            additionalKeys = " " + ((typePrimaryKey) annotation).value();
                         }
                     }
                     if (type != null) {
@@ -99,10 +97,6 @@ public final class DatabaseHelperImpl extends SQLiteOpenHelper implements Databa
     public void onCreate(final SQLiteDatabase pDatabase) {
         for (final Class<?> clazz : ModelList.MODELS) {
             final String sql = getTableCreateQuery(clazz);
-            final String dbHelperStr = "DatabaseHelperImpl";
-            final String classStr = " class: ";
-            final String onCreateDb = "onCreate db: ";
-            Log.d(dbHelperStr, onCreateDb + sql + classStr + clazz);
             if (sql != null) {
                 pDatabase.execSQL(sql);
             }

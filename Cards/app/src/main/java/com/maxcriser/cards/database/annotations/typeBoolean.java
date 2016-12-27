@@ -7,8 +7,8 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface dbInteger {
+public @interface typeBoolean {
 
-    String value() default "INTEGER";
+    String value() default "NUMERIC";
 
 }

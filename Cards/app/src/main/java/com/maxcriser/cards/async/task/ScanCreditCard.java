@@ -1,13 +1,15 @@
 package com.maxcriser.cards.async.task;
 
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
-import android.util.Log;
+import android.widget.Toast;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
+import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.ProgressCallback;
 import com.maxcriser.cards.async.Task;
 import com.maxcriser.cards.model.CreditCard;
@@ -20,13 +22,13 @@ import java.io.OutputStream;
 
 public class ScanCreditCard implements Task<Uri, String, CreditCard> {
 
-    private final String TAG = "TAG";
-    private TessBaseAPI tessBaseApi;
     private final String DATA_PATH = Environment.getExternalStorageDirectory() + "/TesseractSample/";
     private final AssetManager mAssetManager;
+    private final Context mContext;
 
-    public ScanCreditCard(final AssetManager pAssetManager) {
+    public ScanCreditCard(final AssetManager pAssetManager, final Context pContext) {
         this.mAssetManager = pAssetManager;
+        this.mContext = pContext;
     }
 
     @Override
@@ -47,7 +49,7 @@ public class ScanCreditCard implements Task<Uri, String, CreditCard> {
         }
     }
 
-    private void copyTessDataFiles(final String path) {
+    private void copyTessDataFiles(final String path) throws Exception {
         try {
             final String[] fileList = mAssetManager.list(path);
             for (final String fileName : fileList) {
@@ -65,19 +67,22 @@ public class ScanCreditCard implements Task<Uri, String, CreditCard> {
                 }
             }
         } catch (final IOException e) {
-            Log.e(TAG, "Unable to copy files to tessdata " + e);
+            throw new Exception(e);
         }
     }
 
-    private void prepareTesseract() {
+    private void prepareTesseract() throws Exception {
         final String tessdata = "tessdata";
         try {
             prepareDirectory(DATA_PATH + tessdata);
-            Log.d("DATA_PATH + PATH", DATA_PATH + tessdata);
         } catch (final Exception e) {
-            Log.d("TAG", e.toString());
+            throw new Exception(e);
         }
-        copyTessDataFiles(tessdata);
+        try {
+            copyTessDataFiles(tessdata);
+        } catch (final Exception pE) {
+            throw new Exception(pE);
+        }
     }
 
     private void prepareDirectory(final String path) {
@@ -85,32 +90,28 @@ public class ScanCreditCard implements Task<Uri, String, CreditCard> {
         final File dir = new File(path);
         if (!dir.exists()) {
             if (!dir.mkdirs()) {
-                Log.e(TAG, "ERROR: Creation of directory " + path + " failed, check does Android Manifest have permission to write to external storage.");
+                Toast.makeText(mContext, R.string.filed_to_create_directory, Toast.LENGTH_LONG).show();
             }
-        } else {
-            Log.i(TAG, "Created directory " + path);
         }
     }
 
-    private String extractText(final Bitmap bitmap) {
+    private String extractText(final Bitmap bitmap) throws Exception {
+        final TessBaseAPI tessBaseApi;
         try {
             tessBaseApi = new TessBaseAPI();
         } catch (final Exception e) {
-            Log.e(TAG, e.getMessage());
-            if (tessBaseApi == null) {
-                Log.e(TAG, "TessBaseAPI is null. TessFactory not returning tess object.");
-            }
+            throw new Exception(e);
         }
         final String lang = "eng";
         tessBaseApi.init(DATA_PATH, lang);
         tessBaseApi.setVariable(TessBaseAPI.VAR_CHAR_WHITELIST,
                 "0123456789" + "AaBbCcDdEeFfGgHhIiJiKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz /&,.-");
         tessBaseApi.setImage(bitmap);
-        String extractedText = "empty result";
+        final String extractedText;
         try {
             extractedText = tessBaseApi.getUTF8Text();
         } catch (final Exception e) {
-            Log.e(TAG, "Error in recognizing text.");
+            throw new Exception(e);
         }
         tessBaseApi.end();
         return extractedText;

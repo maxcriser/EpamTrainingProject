@@ -23,7 +23,6 @@ import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.database.DatabaseHelper;
-import com.maxcriser.cards.database.DatabaseHelperImpl;
 import com.maxcriser.cards.database.models.ModelBankCards;
 
 import static android.text.InputType.TYPE_CLASS_TEXT;

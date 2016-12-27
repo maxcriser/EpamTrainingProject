@@ -6,7 +6,7 @@ import android.content.DialogInterface;
 
 import com.maxcriser.cards.R;
 
-import static com.maxcriser.cards.utils.manager.NetworkManager.goToUrl;
+import static com.maxcriser.cards.manager.NetworkManager.goToUrl;
 
 public class NotificationDialogBuilder extends AlertDialog {
 

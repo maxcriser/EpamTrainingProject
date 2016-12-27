@@ -3,12 +3,12 @@ package com.maxcriser.cards.model;
 
 import com.maxcriser.cards.thread.PriorityRunnable;
 
-public class Priority {
+public class PriorityModel {
 
     private String mUrl;
     private final PriorityRunnable mRunnable;
 
-    public Priority(final PriorityRunnable pRunnable) {
+    public PriorityModel(final PriorityRunnable pRunnable) {
         mRunnable = pRunnable;
     }
 

@@ -18,7 +18,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -40,18 +39,17 @@ import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.constant.ListPreview;
 import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelTickets;
+import com.maxcriser.cards.date.DateToView;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.listener.OnTemplatePageChangeListener;
 import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.activities.PhotoEditorActivity;
-import com.maxcriser.cards.date.DateToView;
 import com.maxcriser.cards.utils.UniqueStringGenerator;
 import com.maxcriser.cards.view.labels.RobotoRegular;
 
 import java.io.File;
 import java.util.Calendar;
-import java.util.List;
 
 import static android.view.View.GONE;
 import static com.maxcriser.cards.constant.ListConstants.Requests.CAPTURE_IMAGE_BACK;
@@ -63,11 +61,10 @@ import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_CALEND
 import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_FRONT_CAMERA;
 import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_WRITE_STORAGE_BACK;
 import static com.maxcriser.cards.constant.ListConstants.Requests.REQUEST_WRITE_STORAGE_FRONT;
-import static com.maxcriser.cards.utils.manager.StorageManager.isExternalStorageAvailable;
+import static com.maxcriser.cards.manager.StorageManager.isExternalStorageAvailable;
 
 public class CreateTicketActivity extends AppCompatActivity {
 
-    public final String TICKET = "CreateTicketActivity";
     public String photoFileNameFront;
     public String photoFileNameBack;
     private DatabaseHelper db;
@@ -83,7 +80,6 @@ public class CreateTicketActivity extends AppCompatActivity {
     private ViewPager pager;
     private ScrollView mScrollView;
     private CheckBox checkBox;
-    private String myColorName;
     private String myColorCode;
     private EditText ticketTitle;
     private EditText ticketCardholder;
@@ -175,7 +171,7 @@ public class CreateTicketActivity extends AppCompatActivity {
             final File mediaStorageDir = new File(
                     getExternalFilesDir(Environment.DIRECTORY_PICTURES), ListConstants.APP_TAG);
             if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
-                Log.d(ListConstants.APP_TAG, getResources().getString(R.string.filed_to_create_directory));
+                Toast.makeText(this, R.string.filed_to_create_directory, Toast.LENGTH_LONG).show();
             }
             return Uri.fromFile(new File(mediaStorageDir.getPath() + File.separator + fileName));
         }
@@ -224,10 +220,7 @@ public class CreateTicketActivity extends AppCompatActivity {
         db = ((CoreApplication) getApplication()).getDatabaseHelper(this);
         title.setText(getResources().getString(R.string.new_ticket_title));
 
-        List<PreviewColor> ds = ListPreview.colors;
-
         final PreviewColor listPreviewColor = ListPreview.colors.get(0);
-        myColorName = listPreviewColor.getNameColorCards();
         myColorCode = listPreviewColor.getCodeColorCards();
         final int pageCount = ListPreview.colors.size();
         pager.setPageMargin(ListConstants.PAGER_MARGIN_PREVIEW);
@@ -241,7 +234,6 @@ public class CreateTicketActivity extends AppCompatActivity {
             @Override
             public void onResult(final int position, final String codeColor, final String nameColor) {
                 myColorCode = codeColor;
-                myColorName = nameColor;
             }
         }));
     }

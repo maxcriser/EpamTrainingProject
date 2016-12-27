@@ -37,7 +37,7 @@ import static com.maxcriser.cards.constant.ListConstants.TEXT_PLAIN;
 import static com.maxcriser.cards.constant.ListConstants.TYPE_LOCKED_SCREEN;
 import static com.maxcriser.cards.constant.ListConstants.URL_JSON_LOCATION;
 import static com.maxcriser.cards.constant.ListConstants.URL_JSON_SETTINGS;
-import static com.maxcriser.cards.utils.manager.NetworkManager.isConnected;
+import static com.maxcriser.cards.manager.NetworkManager.isConnected;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
