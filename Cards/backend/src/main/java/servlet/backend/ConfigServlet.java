@@ -16,8 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import sun.rmi.runtime.Log;
-
 import static servlet.backend.auth.SecurityUtils.hasPermission;
 
 public class ConfigServlet extends HttpServlet {
