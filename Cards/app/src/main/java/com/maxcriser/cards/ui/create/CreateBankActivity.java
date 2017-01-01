@@ -1,4 +1,4 @@
-package com.maxcriser.cards.ui.create_item;
+package com.maxcriser.cards.ui.create;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -7,6 +7,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -42,12 +43,13 @@ import com.maxcriser.cards.date.DateToView;
 import com.maxcriser.cards.dialog.MatchesFountDialogBuilder;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.listener.OnTypePageChangeListener;
-import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.model.CreditCard;
 import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.activities.PhotoEditorActivity;
 import com.maxcriser.cards.utils.UniqueStringGenerator;
 import com.maxcriser.cards.view.labels.RobotoRegular;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.File;
 import java.util.Calendar;
@@ -88,7 +90,6 @@ public class CreateBankActivity extends AppCompatActivity {
     private Uri editBackUri;
     private boolean statusScan;
     private boolean statusSave;
-    private ImageLoader mImageLoader;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -96,7 +97,6 @@ public class CreateBankActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_bank_card);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
         sync = new OwnAsyncTask();
-        mImageLoader = ((CoreApplication) getApplication()).getImageLoader();
         initViews();
     }
 
@@ -164,21 +164,22 @@ public class CreateBankActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == EDIT_IMAGE_FRONT) {
                 editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
-                mImageLoader.downloadToView(editFrontUri.toString(), frontPhoto, new OnResultCallback<Bitmap, Void>() {
+                Picasso.with(this).load(editFrontUri).into(new Target() {
 
                     @Override
-                    public void onSuccess(final Bitmap pBitmap) {
+                    public void onBitmapLoaded(final Bitmap bitmap, final Picasso.LoadedFrom from) {
+                        frontPhoto.setImageBitmap(bitmap);
                         removeFront.setVisibility(View.VISIBLE);
                         frontPhoto.setClickable(false);
                     }
 
                     @Override
-                    public void onError(final Exception pE) {
-                        Toast.makeText(CreateBankActivity.this, R.string.cannot_load_image, Toast.LENGTH_LONG).show();
+                    public void onBitmapFailed(final Drawable errorDrawable) {
+
                     }
 
                     @Override
-                    public void onProgressChanged(final Void pVoid) {
+                    public void onPrepareLoad(final Drawable placeHolderDrawable) {
 
                     }
                 });
@@ -222,21 +223,22 @@ public class CreateBankActivity extends AppCompatActivity {
                 frontPhoto.setClickable(false);
             } else if (requestCode == EDIT_IMAGE_BACK) {
                 editBackUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
-                mImageLoader.downloadToView(editBackUri.toString(), backPhoto, new OnResultCallback<Bitmap, Void>() {
+                Picasso.with(this).load(editBackUri).into(new Target() {
 
                     @Override
-                    public void onSuccess(final Bitmap pBitmap) {
+                    public void onBitmapLoaded(final Bitmap bitmap, final Picasso.LoadedFrom from) {
+                        backPhoto.setImageBitmap(bitmap);
                         removeBack.setVisibility(View.VISIBLE);
                         backPhoto.setClickable(false);
                     }
 
                     @Override
-                    public void onError(final Exception pE) {
+                    public void onBitmapFailed(final Drawable errorDrawable) {
 
                     }
 
                     @Override
-                    public void onProgressChanged(final Void pVoid) {
+                    public void onPrepareLoad(final Drawable placeHolderDrawable) {
 
                     }
                 });

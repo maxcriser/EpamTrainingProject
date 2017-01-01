@@ -50,54 +50,17 @@
             android:layout_height="wrap_content"
             android:gravity="center">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal"
-                android:paddingBottom="8dp"
-                android:paddingEnd="4dp"
-                android:paddingStart="16dp"
-                android:paddingTop="8dp">
-
-                <TextView
-                    android:id="@+id/title_main_cards"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center|start"
-                    android:maxLines="3"
-                    android:text="@string/name"
-                    android:textAppearance="?attr/textAppearanceListItem"
-                    android:textColor="@color/text_white"
-                    android:textSize="20sp"/>
-
-                <ImageView
-                    android:id="@+id/icon_bank_cards"
-                    android:layout_width="80dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="end|center"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/type_visa"/>
-
-            </LinearLayout>
-
             <TextView
-                android:id="@+id/subhead_main_cards"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
+                android:id="@+id/title_main_cards"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:gravity="center|start"
-                android:maxLines="2"
-                android:paddingBottom="8dp"
-                android:paddingEnd="4dp"
-                android:paddingStart="16dp"
-                android:paddingTop="8dp"
-                android:text="@string/john_michael_johnson"
+                android:maxLines="3"
+                android:text="@string/name"
                 android:textAppearance="?attr/textAppearanceListItem"
                 android:textColor="@color/text_white"
-                android:textSize="12sp"/>
+                android:textSize="20sp"/>
 
             <ImageView
                 android:id="@+id/background_photo"

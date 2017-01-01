@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.barcode.CameraPreview;
-import com.maxcriser.cards.ui.create_item.CreateDiscountActivity;
+import com.maxcriser.cards.ui.create.CreateDiscountActivity;
 import com.maxcriser.cards.view.labels.RobotoThin;
 
 import net.sourceforge.zbar.Config;
@@ -46,11 +46,10 @@ public class BarcodeScannerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_barcode_scanner);
         final WindowManager.LayoutParams attrs = getWindow().getAttributes();
         attrs.flags = WindowManager.LayoutParams.FLAG_FULLSCREEN;
         getWindow().setAttributes(attrs);
-        setContentView(R.layout.activity_barcode_scanner);
-
         initViews();
         initControls();
     }

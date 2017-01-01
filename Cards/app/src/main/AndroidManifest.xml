@@ -45,7 +45,7 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.create_item.CreateBankActivity"
+            android:name=".ui.create.CreateBankActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
@@ -55,17 +55,17 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing"/>
         <activity
-            android:name=".ui.display_item.DiscountCardActivity"
+            android:name=".ui.display.DiscountCardActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
         <activity
-            android:name=".ui.display_item.BankCardActivity"
+            android:name=".ui.display.BankCardActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
         <activity
-            android:name=".ui.display_item.TicketActivity"
+            android:name=".ui.display.TicketActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
@@ -74,12 +74,12 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.create_item.CreateDiscountActivity"
+            android:name=".ui.create.CreateDiscountActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
         <activity
-            android:name=".ui.create_item.CreateTicketActivity"
+            android:name=".ui.create.CreateTicketActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>

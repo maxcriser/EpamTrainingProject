@@ -1,10 +1,10 @@
 package com.maxcriser.cards.ui.adapter;
 
-import android.app.Application;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -12,15 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
-import com.maxcriser.cards.CoreApplication;
 import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.database.models.ModelBankCards;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.database.models.ModelNFCItems;
 import com.maxcriser.cards.database.models.ModelTickets;
-import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.viewHolder.CardHolder;
+import com.squareup.picasso.Picasso;
 
 import static com.maxcriser.cards.constant.ListConstants.RATIO_CREDIT_CARD;
 
@@ -29,12 +28,10 @@ public class CardCursorAdapter extends RecyclerView.Adapter<CardHolder> {
     private final Cursor mCursor;
     private final Context mContext;
     private final Object mView;
-    private double viewWidth;
-    private double viewHeight;
-    private final ImageLoader mImageLoader;
+    private final double viewWidth;
+    private final double viewHeight;
 
-    public CardCursorAdapter(final Cursor pCursor, final Context pContext, final Object mObject, final Application pApplication) {
-        mImageLoader = ((CoreApplication) pApplication).getImageLoader();
+    public CardCursorAdapter(final Cursor pCursor, final Context pContext, final Object mObject) {
         mCursor = pCursor;
         mContext = pContext;
         mView = mObject;
@@ -46,8 +43,6 @@ public class CardCursorAdapter extends RecyclerView.Adapter<CardHolder> {
         final int intDoublePadding = 32;
         viewWidth = size.x - intDoublePadding;
         viewHeight = viewWidth / RATIO_CREDIT_CARD;
-        viewWidth /= 2;
-        viewHeight /= 2;
     }
 
     @Override
@@ -60,41 +55,17 @@ public class CardCursorAdapter extends RecyclerView.Adapter<CardHolder> {
     public void onBindViewHolder(final CardHolder holder, final int position) {
         if (mCursor.moveToPosition(position)) {
             if (mView.equals(R.layout.item_bank)) {
-                final String type = mCursor.getString(mCursor.getColumnIndex(ModelBankCards.TYPE));
-                final Integer typeID;
-                if (type.equals(ListConstants.Cards.VISA)) {
-                    typeID = R.drawable.type_visa;
-                } else if (type.equals(ListConstants.Cards.MASTERCARD)) {
-                    typeID = R.drawable.type_mastercard;
-                } else if (type.equals(ListConstants.Cards.AMEX)) {
-                    typeID = R.drawable.type_amex;
-                } else if (type.equals(ListConstants.Cards.MAESTRO)) {
-                    typeID = R.drawable.type_maestro;
-                } else if (type.equals(ListConstants.Cards.WESTERN_UNION)) {
-                    typeID = R.drawable.type_western_union;
-                } else if (type.equals(ListConstants.Cards.JCB)) {
-                    typeID = R.drawable.type_jcb;
-                } else if (type.equals(ListConstants.Cards.DINERS_CLUB)) {
-                    typeID = R.drawable.type_diners_club;
-                } else {
-                    typeID = R.drawable.type_belcard;
-                }
-                holder.mIcon.setBackgroundResource(typeID);
-                holder.mLinearCard.setBackgroundColor(getColor(mCursor, ModelBankCards.BACKGROUND_COLOR));
-                holder.mTitle.setText(mCursor
-                        .getString(mCursor.getColumnIndex(ModelBankCards.TITLE)));
-                holder.mSubhead.setText(mCursor
-                        .getString(mCursor.getColumnIndex(ModelBankCards.CARDHOLDER)));
                 holder.mTitle.setTag(mCursor.getInt(mCursor.getColumnIndex(ModelBankCards.ID)));
                 final String frontPhoto = mCursor.getString(mCursor.getColumnIndex(ModelBankCards.PHOTO_FRONT));
                 final String backPhoto = mCursor.getString(mCursor.getColumnIndex(ModelBankCards.PHOTO_BACK));
                 if (!frontPhoto.isEmpty()) {
-                    mImageLoader.downloadToView(frontPhoto, holder.backgroundCredit,
-                            null, (int) viewWidth, (int) viewHeight);
+                    // TODO error drawable
+                    Picasso.with(mContext).load(Uri.parse(frontPhoto)).placeholder(R.drawable.load_photo_credit_card)
+                            .resize((int) viewWidth, (int) viewHeight).into(holder.backgroundCredit);
                 }
                 if (!backPhoto.isEmpty()) {
-                    mImageLoader.downloadToView(backPhoto, holder.backgroundCreditBack,
-                            null, (int) viewWidth, (int) viewHeight);
+                    Picasso.with(mContext).load(Uri.parse(backPhoto)).placeholder(R.drawable.load_photo_credit_card)
+                            .resize((int) viewWidth, (int) viewHeight).into(holder.backgroundCreditBack);
                 }
             } else if (mView.equals(R.layout.item_ticket)) {
                 holder.mLinearCard.setBackgroundColor(getColor(mCursor, ModelTickets.BACKGROUND_COLOR));

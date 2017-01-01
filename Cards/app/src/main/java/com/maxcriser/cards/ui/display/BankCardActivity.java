@@ -1,7 +1,9 @@
-package com.maxcriser.cards.ui.display_item;
+package com.maxcriser.cards.ui.display;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +26,9 @@ import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelBankCards;
+import com.maxcriser.cards.dialog.ImageViewerDialogBuilder;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import static android.text.InputType.TYPE_CLASS_TEXT;
 import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
@@ -58,6 +63,8 @@ public class BankCardActivity extends Activity {
     private DatabaseHelper dbHelper;
     private Animation animScaleDown;
     private Animation animScaleUp;
+    private Bitmap firstBitmap;
+    private Bitmap secondBitmap;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -69,6 +76,8 @@ public class BankCardActivity extends Activity {
     }
 
     private void initViews() {
+        final ImageView ivFrontPhoto = (ImageView) findViewById(R.id.front_photo);
+        final ImageView ivBackPhoto = (ImageView) findViewById(R.id.back_photo);
         final EditText verificationNumber = (EditText) findViewById(R.id.ver_number);
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
         eye = (ImageView) findViewById(R.id.eye);
@@ -102,6 +111,45 @@ public class BankCardActivity extends Activity {
         final String type = creditIntent.getStringExtra(EXTRA_BANK_TYPE);
         final String firstPhoto = creditIntent.getStringExtra(EXTRA_BANK_FRONT_PHOTO);
         final String secondPhoto = creditIntent.getStringExtra(EXTRA_BANK_BACK_PHOTO);
+
+        Picasso.with(this).load(Uri.parse(firstPhoto)).into(new Target() {
+
+            @Override
+            public void onBitmapLoaded(final Bitmap bitmap, final Picasso.LoadedFrom from) {
+                ivFrontPhoto.setImageBitmap(bitmap);
+                firstBitmap = bitmap;
+
+            }
+
+            @Override
+            public void onBitmapFailed(final Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(final Drawable placeHolderDrawable) {
+
+            }
+        });
+
+        Picasso.with(this).load(Uri.parse(secondPhoto)).into(new Target() {
+
+            @Override
+            public void onBitmapLoaded(final Bitmap bitmap, final Picasso.LoadedFrom from) {
+                ivBackPhoto.setImageBitmap(bitmap);
+                secondBitmap = bitmap;
+            }
+
+            @Override
+            public void onBitmapFailed(final Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(final Drawable placeHolderDrawable) {
+
+            }
+        });
 
         floatingActionButtonDelete.setOnClickListener(new View.OnClickListener() {
 
@@ -211,6 +259,23 @@ public class BankCardActivity extends Activity {
         } else {
             editPin.setInputType(TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_PASSWORD);
             eye.setImageResource(R.drawable.eye_on);
+        }
+    }
+
+    void showPhoto(final Bitmap bitmap) {
+        final ImageViewerDialogBuilder dialog = new ImageViewerDialogBuilder(this, bitmap);
+        dialog.startDialog();
+    }
+
+    public void onSecondPhotoClicked(final View view) {
+        if (secondBitmap != null) {
+            showPhoto(secondBitmap);
+        }
+    }
+
+    public void onFirstPhotoClicked(final View view) {
+        if (firstBitmap != null) {
+            showPhoto(firstBitmap);
         }
     }
 }

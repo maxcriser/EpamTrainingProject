@@ -1,4 +1,4 @@
-package com.maxcriser.cards.loader.image;
+package com.maxcriser.cards.loader;
 
 import com.maxcriser.cards.thread.PriorityRunnable;
 

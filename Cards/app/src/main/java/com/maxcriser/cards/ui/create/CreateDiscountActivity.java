@@ -1,10 +1,8 @@
-package com.maxcriser.cards.ui.create_item;
+package com.maxcriser.cards.ui.create;
 
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -16,12 +14,9 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.BarcodeConverter;
-import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.constant.ListPreview;
 import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelDiscountCards;
-import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
-import com.maxcriser.cards.listener.OnTemplatePageChangeListener;
 import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.view.labels.RobotoRegular;
 
@@ -32,7 +27,6 @@ public class CreateDiscountActivity extends AppCompatActivity {
 
     private DatabaseHelper db;
     private ScrollView mScrollView;
-    private ViewPager pager;
     private EditText mEditText;
     private String myColorCode;
     private String generateBarcode;
@@ -49,7 +43,6 @@ public class CreateDiscountActivity extends AppCompatActivity {
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
         final RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
         mEditText = (EditText) findViewById(R.id.id_edit_text_name_discount);
-        pager = (ViewPager) findViewById(R.id.pager);
         db = ((CoreApplication) getApplication()).getDatabaseHelper(this);
         title.setText(getResources().getString(R.string.new_discount_title));
         final Intent barcodeIntent = getIntent();
@@ -74,21 +67,6 @@ public class CreateDiscountActivity extends AppCompatActivity {
 
         final PreviewColor listPreviewColor = ListPreview.colors.get(0);
         myColorCode = listPreviewColor.getCodeColorCards();
-
-        final int pageCount = ListPreview.colors.size();
-        pager.setPageMargin(ListConstants.PAGER_MARGIN_PREVIEW);
-        final PagerAdapter pagerAdapter = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
-                ListConstants.PagerIDs.ID_DISCOUNT_ITEM,
-                pageCount);
-
-        pager.setAdapter(pagerAdapter);
-        pager.addOnPageChangeListener(new OnTemplatePageChangeListener(new OnTemplatePageChangeListener.OnPageChangeListener() {
-
-            @Override
-            public void onResult(final int position, final String codeColor, final String nameColor) {
-                myColorCode = codeColor;
-            }
-        }));
     }
 
     @Override
@@ -137,13 +115,5 @@ public class CreateDiscountActivity extends AppCompatActivity {
 
     public void onCancelClicked(final View view) {
         onBackClicked(null);
-    }
-
-    public void onPrevColorPagerClicked(final View view) {
-        pager.setCurrentItem(pager.getCurrentItem() - 1);
-    }
-
-    public void onNextColorPagerClicked(final View view) {
-        pager.setCurrentItem(pager.getCurrentItem() + 1);
     }
 }

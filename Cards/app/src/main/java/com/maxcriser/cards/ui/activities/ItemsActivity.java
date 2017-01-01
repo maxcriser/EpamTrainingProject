@@ -64,11 +64,11 @@ import com.maxcriser.cards.listener.RecyclerItemClickListener;
 import com.maxcriser.cards.loader.CardsCursorLoader;
 import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.adapter.CardCursorAdapter;
-import com.maxcriser.cards.ui.create_item.CreateBankActivity;
-import com.maxcriser.cards.ui.create_item.CreateTicketActivity;
-import com.maxcriser.cards.ui.display_item.BankCardActivity;
-import com.maxcriser.cards.ui.display_item.DiscountCardActivity;
-import com.maxcriser.cards.ui.display_item.TicketActivity;
+import com.maxcriser.cards.ui.create.CreateBankActivity;
+import com.maxcriser.cards.ui.create.CreateTicketActivity;
+import com.maxcriser.cards.ui.display.BankCardActivity;
+import com.maxcriser.cards.ui.display.DiscountCardActivity;
+import com.maxcriser.cards.ui.display.TicketActivity;
 import com.maxcriser.cards.view.labels.RobotoRegular;
 
 import java.io.IOException;
@@ -517,7 +517,7 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
                 layout = R.layout.item_nfc;
                 break;
         }
-        adapter = new CardCursorAdapter(data, this, layout, getApplication());
+        adapter = new CardCursorAdapter(data, this, layout);
         recyclerItems.setAdapter(adapter);
     }
 

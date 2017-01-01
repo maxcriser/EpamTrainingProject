@@ -1,8 +1,9 @@
-package com.maxcriser.cards.ui.display_item;
+package com.maxcriser.cards.ui.display;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,14 +21,14 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.maxcriser.cards.CoreApplication;
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.RemovePhoto;
 import com.maxcriser.cards.database.DatabaseHelper;
 import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.dialog.ImageViewerDialogBuilder;
-import com.maxcriser.cards.loader.image.ImageLoader;
 import com.maxcriser.cards.view.labels.RobotoThin;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -56,7 +57,6 @@ public class TicketActivity extends Activity {
     private Bitmap firstBitmap;
     private Bitmap secondBitmap;
     private OwnAsyncTask sync;
-    private ImageLoader mImageLoader;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -64,7 +64,6 @@ public class TicketActivity extends Activity {
         setContentView(R.layout.activity_show_ticket);
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
         sync = new OwnAsyncTask();
-        mImageLoader = ((CoreApplication) getApplication()).getImageLoader();
         initViews();
     }
 
@@ -130,39 +129,41 @@ public class TicketActivity extends Activity {
             }
         });
 
-        mImageLoader.downloadToView(firstPhoto, ivFrontPhoto, new OnResultCallback<Bitmap, Void>() {
+        Picasso.with(this).load(Uri.parse(firstPhoto)).into(new Target() {
 
             @Override
-            public void onSuccess(final Bitmap pBitmap) {
-                firstBitmap = pBitmap;
-            }
-
-            @Override
-            public void onError(final Exception pE) {
-                Toast.makeText(TicketActivity.this, R.string.cannot_load_image, Toast.LENGTH_LONG).show();
+            public void onBitmapLoaded(final Bitmap bitmap, final Picasso.LoadedFrom from) {
+                ivFrontPhoto.setImageBitmap(bitmap);
+                firstBitmap = bitmap;
 
             }
 
             @Override
-            public void onProgressChanged(final Void pVoid) {
+            public void onBitmapFailed(final Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(final Drawable placeHolderDrawable) {
 
             }
         });
 
-        mImageLoader.downloadToView(secondPhoto, ivBackPhoto, new OnResultCallback<Bitmap, Void>() {
+        Picasso.with(this).load(Uri.parse(secondPhoto)).into(new Target() {
 
             @Override
-            public void onSuccess(final Bitmap pBitmap) {
-                secondBitmap = pBitmap;
+            public void onBitmapLoaded(final Bitmap bitmap, final Picasso.LoadedFrom from) {
+                ivBackPhoto.setImageBitmap(bitmap);
+                secondBitmap = bitmap;
             }
 
             @Override
-            public void onError(final Exception pE) {
-                Toast.makeText(TicketActivity.this, R.string.cannot_load_image, Toast.LENGTH_LONG).show();
+            public void onBitmapFailed(final Drawable errorDrawable) {
+
             }
 
             @Override
-            public void onProgressChanged(final Void pVoid) {
+            public void onPrepareLoad(final Drawable placeHolderDrawable) {
 
             }
         });

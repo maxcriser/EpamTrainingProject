@@ -1,4 +1,4 @@
-package com.maxcriser.cards.ui.display_item;
+package com.maxcriser.cards.ui.display;
 
 import android.app.Activity;
 import android.content.Intent;

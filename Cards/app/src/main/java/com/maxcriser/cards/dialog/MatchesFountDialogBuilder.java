@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.ui.create_item.CreateBankActivity;
+import com.maxcriser.cards.ui.create.CreateBankActivity;
 
 public class MatchesFountDialogBuilder extends AlertDialog {
 
