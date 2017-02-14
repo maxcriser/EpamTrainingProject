@@ -4,11 +4,12 @@
     <item
         android:drawable="@android:color/white"/>
 
-    <item>
-
-        <bitmap
-            android:gravity="center"
-            android:src="@drawable/ck_logo_200_200"/>
-    </item>
+    <item
+        android:src="@drawable/ck_logo_200_200"
+        android:bottom="30dp"
+        android:top="30dp"
+        android:left="30dp"
+        android:right="30dp"
+        android:gravity="center" />
 
 </layer-list>

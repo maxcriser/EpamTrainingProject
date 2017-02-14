@@ -94,26 +94,13 @@
                                 card_view:cardElevation="2dp">
 
                                 <ImageView
-                                    android:layout_width="36dp"
-                                    android:layout_height="36dp"
-                                    android:layout_gravity="center"
-                                    android:background="@drawable/ic_camera"/>
-
-                                <com.maxcriser.cards.view.labels.RobotoThin
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="bottom"
-                                    android:layout_marginBottom="4dp"
-                                    android:gravity="center"
-                                    android:text="@string/front"
-                                    android:textColor="@color/text_toolbar"/>
-
-                                <ImageView
                                     android:id="@+id/front_photo"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:adjustViewBounds="true"
                                     android:onClick="onFrontPhotoClicked"
-                                    android:scaleType="centerCrop"/>
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/load_photo_credit_card"/>
 
                                 <FrameLayout
                                     android:id="@+id/remove_front"
@@ -143,26 +130,13 @@
                                 card_view:cardElevation="2dp">
 
                                 <ImageView
-                                    android:layout_width="36dp"
-                                    android:layout_height="36dp"
-                                    android:layout_gravity="center"
-                                    android:background="@drawable/ic_camera"/>
-
-                                <com.maxcriser.cards.view.labels.RobotoThin
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="bottom"
-                                    android:layout_marginBottom="4dp"
-                                    android:gravity="center"
-                                    android:text="@string/back"
-                                    android:textColor="@color/text_toolbar"/>
-
-                                <ImageView
                                     android:id="@+id/back_photo"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:adjustViewBounds="true"
                                     android:onClick="onBackPhotoClicked"
-                                    android:scaleType="centerCrop"/>
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/load_photo_credit_card"/>
 
                                 <FrameLayout
                                     android:id="@+id/remove_back"

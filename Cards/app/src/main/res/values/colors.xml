@@ -2,6 +2,8 @@
 <resources>
 
     <color name="gray_secondary_text">#a3a3a3</color>
+    <color name="red_background">#dd4b3e</color>
+    <color name="red_background_dark">#9d3228</color>
     <color name="gray_bottom_create_card">#f2f2f2</color>
     <color name="transparent">#00ffffff</color>
     <color name="background_color_empty_page">#f2f2f2</color>

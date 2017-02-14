@@ -96,14 +96,6 @@ public class PhotoEditorActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    public void onLeftRotate(final View view) {
-        image.rotateImage(CropImageView.RotateDegrees.ROTATE_M90D);
-    }
-
-    public void onRightRotate(final View view) {
-        image.rotateImage(CropImageView.RotateDegrees.ROTATE_90D);
-    }
-
     public void onDoneClicked(final View view) {
         mProgressBar.setVisibility(View.VISIBLE);
         image.startCrop(

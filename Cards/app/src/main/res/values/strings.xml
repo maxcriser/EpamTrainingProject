@@ -173,5 +173,7 @@
     <string name="filed_to_init_cipher">Failed to init Cipher</string>
     <string name="error_to_past_matches">Error to paste matches</string>
     <string name="beta">[BETA]</string>
+    <string name="sign_in_with_your_google_account">Sign in with your Google Account</string>
+    <string name="sign_in_to_your_google_account_and_get_access_to_cards_on_any_device">Sign In to your Google Account and get access to cards on any device.</string>
 
 </resources>

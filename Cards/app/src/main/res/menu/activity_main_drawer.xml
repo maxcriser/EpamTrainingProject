@@ -18,10 +18,6 @@
         <item android:title="@string/title_second_group">
             <menu>
                 <item
-                    android:id="@+id/nav_location"
-                    android:icon="@drawable/ic_menu_location"
-                    android:title="@string/location"/>
-                <item
                     android:id="@+id/nav_share"
                     android:icon="@drawable/ic_menu_share"
                     android:title="@string/share"/>

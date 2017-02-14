@@ -76,6 +76,7 @@ public final class ListConstants {
     public static final String CONFIG = "config";
     public static final String EMPTY_STRING = "";
     public static final String BEG_FILE_NAME_BANK = "credit-card-";
+    public static final String BEG_FILE_NAME_DISCOUNT = "discount-card-";
     public static final String BEG_FILE_NAME_TICKET = "ticket-";
     public static final int PAGER_MARGIN_PREVIEW = 16;
     public static final String APP_TAG = "thecrisertakephoto";

@@ -175,13 +175,11 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         final String cardID = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.ID));
         final String cardTitle = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.TITLE));
         final String cardBarcode = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.BARCODE));
-        final String cardColor = pCursor.getString(pCursor.getColumnIndex(ModelDiscountCards.BACKGROUND_COLOR));
 
         final Intent intent = new Intent(this, DiscountCardActivity.class);
         intent.putExtra(EXTRA_DISCOUNT_ID, cardID);
         intent.putExtra(EXTRA_DISCOUNT_TITLE, cardTitle);
         intent.putExtra(EXTRA_DISCOUNT_BARCODE, cardBarcode);
-        intent.putExtra(EXTRA_DISCOUNT_COLOR, cardColor);
         startActivity(intent);
     }
 
@@ -194,7 +192,6 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         final String pin = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.PIN));
         final String valid = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.VALID));
         final String type = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.TYPE));
-        final String color = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.BACKGROUND_COLOR));
         final String frontPhoto = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.PHOTO_FRONT));
         final String backPhoto = pCursor.getString(pCursor.getColumnIndex(ModelBankCards.PHOTO_BACK));
 
@@ -207,7 +204,6 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
         intent.putExtra(EXTRA_BANK_PIN, pin);
         intent.putExtra(EXTRA_BANK_VALID, valid);
         intent.putExtra(EXTRA_BANK_TYPE, type);
-        intent.putExtra(EXTRA_BANK_COLOR, color);
         intent.putExtra(EXTRA_BANK_FRONT_PHOTO, frontPhoto);
         intent.putExtra(EXTRA_BANK_BACK_PHOTO, backPhoto);
         startActivity(intent);
@@ -518,12 +514,14 @@ public class ItemsActivity extends AppCompatActivity implements LoaderManager.Lo
                 break;
         }
         adapter = new CardCursorAdapter(data, this, layout);
-        recyclerItems.setAdapter(adapter);
+//        recyclerItems.setAdapter(adapter);
+        recyclerItems.swapAdapter(adapter, true);
     }
 
     @Override
     public void onLoaderReset(final Loader<Cursor> loader) {
-        recyclerItems.setAdapter(null);
+//        recyclerItems.setAdapter(null);
+        recyclerItems.swapAdapter(null, true);
     }
 
     public void onToolbarBackClicked(final View view) {

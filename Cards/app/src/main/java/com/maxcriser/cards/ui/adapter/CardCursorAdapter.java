@@ -13,9 +13,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.maxcriser.cards.R;
-import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.database.models.ModelBankCards;
-import com.maxcriser.cards.database.models.ModelDiscountCards;
 import com.maxcriser.cards.database.models.ModelNFCItems;
 import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.viewHolder.CardHolder;
@@ -54,7 +52,7 @@ public class CardCursorAdapter extends RecyclerView.Adapter<CardHolder> {
     @Override
     public void onBindViewHolder(final CardHolder holder, final int position) {
         if (mCursor.moveToPosition(position)) {
-            if (mView.equals(R.layout.item_bank)) {
+            if (mView.equals(R.layout.item_bank) || mView.equals(R.layout.item_discount)) {
                 holder.mTitle.setTag(mCursor.getInt(mCursor.getColumnIndex(ModelBankCards.ID)));
                 final String frontPhoto = mCursor.getString(mCursor.getColumnIndex(ModelBankCards.PHOTO_FRONT));
                 final String backPhoto = mCursor.getString(mCursor.getColumnIndex(ModelBankCards.PHOTO_BACK));
@@ -78,12 +76,6 @@ public class CardCursorAdapter extends RecyclerView.Adapter<CardHolder> {
                 holder.mTime.setText(mCursor
                         .getString(mCursor.getColumnIndex(ModelTickets.TIME)));
                 holder.mTitle.setTag(mCursor.getInt(mCursor.getColumnIndex(ModelTickets.ID)));
-
-            } else if (mView.equals(R.layout.item_discount)) {
-                holder.mLinearCard.setBackgroundColor(getColor(mCursor, ModelDiscountCards.BACKGROUND_COLOR));
-                holder.mTitle.setText(mCursor
-                        .getString(mCursor.getColumnIndex(ModelDiscountCards.TITLE)));
-                holder.mTitle.setTag(mCursor.getInt(mCursor.getColumnIndex(ModelDiscountCards.ID)));
             } else if (mView.equals(R.layout.item_nfc)) {
                 holder.mLinearCard.setBackgroundColor(getColor(mCursor, ModelNFCItems.BACKGROUND_COLOR));
                 holder.mTitle.setText(mCursor

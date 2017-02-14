@@ -16,8 +16,11 @@ public final class ModelDiscountCards {
     public static final String TITLE = "title";
 
     @typeString
-    public static final String BARCODE = "barcode";
+    public static final String PHOTO_FRONT = "frontPhoto";
 
     @typeString
-    public static final String BACKGROUND_COLOR = "backgroundColor";
+    public static final String PHOTO_BACK = "backPhoto";
+
+    @typeString
+    public static final String BARCODE = "barcode";
 }

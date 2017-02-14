@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.maxcriser.cards.ContextHolder;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.constant.ListConstants;
 import com.maxcriser.cards.database.annotations.Table;

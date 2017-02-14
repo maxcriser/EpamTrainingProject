@@ -10,6 +10,8 @@
     </style>
 
     <style name="SplashTheme" parent="@android:style/Theme.NoTitleBar.Fullscreen">
+        <item name="android:navigationBarColor">@color/red_background_dark</item>
+        <item name="android:colorPrimaryDark">@color/red_background_dark</item>
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 

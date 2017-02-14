@@ -1,51 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    android:id="@+id/card_view"
+<RelativeLayout
+    android:id="@+id/relative_to_flip"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="8dp"
-    android:foreground="?attr/selectableItemBackgroundBorderless"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    card_view:cardBackgroundColor="@color/card_view"
-    card_view:cardCornerRadius="2dp"
-    card_view:cardElevation="2dp">
+    android:layout_height="wrap_content">
 
-    <FrameLayout
-        android:id="@+id/linear_card"
+    <android.support.v7.widget.CardView
+        android:id="@+id/back_cardview_to_flip"
         android:layout_width="match_parent"
-        android:layout_height="112dp"
-        android:gravity="center">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        card_view:cardCornerRadius="12dp"
+        card_view:cardElevation="2dp">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:gravity="center">
 
             <ImageView
+                android:id="@+id/background_photo_back"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/gray_shadow"/>
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"/>
 
-            <com.maxcriser.cards.view.labels.NotoSans
+        </FrameLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/front_cardview_to_flip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        card_view:cardCornerRadius="12dp"
+        card_view:cardElevation="2dp">
+
+        <FrameLayout
+            android:id="@+id/linear_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
                 android:id="@+id/title_main_cards"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginBottom="16dp"
-                android:layout_marginTop="16dp"
-                android:gravity="center"
-                android:text="@string/title_of_cards"
+                android:gravity="center|start"
+                android:maxLines="3"
+                android:text="@string/name"
                 android:textAppearance="?attr/textAppearanceListItem"
                 android:textColor="@color/text_white"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
+                android:textSize="20sp"/>
 
-        </LinearLayout>
-    </FrameLayout>
-</android.support.v7.widget.CardView>
+            <ImageView
+                android:id="@+id/background_photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/load_photo_credit_card"/>
+
+        </FrameLayout>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

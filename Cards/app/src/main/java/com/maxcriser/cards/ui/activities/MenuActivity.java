@@ -185,23 +185,6 @@ public class MenuActivity extends AppCompatActivity
                 final String SHARE_USING = "share_using";
                 startActivity(Intent.createChooser(sharingIntent, SHARE_USING));
             }
-        } else if (id == R.id.nav_location) {
-            final String title;
-            final String message;
-            if (isConnected(this)) {
-                title = getString(R.string.location);
-                message = getString(R.string.country_) + pCountry + ", " + pCountryCode + "\n" +
-                        getString(R.string.timezone_) + pTimezone + "\n" +
-                        getString(R.string.query_) + pQuery + "\n\n" +
-                        pIsp;
-            } else {
-                title = getString(R.string.no_internet_connection);
-                message = getString(R.string.looks_like_iconnection);
-            }
-
-            final NotificationDialogBuilder notificationDialogBuilder =
-                    new NotificationDialogBuilder(this, title, message, null, true, false, null, null);
-            notificationDialogBuilder.startDialog();
         }
 
         drawer.closeDrawer(GravityCompat.START);
@@ -233,9 +216,10 @@ public class MenuActivity extends AppCompatActivity
                     startActivity(intent);
                     break;
                 case R.id.main_nfc_card:
-                    intent = new Intent(MenuActivity.this, ItemsActivity.class);
-                    intent.putExtra(EXTRA_CHECK_ITEMS, EXTRA_NFC_TITLE_TO_ITEMS);
-                    startActivity(intent);
+                    startActivity(new Intent(MenuActivity.this, SignInGoogleActivity.class));
+//                    intent = new Intent(MenuActivity.this, ItemsActivity.class);
+//                    intent.putExtra(EXTRA_CHECK_ITEMS, EXTRA_NFC_TITLE_TO_ITEMS);
+//                    startActivity(intent);
                     break;
                 case R.id.main_tickets_card:
                     intent = new Intent(MenuActivity.this, ItemsActivity.class);

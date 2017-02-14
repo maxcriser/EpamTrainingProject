@@ -44,7 +44,6 @@ import com.maxcriser.cards.dialog.MatchesFountDialogBuilder;
 import com.maxcriser.cards.fragment.FragmentPagerAdapterTemplate;
 import com.maxcriser.cards.listener.OnTypePageChangeListener;
 import com.maxcriser.cards.model.CreditCard;
-import com.maxcriser.cards.model.PreviewColor;
 import com.maxcriser.cards.ui.activities.PhotoEditorActivity;
 import com.maxcriser.cards.utils.UniqueStringGenerator;
 import com.maxcriser.cards.view.labels.RobotoRegular;
@@ -85,7 +84,6 @@ public class CreateBankActivity extends AppCompatActivity {
     private TextView validDate;
     private MaskedEditText verificationNumber;
     private String myTypeCard;
-    private String myColorCode;
     private Uri editFrontUri;
     private Uri editBackUri;
     private boolean statusScan;
@@ -122,8 +120,6 @@ public class CreateBankActivity extends AppCompatActivity {
         final RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
         title.setText(getResources().getString(R.string.bank_title));
 
-        final PreviewColor listPreviewColor = ListPreview.colors.get(0);
-        myColorCode = listPreviewColor.getCodeColorCards();
         myTypeCard = ListPreview.types.get(0);
         final int pageCount = ListPreview.types.size();
         final PagerAdapter pagerAdapterTypes = new FragmentPagerAdapterTemplate(getSupportFragmentManager(),
@@ -404,10 +400,9 @@ public class CreateBankActivity extends AppCompatActivity {
         final String pinStr = pin.getText().toString();
         final String validThru = validDate.getText().toString();
         final String type = myTypeCard;
-        final String color = myColorCode;
         final String verNumber = verificationNumber.getText().toString();
         if (bankStr.isEmpty() || cardholderStr.isEmpty() || verNumber.isEmpty() || numberStr.isEmpty()
-                || validThru.isEmpty() || type.isEmpty() || color.isEmpty()) {
+                || validThru.isEmpty() || type.isEmpty()) {
             Toast.makeText(this, R.string.fill_all_fields, Toast.LENGTH_LONG).show();
             mScrollView.fullScroll(ScrollView.FOCUS_UP);
         } else if (removeFront.getVisibility() == View.GONE || removeBack.getVisibility() == View.GONE) {
@@ -423,7 +418,6 @@ public class CreateBankActivity extends AppCompatActivity {
             cvNewCredit.put(ModelBankCards.PIN, pinStr);
             cvNewCredit.put(ModelBankCards.VALID, validThru);
             cvNewCredit.put(ModelBankCards.TYPE, type);
-            cvNewCredit.put(ModelBankCards.BACKGROUND_COLOR, color);
             cvNewCredit.put(ModelBankCards.ID, (Integer) null);
 
             db.insert(ModelBankCards.class, cvNewCredit, new OnResultCallback<Long, Void>() {

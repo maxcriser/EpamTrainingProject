@@ -36,9 +36,6 @@ public final class ModelBankCards {
     @typeString
     public static final String VALID = "valid";
 
-    @typeString
-    public static final String BACKGROUND_COLOR = "backgroundColor";
-
     @typeInteger
     public static final String PIN = "pin";
 }
