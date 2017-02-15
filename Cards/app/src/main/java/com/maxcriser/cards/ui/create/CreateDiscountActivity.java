@@ -59,12 +59,23 @@ public class CreateDiscountActivity extends AppCompatActivity {
     public String photoFileNameBack;
     private Uri editFrontUri;
     private Uri editBackUri;
-    private boolean statusSave;
     private ImageView frontPhoto;
     private ImageView backPhoto;
     private FrameLayout removeFront;
     private FrameLayout removeBack;
     private ScrollView mScrollView;
+
+    public void onRemoveFrontClicked(final View view) {
+        frontPhoto.setImageResource(R.drawable.load_photo_credit_card);
+        frontPhoto.setClickable(true);
+        removeFront.setVisibility(GONE);
+    }
+
+    public void onRemoveBackClicked(final View view) {
+        backPhoto.setImageResource(R.drawable.load_photo_credit_card);
+        backPhoto.setClickable(true);
+        removeBack.setVisibility(GONE);
+    }
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -239,7 +250,7 @@ public class CreateDiscountActivity extends AppCompatActivity {
 
                     @Override
                     public void onBitmapFailed(final Drawable errorDrawable) {
-
+                        Toast.makeText(CreateDiscountActivity.this, "Error load bitmap", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -262,7 +273,7 @@ public class CreateDiscountActivity extends AppCompatActivity {
 
                     @Override
                     public void onBitmapFailed(final Drawable errorDrawable) {
-
+                        Toast.makeText(CreateDiscountActivity.this, "Error load bitmap", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

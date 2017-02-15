@@ -55,7 +55,7 @@ public class BankCardActivity extends Activity {
     private OwnAsyncTask sync;
     private TextView editBank;
     private EditText editName;
-    private String editString;
+    private String editNameString;
     private LinearLayout linearFrameAction;
     private String id;
     private EditText editPin;
@@ -65,6 +65,10 @@ public class BankCardActivity extends Activity {
     private Animation animScaleUp;
     private Bitmap firstBitmap;
     private Bitmap secondBitmap;
+    EditText editVerificationNumber;
+    EditText editCardholder;
+    EditText editNumber;
+    EditText editValid;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -78,14 +82,14 @@ public class BankCardActivity extends Activity {
     private void initViews() {
         final ImageView ivFrontPhoto = (ImageView) findViewById(R.id.front_photo);
         final ImageView ivBackPhoto = (ImageView) findViewById(R.id.back_photo);
-        final EditText verificationNumber = (EditText) findViewById(R.id.ver_number);
+        editVerificationNumber = (EditText) findViewById(R.id.ver_number);
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
         eye = (ImageView) findViewById(R.id.eye);
         editBank = (TextView) findViewById(R.id.title_show_discount);
-        final EditText editCardholder = (EditText) findViewById(R.id.cardholder);
-        final EditText editNumber = (EditText) findViewById(R.id.number);
+        editCardholder = (EditText) findViewById(R.id.cardholder);
+        editNumber = (EditText) findViewById(R.id.number);
         editPin = (EditText) findViewById(R.id.pin);
-        final EditText editValid = (EditText) findViewById(R.id.valid);
+        editValid = (EditText) findViewById(R.id.valid);
         final ImageView editType = (ImageView) findViewById(R.id.type_card);
         materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
         editLinear = (LinearLayout) findViewById(R.id.linear_edit_frame_title_discount);
@@ -164,12 +168,19 @@ public class BankCardActivity extends Activity {
         floatingActionButtonEdit.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(final View v) {
+                // newer
+                editCardholder.setEnabled(true);
+                editNumber.setEnabled(true);
+                editPin.setEnabled(true);
+                editValid.setEnabled(true);
+                editVerificationNumber.setEnabled(true);
+                // end newer
                 mScrollView.fullScroll(ScrollView.FOCUS_UP);
                 editLinear.setVisibility(VISIBLE);
                 editBank.setVisibility(GONE);
                 linearFrameAction.setVisibility(VISIBLE);
-                editString = editBank.getText().toString();
-                editName.setText(editString);
+                editNameString = editBank.getText().toString();
+                editName.setText(editNameString);
                 materialDesignFAM.close(true);
                 new Handler().postDelayed(new Runnable() {
 
@@ -186,7 +197,7 @@ public class BankCardActivity extends Activity {
         editCardholder.setText(cardholder);
         editNumber.setText(number);
         editPin.setText(pin);
-        verificationNumber.setText(verNumber);
+        editVerificationNumber.setText(verNumber);
         editValid.setText(valid);
         final Integer typeID;
         switch (type) {
@@ -231,9 +242,15 @@ public class BankCardActivity extends Activity {
     }
 
     public void onCreateCardClicked(final View view) {
-        editString = editName.getText().toString();
-        if (!editString.isEmpty()) {
-            editBank.setText(editString);
+        editNameString = editName.getText().toString();
+        final String editCardholderString = editCardholder.getText().toString();
+        final String editNumberString = editNumber.getText().toString();
+        final String editPinString = editPin.getText().toString();
+        final String editValidString = editValid.getText().toString();
+        final String editVerString = editVerificationNumber.getText().toString();
+        if (!editNameString.isEmpty() && !editCardholderString.isEmpty() && !editNumberString.isEmpty()
+                && !editPinString.isEmpty() && !editValidString.isEmpty() && !editVerString.isEmpty()) {
+            editBank.setText(editNameString);
             editLinear.setVisibility(GONE);
             editBank.setVisibility(VISIBLE);
             linearFrameAction.setVisibility(GONE);
@@ -241,10 +258,25 @@ public class BankCardActivity extends Activity {
             materialDesignFAM.startAnimation(animScaleUp);
 
             dbHelper.edit(ModelBankCards.class, ModelBankCards.TITLE,
-                    editString, ModelBankCards.ID, String.valueOf(id), null);
+                    editNameString, ModelBankCards.ID, String.valueOf(id), null);
+            dbHelper.edit(ModelBankCards.class, ModelBankCards.CARDHOLDER,
+                    editCardholderString, ModelBankCards.ID, String.valueOf(id), null);
+            dbHelper.edit(ModelBankCards.class, ModelBankCards.NUMBER,
+                    editNumberString, ModelBankCards.ID, String.valueOf(id), null);
+            dbHelper.edit(ModelBankCards.class, ModelBankCards.PIN,
+                    editPinString, ModelBankCards.ID, String.valueOf(id), null);
+            dbHelper.edit(ModelBankCards.class, ModelBankCards.VALID,
+                    editValidString, ModelBankCards.ID, String.valueOf(id), null);
+            dbHelper.edit(ModelBankCards.class, ModelBankCards.VERIFICATION_NUMBER,
+                    editVerString, ModelBankCards.ID, String.valueOf(id), null);
+            editCardholder.setEnabled(false);
+            editNumber.setEnabled(false);
+            editPin.setEnabled(false);
+            editValid.setEnabled(false);
+            editVerificationNumber.setEnabled(false);
         } else {
             mScrollView.fullScroll(ScrollView.FOCUS_UP);
-            Toast.makeText(this, R.string.empty_card_name, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.fill_all_fields, Toast.LENGTH_LONG).show();
         }
     }
 

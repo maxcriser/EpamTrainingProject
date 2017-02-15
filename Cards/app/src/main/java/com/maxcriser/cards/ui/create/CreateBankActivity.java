@@ -82,7 +82,7 @@ public class CreateBankActivity extends AppCompatActivity {
     private MaskedEditText number;
     private EditText pin;
     private TextView validDate;
-    private MaskedEditText verificationNumber;
+    private EditText verificationNumber;
     private String myTypeCard;
     private Uri editFrontUri;
     private Uri editBackUri;
@@ -102,7 +102,7 @@ public class CreateBankActivity extends AppCompatActivity {
         final String uniqueString = UniqueStringGenerator.getUniqueString();
         photoFileNameFront = ListConstants.BEG_FILE_NAME_BANK + uniqueString + "front_photo.jpg";
         photoFileNameBack = ListConstants.BEG_FILE_NAME_BANK + uniqueString + "back_photo.jpg";
-        verificationNumber = (MaskedEditText) findViewById(R.id.ver_number);
+        verificationNumber = (EditText) findViewById(R.id.ver_number);
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
         bank = (EditText) findViewById(R.id.bank);
         cardholder = (EditText) findViewById(R.id.cardholder);
@@ -378,13 +378,13 @@ public class CreateBankActivity extends AppCompatActivity {
     }
 
     public void onRemoveBackClicked(final View view) {
-        backPhoto.setImageBitmap(null);
+        backPhoto.setImageResource(R.drawable.load_photo_credit_card);
         backPhoto.setClickable(true);
         removeBack.setVisibility(GONE);
     }
 
     public void onRemoveFrontClicked(final View view) {
-        frontPhoto.setImageBitmap(null);
+        frontPhoto.setImageResource(R.drawable.load_photo_credit_card);
         frontPhoto.setClickable(true);
         removeFront.setVisibility(GONE);
     }

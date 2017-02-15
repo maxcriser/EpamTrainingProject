@@ -57,6 +57,7 @@ public class TicketActivity extends Activity {
     private Bitmap firstBitmap;
     private Bitmap secondBitmap;
     private OwnAsyncTask sync;
+    private EditText editCardholder;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -74,7 +75,7 @@ public class TicketActivity extends Activity {
         final RobotoThin time = (RobotoThin) findViewById(R.id.time);
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
         editTitle = (TextView) findViewById(R.id.title_show_discount);
-        final EditText editCardholder = (EditText) findViewById(R.id.cardholder);
+        editCardholder = (EditText) findViewById(R.id.cardholder);
         materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
         editLinear = (LinearLayout) findViewById(R.id.linear_edit_frame_title_discount);
         editName = (EditText) findViewById(R.id.rename_discount_title);
@@ -118,6 +119,7 @@ public class TicketActivity extends Activity {
                 editTitleStr = editTitle.getText().toString();
                 editName.setText(editTitleStr);
                 materialDesignFAM.close(true);
+                editCardholder.setEnabled(true);
                 new Handler().postDelayed(new Runnable() {
 
                     @Override
@@ -188,7 +190,8 @@ public class TicketActivity extends Activity {
 
     public void onCreateCardClicked(final View view) {
         editTitleStr = editName.getText().toString();
-        if (!editTitleStr.isEmpty()) {
+        final String editCardholderStr = editCardholder.getText().toString();
+        if (!editTitleStr.isEmpty() && !editCardholderStr.isEmpty()) {
             editTitle.setText(editTitleStr);
             editLinear.setVisibility(GONE);
             editTitle.setVisibility(VISIBLE);
@@ -198,6 +201,9 @@ public class TicketActivity extends Activity {
 
             dbHelper.edit(ModelTickets.class, ModelTickets.TITLE, editTitleStr,
                     ModelTickets.ID, String.valueOf(id), null);
+            dbHelper.edit(ModelTickets.class, ModelTickets.CARDHOLDER, editCardholderStr,
+                    ModelTickets.ID, String.valueOf(id), null);
+            editCardholder.setEnabled(false);
         } else {
             mScrollView.fullScroll(ScrollView.FOCUS_UP);
             Toast.makeText(this, R.string.empty_card_name, Toast.LENGTH_LONG).show();
