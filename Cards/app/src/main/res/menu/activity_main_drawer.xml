@@ -7,6 +7,16 @@
             android:id="@+id/nav_pin"
             android:icon="@drawable/ic_menu_pin"
             android:title="@string/setup_pin"/>
+
+        <item
+            android:id="@+id/send_feedback"
+            android:icon="@drawable/send_feedback"
+            android:title="@string/send_feedback"/>
+
+        <item
+            android:id="@+id/help"
+            android:icon="@drawable/help"
+            android:title="@string/help"/>
         <!--<item-->
             <!--android:id="@+id/mi_drawer_item_live_traffic"-->
             <!--android:icon="@drawable/ic_nav_night_mode"-->

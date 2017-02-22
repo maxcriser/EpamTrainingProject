@@ -176,5 +176,7 @@
     <string name="sign_in_with_your_google_account">Sign in with your Google Account</string>
     <string name="sign_in_to_your_google_account_and_get_access_to_cards_on_any_device">Sign In to your Google Account and get access to cards on any device.</string>
     <string name="owner_">Owner:</string>
+    <string name="send_feedback">Send feedback</string>
+    <string name="help">Help</string>
 
 </resources>
