@@ -131,16 +131,18 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginStart="16dp">
 
                                 <LinearLayout
-                                    android:layout_width="100dp"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
                                     android:padding="8dp">
 
                                     <TextView
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="48dp"
                                         android:gravity="center|end"
                                         android:text="@string/owner_"
@@ -157,12 +159,12 @@
 
                                     <EditText
                                         android:id="@+id/cardholder"
-                                        android:layout_width="205dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="48dp"
                                         android:enabled="false"
                                         android:gravity="center|start"
-                                        android:maxLines="1"
                                         android:imeOptions="actionDone"
+                                        android:maxLines="1"
                                         android:textColor="@color/text_toolbar"
                                         android:textSize="16sp"
                                         tools:text="John Johnson"/>
@@ -186,21 +188,6 @@
                                     card_view:cardElevation="2dp">
 
                                     <ImageView
-                                        android:layout_width="36dp"
-                                        android:layout_height="36dp"
-                                        android:layout_gravity="center"
-                                        android:background="@drawable/ic_camera"/>
-
-                                    <com.maxcriser.cards.view.labels.RobotoThin
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="bottom"
-                                        android:layout_marginBottom="4dp"
-                                        android:gravity="center"
-                                        android:text="@string/front"
-                                        android:textColor="@color/text_toolbar"/>
-
-                                    <ImageView
                                         android:id="@+id/front_photo"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
@@ -217,21 +204,6 @@
                                     android:layout_weight="1"
                                     card_view:cardCornerRadius="2dp"
                                     card_view:cardElevation="2dp">
-
-                                    <ImageView
-                                        android:layout_width="36dp"
-                                        android:layout_height="36dp"
-                                        android:layout_gravity="center"
-                                        android:background="@drawable/ic_camera"/>
-
-                                    <com.maxcriser.cards.view.labels.RobotoThin
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="bottom"
-                                        android:layout_marginBottom="4dp"
-                                        android:gravity="center"
-                                        android:text="@string/back"
-                                        android:textColor="@color/text_toolbar"/>
 
                                     <ImageView
                                         android:id="@+id/back_photo"

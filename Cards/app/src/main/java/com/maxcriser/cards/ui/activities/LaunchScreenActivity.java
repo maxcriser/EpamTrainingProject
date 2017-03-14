@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import static com.maxcriser.cards.constant.ListConstants.PASSWORD_TAG;
 import static com.maxcriser.cards.constant.ListConstants.UNDEFENDED;

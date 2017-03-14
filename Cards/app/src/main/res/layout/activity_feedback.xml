@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/fragment_toolbar_settings"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="16dp"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/from"
+                    android:textColor="@color/text_toolbar"
+                    android:textSize="15sp"/>
+
+                <EditText
+                    android:id="@+id/email_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center|start"
+                    android:layout_marginStart="8dp"
+                    android:background="@android:color/transparent"
+                    android:clickable="false"
+                    android:gravity="center|start"
+                    android:minWidth="48dp"
+                    android:textColor="@color/text_toolbar"
+                    android:textSize="15sp"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_down"/>
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/text_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Write your feedback"
+                android:maxLines="1"
+                android:textColor="#1d1d1d"/>
+
+            <CheckBox
+                android:id="@+id/include_screenshot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/include_screenshot_and_logs"
+                android:textColor="#151515"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/screenshot"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/feedback_text"
+                    android:textColor="@color/text_toolbar"
+                    android:textSize="15sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

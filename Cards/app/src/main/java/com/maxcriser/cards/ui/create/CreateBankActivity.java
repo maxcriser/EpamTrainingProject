@@ -6,19 +6,19 @@ import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -48,7 +48,6 @@ import com.maxcriser.cards.ui.activities.PhotoEditorActivity;
 import com.maxcriser.cards.utils.UniqueStringGenerator;
 import com.maxcriser.cards.view.labels.RobotoRegular;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.io.File;
 import java.util.Calendar;
@@ -88,6 +87,7 @@ public class CreateBankActivity extends AppCompatActivity {
     private Uri editBackUri;
     private boolean statusScan;
     private boolean statusSave;
+    private TextInputLayout numberLayout, bankLayout, cardholderLayout, vernumberLayout, pinLayout;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -99,6 +99,11 @@ public class CreateBankActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        numberLayout = (TextInputLayout) findViewById(R.id.layout_number);
+        bankLayout = (TextInputLayout) findViewById(R.id.layout_bank);
+        cardholderLayout = (TextInputLayout) findViewById(R.id.layout_cardholder);
+        vernumberLayout = (TextInputLayout) findViewById(R.id.layout_ver);
+        pinLayout = (TextInputLayout) findViewById(R.id.layout_pin);
         final String uniqueString = UniqueStringGenerator.getUniqueString();
         photoFileNameFront = ListConstants.BEG_FILE_NAME_BANK + uniqueString + "front_photo.jpg";
         photoFileNameBack = ListConstants.BEG_FILE_NAME_BANK + uniqueString + "back_photo.jpg";
@@ -160,13 +165,14 @@ public class CreateBankActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == EDIT_IMAGE_FRONT) {
                 editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
+                Picasso.with(this).load(editFrontUri).placeholder(R.drawable.background_placeholder_500_316).into(frontPhoto);
+                /*
                 Picasso.with(this).load(editFrontUri).into(new Target() {
 
                     @Override
                     public void onBitmapLoaded(final Bitmap bitmap, final Picasso.LoadedFrom from) {
                         frontPhoto.setImageBitmap(bitmap);
-                        removeFront.setVisibility(View.VISIBLE);
-                        frontPhoto.setClickable(false);
+
                     }
 
                     @Override
@@ -179,6 +185,9 @@ public class CreateBankActivity extends AppCompatActivity {
 
                     }
                 });
+                */
+                removeFront.setVisibility(View.VISIBLE);
+                frontPhoto.setClickable(false);
                 sync.execute(new ScanCreditCard(getAssets(), this), editFrontUri, new OnResultCallback<CreditCard, String>() {
 
                     @Override
@@ -191,9 +200,7 @@ public class CreateBankActivity extends AppCompatActivity {
                                 final String creditType = pCredit.getTypeCreditCard();
                                 final String creditValid = pCredit.getValidCreditCard();
 
-                                if (!creditNumber.isEmpty() || !creditCardholder.isEmpty()
-                                        || !creditName.isEmpty() || !creditType.isEmpty()
-                                        || !creditValid.isEmpty()) {
+                                if (!creditNumber.isEmpty() || !creditCardholder.isEmpty() || !creditName.isEmpty() || !creditType.isEmpty() || !creditValid.isEmpty()) {
                                     showAlertDialogRecognize(creditNumber, creditCardholder, creditName,
                                             creditType, creditValid);
                                 } else {
@@ -215,10 +222,10 @@ public class CreateBankActivity extends AppCompatActivity {
 
                     }
                 });
-                removeFront.setVisibility(View.VISIBLE);
-                frontPhoto.setClickable(false);
             } else if (requestCode == EDIT_IMAGE_BACK) {
                 editBackUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
+                Picasso.with(this).load(editBackUri).placeholder(R.drawable.background_placeholder_500_316).into(backPhoto);
+                /*
                 Picasso.with(this).load(editBackUri).into(new Target() {
 
                     @Override
@@ -238,6 +245,9 @@ public class CreateBankActivity extends AppCompatActivity {
 
                     }
                 });
+                */
+                removeBack.setVisibility(View.VISIBLE);
+                backPhoto.setClickable(false);
             }
         } else {
             Toast.makeText(this, R.string.picture_wasnt_edited, Toast.LENGTH_SHORT).show();
@@ -378,19 +388,37 @@ public class CreateBankActivity extends AppCompatActivity {
     }
 
     public void onRemoveBackClicked(final View view) {
-        backPhoto.setImageResource(R.drawable.load_photo_credit_card);
+        backPhoto.setImageResource(R.drawable.camera_card_size);
         backPhoto.setClickable(true);
         removeBack.setVisibility(GONE);
     }
 
     public void onRemoveFrontClicked(final View view) {
-        frontPhoto.setImageResource(R.drawable.load_photo_credit_card);
+        frontPhoto.setImageResource(R.drawable.camera_card_size);
         frontPhoto.setClickable(true);
         removeFront.setVisibility(GONE);
     }
 
     public void onBackClicked(final View view) {
         super.onBackPressed();
+    }
+
+    private boolean validateField(final EditText view, final TextInputLayout viewLayout) {
+        if (view.getText().toString().isEmpty()) {
+            viewLayout.setError("You must fill this field");
+            requestFocus(view);
+            return false;
+        } else {
+            viewLayout.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private void requestFocus(final View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
     }
 
     private void createCard() {
@@ -401,10 +429,9 @@ public class CreateBankActivity extends AppCompatActivity {
         final String validThru = validDate.getText().toString();
         final String type = myTypeCard;
         final String verNumber = verificationNumber.getText().toString();
-        if (bankStr.isEmpty() || cardholderStr.isEmpty() || verNumber.isEmpty() || numberStr.isEmpty()
-                || validThru.isEmpty() || type.isEmpty()) {
+        if (!validateField(pin, pinLayout) | !validateField(verificationNumber, vernumberLayout) | !validateField(cardholder, cardholderLayout) | !validateField(bank, bankLayout) | !validateField(number, numberLayout) || validThru.isEmpty() || type.isEmpty()) {
             Toast.makeText(this, R.string.fill_all_fields, Toast.LENGTH_LONG).show();
-            mScrollView.fullScroll(ScrollView.FOCUS_UP);
+//            mScrollView.fullScroll(ScrollView.FOCUS_UP);
         } else if (removeFront.getVisibility() == View.GONE || removeBack.getVisibility() == View.GONE) {
             Toast.makeText(this, R.string.must_make_card_images, Toast.LENGTH_LONG).show();
         } else {

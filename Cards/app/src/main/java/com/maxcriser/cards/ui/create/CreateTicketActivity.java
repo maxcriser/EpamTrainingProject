@@ -7,19 +7,19 @@ import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -48,7 +48,6 @@ import com.maxcriser.cards.ui.activities.PhotoEditorActivity;
 import com.maxcriser.cards.utils.UniqueStringGenerator;
 import com.maxcriser.cards.view.labels.RobotoRegular;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.io.File;
 import java.util.Calendar;
@@ -87,6 +86,7 @@ public class CreateTicketActivity extends AppCompatActivity {
     private EditText ticketCardholder;
     private FrameLayout removeFront;
     private FrameLayout removeBack;
+    private TextInputLayout ownerLayout, nameLayout;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -95,6 +95,23 @@ public class CreateTicketActivity extends AppCompatActivity {
         findViewById(R.id.search_image_toolbar).setVisibility(GONE);
         sync = new OwnAsyncTask();
         initViews();
+    }
+
+    private boolean validateField(final EditText view, final TextInputLayout viewLayout) {
+        if (view.getText().toString().isEmpty()) {
+            viewLayout.setError("You must fill this field");
+            requestFocus(view);
+            return false;
+        } else {
+            viewLayout.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    private void requestFocus(final View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
     }
 
     @Override
@@ -122,6 +139,8 @@ public class CreateTicketActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == EDIT_IMAGE_FRONT) {
                 editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
+                Picasso.with(this).load(editFrontUri).placeholder(R.drawable.background_placeholder_500_316).into(frontPhoto);
+                /*
                 Picasso.with(this).load(editFrontUri).into(new Target() {
 
                     @Override
@@ -141,8 +160,13 @@ public class CreateTicketActivity extends AppCompatActivity {
 
                     }
                 });
+                */
+                removeFront.setVisibility(View.VISIBLE);
+                frontPhoto.setClickable(false);
             } else if (requestCode == EDIT_IMAGE_BACK) {
                 editBackUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
+                Picasso.with(this).load(editBackUri).placeholder(R.drawable.background_placeholder_500_316).into(backPhoto);
+                /*
                 Picasso.with(this).load(editBackUri).into(new Target() {
 
                     @Override
@@ -162,6 +186,9 @@ public class CreateTicketActivity extends AppCompatActivity {
 
                     }
                 });
+                */
+                removeBack.setVisibility(View.VISIBLE);
+                backPhoto.setClickable(false);
             }
         } else {
             Toast.makeText(this, R.string.picture_wasnt_edited, Toast.LENGTH_SHORT).show();
@@ -194,6 +221,8 @@ public class CreateTicketActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        nameLayout = (TextInputLayout) findViewById(R.id.layout_name);
+        ownerLayout = (TextInputLayout) findViewById(R.id.layout_owner);
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
         ticketCardholder = (EditText) findViewById(R.id.cardholder);
         frontPhoto = (ImageView) findViewById(R.id.front_photo);
@@ -342,10 +371,7 @@ public class CreateTicketActivity extends AppCompatActivity {
         final String titleStr = ticketTitle.getText().toString();
         final String timeStr = DateToView.getTicketTimeFormat().format(calendar.getTime());
         final String dateStr = DateToView.getTicketDateFormat().format(calendar.getTime());
-        if (!titleStr.isEmpty()
-                && !cardholderStr.isEmpty()
-                && !timeStr.isEmpty()
-                && !dateStr.isEmpty()) {
+        if (validateField(ticketTitle, nameLayout) && validateField(ticketCardholder, ownerLayout) && !timeStr.isEmpty() && !dateStr.isEmpty()) {
             if (checkBox.isChecked()) {
                 addCalendarEvent(calendar.getTimeInMillis(), ticketTitle.getText().toString());
             }

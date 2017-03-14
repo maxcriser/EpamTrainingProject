@@ -1,42 +1,57 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="none">
+
         <item
             android:id="@+id/nav_pin"
             android:icon="@drawable/ic_menu_pin"
             android:title="@string/setup_pin"/>
 
         <item
-            android:id="@+id/send_feedback"
-            android:icon="@drawable/send_feedback"
-            android:title="@string/send_feedback"/>
-
-        <item
-            android:id="@+id/help"
-            android:icon="@drawable/help"
-            android:title="@string/help"/>
-        <!--<item-->
-            <!--android:id="@+id/mi_drawer_item_live_traffic"-->
-            <!--android:icon="@drawable/ic_nav_night_mode"-->
-            <!--android:title="@string/use_fingerprint"-->
-            <!--app:actionLayout="@layout/fragment_nav_switch"/>-->
+            android:id="@+id/rate"
+            android:icon="@drawable/star"
+            android:title="@string/rate_app"/>
     </group>
 
     <group>
-        <item android:title="@string/title_second_group">
+
+        <item android:title="@string/communication">
             <menu>
+
+                <item
+                    android:id="@+id/group"
+                    android:icon="@drawable/account_multiple"
+                    android:title="@string/join_group"/>
+
                 <item
                     android:id="@+id/nav_share"
                     android:icon="@drawable/ic_menu_share"
                     android:title="@string/share"/>
-                <item
-                    android:id="@+id/nav_about"
-                    android:icon="@drawable/information_variant"
-                    android:title="@string/about"/>
+
             </menu>
         </item>
+
+    </group>
+
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/send_feedback"
+            android:icon="@drawable/send_feedback"
+            android:title="@string/send_feedback"/>
+
+        <!--<item-->
+            <!--android:id="@+id/help"-->
+            <!--android:icon="@drawable/help"-->
+            <!--android:title="@string/help"/>-->
+
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/information_variant"
+            android:title="@string/about"/>
+
     </group>
 
 </menu>

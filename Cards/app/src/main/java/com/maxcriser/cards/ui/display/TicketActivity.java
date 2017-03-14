@@ -3,7 +3,6 @@ package com.maxcriser.cards.ui.display;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,7 +27,6 @@ import com.maxcriser.cards.database.models.ModelTickets;
 import com.maxcriser.cards.dialog.ImageViewerDialogBuilder;
 import com.maxcriser.cards.view.labels.RobotoThin;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -131,6 +129,10 @@ public class TicketActivity extends Activity {
             }
         });
 
+        Picasso.with(this).load(Uri.parse(firstPhoto)).placeholder(R.drawable.camera_card_size_light).into(ivFrontPhoto);
+        Picasso.with(this).load(Uri.parse(secondPhoto)).placeholder(R.drawable.camera_card_size_light).into(ivBackPhoto);
+
+        /*
         Picasso.with(this).load(Uri.parse(firstPhoto)).into(new Target() {
 
             @Override
@@ -169,6 +171,7 @@ public class TicketActivity extends Activity {
 
             }
         });
+        */
 
         editTitle.setText(titleStr);
         editCardholder.setText(cardholderStr);

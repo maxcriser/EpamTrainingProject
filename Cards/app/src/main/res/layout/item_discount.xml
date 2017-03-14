@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/load_photo_credit_card"/>
+                android:src="@drawable/camera_card_size"/>
 
         </FrameLayout>
     </android.support.v7.widget.CardView>

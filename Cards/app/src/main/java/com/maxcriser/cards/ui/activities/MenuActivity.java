@@ -1,6 +1,7 @@
 package com.maxcriser.cards.ui.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.maxcriser.cards.BuildConfig;
@@ -19,11 +21,11 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.async.OnResultCallback;
 import com.maxcriser.cards.async.OwnAsyncTask;
 import com.maxcriser.cards.async.task.JsonParser;
+import com.maxcriser.cards.dialog.AlertCustomDialog;
+import com.maxcriser.cards.dialog.AlertStandardDialog;
 import com.maxcriser.cards.dialog.NotificationDialogBuilder;
+import com.maxcriser.cards.manager.ProfileManager;
 import com.maxcriser.cards.model.SettingsJson;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import static android.view.View.GONE;
 import static com.maxcriser.cards.constant.Extras.EXTRA_CHECK_ITEMS;
@@ -32,24 +34,26 @@ import static com.maxcriser.cards.constant.Extras.EXTRA_NFC_TITLE_TO_ITEMS;
 import static com.maxcriser.cards.constant.Extras.EXTRA_TICKETS_TITLE_TO_ITEMS;
 import static com.maxcriser.cards.constant.ListConstants.CONFIG;
 import static com.maxcriser.cards.constant.ListConstants.CREDIT_CARD;
+import static com.maxcriser.cards.constant.ListConstants.MV_MAXCRISER_GMAIL_COM;
 import static com.maxcriser.cards.constant.ListConstants.SETUP_PIN;
 import static com.maxcriser.cards.constant.ListConstants.TEXT_PLAIN;
 import static com.maxcriser.cards.constant.ListConstants.TYPE_LOCKED_SCREEN;
-import static com.maxcriser.cards.constant.ListConstants.URL_JSON_LOCATION;
 import static com.maxcriser.cards.constant.ListConstants.URL_JSON_SETTINGS;
-import static com.maxcriser.cards.manager.NetworkManager.isConnected;
+import static com.maxcriser.cards.constant.ListConstants.facebookGroupUrl;
+import static com.maxcriser.cards.constant.ListConstants.googlePlusGroupUrl;
+import static com.maxcriser.cards.constant.ListConstants.playMarketUrl;
+import static com.maxcriser.cards.constant.ListConstants.vkGroupUrl;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private String pCountry = "#country";
-    private String pCountryCode = "#country code";
-    private String pIsp = "#isp";
-    private String pQuery = "#query";
-    private String pTimezone = "#timezone";
     private DrawerLayout drawer;
     private OwnAsyncTask sync;
     private SettingsJson mSettingsJson;
+    private static final String CKEEPER_RATE = "CKeeper: Rate ";
+    private static final String SUPPORT = ": Support";
+    private static final String MESSAGE_RFC822 = "message/rfc822";
+    private static final String MAILTO = "mailto:";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -59,41 +63,50 @@ public class MenuActivity extends AppCompatActivity
         initViews();
     }
 
-    public void initViews() {
-        sync.execute(new JsonParser(), URL_JSON_LOCATION, new OnResultCallback<String, Void>() {
+    private void sendEmail(final String title, final String body, final String emailFrom) {
+        final Intent i = new Intent(Intent.ACTION_SENDTO);
+        i.setType(MESSAGE_RFC822);
+        i.putExtra(Intent.EXTRA_EMAIL, emailFrom);
+        i.putExtra(Intent.EXTRA_SUBJECT, title);
+        i.putExtra(Intent.EXTRA_TEXT, body);
+        i.setData(Uri.parse(MAILTO + MV_MAXCRISER_GMAIL_COM));
+        try {
+            startActivity(i);
+        } catch (final android.content.ActivityNotFoundException ex) {
+            Toast.makeText(this, R.string.no_email_clients_installed, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void showRate() {
+        final AlertCustomDialog dialog = new AlertCustomDialog(this);
+        dialog.setView(R.layout.fragment_rate_app)
+                .setTopColorRes(R.color.text_toolbar)
+                .setCancelable(true)
+                .setIcon(R.drawable.ic_pulse)
+                .show();
+
+        final View view = dialog.getAddedView();
+        final RatingBar ratingBar = (RatingBar) view.findViewById(R.id.rating);
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
 
             @Override
-            public void onSuccess(final String pS) {
-                final JSONObject dataJsonObj;
-                try {
-                    dataJsonObj = new JSONObject(pS);
-
-                    final String COUNTRY_ID = "country";
-                    pCountry = dataJsonObj.getString(COUNTRY_ID);
-                    final String COUNTRY_CODE_ID = "countryCode";
-                    pCountryCode = dataJsonObj.getString(COUNTRY_CODE_ID);
-                    final String ISP_ID = "isp";
-                    pIsp = dataJsonObj.getString(ISP_ID);
-                    final String QUERY_ID = "query";
-                    pQuery = dataJsonObj.getString(QUERY_ID);
-                    final String TIMEZONE_ID = "timezone";
-                    pTimezone = dataJsonObj.getString(TIMEZONE_ID);
-
-                } catch (final JSONException e) {
-                    throw new RuntimeException(e);
+            public void onRatingChanged(final RatingBar ratingBar, final float rating, final boolean fromUser) {
+                if (rating <= 3) {
+                    sendEmail(CKEEPER_RATE + rating + SUPPORT, "", ProfileManager.getUserMail(MenuActivity.this));
+                } else {
+                    openUrl(playMarketUrl);
                 }
-            }
-
-            @Override
-            public void onError(final Exception pE) {
-                Toast.makeText(MenuActivity.this, getString(R.string.cannot_parese_location), Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onProgressChanged(final Void pVoid) {
+                dialog.dismiss();
             }
         });
+    }
 
+    private void openUrl(final String url) {
+        final Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(url));
+        startActivity(intent);
+    }
+
+    public void initViews() {
         sync.execute(new JsonParser(), URL_JSON_SETTINGS + CONFIG, new OnResultCallback<String, Void>() {
 
             @Override
@@ -169,12 +182,20 @@ public class MenuActivity extends AppCompatActivity
             final Intent intent = new Intent(this, LockerActivity.class);
             intent.putExtra(TYPE_LOCKED_SCREEN, SETUP_PIN);
             startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY));
-
         } else if (id == R.id.nav_about) {
             if (mSettingsJson != null) {
+                final AlertStandardDialog dialog = new AlertStandardDialog(this);
+                dialog.setTopColorRes(R.color.text_toolbar)
+//                        .setTitle(getString(R.string.about))
+                        .setCancelable(true)
+                        .setIcon(R.drawable.information_variant_white)
+                        .setMessage(mSettingsJson.getAbout())
+                        .show();
+                /*
                 final NotificationDialogBuilder notificationDialogBuilder = new NotificationDialogBuilder(this,
                         getString(R.string.about), mSettingsJson.getAbout(), null, false, false, null, null);
                 notificationDialogBuilder.startDialog();
+                */
             }
         } else if (id == R.id.nav_share) {
             if (mSettingsJson != null) {
@@ -182,13 +203,51 @@ public class MenuActivity extends AppCompatActivity
                 sharingIntent.setType(TEXT_PLAIN);
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, mSettingsJson.getTitleShare());
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, mSettingsJson.getBodyShare());
-                final String SHARE_USING = "share_using";
-                startActivity(Intent.createChooser(sharingIntent, SHARE_USING));
+                startActivity(sharingIntent);
             }
+        } else if (id == R.id.send_feedback) {
+            startActivity(new Intent(this, FeedbackActivity.class));
+        } else if (id == R.id.rate) {
+            showRate();
+        } else if (id == R.id.group) {
+            showJoinGroup();
         }
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void showJoinGroup() {
+        final AlertCustomDialog dialog = new AlertCustomDialog(this);
+        dialog.setView(R.layout.fragment_join_group)
+                .setTopColorRes(R.color.text_toolbar)
+                .setCancelable(true)
+                .setListener(R.id.facebook_id, new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(final View v) {
+                        openUrl(facebookGroupUrl);
+                        dialog.dismiss();
+                    }
+                })
+                .setListener(R.id.vk_com_id, new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(final View v) {
+                        openUrl(vkGroupUrl);
+                        dialog.dismiss();
+                    }
+                })
+                .setListener(R.id.google_plus_id, new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(final View v) {
+                        openUrl(googlePlusGroupUrl);
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(R.drawable.account_multiple_white)
+                .show();
     }
 
     public void onMenuClicked(final View view) {
@@ -216,10 +275,10 @@ public class MenuActivity extends AppCompatActivity
                     startActivity(intent);
                     break;
                 case R.id.main_nfc_card:
-                    startActivity(new Intent(MenuActivity.this, SignInGoogleActivity.class));
-//                    intent = new Intent(MenuActivity.this, ItemsActivity.class);
-//                    intent.putExtra(EXTRA_CHECK_ITEMS, EXTRA_NFC_TITLE_TO_ITEMS);
-//                    startActivity(intent);
+//                    startActivity(new Intent(MenuActivity.this, SignInGoogleActivity.class));
+                    intent = new Intent(MenuActivity.this, ItemsActivity.class);
+                    intent.putExtra(EXTRA_CHECK_ITEMS, EXTRA_NFC_TITLE_TO_ITEMS);
+                    startActivity(intent);
                     break;
                 case R.id.main_tickets_card:
                     intent = new Intent(MenuActivity.this, ItemsActivity.class);

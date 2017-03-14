@@ -5,16 +5,16 @@ import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -34,7 +34,6 @@ import com.maxcriser.cards.ui.activities.PhotoEditorActivity;
 import com.maxcriser.cards.utils.UniqueStringGenerator;
 import com.maxcriser.cards.view.labels.RobotoRegular;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.io.File;
 
@@ -53,7 +52,7 @@ import static com.maxcriser.cards.manager.StorageManager.isExternalStorageAvaila
 public class CreateDiscountActivity extends AppCompatActivity {
 
     private DatabaseHelper db;
-    private EditText mEditText;
+    private EditText nameEditText;
     private String generateBarcode;
     public String photoFileNameFront;
     public String photoFileNameBack;
@@ -64,15 +63,34 @@ public class CreateDiscountActivity extends AppCompatActivity {
     private FrameLayout removeFront;
     private FrameLayout removeBack;
     private ScrollView mScrollView;
+    private TextInputLayout nameLayout;
 
     public void onRemoveFrontClicked(final View view) {
-        frontPhoto.setImageResource(R.drawable.load_photo_credit_card);
+        frontPhoto.setImageResource(R.drawable.camera_card_size);
         frontPhoto.setClickable(true);
         removeFront.setVisibility(GONE);
     }
 
+    private boolean validateField(final EditText view, final TextInputLayout viewLayout) {
+        if (view.getText().toString().isEmpty()) {
+            viewLayout.setError("You must fill this field");
+            requestFocus(view);
+            return false;
+        } else {
+            viewLayout.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private void requestFocus(final View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
+
     public void onRemoveBackClicked(final View view) {
-        backPhoto.setImageResource(R.drawable.load_photo_credit_card);
+        backPhoto.setImageResource(R.drawable.camera_card_size);
         backPhoto.setClickable(true);
         removeBack.setVisibility(GONE);
     }
@@ -86,6 +104,7 @@ public class CreateDiscountActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        nameLayout = (TextInputLayout) findViewById(R.id.layout_name);
         final String uniqueString = UniqueStringGenerator.getUniqueString();
         photoFileNameFront = ListConstants.BEG_FILE_NAME_DISCOUNT + uniqueString + "front_photo.jpg";
         photoFileNameBack = ListConstants.BEG_FILE_NAME_DISCOUNT + uniqueString + "back_photo.jpg";
@@ -95,26 +114,33 @@ public class CreateDiscountActivity extends AppCompatActivity {
         removeFront = (FrameLayout) findViewById(R.id.remove_front);
         mScrollView = (ScrollView) findViewById(R.id.scrollView);
         final RobotoRegular title = (RobotoRegular) findViewById(R.id.title_toolbar);
-        mEditText = (EditText) findViewById(R.id.id_edit_text_name_discount);
+        nameEditText = (EditText) findViewById(R.id.id_edit_text_name_discount);
         db = ((CoreApplication) getApplication()).getDatabaseHelper(this);
         title.setText(getResources().getString(R.string.new_discount_title));
         final Intent barcodeIntent = getIntent();
         final String barcode = barcodeIntent.getStringExtra(TAG_BARCODE);
         final OwnAsyncTask barcodeGenerator = new OwnAsyncTask();
-        barcodeGenerator.execute(new BarcodeConverter(), barcode, new OnResultCallback<String, String>() {
+
+        barcodeGenerator.execute(new BarcodeConverter(barcode), null, new OnResultCallback<String, Void>() {
 
             @Override
             public void onSuccess(final String pS) {
-                generateBarcode = pS;
+                if (pS == null) {
+                    Toast.makeText(CreateDiscountActivity.this, R.string.cannot_convert_barcode, Toast.LENGTH_SHORT).show();
+                    generateBarcode = barcode;
+                } else {
+                    generateBarcode = pS;
+                }
             }
 
             @Override
             public void onError(final Exception pE) {
-                Toast.makeText(CreateDiscountActivity.this, R.string.cannot_convert_barcode, Toast.LENGTH_LONG).show();
+                Toast.makeText(CreateDiscountActivity.this, R.string.cannot_convert_barcode, Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onProgressChanged(final String pS) {
+            public void onProgressChanged(final Void pVoid) {
+
             }
         });
     }
@@ -129,8 +155,12 @@ public class CreateDiscountActivity extends AppCompatActivity {
     }
 
     public void onCreateCardClicked(final View view) {
-        final String titleStr = mEditText.getText().toString();
-        if (!titleStr.isEmpty()) {
+        final String titleStr = nameEditText.getText().toString();
+        if (!validateField(nameEditText, nameLayout)) {
+            Toast.makeText(this, R.string.fill_all_fields, Toast.LENGTH_LONG).show();
+        } else if (removeFront.getVisibility() == View.GONE || removeBack.getVisibility() == View.GONE) {
+            Toast.makeText(this, R.string.must_make_card_images, Toast.LENGTH_LONG).show();
+        } else {
             final ContentValues cvNewDiscount = new ContentValues();
             cvNewDiscount.put(ModelDiscountCards.TITLE, titleStr);
             cvNewDiscount.put(ModelDiscountCards.BARCODE, generateBarcode);
@@ -155,9 +185,6 @@ public class CreateDiscountActivity extends AppCompatActivity {
                 public void onProgressChanged(final Void pVoid) {
                 }
             });
-        } else {
-            mScrollView.fullScroll(ScrollView.FOCUS_UP);
-            Toast.makeText(this, R.string.fill_all_fields, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -239,6 +266,8 @@ public class CreateDiscountActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == EDIT_IMAGE_FRONT) {
                 editFrontUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
+                Picasso.with(this).load(editFrontUri).placeholder(R.drawable.background_placeholder_500_316).into(frontPhoto);
+                /*
                 Picasso.with(this).load(editFrontUri).into(new Target() {
 
                     @Override
@@ -258,10 +287,13 @@ public class CreateDiscountActivity extends AppCompatActivity {
 
                     }
                 });
+                */
                 removeFront.setVisibility(View.VISIBLE);
                 frontPhoto.setClickable(false);
             } else if (requestCode == EDIT_IMAGE_BACK) {
                 editBackUri = Uri.parse(data.getStringExtra(Extras.EXTRA_URI));
+                Picasso.with(this).load(editBackUri).placeholder(R.drawable.background_placeholder_500_316).into(backPhoto);
+                /*
                 Picasso.with(this).load(editBackUri).into(new Target() {
 
                     @Override
@@ -281,6 +313,9 @@ public class CreateDiscountActivity extends AppCompatActivity {
 
                     }
                 });
+                */
+                removeBack.setVisibility(View.VISIBLE);
+                backPhoto.setClickable(false);
             }
         } else {
             Toast.makeText(this, R.string.picture_wasnt_edited, Toast.LENGTH_SHORT).show();

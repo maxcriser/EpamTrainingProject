@@ -164,7 +164,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
         mCancel.setOnClickListener(new onCancelClickListener());
 
-        mOk.setOnClickListener(new onOkClickListener());
+        mOk.setOnClickListener(new okClickListener());
     }
 
     private class onCancelClickListener implements View.OnClickListener {
@@ -184,7 +184,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         }
     }
 
-    private class onOkClickListener implements View.OnClickListener {
+    private class okClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(final View v) {

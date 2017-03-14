@@ -64,12 +64,18 @@ public final class ListConstants {
     }
 
     public interface Database {
+
         String SQL_TABLE_CREATE_TEMPLATE = "CREATE TABLE IF NOT EXISTS %s (%s);";
         String SQL_TABLE_CREATE_FIELD_TEMPLATE = "%s %s%s";
         String mDatabaseName = "database.cards.thecriser";
         int dbVersion = 1;
     }
 
+    public static final String vkGroupUrl = "https://vk.com/ckeeperapp";
+    public static final String facebookGroupUrl = "https://www.facebook.com/groups/767014203461659/";
+    public static final String googlePlusGroupUrl = "https://plus.google.com/communities/113698456359009986352";
+    public static final String MV_MAXCRISER_GMAIL_COM = "mv.maxcriser@gmail.com";
+    public static final String playMarketUrl = "https://vk.com/";
     public static final String URL_JSON_LOCATION = "http://ip-api.com/json";
     public static final String URL_JSON_SETTINGS = "http://ckeeperservletbackend.appspot.com/";
     public static final double RATIO_CREDIT_CARD = 1.5818181818181818181818181818182;

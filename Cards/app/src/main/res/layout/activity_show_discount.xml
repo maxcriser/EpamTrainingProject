@@ -40,34 +40,7 @@
                             card_view:cardCornerRadius="0dp"
                             card_view:cardElevation="4dp">
 
-                            <LinearLayout
-                                android:id="@+id/linear_edit_frame_title_discount"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:visibility="gone">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="48dp"
-                                    android:gravity="center|start"
-                                    android:paddingStart="16dp"
-                                    android:text="@string/name"
-                                    android:textColor="@color/text_toolbar"
-                                    android:textSize="18sp"/>
-
-                                <EditText
-                                    android:id="@+id/rename_discount_title"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="48dp"
-                                    android:imeOptions="actionDone"
-                                    android:inputType="text"
-                                    android:maxLines="1"
-                                    android:paddingStart="16dp"
-                                    android:textColor="@color/text_toolbar"
-                                    android:textSize="16sp"/>
-
-                            </LinearLayout>
+                            <include layout="@layout/fragment_edit_name"/>
 
                             <TextView
                                 android:id="@+id/title_show_discount"

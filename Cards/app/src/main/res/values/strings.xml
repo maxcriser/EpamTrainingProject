@@ -1,6 +1,9 @@
 <resources>
 
     <string name="message_write_error">Error Writing Message !</string>
+    <string name="ex_msg_dialog_choice_confirm">Confirm button is only for multi choice lists. You must call setMultiChoiceItems first</string>
+    <string name="ex_msg_dialog_view_not_set">You must call method setView before calling configureView.</string>
+    <string name="dont_show_again">Don\'t show again</string>
     <string name="message_write_success">Successfully written to Tag !</string>
     <string name="message_write_progress">Writing to Tag..</string>
     <string name="message_tag_detected">NFC Tag Detected !</string>
@@ -8,7 +11,8 @@
     <string name="message_write_tag">Write to NFC Tag</string>
     <string name="message_tap_tag">Tap the NFC Tag to your device !</string>
     <string name="hint_message">Message</string>
-
+    <string name="no_email_clients_installed">No email clients installed.</string>
+    <string name="feedback_text">Go to the Legal Help page to request content changes for legal reasons.\nYour System info will be sent to developer. See privacy policy and terms of service.</string>
     <string name="app_name">CKeeper</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -84,7 +88,8 @@
     <string name="please_wait">Please wait...</string>
     <string name="name_of_the_bank">Name of the bank</string>
     <string name="number">Number</string>
-    <string name="valid_thru">VALID\nTHRU</string>
+    <string name="valid_thru">VALID THRU:</string>
+    <string name="valid_n_thru">VALID\nTHRU</string>
     <string name="cardholder">Cardholder</string>
     <string name="_4000_1234_5678_9123">4000 1234 5678 9123</string>
     <string name="_4000">4000</string>
@@ -178,5 +183,25 @@
     <string name="owner_">Owner:</string>
     <string name="send_feedback">Send feedback</string>
     <string name="help">Help</string>
+    <string name="name_ticket">Name ticket</string>
+    <string name="name_card">Name card</string>
+    <string name="feedback">Feedback</string>
+    <string name="from">From:</string>
+    <string name="include_screenshot_and_logs">Include screenshot and logs</string>
+    <string name="processing">Processing..</string>
+    <string name="communication">Communication</string>
+    <string name="rate_app">Rate app</string>
+    <string name="join_group">Join group</string>
+    <string name="google">Google+</string>
+    <string name="facebook">Facebook</string>
+    <string name="vk_com">VK.com</string>
+    <string-array name="frame_size_editor">
+        <item>FREE</item>
+        <item>SQUARE</item>
+        <item>4:3</item>
+        <item>3:4</item>
+        <item>16:9</item>
+        <item>9:16</item>
+    </string-array>
 
 </resources>

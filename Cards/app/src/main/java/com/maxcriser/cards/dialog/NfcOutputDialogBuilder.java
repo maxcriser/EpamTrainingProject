@@ -2,6 +2,7 @@ package com.maxcriser.cards.dialog;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.nfc.tech.NfcA;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;

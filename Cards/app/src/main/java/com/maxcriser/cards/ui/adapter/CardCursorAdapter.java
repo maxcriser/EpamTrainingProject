@@ -56,13 +56,19 @@ public class CardCursorAdapter extends RecyclerView.Adapter<CardHolder> {
                 holder.mTitle.setTag(mCursor.getInt(mCursor.getColumnIndex(ModelBankCards.ID)));
                 final String frontPhoto = mCursor.getString(mCursor.getColumnIndex(ModelBankCards.PHOTO_FRONT));
                 final String backPhoto = mCursor.getString(mCursor.getColumnIndex(ModelBankCards.PHOTO_BACK));
+                int idBackgroundSvg = R.drawable.camera_card_size;
                 if (!frontPhoto.isEmpty()) {
                     // TODO error drawable
-                    Picasso.with(mContext).load(Uri.parse(frontPhoto)).placeholder(R.drawable.load_photo_credit_card)
+                    if (mView.equals(R.layout.item_bank)) {
+                        idBackgroundSvg = R.drawable.svg_credit_card;
+                    } else if (mView.equals(R.layout.item_discount)) {
+                        idBackgroundSvg = R.drawable.svg_discount_card;
+                    }
+                    Picasso.with(mContext).load(Uri.parse(frontPhoto)).placeholder(idBackgroundSvg)
                             .resize((int) viewWidth, (int) viewHeight).into(holder.backgroundCredit);
                 }
                 if (!backPhoto.isEmpty()) {
-                    Picasso.with(mContext).load(Uri.parse(backPhoto)).placeholder(R.drawable.load_photo_credit_card)
+                    Picasso.with(mContext).load(Uri.parse(backPhoto)).placeholder(idBackgroundSvg)
                             .resize((int) viewWidth, (int) viewHeight).into(holder.backgroundCreditBack);
                 }
             } else if (mView.equals(R.layout.item_ticket)) {

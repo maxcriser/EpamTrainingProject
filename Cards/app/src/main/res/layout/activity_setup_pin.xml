@@ -20,7 +20,7 @@
             android:padding="16dp"
             android:text="@string/shared_input_password_first"
             android:textColor="@color/text_toolbar"
-            android:textSize="18sp"/>
+            android:textSize="16sp"/>
 
         <EditText
             android:id="@+id/setup_pin_edit_text"

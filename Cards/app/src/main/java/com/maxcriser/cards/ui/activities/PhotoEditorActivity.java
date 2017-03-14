@@ -5,11 +5,15 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.Space;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.isseiaoki.simplecropview.CropImageView;
@@ -20,11 +24,15 @@ import com.maxcriser.cards.R;
 import com.maxcriser.cards.constant.Extras;
 import com.maxcriser.cards.constant.ListConstants;
 
+import static android.view.View.GONE;
+
 public class PhotoEditorActivity extends AppCompatActivity {
 
     private CropImageView image;
     private FrameLayout mProgressBar;
     private Uri photoUri;
+    private Spinner mSpinner;
+    private Space space1, space2;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -37,6 +45,37 @@ public class PhotoEditorActivity extends AppCompatActivity {
     }
 
     void initViews() {
+        space1 = (Space) findViewById(R.id.space_1);
+        space2 = (Space) findViewById(R.id.space_2);
+        mSpinner = (Spinner) findViewById(R.id.spinner_frame);
+        final ArrayAdapter<?> adapter =
+                ArrayAdapter.createFromResource(this, R.array.frame_size_editor, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinner.setAdapter(adapter);
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(final AdapterView<?> parent, final View view, final int position, final long id) {
+                if (position == 0) {
+                    image.setCropMode(CropImageView.CropMode.FREE);
+                } else if (position == 1) {
+                    image.setCropMode(CropImageView.CropMode.SQUARE);
+                } else if (position == 2) {
+                    image.setCropMode(CropImageView.CropMode.RATIO_4_3);
+                } else if (position == 3) {
+                    image.setCropMode(CropImageView.CropMode.RATIO_3_4);
+                } else if (position == 4) {
+                    image.setCropMode(CropImageView.CropMode.RATIO_16_9);
+                } else {
+                    image.setCropMode(CropImageView.CropMode.RATIO_9_16);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(final AdapterView<?> parent) {
+                image.setCropMode(CropImageView.CropMode.FREE);
+            }
+        });
         final Intent intent = getIntent();
         final String statusEditor = intent.getStringExtra(ListConstants.STATUS_PHOTOEDITOR);
         final LinearLayout menuBar = (LinearLayout) findViewById(R.id.menu_bar);
@@ -48,10 +87,13 @@ public class PhotoEditorActivity extends AppCompatActivity {
             final int ratioY = 55;
             final int ratioX = 87;
             image.setCustomRatio(ratioX, ratioY);
-            menuBar.setVisibility(View.GONE);
+//            menuBar.setVisibility(View.GONE);
         } else {
+            mSpinner.setVisibility(View.VISIBLE);
+            space1.setVisibility(GONE);
+            space2.setVisibility(GONE);
             image.setCropMode(CropImageView.CropMode.FREE);
-            menuBar.setVisibility(View.VISIBLE);
+//            menuBar.setVisibility(View.VISIBLE);
         }
         final int handleDp = 0;
         image.setHandleSizeInDp(handleDp);
@@ -122,13 +164,13 @@ public class PhotoEditorActivity extends AppCompatActivity {
                         final Intent intent = new Intent();
                         intent.putExtra(Extras.EXTRA_URI, outputUri.toString());
                         setResult(RESULT_OK, intent);
-                        mProgressBar.setVisibility(View.GONE);
+                        mProgressBar.setVisibility(GONE);
                         finish();
                     }
 
                     @Override
                     public void onError() {
-                        mProgressBar.setVisibility(View.GONE);
+                        mProgressBar.setVisibility(GONE);
                         Toast.makeText(PhotoEditorActivity.this, R.string.cannot_load_image_to_crop, Toast.LENGTH_LONG).show();
                     }
                 }

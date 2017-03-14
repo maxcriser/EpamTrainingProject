@@ -46,7 +46,7 @@
                     android:maxLines="3"
                     android:textAppearance="?attr/textAppearanceListItem"
                     android:textColor="@color/text_white"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     tools:text="Name"/>
 
                 <TextView
@@ -90,7 +90,7 @@
                     android:gravity="center"
                     android:text="@string/_6_00_pm"
                     android:textColor="@color/text_toolbar"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
 
             </LinearLayout>
 

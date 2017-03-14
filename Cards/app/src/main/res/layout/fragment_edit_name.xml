@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/linear_edit_frame_title_discount"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:visibility="gone">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:gravity="center|start"
+        android:text="@string/name"
+        android:textColor="@color/text_toolbar"
+        android:textSize="16sp"/>
+
+    <EditText
+        android:id="@+id/rename_discount_title"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:maxLines="1"
+        android:textColor="@color/text_toolbar"
+        android:textSize="16sp"/>
+
+</LinearLayout>

@@ -33,26 +33,7 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <android.support.v7.widget.CardView
-                            android:id="@+id/linear_frame_title_discount"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="4dp"
-                            card_view:cardBackgroundColor="@color/gray_bottom_create_card"
-                            card_view:cardCornerRadius="0dp"
-                            card_view:cardElevation="4dp">
-
-                            <com.maxcriser.cards.view.labels.RobotoRegular
-                                android:layout_width="match_parent"
-                                android:layout_height="48dp"
-                                android:gravity="center|start"
-                                android:paddingStart="16dp"
-                                android:text="@string/add_a_new_card"
-                                android:textAllCaps="true"
-                                android:textColor="@color/text_toolbar"
-                                android:textSize="16sp"/>
-
-                        </android.support.v7.widget.CardView>
+                        <include layout="@layout/fragment_header_add_new_card"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -98,144 +79,142 @@
 
                         </LinearLayout>
 
-                        <EditText
-                            android:id="@+id/bank"
-                            style="@style/EditTextBlank"
-                            android:layout_marginTop="8dp"
-                            android:hint="@string/name_of_the_bank"
-                            android:inputType="text"/>
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/layout_number"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp">
 
-                        <EditText
-                            android:id="@+id/cardholder"
-                            style="@style/EditTextBlank"
-                            android:hint="@string/cardholder"
-                            android:inputType="text"/>
+                            <com.github.pinball83.maskededittext.MaskedEditText
+                                android:id="@+id/number"
+                                android:layout_width="match_parent"
+                                android:layout_height="56dp"
+                                android:hint="@string/number"
+                                android:inputType="number"
+                                android:textSize="16sp"
+                                app:mask="**** **** **** ****"
+                                app:notMaskedSymbol="*"/>
 
-                        <EditText
-                            android:id="@+id/ver_number"
-                            style="@style/EditTextBlank"
-                            android:hint="@string/verification_number"
-                            android:inputType="number"/>
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/layout_bank"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <EditText
+                                android:id="@+id/bank"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/name_of_the_bank"
+                                android:inputType="text"
+                                android:textSize="16sp"/>
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/layout_cardholder"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <EditText
+                                android:id="@+id/cardholder"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/cardholder"
+                                android:inputType="text"
+                                android:textSize="16sp"/>
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/layout_ver"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <EditText
+                                android:id="@+id/ver_number"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/verification_number"
+                                android:inputType="number"
+                                android:textSize="16sp"/>
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/layout_pin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginStart="16dp">
+
+                            <EditText
+                                android:id="@+id/pin"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/pin"
+                                android:imeOptions="actionDone"
+                                android:inputType="numberPassword"
+                                android:maxLength="4"
+                                android:textSize="16sp"/>
+
+                        </android.support.design.widget.TextInputLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="56dp"
+                            android:layout_gravity="start|center"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="4dp"
+                            android:gravity="start|center"
                             android:orientation="horizontal">
 
-                            <LinearLayout
+                            <TextView
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:orientation="vertical">
+                                android:layout_height="56dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/valid_thru"
+                                android:textColor="@color/text_toolbar"
+                                android:textSize="16sp"/>
 
-                                <TextView
-                                    android:id="@+id/textView2"
+                            <android.support.v7.widget.CardView
+                                android:layout_width="92dp"
+                                android:layout_height="48dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="4dp"
+                                android:layout_marginEnd="4dp"
+                                android:layout_marginTop="4dp"
+                                android:layout_weight="1"
+                                card_view:cardCornerRadius="2dp"
+                                card_view:cardElevation="2dp">
+
+                                <com.maxcriser.cards.view.labels.RobotoThin
+                                    android:id="@+id/date"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="56dp"
-                                    android:layout_gravity="end"
-                                    android:gravity="center|bottom"
-                                    android:paddingBottom="6dp"
-                                    android:text="NUMBER"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="4dp"
+                                    android:gravity="center"
+                                    android:onClick="onDateClicked"
                                     android:textColor="@color/text_toolbar"
-                                    android:textSize="16sp"/>
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="56dp"
-                                    android:layout_gravity="end"
-                                    android:gravity="center|bottom"
-                                    android:paddingBottom="6dp"
-                                    android:text="@string/pin"
-                                    android:textColor="@color/text_toolbar"
-                                    android:textSize="16sp"/>
-
-                            </LinearLayout>
-
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="112dp"
-                                android:orientation="vertical">
-
-                                <com.github.pinball83.maskededittext.MaskedEditText
-                                    android:id="@+id/number"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="56dp"
-                                    android:layout_marginEnd="16dp"
-                                    android:layout_marginStart="16dp"
-                                    android:inputType="number"
                                     android:textSize="18sp"
-                                    app:mask="**** **** **** ****"
-                                    app:notMaskedSymbol="*"/>
+                                    tools:text="12/16"/>
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="56dp"
-                                    android:layout_marginEnd="16dp"
-                                    android:orientation="horizontal">
-
-                                    <EditText
-                                        android:id="@+id/pin"
-                                        style="@style/EditTextBlank"
-                                        android:layout_width="0dp"
-                                        android:layout_height="56dp"
-                                        android:layout_gravity="center"
-                                        android:layout_weight="1000"
-                                        android:gravity="center"
-                                        android:imeOptions="actionDone"
-                                        android:inputType="numberPassword"
-                                        android:maxLength="4"/>
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="56dp"
-                                        android:layout_gravity="end"
-                                        android:layout_weight="1"
-                                        android:gravity="end"
-                                        android:orientation="horizontal">
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="56dp"
-                                            android:layout_gravity="end"
-                                            android:gravity="center"
-                                            android:text="@string/valid_thru"
-                                            android:textColor="@color/text_toolbar"
-                                            android:textSize="12sp"/>
-
-                                        <android.support.v7.widget.CardView
-                                            android:layout_width="92dp"
-                                            android:layout_height="48dp"
-                                            android:layout_gravity="end"
-                                            android:layout_marginBottom="4dp"
-                                            android:layout_marginStart="16dp"
-                                            android:layout_marginTop="4dp"
-                                            card_view:cardCornerRadius="2dp"
-                                            card_view:cardElevation="2dp">
-
-                                            <com.maxcriser.cards.view.labels.RobotoThin
-                                                android:id="@+id/date"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="match_parent"
-                                                android:layout_gravity="center"
-                                                android:layout_margin="4dp"
-                                                android:gravity="center"
-                                                android:onClick="onDateClicked"
-                                                android:textColor="@color/text_toolbar"
-                                                android:textSize="18sp"
-                                                tools:text="12/16"/>
-
-                                        </android.support.v7.widget.CardView>
-
-                                    </LinearLayout>
-
-
-                                </LinearLayout>
-
-                            </LinearLayout>
-
+                            </android.support.v7.widget.CardView>
 
                         </LinearLayout>
+
 
                         <ImageView
                             android:id="@+id/scannerBar"
@@ -248,85 +227,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginBottom="10dp"
-                                android:orientation="vertical">
-
-                                <android.support.v7.widget.CardView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_margin="16dp"
-                                    card_view:cardCornerRadius="2dp"
-                                    card_view:cardElevation="2dp">
-
-                                    <ImageView
-                                        android:id="@+id/front_photo"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:adjustViewBounds="true"
-                                        android:onClick="onFrontPhotoClicked"
-                                        android:scaleType="centerCrop"
-                                        android:src="@drawable/load_photo_credit_card"/>
-
-                                    <FrameLayout
-                                        android:id="@+id/remove_front"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="36dp"
-                                        android:layout_gravity="end|bottom"
-                                        android:background="@color/gray_shadow"
-                                        android:onClick="onRemoveFrontClicked"
-                                        android:visibility="gone">
-
-                                        <ImageButton
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:background="@drawable/ic_delete_black_24dp"/>
-
-                                    </FrameLayout>
-
-                                </android.support.v7.widget.CardView>
-
-                                <android.support.v7.widget.CardView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_margin="16dp"
-                                    card_view:cardCornerRadius="2dp"
-                                    card_view:cardElevation="2dp">
-
-                                    <ImageView
-                                        android:id="@+id/back_photo"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:adjustViewBounds="true"
-                                        android:onClick="onBackPhotoClicked"
-                                        android:scaleType="centerCrop"
-                                        android:src="@drawable/load_photo_credit_card"/>
-
-                                    <FrameLayout
-                                        android:id="@+id/remove_back"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="36dp"
-                                        android:layout_gravity="end|bottom"
-                                        android:background="@color/gray_shadow"
-                                        android:onClick="onRemoveBackClicked"
-                                        android:visibility="gone">
-
-                                        <ImageButton
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:background="@drawable/ic_delete_black_24dp"/>
-
-                                    </FrameLayout>
-
-                                </android.support.v7.widget.CardView>
-
-                            </LinearLayout>
+                            <include layout="@layout/fragment_show_front_back_photo"/>
 
                         </LinearLayout>
 

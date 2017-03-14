@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
+        android:background="#252525"
         android:orientation="vertical">
 
         <com.isseiaoki.simplecropview.CropImageView
@@ -30,12 +30,68 @@
             card_view:scv_overlay_color="@color/gray_shadow_photo_editor_back"
             card_view:scv_touch_padding="8dp"/>
 
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_gravity="bottom|end"
+            card_view:cardBackgroundColor="@android:color/white"
+            card_view:cardCornerRadius="0dp"
+            card_view:cardElevation="24dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:onClick="onBackClicked"
+                    android:src="@drawable/ic_cancel"/>
+
+                <android.support.v4.widget.Space
+                    android:id="@+id/space_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1000"/>
+
+                <Spinner
+                    android:id="@+id/spinner_frame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1000"
+                    android:background="#fff"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:visibility="gone"/>
+
+                <android.support.v4.widget.Space
+                    android:id="@+id/space_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1000"/>
+
+                <ImageButton
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="end"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:onClick="onDoneClicked"
+                    android:src="@drawable/arrow_done"/>
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
         <LinearLayout
             android:id="@+id/menu_bar"
             android:layout_width="match_parent"
             android:layout_height="72dp"
             android:background="@android:color/white"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -253,12 +309,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@android:color/darker_gray"/>
+            android:background="@android:color/darker_gray"
+            android:visibility="gone"/>
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="@android:color/white">
+            android:background="@android:color/white"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="match_parent"
@@ -275,30 +333,6 @@
 
     </LinearLayout>
 
-    <FrameLayout
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_margin="12dp">
-
-        <ImageButton
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:background="@android:color/transparent"
-            android:onClick="onBackClicked"
-            android:src="@drawable/circle_photo_editor"/>
-
-
-        <ImageButton
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="center"
-            android:background="@android:color/transparent"
-            android:onClick="onBackClicked"
-            android:src="@drawable/ic_cancel"/>
-
-    </FrameLayout>
-
-    <include layout="@layout/fragment_please_wait"/>
+    <include layout="@layout/fragment_processing"/>
 
 </merge>
